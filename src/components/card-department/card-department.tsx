@@ -15,6 +15,7 @@ import {
   UserOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
+import ModalUpdateDepartment from "../modal-update-department";
 type CardDepartmentProps = {
   name?: string;
   description?: string;
@@ -98,20 +99,20 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
 
             {/* info */}
             <Row className="department-body-info">
-              <Col span={15}>
-                <div className="department-body-manager-info-wrapper">
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <CustomAvatar size={40} userName={name} />
-                  </div>
-                  <div>
+              <Col span={18}>
+                <Card className="department-body-manager-card">
+                  <div className="department-body-manager-info-wrapper">
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <CustomAvatar size={40} userName={name} />
+                    </div>
                     <div className="department-manager-main-info">
+                      <h3 style={{ textWrap: "nowrap" }}>{name}</h3>
                       <span className="department-body-manager-role">
-                        Department manger
+                        Manger
                       </span>
-                      <h3>{name}</h3>
                     </div>
                   </div>
-                </div>
+                </Card>
               </Col>
               {/* avatar group */}
               <Col>
@@ -125,8 +126,13 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                     cursor: "pointer",
                   }}
                 >
-                  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                  <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
+                  <Avatar
+                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                    gap={1}
+                  />
+                  <Avatar style={{ backgroundColor: "#f56a00" }} gap={1}>
+                    K
+                  </Avatar>
                   <Tooltip placement="bottom">
                     <Avatar
                       size="large"
@@ -151,7 +157,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
             isModalOpen={isModalAddUserOpen}
             setIsModalOpen={setIsModalAddUserOpen}
           />
-          <ModalUpdatePost
+          <ModalUpdateDepartment
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
           />
