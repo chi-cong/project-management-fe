@@ -1,0 +1,46 @@
+.admin-project-page {
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .first-part {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-xs);
+    }
+    .second-part {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-xs);
+      .create-task-btn {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: var(--gap-s);
+        color: white;
+        svg {
+          width: 16px;
+        }
+      }
+    }
+    svg {
+      width: 16px;
+    }
+  }
+}
+
+.project-option {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  .project-option-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    gap: var(--gap-s);
+    svg {
+      width: 16px;
+    }
+  }
+}
