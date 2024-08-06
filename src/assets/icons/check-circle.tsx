@@ -1,6 +1,6 @@
 import type { IconProp } from "./iconProp";
 
-export const checkCircle = ({ className, style }: IconProp) => {
+export const CheckCircle = ({ className, style }: IconProp) => {
   return (
     <svg
       viewBox='-0.5 -0.5 16 16'

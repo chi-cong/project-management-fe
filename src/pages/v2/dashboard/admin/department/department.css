@@ -1,6 +1,7 @@
 .department-page {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: var(--gap-s);
   width: 100%;
   .main {
     display: flex;
