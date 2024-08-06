@@ -24,7 +24,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import ModalAddUserToProject from "../modal-add-user-to-project";
-import ModalUpdatePost from "../modal-update-post";
+import ModalUpdatePost from "../modal-update-project";
 type CardProject = {
   name?: string;
   description?: string;

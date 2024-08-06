@@ -6,7 +6,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import React, { useState } from "react";
-import ModalCreatePost from "src/components/modal-create-post";
+import ModalCreatePost from "src/components/modal-create-project";
 import { CardDepartment } from "src/components/card-department";
 export const Departments = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

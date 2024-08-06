@@ -10,14 +10,14 @@ import {
   Space,
 } from "antd";
 import React from "react";
-import "./modal-create-post.css";
+import "./modal-create-project.css";
 import { DownOutlined } from "@ant-design/icons";
 const { RangePicker } = DatePicker;
-type ModalCreatePost = {
+type ModalCreateProject = {
   isModalOpen: boolean;
   setIsModalOpen: any;
 };
-const ModalCreatePost: React.FC<ModalCreatePost> = ({
+const ModalCreateProject: React.FC<ModalCreateProject> = ({
   isModalOpen,
   setIsModalOpen,
 }) => {
@@ -69,7 +69,7 @@ const ModalCreatePost: React.FC<ModalCreatePost> = ({
           textAlign: "center",
         }}
       >
-        Create Post
+        Create Project
       </h2>
       <Space direction="vertical" size="middle" style={{ display: "flex" }}>
         <div>
@@ -151,4 +151,4 @@ const ModalCreatePost: React.FC<ModalCreatePost> = ({
   );
 };
 
-export default ModalCreatePost;
+export default ModalCreateProject;

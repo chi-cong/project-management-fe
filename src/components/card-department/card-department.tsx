@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import "./card-department.css";
 import { useDeleteDepartmentsMutation } from "src/share/services";
-import ModalUpdatePost from "../modal-update-post";
+import ModalUpdatePost from "../modal-update-project";
 import ModalAddUserToProject from "../modal-add-user-to-project";
 import { CustomAvatar } from "../v2";
 import {
@@ -63,7 +63,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
           <Row className="department-header">
             {/* title */}
             <Col span={12} className="department-header-info">
-              <h3 className="department-name">{name}</h3>
+              <h2 className="department-name">{name}</h2>
             </Col>
             {/* action (delete, update) */}
             <Col span={12} className="department-header-action">
@@ -99,28 +99,26 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
             {/* info */}
             <Row className="department-body-info">
               <Col span={15}>
-                <Row>
-                  <Col
-                    span={12}
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    <CustomAvatar size={50} userName={name} />
-                  </Col>
-                  <Col span={12}>
+                <div className="department-body-manager-info-wrapper">
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <CustomAvatar size={40} userName={name} />
+                  </div>
+                  <div>
                     <div className="department-manager-main-info">
                       <span className="department-body-manager-role">
                         Department manger
                       </span>
-                      <h2>{name}</h2>
+                      <h3>{name}</h3>
                     </div>
-                  </Col>
-                </Row>
+                  </div>
+                </div>
               </Col>
+              {/* avatar group */}
               <Col>
                 <Avatar.Group
                   maxCount={2}
                   maxPopoverTrigger="click"
-                  size={35}
+                  size={40}
                   maxStyle={{
                     color: "#f56a00",
                     backgroundColor: "#fde3cf",

@@ -66,22 +66,12 @@ export const router = createBrowserRouter([
           {
             path: "admin",
             element: <Admin />,
-            children: [{ path: "department", element: <AdminDepartment /> }],
-          },
-          {
-            path: "admin",
-            element: <Admin />,
-            children: [{ path: "account", element: <Account /> }],
-          },
-          {
-            path: "admin",
-            element: <Admin />,
-            children: [{ path: "projects", element: <Projects /> }],
-          },
-          {
-            path: "admin",
-            element: <Admin />,
-            children: [{ path: "departments", element: <Departments /> }],
+            children: [
+              { path: "department", element: <AdminDepartment /> },
+              { path: "projects", element: <Projects /> },
+              { path: "account", element: <Account /> },
+              { path: "departments", element: <Departments /> },
+            ],
           },
         ],
       },
