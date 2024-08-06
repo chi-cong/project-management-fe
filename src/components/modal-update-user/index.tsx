@@ -79,7 +79,7 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
 
   return (
     <Modal
-      className='wrapper'
+      className="wrapper"
       open={isModalOpen}
       centered
       onCancel={handleCancel}
@@ -95,62 +95,62 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
       >
         Update User
       </h2>
-      <Form name='user-info' onFinish={onFinish} layout='vertical' form={form}>
+      <Form name="user-info" onFinish={onFinish} layout="vertical" form={form}>
         <div>
-          <Form.Item<IUpdateUser> name='name' label='Name'>
-            <Input placeholder='Name...' size='large' />
+          <Form.Item<IUpdateUser> name="name" label="Name">
+            <Input placeholder="Name..." size="large" />
           </Form.Item>
         </div>
         <div>
           <Form.Item<IUpdateUser>
-            name='username'
+            name="username"
             rules={[{ required: true, message: "Username is required" }]}
-            label='Username'
+            label="Username"
           >
-            <Input placeholder='Username...' size='large' />
+            <Input placeholder="Username..." size="large" />
           </Form.Item>
         </div>
         <div>
-          <Form.Item<IUpdateUser> name='phone' label='Phone'>
-            <Input placeholder='Phone...' size='large' />
+          <Form.Item<IUpdateUser> name="phone" label="Phone">
+            <Input placeholder="Phone..." size="large" />
           </Form.Item>
         </div>
         <div>
           <Form.Item<IUpdateUser>
-            name='email'
-            label='Email'
+            name="email"
+            label="Email"
             rules={[{ required: true, message: "Email is required" }]}
           >
-            <Input placeholder='Email...' size='large' />
+            <Input placeholder="Email..." size="large" />
           </Form.Item>
         </div>
         <div>
-          <Form.Item<IUpdateUser> name='birthday' label='Birthday'>
+          <Form.Item<IUpdateUser> name="birthday" label="Birthday">
             <DatePicker
-              placeholder='Birthday...'
-              size='large'
+              placeholder="Birthday..."
+              size="large"
               style={{ width: "100%" }}
             />
           </Form.Item>
         </div>
         <div>
           <Form.Item<IUpdateUser>
-            name='role'
-            label='Roles'
+            name="role"
+            label="Roles"
             rules={[{ required: true, message: "Role is required" }]}
           >
-            <Select options={userRoleOptions} size='large' />
+            <Select options={userRoleOptions} size="large" />
           </Form.Item>
         </div>
-        <Form.Item className='update-user-form-btn'>
+        <Form.Item className="update-user-form-btn">
           <Space>
-            <Button type='primary' htmlType='submit' size='large'>
-              Create
+            <Button type="primary" htmlType="submit" size="large">
+              Update
             </Button>
             <Button
-              type='primary'
+              type="primary"
               ghost
-              size='large'
+              size="large"
               onClick={() => setIsModalOpen(false)}
             >
               Cancel

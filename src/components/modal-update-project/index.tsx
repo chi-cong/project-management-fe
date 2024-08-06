@@ -10,14 +10,14 @@ import {
   Space,
 } from "antd";
 import React from "react";
-import "./modal-update-post.css";
+import "./modal-update-project.css";
 import { DownOutlined } from "@ant-design/icons";
 const { RangePicker } = DatePicker;
-type ModalUpdatePost = {
+type ModalUpdateProject = {
   isModalOpen: boolean;
   setIsModalOpen: any;
 };
-const ModalUpdatePost: React.FC<ModalUpdatePost> = ({
+const ModalUpdateProject: React.FC<ModalUpdateProject> = ({
   isModalOpen,
   setIsModalOpen,
 }) => {
@@ -69,7 +69,7 @@ const ModalUpdatePost: React.FC<ModalUpdatePost> = ({
           textAlign: "center",
         }}
       >
-        Update Post
+        Update Project
       </h2>
       <Space direction="vertical" size="middle" style={{ display: "flex" }}>
         <div>
@@ -151,4 +151,4 @@ const ModalUpdatePost: React.FC<ModalUpdatePost> = ({
   );
 };
 
-export default ModalUpdatePost;
+export default ModalUpdateProject;

@@ -29,14 +29,12 @@
       display: flex;
       flex-direction: column;
       width: 100%;
-      .department-manager-main-info {
-        .department-body-manager-role {
-          color: #828282;
-        }
-      }
 
       .department-body-info {
         margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         .department-role {
           text-wrap: nowrap;
           margin-left: 10px;
@@ -45,12 +43,17 @@
           border-radius: 7px;
           padding: 2px 8px;
         }
-      }
-      .department-manager-info {
-        width: 100%;
-        display: flex;
-        align-self: center;
-        justify-content: space-between;
+        .department-body-manager-info-wrapper {
+          display: flex;
+          width: 100%;
+          .department-manager-main-info {
+            margin-left: 12px;
+            .department-body-manager-role {
+              color: #828282;
+              text-wrap: nowrap;
+            }
+          }
+        }
       }
     }
   }
