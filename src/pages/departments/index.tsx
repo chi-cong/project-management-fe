@@ -1,1 +1,0 @@
-export {Departments} from './departments'
