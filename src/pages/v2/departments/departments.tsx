@@ -8,6 +8,7 @@ import {
 import React, { useState } from "react";
 import ModalCreatePost from "src/components/modal-create-project";
 import { CardDepartment } from "src/components/card-department";
+import ModalCreateDepartment from "src/components/modal-create-department";
 export const Departments = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleMenuClick: MenuProps["onClick"] = (e) => {
@@ -70,10 +71,10 @@ export const Departments = () => {
           />
         </main>
       </section>
-      <ModalCreatePost
+      <ModalCreateDepartment
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-      ></ModalCreatePost>
+      ></ModalCreateDepartment>
     </div>
   );
 };
