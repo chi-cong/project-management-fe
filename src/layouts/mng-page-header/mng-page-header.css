@@ -1,0 +1,51 @@
+@import "src/index.css";
+.mng-page-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 120px;
+  border: solid 1px var(--gray-color);
+  border-radius: var(--rounded-border);
+  background-color: var(--white-color);
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+  padding: var(--padding-s) var(--padding-l);
+  .page-header-row-1 {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--gap-m);
+    height: auto;
+    .mng-title-section {
+      display: flex;
+      justify-content: start;
+      align-items: flex-start;
+      gap: var(--gap-m);
+      height: auto;
+    }
+  }
+  .page-header-row-2 {
+    height: auto;
+    width: 100%;
+    display: flex;
+    gap: var(--gap-m);
+    align-items: center;
+    justify-content: flex-end;
+    .filter-item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: var(--gap-m);
+      .filter-title {
+        font-weight: 500;
+      }
+      .filter-selector {
+        width: 150px;
+      }
+    }
+  }
+}

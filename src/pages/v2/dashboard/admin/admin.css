@@ -1,0 +1,10 @@
+.admin-page {
+  width: 100%;
+  min-height: calc(100dvh - 80px);
+  display: flex;
+  .route-content {
+    width: 100%;
+    padding: var(--padding-m);
+    padding-right: 0;
+  }
+}

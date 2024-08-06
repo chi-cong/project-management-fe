@@ -1,0 +1,30 @@
+@import url(src/index.css);
+
+.user-department-ui {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-l);
+  .user-depart-header {
+    width: 100%;
+    min-height: 120px;
+    border: solid 1px var(--gray-color);
+    border-radius: var(--rounded-border);
+    background-color: var(--white-color);
+    box-shadow:
+      0 10px 15px -3px rgb(0 0 0 / 0.1),
+      0 4px 6px -4px rgb(0 0 0 / 0.1);
+    padding: var(--padding-s) var(--padding-l);
+  }
+  .manager-info {
+    width: 500px;
+  }
+  .user-depart-main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    .user-depart-main-part {
+      width: 45%;
+    }
+  }
+}

@@ -1,0 +1,45 @@
+.forgot-pass-page {
+  width: 100vw;
+  height: 100dvh;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--gap-l);
+  background-image: url(../../../assets/imgs/loginbg.jpg);
+  background-size: cover;
+  box-sizing: border-box;
+  padding-top: 10%;
+  padding-left: 10%;
+  padding-right: 5%;
+  .forgot-password-title {
+    color: var(--semi-black-color);
+    .title {
+      font-family: "Poppins semi bold";
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+    .emphasized-text {
+      color: var(--primary-color);
+    }
+  }
+
+  .forgot-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding: var(--padding-l);
+    gap: var(--gap-l);
+    background: var(--white-color);
+    border-radius: var(--rounded-border-xl);
+    width: 400px;
+    .title {
+      color: var(--primary-color);
+      font-family: "Poppins black";
+    }
+    /* override UI lib*/
+    .ant-spin-nested-loading {
+      width: 100%;
+    }
+  }
+}

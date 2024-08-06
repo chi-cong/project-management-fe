@@ -1,0 +1,24 @@
+.account-card-loading {
+  width: 100%;
+  min-height: 300px;
+}
+.filter-row {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--gap-xl);
+  width: 100%;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  .filter-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--gap-m);
+    .role-filter-title {
+      font-weight: 500;
+    }
+    .acc-role-filter {
+      width: 150px;
+    }
+  }
+}

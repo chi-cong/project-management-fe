@@ -1,0 +1,107 @@
+@import url(src/index.css);
+
+.task-detail-modal {
+  transition-duration: 300ms;
+  .task-detail-modal-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 95%;
+    .task-assignment-selector {
+      position: absolute;
+      opacity: 0;
+      width: 200px;
+      z-index: 3;
+    }
+    .assign-task-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--gap-s);
+      width: 200px;
+      height: 32px;
+      .assign-task-icon {
+        width: 20px;
+      }
+      h5 {
+        font-size: 16px;
+      }
+    }
+    .task-detail-head-right-size {
+      display: flex;
+      gap: var(--gap-m);
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .task-detail-content {
+    display: flex;
+    justify-content: space-between;
+    .main-task-detail-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-xl);
+      width: 60%;
+      .assigned-user-card {
+        border: transparent;
+        /* override UI lib */
+        .ant-card-body {
+          padding-left: 0;
+        }
+      }
+      .task-description {
+        width: 100%;
+      }
+      .acti-section {
+        width: 100%;
+        .acti-des-row {
+          width: 100%;
+          display: flex;
+          gap: var(--gap-s);
+          .acti-des-container {
+            width: 85%;
+            height: 100px;
+            border:
+              solid 1px,
+              var(--gray-color);
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            padding: var(--padding-m);
+            border-radius: var(--rounded-border-l);
+            .task-text-area {
+              border-color: transparent;
+              :focus {
+                border-color: transparent;
+              }
+            }
+            .add-acti-btn {
+              width: 100px;
+            }
+          }
+        }
+      }
+    }
+    .main-task-detail-section-full {
+      width: 90%;
+    }
+  }
+}
+
+.task-option {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  .task-option-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    gap: var(--gap-s);
+    svg {
+      width: 16px;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+.add-staff-tag {
+    border-style: dashed;
+    height: 22;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    cursor: pointer;
+  }
+.icon-delete-staff{
+    color: rgb(176, 173, 173);
+}
+.icon-add-staffs{
+    color: #aaaaaa;
+    font-size: 25px;
+}

@@ -1,0 +1,47 @@
+.modal-select-manager .ant-modal-title{
+    text-align: center;
+    font-size: 25px;
+}
+.modal-select-manager {
+  .decribe-select-manager{
+      color: rgb(187, 185, 185);
+      text-align: center;
+  }
+  .list-manager{
+    margin-top: 10px;
+    .avatar-manager{
+      text-align: center;
+    }
+    .item-list-manager{
+      margin-top: 10px;
+      background: white; 
+      padding: 8px 10px;
+      border-radius: 5px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      &:hover{
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+      }
+      .checkbox-select-staff
+      {
+        display: flex;
+        justify-content: flex-end;
+      }
+      .name-manager{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .title-list-manager{
+        color: rgb(187, 185, 185);
+      }
+    }
+    .title-manager-list{
+      color: rgb(187, 185, 185);
+    }
+    
+    }
+   
+}

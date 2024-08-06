@@ -1,0 +1,9 @@
+@import url(src/index.css);
+
+.content {
+  width: calc(100vw - 80px);
+  position: absolute;
+  right: 0;
+  padding: 24px;
+  min-height: 100dvh;
+}

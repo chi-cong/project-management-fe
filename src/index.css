@@ -1,0 +1,71 @@
+@font-face {
+  font-family: Poppins;
+  src: url(assets/fonts/Poppins/Poppins-Regular.ttf);
+}
+@font-face {
+  font-family: "Poppins black";
+  src: url(assets/fonts/Poppins/Poppins-Black.ttf);
+}
+@font-face {
+  font-family: "Poppins semi bold";
+  src: url(assets/fonts/Poppins/Poppins-SemiBold.ttf);
+}
+
+:root {
+  --primary-color: #5030e5;
+  --primary-transparent-color: rgb(80, 48, 229, 0.08);
+  --accent-color: #0958d9;
+  --warning-color: #f5222d;
+  --warning-hover-color: #eb5757;
+  --success-color: #28a745;
+  --info-color: #ffc008;
+  --black-color: #141414;
+  --white-color: #ffffff;
+  --gray-color: #d9d9d9;
+  --gray-transparent-color: rgb(217, 217, 217, 0.5);
+  --gray-color-2: #4f4f4f;
+  --semi-black-color: #2f2f2f;
+  /* gap  */
+  --gap-xs: 5px;
+  --gap-s: 10px;
+  --gap-m: 15px;
+  --gap-l: 20px;
+  --gap-xl: 25px;
+  --gap-xxl: 35px;
+
+  /* border */
+  --primary-border-s: solid 1px --primary-color;
+  --primary-border-m: solid 2px --primary-color;
+  --primary-border-l: solid 3px --primary-color;
+  --rounded-border: 5px;
+  --rounded-border-l: 10px;
+  --rounded-border-xl: 20px;
+  --circle-border: 50%;
+
+  /* margin */
+
+  /* padding */
+  --padding-xxs: 2px;
+  --padding-xs: 5px;
+  --padding-s: 10px;
+  --padding-m: 15px;
+  --padding-l: 20px;
+  --padding-xl: 30px;
+  --padding-xxl: 50px;
+
+  /* transition */
+  --quick-transition: 0.3s;
+
+  /* font size */
+  --font-size-xs: 14px;
+  --font-size-s: 17px;
+  --font-size-m: 22px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", "Helvetica Neue", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", sans-serif;
+  box-sizing: border-box;
+}

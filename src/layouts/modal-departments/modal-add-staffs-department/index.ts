@@ -1,0 +1,1 @@
+export {ModalAddStaffsDepartment} from './modal-add-staffs-departments'

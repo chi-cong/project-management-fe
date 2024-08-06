@@ -1,0 +1,29 @@
+@import url(src/index.css);
+
+.project-reports-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 50dvh;
+  padding-top: var(--padding-m);
+  padding-right: var(--padding-m);
+  overflow-y: auto;
+  overflow-x: auto;
+  .report-timeline {
+    width: 100%;
+    .ant-timeline-item-label {
+      width: 80px;
+    }
+    .ant-timeline-item-tail {
+      inset-inline-start: 90px;
+    }
+    .ant-timeline-item-content {
+      inset-inline-start: 90px !important;
+      width: 85% !important;
+    }
+    .ant-timeline-item-head {
+      inset-inline-start: 90px;
+    }
+  }
+}

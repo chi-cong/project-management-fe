@@ -1,0 +1,51 @@
+@import url(src/index.css);
+
+.project-card-v2 {
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding-m);
+  border: solid 1px var(--gray-color);
+  border-radius: var(--rounded-border-l);
+  .project-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .project-card-body {
+    width: 100%;
+    .progress-sec {
+      width: 100%;
+      .progress-second-line {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+  .project-card-footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.project-option {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  .project-option-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    gap: var(--gap-s);
+    svg {
+      width: 16px;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@import "src/index.css";
+
+.sidebar-container {
+  position: fixed;
+  z-index: 3;
+  .sider {
+    border-inline-end: 1px solid rgba(5, 5, 5, 0.06);
+    height: 100dvh;
+    .sider-menu {
+      border-inline-end: none;
+    }
+  }
+}
+.extended-sidebar-container {
+  opacity: 0.92;
+  z-index: 2;
+}

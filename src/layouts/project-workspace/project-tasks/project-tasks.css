@@ -1,0 +1,48 @@
+@import url(src/index.css);
+
+.task-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-l);
+  .filter-role {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .task-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: var(--gap-s);
+  }
+  .create-task-btn {
+    width: 150px;
+  }
+  .task-done-icon {
+    color: var(--success-color);
+    font-size: large;
+  }
+  .task-in-progress-icon {
+    color: var(--info-color);
+    font-size: large;
+  }
+}
+.task-done-btn {
+  transition-duration: 300ms;
+  font-size: 30px;
+}
+.task-done-btn-green {
+  color: var(--success-color);
+}
+.task-done-btn-gray {
+  color: var(--gray-color);
+  &:hover {
+    color: var(--success-color);
+  }
+}
+.task-modal {
+  width: 900px !important;
+}
+.project-section-title {
+  font-weight: 600;
+}

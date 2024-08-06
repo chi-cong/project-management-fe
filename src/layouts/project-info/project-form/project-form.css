@@ -1,0 +1,11 @@
+.project-form {
+  input:disabled {
+    color: rgba(0, 0, 0, 1) !important;
+  }
+  textarea:disabled {
+    color: rgba(0, 0, 0, 1);
+  }
+  .project-form-cancel-btn {
+    margin-left: 10px;
+  }
+}

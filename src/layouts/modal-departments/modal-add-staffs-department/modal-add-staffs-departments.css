@@ -1,0 +1,102 @@
+.group-radio-select-add-staffs {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .select-staffs {
+    width: 280px;
+    padding: 10px 0 10px 20px;
+    border-radius: 10px;
+    background-color: rgb(233, 231, 231);
+    font-weight: bold;
+  }
+  .create-staffs {
+    width: 310px;
+    padding: 10px 0 10px 20px;
+    border-radius: 10px;
+    background-color: rgb(233, 231, 231);
+    font-weight: bold;
+  }
+  .select-staffs.active {
+    border: 2px solid blue;
+    background-color: transparent;
+  }
+  .create-staffs.active {
+    border: 2px solid blue;
+    background-color: transparent;
+  }
+}
+.select-staffs-content {
+  p {
+    margin-top: 10px;
+    color: rgb(187, 185, 185);
+  }
+  .searchbar-staffs {
+    margin-top: 10px;
+  }
+  .option-select {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    p {
+      transition: all 0.3s ease;
+      padding: 10px;
+      &:hover {
+        color: blue;
+      }
+    }
+  }
+  hr {
+    margin-top: 10px;
+    height: 5px; 
+    border: none;
+    background-color: #d4cece; 
+  }
+  .list-add-staffs{
+    margin-top: 10px;
+    .checkbox-staff{
+            margin-right: 10px;
+        }
+    .button-save-staffs{
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+.hidden {
+  display: none;
+}
+.select-create-new-staffs{
+  h2{
+    margin: 10px 0px 5px 0px;
+  }
+  hr{
+    height: 5px; 
+    border: none;
+    background-color: #d4cece; 
+  }
+  .email-phone-staff{
+    display: flex;
+    .phone-number-staff{
+      margin-left: 20px;
+    }
+  }
+  .input-add-staff{
+    margin-top: 20px;
+  }
+}
+.title-add-staff{
+  display: flex;
+  .anticon{
+    font-size: 20px;
+    margin-right: 10px;
+  }
+}
+.department-staff{
+  width: 200px;
+}
+.button-save-staffs{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}

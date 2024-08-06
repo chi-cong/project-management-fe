@@ -1,0 +1,9 @@
+.account-detail-modal {
+  width: 800px !important;
+  .account-tab {
+    width: 100%;
+    background: var(--white-color);
+    padding: var(--padding-m);
+    border-radius: var(--rounded-border);
+  }
+}

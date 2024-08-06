@@ -1,0 +1,45 @@
+.v2-account-page {
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-m);
+    width: 100%;
+    .main-header {
+      width: 100%;
+      display: flex;
+      gap: var(--gap-s);
+      .first-sec {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+        justify-content: space-between;
+        .title-des {
+          width: 80%;
+          .title-row {
+            display: flex;
+            align-items: center;
+            gap: var(--gap-xs);
+
+            svg {
+              margin: auto;
+              width: 16px;
+            }
+            h2 {
+              font-size: 32px;
+            }
+          }
+        }
+        .action {
+          display: flex;
+          .title-row-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--gap-xs);
+          }
+        }
+      }
+    }
+  }
+}

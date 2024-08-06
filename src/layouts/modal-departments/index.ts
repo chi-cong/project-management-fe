@@ -1,0 +1,1 @@
+export {ModalDepartments} from './modal-departments'

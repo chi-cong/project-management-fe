@@ -1,0 +1,10 @@
+.main-layout{
+    display: flex;
+    justify-content: space-between;
+}
+.avatar-manager-department{
+    margin-top: 50px;
+}
+.layout-3{
+    margin-right: 50px;
+}

@@ -1,0 +1,17 @@
+@import url(src/index.css);
+
+.login-form-spin {
+  width: 100%;
+  .login-form {
+    width: 100%;
+    .forgot-password {
+      float: right;
+    }
+    .remember {
+      float: left;
+    }
+    .login-button {
+      width: 100%;
+    }
+  }
+}

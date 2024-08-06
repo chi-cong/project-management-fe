@@ -1,0 +1,10 @@
+.wrapper {
+  span {
+    margin-bottom: 10px;
+  }
+}
+.create-user-form-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

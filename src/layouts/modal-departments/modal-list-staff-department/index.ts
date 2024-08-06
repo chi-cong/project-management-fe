@@ -1,0 +1,1 @@
+export {ModalListStaffDepartment} from './modal-list-staff-department'

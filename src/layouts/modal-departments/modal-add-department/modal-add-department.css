@@ -1,0 +1,68 @@
+.modal-add-department{
+    text-align: center;
+    .ant-modal-title{
+        font-size: 25px;
+        font-weight: 700;
+        color: #000;
+    }
+    .label-icon-container{
+        display: flex;
+        align-items: center;
+        gap: 10px; 
+        .icon-staffs{
+            color: #DAD9D9;
+            font-size: 20px;
+        }
+        span{
+            font-size: 15px;
+            font-weight: 700;
+        }
+    }
+    .ant-steps-item-icon{
+        display: flex;
+        justify-content: center;
+        align-items: center;    
+    }
+}
+.create-departments-step1{
+    display: flex;
+    flex-direction: column;
+   .create-departments-step1-title{
+        padding:10px;
+        height: 100px;
+        display: flex;
+        label{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .input-title{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 450px;
+            margin-left: 20px;
+        }
+   }
+    .create-departments-step1-decription{
+        padding:10px;
+        height: 140px;
+        display: flex;
+        label{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .input-decription{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 450px;
+            margin-left: 20px;
+        }
+        
+   }
+}
+.list-user{
+    padding:10px;
+}

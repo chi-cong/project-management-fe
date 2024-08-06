@@ -1,0 +1,75 @@
+.department-page {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-m);
+    width: 100%;
+    .main-header {
+      width: 100%;
+      display: flex;
+      gap: var(--gap-s);
+      .first-sec {
+        width: 60%;
+        .title-des {
+          width: 80%;
+          margin-bottom: 20px;
+          .title-row {
+            display: flex;
+            align-items: center;
+            gap: var(--gap-xs);
+            margin-bottom: 20px;
+            .title-row-btn {
+              display: flex;
+              align-items: center;
+              gap: var(--gap-xs);
+            }
+            svg {
+              margin: auto;
+              width: 16px;
+            }
+            h2 {
+              font-size: 32px;
+            }
+          }
+        }
+      }
+      .pie-chart {
+        width: 300px;
+        height: 300px;
+      }
+    }
+    .project-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-s);
+    }
+  }
+  .team-member-sec {
+    width: 350px;
+    padding-left: var(--padding-xs);
+    .member-list-container {
+      border: 1px solid var(--gray-color);
+      border-radius: var(--rounded-border);
+      padding: var(--padding-s);
+    }
+  }
+}
+
+.department-option {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  .department-option-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    gap: var(--gap-s);
+    svg {
+      width: 16px;
+    }
+  }
+}

@@ -1,0 +1,1 @@
+export { CardDepartmentss } from "./card-departments";

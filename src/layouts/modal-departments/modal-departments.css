@@ -1,0 +1,100 @@
+.info-department-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .department-manager {
+    width: 600px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 30px;
+    .title-manager-department {
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      background-color: #001529;
+      span {
+        color: white;
+      }
+    }
+    .name-manager-department {
+      display: flex;
+      justify-content: center;
+      padding: 10px 10px 0px 10px;
+      p {
+        margin: 3px 0 0 5px;
+        color: #aaaaaa;
+        &:hover {
+          color: #001529;
+        }
+      }
+    }
+    .edit-manager-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border-left: 1px solid #c1bebe;
+      color: #aaaaaa;
+      &:hover {
+        color: #001529;
+      }
+    }
+  }
+}
+.info-staffs-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .department-staff {
+    width: 600px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 30px;
+
+    .title-staff-department {
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      background-color: #001529;
+      span {
+        color: white;
+      }
+    }
+    .number-staff-department {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+    .icon-list-staff-department {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border-left: 1px solid #c1bebe;
+      color: #aaaaaa;
+      &:hover {
+        color: #001529;
+      }
+    }
+  }
+}
+
+.delete-icon {
+  display: flex;
+  width: 100%;
+  color: #a6a3a3;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 15px;
+  &:hover {
+    color: #001529;
+  }
+}
+.description-department{
+  display: flex;
+  p{
+    padding-left: 10px;
+  }
+}
