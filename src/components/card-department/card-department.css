@@ -1,0 +1,61 @@
+.card-department-container {
+  .department-wrapper {
+    .department-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .department-name {
+        text-wrap: nowrap;
+      }
+      .department-header-info {
+        display: flex;
+        align-items: center;
+      }
+      .department-header-action {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        .department-header-action-button {
+          font-size: 20px;
+        }
+      }
+    }
+    .department-body {
+      padding-top: 12px;
+      border-top: 3px solid #d9d9d9;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      .department-manager-main-info {
+        .department-body-manager-role {
+          color: #828282;
+        }
+      }
+
+      .department-body-info {
+        margin-top: 10px;
+        .department-role {
+          text-wrap: nowrap;
+          margin-left: 10px;
+          background-color: #cdcbf9;
+          color: #6358dc;
+          border-radius: 7px;
+          padding: 2px 8px;
+        }
+      }
+      .department-manager-info {
+        width: 100%;
+        display: flex;
+        align-self: center;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  + .card-account-container {
+    margin-left: 10px;
+  }
+}
