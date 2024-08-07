@@ -1,4 +1,4 @@
-import "./departments.css";
+import "./departments.scss";
 import { Button, Input, List, MenuProps, message, Space } from "antd";
 import {
   SearchOutlined,
@@ -16,7 +16,7 @@ export const Departments = () => {
     console.log("click", e);
   };
   return (
-    <div className="v2-projects-page">
+    <div className="v2-departments-page">
       <section className="main">
         <header className="main-header">
           <section className="first-sec">
@@ -25,7 +25,7 @@ export const Departments = () => {
                 <h2>Departments</h2>
               </div>
             </div>
-            <div className="action">
+            <div className="header-action">
               <Space>
                 <Input placeholder="Search..." prefix={<SearchOutlined />} />
                 <Button
@@ -35,6 +35,7 @@ export const Departments = () => {
                 >
                   Trash
                 </Button>
+
                 <Button
                   type="primary"
                   className="title-row-btn"
@@ -47,15 +48,15 @@ export const Departments = () => {
             </div>
           </section>
         </header>
-        <main>
+        <main className="department-main-info">
           <List
             grid={{
               gutter: 12,
-              xs: 3,
-              sm: 3,
-              md: 3,
-              lg: 3,
-              xl: 3,
+              xs: 1,
+              sm: 1,
+              md: 2,
+              lg: 2,
+              xl: 2,
               xxl: 3,
             }}
             dataSource={[0, 1, 2, 4]}

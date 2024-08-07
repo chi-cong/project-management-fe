@@ -1,3 +1,4 @@
+@import "../../Mixin/Mixin.scss";
 .card-department-container {
   .ant-card-body {
     padding: 10px;
@@ -37,9 +38,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        .department-body-manager-card {
-          border-radius: 60px;
-        }
+
         .department-body-manager-info-wrapper {
           display: flex;
           width: 100%;
@@ -49,6 +48,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            @include tabletAndMobile {
+              flex-direction: column;
+              align-items: center;
+            }
+
             .department-body-manager-role {
               color: #6358dc;
               padding: 3px 10px;
@@ -57,6 +61,12 @@
               background-color: #cdcbf9;
             }
           }
+        }
+        .department-body-manager-card {
+          @include tabletAndMobile {
+            margin-bottom: 10px;
+          }
+          border-radius: 60px;
         }
       }
     }
