@@ -1,11 +1,21 @@
 import React, { useState } from "react";
-import { Avatar, Card, Col, Popconfirm, Row, Space, Tooltip } from "antd";
+import {
+  Avatar,
+  Card,
+  Col,
+  Divider,
+  List,
+  Popconfirm,
+  Row,
+  Space,
+  Tooltip,
+} from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-import "./card-department.css";
+import "./card-department.scss";
 import { useDeleteDepartmentsMutation } from "src/share/services";
 import ModalUpdatePost from "../modal-update-project";
 import ModalAddUserToProject from "../modal-add-user-to-project";
@@ -69,7 +79,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
             {/* action (delete, update) */}
             <Col span={12} className="department-header-action">
               {role !== "MANAGER" && (
-                <Space>
+                <Space size={[8, 24]} wrap={true}>
                   <div
                     onClick={showModal}
                     className="department-header-action-button"
@@ -96,10 +106,9 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
             <div className="department-manager-info">
               <span>{description}</span>
             </div>
-
             {/* info */}
             <Row className="department-body-info">
-              <Col span={18}>
+              <Col sm={24} xs={24} xxl={18}>
                 <Card className="department-body-manager-card">
                   <div className="department-body-manager-info-wrapper">
                     <div style={{ display: "flex", alignItems: "center" }}>
@@ -134,19 +143,45 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                     K
                   </Avatar>
                   <Tooltip placement="bottom">
-                    <Avatar
-                      size="large"
-                      style={{ backgroundColor: "#87d068" }}
-                      icon={<UserOutlined />}
-                    />
-                    <Avatar
-                      onClick={() => {
-                        showModalAddUser();
-                      }}
-                      size="large"
-                      style={{ backgroundColor: "#87d068", cursor: "pointer" }}
-                      icon={<PlusOutlined />}
-                    />
+                    <Space direction="vertical" style={{ display: "flex" }}>
+                      <div>
+                        <Space direction="vertical">
+                          <h2>Project Manager</h2>
+                          <Avatar
+                            size="large"
+                            style={{ backgroundColor: "#87d068" }}
+                            icon={<UserOutlined />}
+                          />
+                        </Space>
+                      </div>
+                      <Divider />
+                      <Space direction="vertical">
+                        <h2>Members</h2>
+                        <Space>
+                          <Avatar
+                            size="large"
+                            style={{ backgroundColor: "#87d068" }}
+                            icon={<UserOutlined />}
+                          />
+                          <Avatar
+                            size="large"
+                            style={{ backgroundColor: "#87d068" }}
+                            icon={<UserOutlined />}
+                          />
+                        </Space>
+                        <Avatar
+                          onClick={() => {
+                            showModalAddUser();
+                          }}
+                          size="large"
+                          style={{
+                            backgroundColor: "#87d068",
+                            cursor: "pointer",
+                          }}
+                          icon={<PlusOutlined />}
+                        />
+                      </Space>
+                    </Space>
                   </Tooltip>
                 </Avatar.Group>
               </Col>
