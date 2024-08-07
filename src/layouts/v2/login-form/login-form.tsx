@@ -4,12 +4,15 @@ import { useLoginMutation } from "src/share/services/accountServices";
 import { useNavigate } from "react-router-dom";
 import { localStorageUtil, sessionStorageUtil } from "src/share/utils";
 import { Link } from "react-router-dom";
+import { useRoleChecker } from "src/share/hooks";
 
 import type { FormProps } from "antd";
+import { OUserRole } from "src/share/models";
 
 export type LoginFieldType = {
   username?: string;
   password?: string;
+  remember: boolean;
 };
 export type LoginReqBody = {
   email?: string;
@@ -20,6 +23,7 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
   const [loginService, loginStatus] = useLoginMutation();
+  const checkRole = useRoleChecker();
 
   const onFinish: FormProps<LoginFieldType>["onFinish"] = async (values) => {
     await loginService({
@@ -29,9 +33,13 @@ export const LoginForm = () => {
       .unwrap()
       .then((resp) => {
         sessionStorageUtil.set("accessToken", resp.data.tokens.accessToken);
-        localStorageUtil.set("refreshToken", resp.data.tokens.refreshToken);
         sessionStorageUtil.set("role", resp.data.role);
-        navigate("/v2/dashboard/");
+        if (values.remember) {
+          localStorageUtil.set("refreshToken", resp.data.tokens.refreshToken);
+        }
+        if (checkRole(OUserRole.Admin)) {
+          navigate("/v2/dashboard/admin/account");
+        }
       })
       .catch(() => {
         messageApi.error("Failed to Login");

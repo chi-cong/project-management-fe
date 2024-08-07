@@ -18,8 +18,8 @@ export const DepartmentProjects = ({ title }: DepartmentProjectsProp) => {
           gutter: 16,
           xs: 1,
           sm: 1,
-          md: 2,
-          lg: 2,
+          md: 1,
+          lg: 3,
           xl: 3,
           xxl: 3,
         }}

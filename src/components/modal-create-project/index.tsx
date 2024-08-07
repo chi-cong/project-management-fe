@@ -2,10 +2,8 @@ import {
   Button,
   DatePicker,
   Dropdown,
-  Flex,
   Input,
   MenuProps,
-  message,
   Modal,
   Space,
 } from "antd";
@@ -15,7 +13,7 @@ import { DownOutlined } from "@ant-design/icons";
 const { RangePicker } = DatePicker;
 type ModalCreateProject = {
   isModalOpen: boolean;
-  setIsModalOpen: any;
+  setIsModalOpen: (show: boolean) => void;
 };
 const ModalCreateProject: React.FC<ModalCreateProject> = ({
   isModalOpen,
@@ -55,7 +53,7 @@ const ModalCreateProject: React.FC<ModalCreateProject> = ({
   };
   return (
     <Modal
-      className="wrapper"
+      className='wrapper'
       open={isModalOpen}
       centered
       onOk={handleOk}
@@ -71,22 +69,22 @@ const ModalCreateProject: React.FC<ModalCreateProject> = ({
       >
         Create Project
       </h2>
-      <Space direction="vertical" size="middle" style={{ display: "flex" }}>
+      <Space direction='vertical' size='middle' style={{ display: "flex" }}>
         <div>
           <span>Project Name</span>
-          <Input placeholder="Project name..." size="large" />
+          <Input placeholder='Project name...' size='large' />
         </div>
         <div>
           <span>Project Code</span>
-          <Input placeholder="Project code..." size="large" />
+          <Input placeholder='Project code...' size='large' />
         </div>
         <div>
           <span>Investor</span>
-          <Input placeholder="Investor..." size="large" />
+          <Input placeholder='Investor...' size='large' />
         </div>
         <div>
           <span>Description</span>
-          <Input placeholder="Description..." size="large" />
+          <Input placeholder='Description...' size='large' />
         </div>
 
         <div>
