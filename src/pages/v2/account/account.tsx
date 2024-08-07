@@ -21,6 +21,7 @@ import { useState } from "react";
 import { useGetUsersQuery } from "src/share/services";
 import ModalCreateUser from "src/components/modal-create-user";
 import { UserRole, OUserRole } from "src/share/models";
+
 export const Account = () => {
   const [queries] = useState<{
     role: UserRole;
@@ -33,31 +34,23 @@ export const Account = () => {
   });
 
   const items: MenuProps["items"] = [
-    {
-      label: "Admin",
-      key: OUserRole.Admin,
-    },
-    {
-      label: "Staff",
-      key: OUserRole.Staff,
-    },
-    {
-      label: "Project Manager",
-      key: OUserRole.ProjectManager,
-    },
-    {
-      label: "Manager",
-      key: OUserRole.Manager,
-    },
+    { label: "Admin", key: OUserRole.Admin },
+    { label: "Staff", key: OUserRole.Staff },
+    { label: "Project Manager", key: OUserRole.ProjectManager },
+    { label: "Manager", key: OUserRole.Manager },
   ];
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleMenuClick: MenuProps["onClick"] = () => {
     message.info("Click on menu item.");
   };
+
   const menuProps = {
     items,
     onClick: handleMenuClick,
   };
+
   return (
     <div className="v2-account-page">
       <section className="main">
@@ -68,42 +61,51 @@ export const Account = () => {
                 <h2>Account</h2>
               </div>
             </div>
-            <div className="action">
-              <Row gutter={[16, 8]}>
-                <Col md={6} sm={12}>
-                  <Dropdown menu={menuProps}>
-                    <Button>
-                      <Space>
-                        Roles
-                        <DownOutlined />
-                      </Space>
-                    </Button>
-                  </Dropdown>
-                </Col>
-                <Col md={6} sm={12}>
-                  <Input placeholder="Search..." prefix={<SearchOutlined />} />
-                </Col>
-                <Col md={6} sm={12}>
-                  <Button
-                    type="default"
-                    className="title-row-btn"
-                    icon={<DeleteOutlined />}
-                  >
-                    Trash
+            <Row className="action" gutter={[8, 8]}>
+              <Col xs={24} sm={12} md={6}>
+                <Dropdown menu={menuProps}>
+                  <Button style={{ width: "100%" }}>
+                    <Space
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      Roles
+                      <DownOutlined />
+                    </Space>
                   </Button>
-                </Col>
-                <Col md={6} sm={12}>
-                  <Button
-                    type="primary"
-                    className="title-row-btn"
-                    icon={<PlusOutlined />}
-                    onClick={() => setIsModalOpen(true)}
-                  >
-                    Create User
-                  </Button>
-                </Col>
-              </Row>
-            </div>
+                </Dropdown>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <Input
+                  placeholder="Search..."
+                  prefix={<SearchOutlined />}
+                  style={{ width: "100%" }}
+                />
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <Button
+                  type="default"
+                  className="title-row-btn"
+                  icon={<DeleteOutlined />}
+                  style={{ width: "100%" }}
+                >
+                  Trash
+                </Button>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <Button
+                  type="primary"
+                  className="title-row-btn"
+                  icon={<PlusOutlined />}
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Create User
+                </Button>
+              </Col>
+            </Row>
           </section>
         </header>
         <main>
@@ -129,7 +131,7 @@ export const Account = () => {
       <ModalCreateUser
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-      ></ModalCreateUser>
+      />
     </div>
   );
 };
