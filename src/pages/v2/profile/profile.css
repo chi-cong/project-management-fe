@@ -1,18 +1,16 @@
 .v2-profile-page {
-  margin: 30px 0;
-
-  display: flex;
-  align-items: center;
   flex-direction: column;
   .profile-container {
     display: flex;
     align-items: center;
+    justify-content: center;
     .profile-content {
+      display: flex;
+      align-items: stretch;
+      width: 100%;
       .user-profile-container {
         display: flex;
-        align-items: center;
         flex-direction: column;
-        box-sizing: border-box;
         .user-info-form,
         .select-new-avatar-form,
         .personal-information {
@@ -41,38 +39,34 @@
             .role-label {
               background-color: #cdcbf9;
               color: #6358dc;
-              width: 131px;
+              width: 70%;
               font-weight: bold;
               padding: 5px 10px;
               border-radius: 5px;
               margin: 5px 0;
-              display: inline-block;
             }
           }
         }
-
         .select-new-avatar-form {
           h3 {
-            text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
           }
           .avatar-upload {
             display: flex;
             align-items: flex-start;
             justify-content: flex-start;
             gap: 20px;
-            position: relative;
-            flex: 4;
             img {
+              margin-top: 20px;
               border-radius: 8px;
             }
             .upload-icon {
+              margin-top: 40px;
               font-size: 24px;
             }
             p {
               margin: 0;
               font-size: 16px;
-              color: #666;
             }
             .text-content {
               display: flex;
@@ -92,7 +86,6 @@
         justify-content: center;
         align-items: center;
         margin-left: auto;
-        box-sizing: border-box;
         .ant-card-body {
           width: 100%;
         }
@@ -100,21 +93,7 @@
           margin-bottom: 20px;
           font-size: 1.5em;
           text-align: center;
-          width: 100%;
           color: #6358dc;
-        }
-
-        form {
-          input[type="text"],
-          input[type="email"],
-          input[type="tel"],
-          input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-          }
         }
       }
     }

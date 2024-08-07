@@ -20,7 +20,7 @@ interface User {
   const UserInfo: React.FC<{ user: User }> = ({ user }) => (
     <div className="user-info-form">
         <div className="user-info">
-            <CustomAvatar size={200} userName={user.username} avatarSrc={user.avatar} className="user-info-avatar"/>
+            <CustomAvatar size={300} userName={user.username} avatarSrc={user.avatar} className="user-info-avatar"/>
             <div className="user-details">
                 <h3>{user.name}</h3>
                 <span className="role-label">{user.role}</span>
@@ -34,7 +34,7 @@ const SelectNewAvatar: React.FC = () => (
     <div className="select-new-avatar-form">
         <h3>Select new avatar</h3>
         <div className="avatar-upload">
-            <img src="/src/assets/imgs/loginbg.jpg" alt="Placeholder Avatar" className="img" style={{width:"30%"}}/>
+            <img src="/src/assets/imgs/loginbg.jpg" alt="Placeholder Avatar" className="img" style={{width:"30%", height:"100%"}}/>
             <div>
                 <UploadOutlined className="upload-icon"/>
             </div>
@@ -59,23 +59,25 @@ export const Profile = () => {
     };
     return(
         <div className='v2-profile-page'>
+            <header>
+                <h1 >
+                    Profile
+                </h1>
+            </header>
             <div className="profile-container">
                 <Row className="profile-content" gutter={[16, 8]}>
-                    <Col sm={24} md={6} className="user-profile-container">
-                        <Space 
-                        direction="vertical"
-                        style={{width:"100%"}}
-                        >
-                                <Card>
-                                    <UserInfo user={user} />
-                                </Card>
+                    <Col sm={24} md={7} className="user-profile-container">
+                        <Space direction="vertical">
+                            <Card>
+                                <UserInfo user={user} />
+                            </Card>
                             <Card>
                                 <SelectNewAvatar />
                             </Card>
                         </Space>
                     </Col>
                     <Col sm={24} md={17} > 
-                        <Card className="personal-information" >
+                        <Card className="personal-information" style={{width:"100%"}}>
                             <h2>Personal Information</h2>
                             <ProfileForm user={user} />
                         </Card>
