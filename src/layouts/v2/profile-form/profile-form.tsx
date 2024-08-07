@@ -1,5 +1,5 @@
 import "./profile-form.css";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   DatePicker,
@@ -29,6 +29,7 @@ export const ProfileForm: React.FC<ProfileForm> = ({
   user,
 }) => {
     const [form] = Form.useForm();
+    const [isEdit, setIsEdit] = useState(false);
     useEffect(() => {
     form.setFieldsValue({
       ...user,
@@ -42,12 +43,25 @@ export const ProfileForm: React.FC<ProfileForm> = ({
     });
   });
 
+  const handleUpdateClick = () => {
+    setIsEdit(true);
+  }
+
+  const handleSaveClick = () =>{
+
+  }
+
+  const handleCancelClick = () => {
+    form.resetFields();
+    setIsEdit(false);
+  }
+
   return (
     <>
       <Form name='user-info' layout='vertical' form={form}>
         <div>
           <Form.Item<UserInfor> name='name' label='Name'>
-            <Input placeholder='Name...' size='large' />
+            <Input placeholder='Name...' size='large' className={isEdit ? "input-enable" : "input-disable"} disabled={!isEdit}/>
           </Form.Item>
         </div>
         <div>
@@ -56,12 +70,12 @@ export const ProfileForm: React.FC<ProfileForm> = ({
             rules={[{ required: true, message: "Username is required" }]}
             label='Username'
           >
-            <Input placeholder='Username...' size='large' />
+            <Input placeholder='Username...' size='large' className={isEdit ? "input-enable" : "input-disable"} disabled={!isEdit}/>
           </Form.Item>
         </div>
         <div>
           <Form.Item<UserInfor> name='phone' label='Phone'>
-            <Input placeholder='Phone...' size='large' />
+            <Input placeholder='Phone...' size='large' className={isEdit ? "input-enable" : "input-disable"} disabled={!isEdit}/>
           </Form.Item>
         </div>
         <div>
@@ -70,7 +84,7 @@ export const ProfileForm: React.FC<ProfileForm> = ({
             label='Email'
             rules={[{ required: true, message: "Email is required" }]}
           >
-            <Input placeholder='Email...' size='large' />
+            <Input placeholder='Email...' size='large' className={isEdit ? "input-enable" : "input-disable"} disabled={!isEdit}/>
           </Form.Item>
         </div>
         <div>
@@ -79,6 +93,8 @@ export const ProfileForm: React.FC<ProfileForm> = ({
               placeholder='Birthday...'
               size='large'
               style={{ width: "100%" }}
+              className={isEdit ? "input-enable" : "input-disable"}
+              disabled={!isEdit}
             />
           </Form.Item>
         </div>
@@ -88,14 +104,26 @@ export const ProfileForm: React.FC<ProfileForm> = ({
             label='Roles'
             rules={[{ required: true, message: "Role is required" }]}
           >
-            <Select options={userRoleOptions} size='large' />
+            <Select options={userRoleOptions} size='large' className={isEdit ? "input-enable" : "input-disable"} disabled={!isEdit}/>
           </Form.Item>
         </div>
-        <Form.Item className='update-infor-btn'>
-          <Space>
-            <Button type='primary' htmlType='submit' size='large' onClick={() =>{}}>
-              Update
-            </Button>
+        <Form.Item>
+          <Space className="profile-form-btn">
+            {!isEdit ? (
+              <Button type='primary' htmlType='submit' size='large' onClick={handleUpdateClick} className='update-infor-btn'>
+                Update
+              </Button>
+            ) : (
+              <>
+                <Button type='primary' htmlType='submit' size='large' onClick={handleSaveClick} className='update-infor-btn'>
+                  Save
+                </Button>
+                <Button type='primary' htmlType='submit' size='large' onClick={handleCancelClick} className='cancel-infor-btn'>
+                  Cancel
+                </Button>   
+              </>
+             )
+            }
           </Space>
         </Form.Item>
       </Form>
