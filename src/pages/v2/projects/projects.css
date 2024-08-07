@@ -1,5 +1,5 @@
-@import "../../../Mixin/Mixin.scss";
-.v2-departments-page {
+@import "../../../mixin/mixin.css";
+.v2-projects-page {
   .main {
     display: flex;
     flex-direction: column;
@@ -36,7 +36,7 @@
             }
           }
         }
-        .header-action {
+        .action {
           display: flex;
 
           .title-row-btn {
@@ -46,11 +46,6 @@
           }
         }
       }
-    }
-    .departments-main-info {
-      width: 100%;
-      display: flex;
-      align-items: center;
     }
   }
 }

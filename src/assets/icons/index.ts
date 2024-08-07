@@ -17,3 +17,8 @@ export * from "./lock";
 export * from "./person";
 export * from "./plus-square";
 export * from "./pie-chart";
+export * from "./plus";
+export * from "./page";
+export * from "./chat";
+export * from "./loading";
+export * from './'

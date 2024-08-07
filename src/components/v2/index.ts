@@ -4,3 +4,4 @@ export * from "./project-card";
 export * from "./sidebar";
 export * from "./headbar";
 export * from "./custom-menu";
+export * from "./task-card";

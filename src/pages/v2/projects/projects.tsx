@@ -1,29 +1,14 @@
-import { CardAccount } from "src/components/card-account";
-import "./projects.scss";
-import {
-  Button,
-  Col,
-  Dropdown,
-  Input,
-  List,
-  MenuProps,
-  message,
-  Row,
-  Space,
-  Tooltip,
-  Typography,
-} from "antd";
+import "./projects.css";
+import { Button, Dropdown, Input, List, MenuProps, message, Space } from "antd";
 import {
   DownOutlined,
   SearchOutlined,
   DeleteOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import React, { useState } from "react";
-import ModalCreateUser from "src/components/modal-create-user";
+import { useState } from "react";
 import ModalCreatePost from "src/components/modal-create-project";
 import { CardProject } from "src/components/card-project";
-import ModalUpdatePost from "src/components/modal-update-project";
 export const Projects = () => {
   const items: MenuProps["items"] = [
     {
@@ -49,16 +34,16 @@ export const Projects = () => {
     onClick: handleMenuClick,
   };
   return (
-    <div className="v2-projects-page">
-      <section className="main">
-        <header className="main-header">
-          <section className="first-sec">
-            <div className="title-des">
-              <div className="title-row">
+    <div className='v2-projects-page'>
+      <section className='main'>
+        <header className='main-header'>
+          <section className='first-sec'>
+            <div className='title-des'>
+              <div className='title-row'>
                 <h2>Project</h2>
               </div>
             </div>
-            <div className="action">
+            <div className='action'>
               <Space>
                 <Dropdown menu={menuProps}>
                   <Button>
@@ -68,17 +53,17 @@ export const Projects = () => {
                     </Space>
                   </Button>
                 </Dropdown>
-                <Input placeholder="Search..." prefix={<SearchOutlined />} />
+                <Input placeholder='Search...' prefix={<SearchOutlined />} />
                 <Button
-                  type="default"
-                  className="title-row-btn"
+                  type='default'
+                  className='title-row-btn'
                   icon={<DeleteOutlined />}
                 >
                   Trash
                 </Button>
                 <Button
-                  type="primary"
-                  className="title-row-btn"
+                  type='primary'
+                  className='title-row-btn'
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
                 >
@@ -103,9 +88,9 @@ export const Projects = () => {
             renderItem={() => (
               <List.Item>
                 <CardProject
-                  name="Tính năng thanh toán zalopay"
-                  description="Code giao diện bằng ReactJS và sử dụng các framwork liên quan
-                như là...."
+                  name='Tính năng thanh toán zalopay'
+                  description='Code giao diện bằng ReactJS và sử dụng các framwork liên quan
+                như là....'
                 />
               </List.Item>
             )}

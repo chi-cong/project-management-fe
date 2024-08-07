@@ -1,4 +1,4 @@
-@import "../../Mixin/Mixin.scss";
+@import "../../mixin/mixin.css";
 .card-department-container {
   .ant-card-body {
     padding: 10px;

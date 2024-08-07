@@ -11,6 +11,7 @@ import {
   Dashboard as DashboardV2,
   Admin,
   AdminDepartment,
+  AdminProject,
   Account,
 } from "src/pages/v2";
 import App from "src/App";
@@ -70,6 +71,7 @@ export const router = createBrowserRouter([
             children: [
               { path: "department", element: <AdminDepartment /> },
               { path: "projects", element: <Projects /> },
+              { path: "project", element: <AdminProject /> },
               { path: "account", element: <Account /> },
               { path: "departments", element: <Departments /> },
             ],
