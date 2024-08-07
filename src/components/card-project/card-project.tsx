@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import {
   Avatar,
-  Button,
   Card,
   Col,
-  Modal,
   Popconfirm,
   Progress,
   Row,
@@ -18,11 +16,7 @@ import {
 } from "@ant-design/icons";
 import "./card-project.css";
 import { useDeleteDepartmentsMutation } from "src/share/services";
-import {
-  AntDesignOutlined,
-  UserOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { UserOutlined, PlusOutlined } from "@ant-design/icons";
 import ModalAddUserToProject from "../modal-add-user-to-project";
 import ModalUpdatePost from "../modal-update-project";
 type CardProject = {
@@ -65,35 +59,30 @@ export const CardProject: React.FC<CardProject> = ({
   };
 
   return (
-    <div className="card-project-container">
-      <Card
-        hoverable
-        bordered={false}
-        className="card-Project"
-        onClick={onClick}
-      >
-        <div className="project-wrapper">
-          <Row className="project-header">
+    <div className='card-project-container'>
+      <Card hoverable bordered={false} className='card-Project'>
+        <div className='project-wrapper'>
+          <Row className='project-header'>
             {/* title */}
-            <Col span={12} className="project-header-info">
-              <h3 className="project-name">{name}</h3>
+            <Col span={12} className='project-header-info' onClick={onClick}>
+              <h3 className='project-name'>{name}</h3>
             </Col>
             {/* action (delete, update) */}
-            <Col span={12} className="project-header-action">
+            <Col span={12} className='project-header-action'>
               {role !== "MANAGER" ? (
                 <Space>
                   <div
                     onClick={showModal}
-                    className="project-header-action-button"
+                    className='project-header-action-button'
                   >
                     <EditOutlined />
                   </div>
                   <div
-                    className="project-header-action-button icon-delete-Project"
+                    className='project-header-action-button icon-delete-Project'
                     onClick={handleDeleteClick}
                   >
                     <Popconfirm
-                      title="Are you sure to delete this Project?"
+                      title='Are you sure to delete this Project?'
                       icon={<QuestionCircleOutlined style={{ color: "red" }} />}
                       onConfirm={deleteDapartment}
                     >
@@ -106,36 +95,36 @@ export const CardProject: React.FC<CardProject> = ({
               )}
             </Col>
           </Row>
-          <div className="project-body">
+          <div className='project-body' onClick={onClick}>
             {/* info */}
-            <div className="project-body-info">
+            <div className='project-body-info'>
               <span>{description}</span>
               {/* progress */}
-              <div className="project-progress">
-                <Progress percent={50} status="active" />
+              <div className='project-progress'>
+                <Progress percent={50} status='active' />
               </div>
             </div>
           </div>
-          <div className="project-footer">
-            <div className="project-footer-info">
+          <div className='project-footer'>
+            <div className='project-footer-info'>
               <span>Start: Nov 2, 2022</span>
             </div>
-            <div className="project-footer-action">
+            <div className='project-footer-action'>
               <Avatar.Group
                 maxCount={2}
-                maxPopoverTrigger="click"
-                size="small"
+                maxPopoverTrigger='click'
+                size='small'
                 maxStyle={{
                   color: "#f56a00",
                   backgroundColor: "#fde3cf",
                   cursor: "pointer",
                 }}
               >
-                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                <Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />
                 <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
-                <Tooltip placement="bottom" autoAdjustOverflow>
+                <Tooltip placement='bottom' autoAdjustOverflow>
                   <Avatar
-                    size="large"
+                    size='large'
                     style={{ backgroundColor: "#87d068" }}
                     icon={<UserOutlined />}
                   />
@@ -143,7 +132,7 @@ export const CardProject: React.FC<CardProject> = ({
                     onClick={() => {
                       showModalAddUser();
                     }}
-                    size="large"
+                    size='large'
                     style={{ backgroundColor: "#87d068", cursor: "pointer" }}
                     icon={<PlusOutlined />}
                   />

@@ -52,16 +52,16 @@ export const Account = () => {
   };
 
   return (
-    <div className="v2-account-page">
-      <section className="main">
-        <header className="main-header">
-          <section className="first-sec">
-            <div className="title-des">
-              <div className="title-row">
+    <div className='v2-account-page'>
+      <section className='main'>
+        <header className='main-header'>
+          <section className='first-sec'>
+            <div className='title-des'>
+              <div className='title-row'>
                 <h2>Account</h2>
               </div>
             </div>
-            <Row className="action" gutter={[8, 8]}>
+            <Row className='action' gutter={[8, 8]}>
               <Col xs={12} sm={12} md={6}>
                 <Dropdown menu={menuProps}>
                   <Button style={{ width: "100%" }}>
@@ -78,27 +78,27 @@ export const Account = () => {
                   </Button>
                 </Dropdown>
               </Col>
-              <Col xs={12} sm={12} md={6}>
+              <Col xs={12} sm={12} md={8}>
                 <Input
-                  placeholder="Search..."
+                  placeholder='Search...'
                   prefix={<SearchOutlined />}
                   style={{ width: "100%" }}
                 />
               </Col>
-              <Col xs={12} sm={12} md={6}>
+              <Col xs={12} sm={12} md={5}>
                 <Button
-                  type="default"
-                  className="title-row-btn"
+                  type='default'
+                  className='title-row-btn'
                   icon={<DeleteOutlined />}
                   style={{ width: "100%" }}
                 >
                   Trash
                 </Button>
               </Col>
-              <Col xs={12} sm={12} md={6}>
+              <Col xs={12} sm={12} md={5}>
                 <Button
-                  type="primary"
-                  className="title-row-btn"
+                  type='primary'
+                  className='title-row-btn'
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
                   style={{ width: "100%" }}

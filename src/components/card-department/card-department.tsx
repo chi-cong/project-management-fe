@@ -16,14 +16,9 @@ import {
 } from "@ant-design/icons";
 import "./card-department.css";
 import { useDeleteDepartmentsMutation } from "src/share/services";
-import ModalUpdatePost from "../modal-update-project";
 import ModalAddUserToProject from "../modal-add-user-to-project";
-import { CustomAvatar } from "../v2";
-import {
-  AntDesignOutlined,
-  UserOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { CustomAvatar } from "src/components/v2";
+import { UserOutlined, PlusOutlined } from "@ant-design/icons";
 import ModalUpdateDepartment from "../modal-update-department";
 type CardDepartmentProps = {
   name?: string;
@@ -47,6 +42,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
   const showModalAddUser = () => {
     setIsModalAddUserOpen(true);
   };
+
   const showModal = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     setIsModalOpen(true);
@@ -67,30 +63,32 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
   };
 
   return (
-    <div className="card-department-container">
-      <Card hoverable bordered={false} onClick={onClick}>
-        <div className="department-wrapper">
-          <Row className="department-header">
+    <div className='card-department-container'>
+      <Card hoverable bordered={false}>
+        <div className='department-wrapper'>
+          <Row className='department-header'>
             {/* title */}
-            <Col span={12} className="department-header-info">
-              <h2 className="department-name">{name}</h2>
+            <Col span={12} className='department-header-info'>
+              <h2 className='department-name' onClick={onClick}>
+                {name}
+              </h2>
             </Col>
             {/* action (delete, update) */}
-            <Col span={12} className="department-header-action">
+            <Col span={12} className='department-header-action'>
               {role !== "MANAGER" && (
                 <Space size={[8, 24]} wrap={true}>
                   <div
                     onClick={showModal}
-                    className="department-header-action-button"
+                    className='department-header-action-button'
                   >
                     <EditOutlined />
                   </div>
                   <div
-                    className="department-header-action-button icon-delete-Project"
+                    className='department-header-action-button icon-delete-Project'
                     onClick={handleDeleteClick}
                   >
                     <Popconfirm
-                      title="Are you sure to delete this department?"
+                      title='Are you sure to delete this department?'
                       icon={<QuestionCircleOutlined style={{ color: "red" }} />}
                       onConfirm={deleteDepartmentHandler}
                     >
@@ -101,21 +99,21 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
               )}
             </Col>
           </Row>
-          <div className="department-body">
-            <div className="department-manager-info">
+          <div className='department-body'>
+            <div className='department-manager-info' onClick={onClick}>
               <span>{description}</span>
             </div>
             {/* info */}
-            <Row className="department-body-info">
+            <Row className='department-body-info'>
               <Col sm={24} xs={24} xxl={18}>
-                <Card className="department-body-manager-card">
-                  <div className="department-body-manager-info-wrapper">
+                <Card className='department-body-manager-card'>
+                  <div className='department-body-manager-info-wrapper'>
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <CustomAvatar size={40} userName={name} />
                     </div>
-                    <div className="department-manager-main-info">
+                    <div className='department-manager-main-info'>
                       <h3 style={{ textWrap: "nowrap" }}>{name}</h3>
-                      <span className="department-body-manager-role">
+                      <span className='department-body-manager-role'>
                         Manger
                       </span>
                     </div>
@@ -126,7 +124,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
               <Col>
                 <Avatar.Group
                   maxCount={2}
-                  maxPopoverTrigger="click"
+                  maxPopoverTrigger='click'
                   size={40}
                   maxStyle={{
                     color: "#f56a00",
@@ -135,35 +133,35 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                   }}
                 >
                   <Avatar
-                    src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                    src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
                     gap={1}
                   />
                   <Avatar style={{ backgroundColor: "#f56a00" }} gap={1}>
                     K
                   </Avatar>
-                  <Tooltip placement="bottom">
-                    <Space direction="vertical" style={{ display: "flex" }}>
+                  <Tooltip placement='bottom'>
+                    <Space direction='vertical' style={{ display: "flex" }}>
                       <div>
-                        <Space direction="vertical">
+                        <Space direction='vertical'>
                           <h2>Project Manager</h2>
                           <Avatar
-                            size="large"
+                            size='large'
                             style={{ backgroundColor: "#87d068" }}
                             icon={<UserOutlined />}
                           />
                         </Space>
                       </div>
                       <Divider />
-                      <Space direction="vertical">
+                      <Space direction='vertical'>
                         <h2>Members</h2>
                         <Space>
                           <Avatar
-                            size="large"
+                            size='large'
                             style={{ backgroundColor: "#87d068" }}
                             icon={<UserOutlined />}
                           />
                           <Avatar
-                            size="large"
+                            size='large'
                             style={{ backgroundColor: "#87d068" }}
                             icon={<UserOutlined />}
                           />
@@ -172,7 +170,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                           onClick={() => {
                             showModalAddUser();
                           }}
-                          size="large"
+                          size='large'
                           style={{
                             backgroundColor: "#87d068",
                             cursor: "pointer",

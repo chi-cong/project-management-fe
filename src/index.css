@@ -74,3 +74,6 @@
   border: 2px solid #f0f1f3;
   border-radius: 20px;
 }
+.ant-avatar-group-popover {
+  z-index: 10 !important;
+}

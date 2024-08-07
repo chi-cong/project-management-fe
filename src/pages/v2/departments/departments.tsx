@@ -5,38 +5,41 @@ import {
   DeleteOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import React, { useState } from "react";
+import { useState } from "react";
 import ModalCreatePost from "src/components/modal-create-project";
 import { CardDepartment } from "src/components/card-department";
 import ModalCreateDepartment from "src/components/modal-create-department";
+import { useNavigate } from "react-router-dom";
+
 export const Departments = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleMenuClick: MenuProps["onClick"] = (e) => {
+  const handleMenuClick: MenuProps["onClick"] = () => {
     message.info("Click on menu item.");
-    console.log("click", e);
   };
+
+  const navigate = useNavigate();
   return (
-    <div className="v2-departments-page">
-      <section className="main">
-        <header className="main-header">
-          <section className="first-sec">
-            <div className="title-des">
-              <div className="title-row">
+    <div className='v2-departments-page'>
+      <section className='main'>
+        <header className='main-header'>
+          <section className='first-sec'>
+            <div className='title-des'>
+              <div className='title-row'>
                 <h2>Departments</h2>
               </div>
             </div>
-            <Row className="header-action" gutter={[8, 8]}>
+            <Row className='header-action' gutter={[8, 8]}>
               <Col xs={12} sm={12} md={8}>
                 <Input
-                  placeholder="Search..."
+                  placeholder='Search...'
                   prefix={<SearchOutlined />}
                   style={{ width: "100%" }}
                 />
               </Col>
               <Col xs={12} sm={12} md={8}>
                 <Button
-                  type="default"
-                  className="title-row-btn"
+                  type='default'
+                  className='title-row-btn'
                   icon={<DeleteOutlined />}
                   style={{ width: "100%" }}
                 >
@@ -46,8 +49,8 @@ export const Departments = () => {
 
               <Col xs={24} sm={24} md={8}>
                 <Button
-                  type="primary"
-                  className="title-row-btn"
+                  type='primary'
+                  className='title-row-btn'
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
                   style={{ width: "100%" }}
@@ -58,7 +61,7 @@ export const Departments = () => {
             </Row>
           </section>
         </header>
-        <main className="department-main-info">
+        <main className='department-main-info'>
           <List
             grid={{
               gutter: 12,
@@ -73,9 +76,10 @@ export const Departments = () => {
             renderItem={() => (
               <List.Item>
                 <CardDepartment
-                  name="Nguyen Van A"
-                  description="Code giao diện bằng ReactJS và sử dụng các framework liên quan
-                như là...."
+                  name='Nguyen Van A'
+                  description='Code giao diện bằng ReactJS và sử dụng các framework liên quan
+                như là....'
+                  onClick={() => navigate("/v2/dashboard/admin/department")}
                 />
               </List.Item>
             )}
