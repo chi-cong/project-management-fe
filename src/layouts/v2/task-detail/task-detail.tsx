@@ -20,12 +20,17 @@ import type { Assignment, Task, Project, Activity } from "src/share/models";
 interface TaskFormProps {
   assignment?: Assignment;
   task?: Task;
-  action: "create" | "update";
   project: Project;
-  setShowTaskForm: (isOpen: boolean) => void;
+  open: boolean;
+  setShowTaskDetail: (isOpen: boolean) => void;
 }
 
-export const TaskDetail = ({ assignment, task }: TaskFormProps) => {
+export const TaskDetail = ({
+  assignment,
+  task,
+  open,
+  setShowTaskDetail,
+}: TaskFormProps) => {
   const [actiDesc, setActiDesc] = useState<string>("");
   const [modalWidth, setModalWidth] = useState<number>(750);
   const activityData: Activity[] = [
@@ -59,7 +64,8 @@ export const TaskDetail = ({ assignment, task }: TaskFormProps) => {
   return (
     <Modal
       width={modalWidth}
-      open={true}
+      open={open}
+      onCancel={() => setShowTaskDetail(false)}
       className='task-detail-modal'
       title={
         <div className='task-detail-modal-title'>

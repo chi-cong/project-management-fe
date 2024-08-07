@@ -44,12 +44,12 @@ export const Projects = () => {
     onClick: handleMenuClick,
   };
   return (
-    <div className="v2-projects-page">
-      <section className="main">
-        <header className="main-header">
-          <section className="first-sec">
-            <div className="title-des">
-              <div className="title-row">
+    <div className='v2-projects-page'>
+      <section className='main'>
+        <header className='main-header'>
+          <section className='first-sec'>
+            <div className='title-des'>
+              <div className='title-row'>
                 <h2>Project</h2>
               </div>
             </div>
@@ -79,8 +79,8 @@ export const Projects = () => {
               </Col>
               <Col xs={12} sm={12} md={6}>
                 <Button
-                  type="default"
-                  className="title-row-btn"
+                  type='default'
+                  className='title-row-btn'
                   icon={<DeleteOutlined />}
                   style={{ width: "100%" }}
                 >
@@ -89,8 +89,8 @@ export const Projects = () => {
               </Col>
               <Col xs={12} sm={12} md={6}>
                 <Button
-                  type="primary"
-                  className="title-row-btn"
+                  type='primary'
+                  className='title-row-btn'
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
                   style={{ width: "100%" }}
@@ -116,9 +116,9 @@ export const Projects = () => {
             renderItem={() => (
               <List.Item>
                 <CardProject
-                  name="Tính năng thanh toán zalopay"
-                  description="Code giao diện bằng ReactJS và sử dụng các framwork liên quan
-                như là...."
+                  name='Tính năng thanh toán zalopay'
+                  description='Code giao diện bằng ReactJS và sử dụng các framwork liên quan
+                như là....'
                 />
               </List.Item>
             )}

@@ -55,7 +55,17 @@ export const useHandleReports = (
       const tempTimeChildren: ReactNode[] = [];
       sortedList?.forEach((report, index) => {
         if (index === 0) {
-          timeItem.label = report.date;
+          timeItem.label = <Typography.Text
+              style={{
+                paddingLeft: "var(--padding-s)",
+                paddingRight: "var(--padding-s)",
+                backgroundColor: "var(--primary-color)",
+                borderRadius: "25px",
+                color: "white",
+              }}
+            >
+              {report.date}
+            </Typography.Text>
           timeItem.key = index;
         }
         if (index !== 0 && sortedList[index - 1].date !== report.date) {
@@ -63,7 +73,17 @@ export const useHandleReports = (
           tempTimeChildren.length = 0;
           finalTimeline.push(timeItem);
           timeItem = {};
-          timeItem.label = report.date;
+          timeItem.label = <Typography.Text
+              style={{
+                paddingLeft: "var(--padding-s)",
+                paddingRight: "var(--padding-s)",
+                backgroundColor: "var(--primary-color)",
+                borderRadius: "25px",
+                color: "white",
+              }}
+            >
+              {report.date}
+            </Typography.Text>;
           timeItem.key = index;
         }
         tempTimeChildren.push(
@@ -120,14 +140,38 @@ export const useHandleReports = (
       const tempTimeChildren: ReactNode[] = [];
       sortedList.forEach((report, index) => {
         if (index === 0) {
-          timeItem.label = report.date;
+          timeItem.label = (
+            <Typography.Text
+              style={{
+                paddingLeft: "var(--padding-s)",
+                paddingRight: "var(--padding-s)",
+                backgroundColor: "var(--primary-color)",
+                borderRadius: "25px",
+                color: "white",
+              }}
+            >
+              {report.date}
+            </Typography.Text>
+          );
           timeItem.key = index;
         } else if (index > 0 && sortedList[index - 1].date !== report.date) {
           timeItem.children = tempTimeChildren.map((timeChild) => timeChild);
           tempTimeChildren.length = 0;
           finalTimeline.push(timeItem);
           timeItem = {};
-          timeItem.label = report.date;
+          timeItem.label = (
+            <Typography.Text
+              style={{
+                paddingLeft: "var(--padding-s)",
+                paddingRight: "var(--padding-s)",
+                backgroundColor: "var(--primary-color)",
+                borderRadius: "25px",
+                color: "white",
+              }}
+            >
+              {report.date}
+            </Typography.Text>
+          );
           timeItem.key = index;
         }
         tempTimeChildren.push(
@@ -151,8 +195,16 @@ export const useHandleReports = (
                     <br />
                     <span style={{ color: "#8c8c8c", fontWeight: 500 }}>
                       {`${activity.description}  `}{" "}
-                      {activity.user_information &&
-                        `- by ${activity.user_information.username}`}
+                      {activity.user_information && (
+                        <p
+                          style={{
+                            font: "0.9em",
+                            color: "var(--primary-color)",
+                          }}
+                        >
+                          {`- by ` + activity.user_information.username}
+                        </p>
+                      )}
                     </span>
                   </React.Fragment>
                 );
