@@ -31,7 +31,7 @@ export const LoginForm = () => {
         sessionStorageUtil.set("accessToken", resp.data.tokens.accessToken);
         localStorageUtil.set("refreshToken", resp.data.tokens.refreshToken);
         sessionStorageUtil.set("role", resp.data.role);
-        navigate("/dashboard");
+        navigate("/v2/dashboard/");
       })
       .catch(() => {
         messageApi.error("Failed to Login");
