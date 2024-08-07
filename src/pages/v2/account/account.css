@@ -1,4 +1,4 @@
-@import "../../../Mixin/Mixin.css";
+@import "../../../mixin/mixin.css";
 .v2-account-page {
   .main {
     display: flex;
