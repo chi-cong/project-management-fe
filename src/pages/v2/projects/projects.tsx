@@ -1,29 +1,14 @@
-import { CardAccount } from "src/components/card-account";
-import "./projects.scss";
-import {
-  Button,
-  Col,
-  Dropdown,
-  Input,
-  List,
-  MenuProps,
-  message,
-  Row,
-  Space,
-  Tooltip,
-  Typography,
-} from "antd";
+import "./projects.css";
+import { Button, Dropdown, Input, List, MenuProps, message, Space } from "antd";
 import {
   DownOutlined,
   SearchOutlined,
   DeleteOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import React, { useState } from "react";
-import ModalCreateUser from "src/components/modal-create-user";
+import { useState } from "react";
 import ModalCreatePost from "src/components/modal-create-project";
 import { CardProject } from "src/components/card-project";
-import ModalUpdatePost from "src/components/modal-update-project";
 export const Projects = () => {
   const items: MenuProps["items"] = [
     {

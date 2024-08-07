@@ -1,4 +1,4 @@
-import "./departments.scss";
+import "./departments.css";
 import { Button, Input, List, MenuProps, message, Space } from "antd";
 import {
   SearchOutlined,

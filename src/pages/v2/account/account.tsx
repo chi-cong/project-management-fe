@@ -1,6 +1,16 @@
 import { CardAccount } from "src/components/card-account";
 import "./account.css";
-import { Button, Dropdown, Input, List, MenuProps, message, Space } from "antd";
+import {
+  Button,
+  Col,
+  Dropdown,
+  Input,
+  List,
+  MenuProps,
+  message,
+  Row,
+  Space,
+} from "antd";
 import {
   DownOutlined,
   SearchOutlined,
@@ -49,42 +59,50 @@ export const Account = () => {
     onClick: handleMenuClick,
   };
   return (
-    <div className='v2-account-page'>
-      <section className='main'>
-        <header className='main-header'>
-          <section className='first-sec'>
-            <div className='title-des'>
-              <div className='title-row'>
+    <div className="v2-account-page">
+      <section className="main">
+        <header className="main-header">
+          <section className="first-sec">
+            <div className="title-des">
+              <div className="title-row">
                 <h2>Account</h2>
               </div>
             </div>
-            <div className='action'>
-              <Space>
-                <Dropdown menu={menuProps}>
-                  <Button>
-                    <Space>
-                      Roles
-                      <DownOutlined />
-                    </Space>
+            <div className="action">
+              <Row gutter={[16, 8]}>
+                <Col md={6} sm={12}>
+                  <Dropdown menu={menuProps}>
+                    <Button>
+                      <Space>
+                        Roles
+                        <DownOutlined />
+                      </Space>
+                    </Button>
+                  </Dropdown>
+                </Col>
+                <Col md={6} sm={12}>
+                  <Input placeholder="Search..." prefix={<SearchOutlined />} />
+                </Col>
+                <Col md={6} sm={12}>
+                  <Button
+                    type="default"
+                    className="title-row-btn"
+                    icon={<DeleteOutlined />}
+                  >
+                    Trash
                   </Button>
-                </Dropdown>
-                <Input placeholder='Search...' prefix={<SearchOutlined />} />
-                <Button
-                  type='default'
-                  className='title-row-btn'
-                  icon={<DeleteOutlined />}
-                >
-                  Trash
-                </Button>
-                <Button
-                  type='primary'
-                  className='title-row-btn'
-                  icon={<PlusOutlined />}
-                  onClick={() => setIsModalOpen(true)}
-                >
-                  Create User
-                </Button>
-              </Space>
+                </Col>
+                <Col md={6} sm={12}>
+                  <Button
+                    type="primary"
+                    className="title-row-btn"
+                    icon={<PlusOutlined />}
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    Create User
+                  </Button>
+                </Col>
+              </Row>
             </div>
           </section>
         </header>
@@ -92,8 +110,8 @@ export const Account = () => {
           <List
             grid={{
               gutter: 12,
-              xs: 2,
-              sm: 2,
+              xs: 1,
+              sm: 1,
               md: 2,
               lg: 2,
               xl: 2,
