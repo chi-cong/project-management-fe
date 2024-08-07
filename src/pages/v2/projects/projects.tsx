@@ -1,5 +1,5 @@
 import { CardAccount } from "src/components/card-account";
-import "./projects.css";
+import "./projects.scss";
 import {
   Button,
   Col,
@@ -88,15 +88,15 @@ export const Projects = () => {
             </div>
           </section>
         </header>
-        <main>
+        <main className="">
           <List
             grid={{
               gutter: 12,
-              xs: 3,
-              sm: 3,
-              md: 3,
-              lg: 3,
-              xl: 3,
+              xs: 1,
+              sm: 1,
+              md: 1,
+              lg: 2,
+              xl: 2,
               xxl: 3,
             }}
             dataSource={[0, 1, 2, 4]}
