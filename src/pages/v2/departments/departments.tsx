@@ -1,5 +1,5 @@
 import "./departments.css";
-import { Button, Input, List, MenuProps, message, Space } from "antd";
+import { Button, Col, Input, List, MenuProps, message, Row, Space } from "antd";
 import {
   SearchOutlined,
   DeleteOutlined,
@@ -25,27 +25,37 @@ export const Departments = () => {
                 <h2>Departments</h2>
               </div>
             </div>
-            <div className="header-action">
-              <Space>
-                <Input placeholder="Search..." prefix={<SearchOutlined />} />
+            <Row className="header-action" gutter={[8, 8]}>
+              <Col xs={12} sm={12} md={8}>
+                <Input
+                  placeholder="Search..."
+                  prefix={<SearchOutlined />}
+                  style={{ width: "100%" }}
+                />
+              </Col>
+              <Col xs={12} sm={12} md={8}>
                 <Button
                   type="default"
                   className="title-row-btn"
                   icon={<DeleteOutlined />}
+                  style={{ width: "100%" }}
                 >
                   Trash
                 </Button>
+              </Col>
 
+              <Col xs={24} sm={24} md={8}>
                 <Button
                   type="primary"
                   className="title-row-btn"
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
+                  style={{ width: "100%" }}
                 >
-                  Create Department
+                  Create
                 </Button>
-              </Space>
-            </div>
+              </Col>
+            </Row>
           </section>
         </header>
         <main className="department-main-info">

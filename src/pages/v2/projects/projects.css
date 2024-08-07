@@ -21,7 +21,6 @@
           gap: var(--gap-s);
         }
         .title-des {
-          width: 80%;
           .title-row {
             display: flex;
             align-items: center;
