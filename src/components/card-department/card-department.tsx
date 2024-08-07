@@ -4,7 +4,6 @@ import {
   Card,
   Col,
   Divider,
-  List,
   Popconfirm,
   Row,
   Space,
@@ -15,7 +14,7 @@ import {
   DeleteOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
-import "./card-department.scss";
+import "./card-department.css";
 import { useDeleteDepartmentsMutation } from "src/share/services";
 import ModalUpdatePost from "../modal-update-project";
 import ModalAddUserToProject from "../modal-add-user-to-project";

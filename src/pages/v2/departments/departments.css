@@ -1,5 +1,5 @@
-@import "../../../Mixin/Mixin.scss";
-.v2-projects-page {
+@import "../../../mixin/mixin.css";
+.v2-departments-page {
   .main {
     display: flex;
     flex-direction: column;
@@ -11,22 +11,19 @@
       gap: var(--gap-s);
       .first-sec {
         width: 100%;
+        margin-bottom: 10px;
         display: flex;
         align-items: center;
-        margin-bottom: 20px;
         justify-content: space-between;
-        @include tabletAndMobile {
+        @mixin tabletAndMobile {
           flex-direction: column;
           align-items: flex-start;
-          gap: var(--gap-s);
         }
         .title-des {
           width: 80%;
           .title-row {
             display: flex;
             align-items: center;
-            gap: var(--gap-xs);
-
             svg {
               margin: auto;
               width: 16px;
@@ -36,7 +33,7 @@
             }
           }
         }
-        .action {
+        .header-action {
           display: flex;
 
           .title-row-btn {
@@ -46,6 +43,11 @@
           }
         }
       }
+    }
+    .departments-main-info {
+      width: 100%;
+      display: flex;
+      align-items: center;
     }
   }
 }

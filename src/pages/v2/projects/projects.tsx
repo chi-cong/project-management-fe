@@ -1,5 +1,4 @@
-import { CardAccount } from "src/components/card-account";
-import "./projects.scss";
+import "./projects.css";
 import {
   Button,
   Col,
@@ -10,8 +9,6 @@ import {
   message,
   Row,
   Space,
-  Tooltip,
-  Typography,
 } from "antd";
 import {
   DownOutlined,
@@ -19,11 +16,9 @@ import {
   DeleteOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import React, { useState } from "react";
-import ModalCreateUser from "src/components/modal-create-user";
+import { useState } from "react";
 import ModalCreatePost from "src/components/modal-create-project";
 import { CardProject } from "src/components/card-project";
-import ModalUpdatePost from "src/components/modal-update-project";
 export const Projects = () => {
   const items: MenuProps["items"] = [
     {
@@ -58,34 +53,52 @@ export const Projects = () => {
                 <h2>Project</h2>
               </div>
             </div>
-            <div className='action'>
-              <Space>
+            <Row className="action" gutter={[8, 8]}>
+              <Col xs={12} sm={12} md={6}>
                 <Dropdown menu={menuProps}>
-                  <Button>
-                    <Space>
+                  <Button style={{ width: "100%" }}>
+                    <Space
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
                       Progress
                       <DownOutlined />
                     </Space>
                   </Button>
                 </Dropdown>
-                <Input placeholder='Search...' prefix={<SearchOutlined />} />
+              </Col>
+              <Col xs={12} sm={12} md={6}>
+                <Input
+                  placeholder="Search..."
+                  prefix={<SearchOutlined />}
+                  style={{ width: "100%" }}
+                />
+              </Col>
+              <Col xs={12} sm={12} md={6}>
                 <Button
                   type='default'
                   className='title-row-btn'
                   icon={<DeleteOutlined />}
+                  style={{ width: "100%" }}
                 >
                   Trash
                 </Button>
+              </Col>
+              <Col xs={12} sm={12} md={6}>
                 <Button
                   type='primary'
                   className='title-row-btn'
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
+                  style={{ width: "100%" }}
                 >
-                  Create Project
+                  Create
                 </Button>
-              </Space>
-            </div>
+              </Col>
+            </Row>
           </section>
         </header>
         <main className="">

@@ -1,6 +1,16 @@
 import { CardAccount } from "src/components/card-account";
 import "./account.css";
-import { Button, Dropdown, Input, List, MenuProps, message, Space } from "antd";
+import {
+  Button,
+  Col,
+  Dropdown,
+  Input,
+  List,
+  MenuProps,
+  message,
+  Row,
+  Space,
+} from "antd";
 import {
   DownOutlined,
   SearchOutlined,
@@ -11,6 +21,7 @@ import { useState } from "react";
 import { useGetUsersQuery } from "src/share/services";
 import ModalCreateUser from "src/components/modal-create-user";
 import { UserRole, OUserRole } from "src/share/models";
+
 export const Account = () => {
   const [queries] = useState<{
     role: UserRole;
@@ -23,77 +34,87 @@ export const Account = () => {
   });
 
   const items: MenuProps["items"] = [
-    {
-      label: "Admin",
-      key: OUserRole.Admin,
-    },
-    {
-      label: "Staff",
-      key: OUserRole.Staff,
-    },
-    {
-      label: "Project Manager",
-      key: OUserRole.ProjectManager,
-    },
-    {
-      label: "Manager",
-      key: OUserRole.Manager,
-    },
+    { label: "Admin", key: OUserRole.Admin },
+    { label: "Staff", key: OUserRole.Staff },
+    { label: "Project Manager", key: OUserRole.ProjectManager },
+    { label: "Manager", key: OUserRole.Manager },
   ];
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleMenuClick: MenuProps["onClick"] = () => {
     message.info("Click on menu item.");
   };
+
   const menuProps = {
     items,
     onClick: handleMenuClick,
   };
+
   return (
-    <div className='v2-account-page'>
-      <section className='main'>
-        <header className='main-header'>
-          <section className='first-sec'>
-            <div className='title-des'>
-              <div className='title-row'>
+    <div className="v2-account-page">
+      <section className="main">
+        <header className="main-header">
+          <section className="first-sec">
+            <div className="title-des">
+              <div className="title-row">
                 <h2>Account</h2>
               </div>
             </div>
-            <div className='action'>
-              <Space>
+            <Row className="action" gutter={[8, 8]}>
+              <Col xs={12} sm={12} md={6}>
                 <Dropdown menu={menuProps}>
-                  <Button>
-                    <Space>
+                  <Button style={{ width: "100%" }}>
+                    <Space
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
                       Roles
                       <DownOutlined />
                     </Space>
                   </Button>
                 </Dropdown>
-                <Input placeholder='Search...' prefix={<SearchOutlined />} />
+              </Col>
+              <Col xs={12} sm={12} md={6}>
+                <Input
+                  placeholder="Search..."
+                  prefix={<SearchOutlined />}
+                  style={{ width: "100%" }}
+                />
+              </Col>
+              <Col xs={12} sm={12} md={6}>
                 <Button
-                  type='default'
-                  className='title-row-btn'
+                  type="default"
+                  className="title-row-btn"
                   icon={<DeleteOutlined />}
+                  style={{ width: "100%" }}
                 >
                   Trash
                 </Button>
+              </Col>
+              <Col xs={12} sm={12} md={6}>
                 <Button
-                  type='primary'
-                  className='title-row-btn'
+                  type="primary"
+                  className="title-row-btn"
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
+                  style={{ width: "100%" }}
                 >
-                  Create User
+                  Create
                 </Button>
-              </Space>
-            </div>
+              </Col>
+            </Row>
           </section>
         </header>
         <main>
           <List
             grid={{
               gutter: 12,
-              xs: 2,
-              sm: 2,
+              xs: 1,
+              sm: 1,
               md: 2,
               lg: 2,
               xl: 2,
@@ -111,7 +132,7 @@ export const Account = () => {
       <ModalCreateUser
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-      ></ModalCreateUser>
+      />
     </div>
   );
 };
