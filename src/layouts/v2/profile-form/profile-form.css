@@ -1,0 +1,11 @@
+.wrapper {
+    span {
+      margin-bottom: 10px;
+    }
+  }
+  .update-infor-btn {
+    display: flex;
+    justify-content:end;
+    align-items: center;
+  }
+  
