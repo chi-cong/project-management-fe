@@ -1,5 +1,3 @@
-@import url(src/index.css);
-
 .project-card {
   cursor: pointer;
   .project-card-content {

@@ -53,13 +53,16 @@ export const Headbar = () => {
   };
 
   return (
-    <header className='headbar'>
-      <Typography.Title level={4}>Project Management</Typography.Title>
-      <Popover content={<UserHeadbarOption />} trigger='click'>
-        <div className='headbar-avatar-wraper'>
-          <CustomAvatar size={45} userName='N' />
-        </div>
-      </Popover>
-    </header>
+    <>
+      <header className='headbar'>
+        <Typography.Title level={5}>Project Management</Typography.Title>
+        <Popover content={<UserHeadbarOption />} trigger='click'>
+          <div className='headbar-avatar-wraper'>
+            <CustomAvatar size={45} userName='N' />
+          </div>
+        </Popover>
+      </header>
+      <div className='headbar-placeholder'></div>
+    </>
   );
 };

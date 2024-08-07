@@ -13,7 +13,7 @@
         width: 100%;
         display: flex;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         justify-content: space-between;
         @mixin tabletAndMobile {
           flex-direction: column;
