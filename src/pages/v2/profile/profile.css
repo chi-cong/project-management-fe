@@ -7,11 +7,13 @@
     .profile-content {
       display: flex;
       width: 100%;
+      align-items: stretch;
       .user-profile-container {
         display: flex;
         flex-direction: column;
         .card-box-shadow {
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+          height: 100%;
         }
         .user-profile-form {
           text-align: center;
@@ -38,6 +40,10 @@
               padding: 5px 10px;
               border-radius: 5px;
               margin: 5px 0;
+            }
+            .user-profile-avatar {
+              max-width: 100%;
+              height: auto;
             }
           }
         }
@@ -75,10 +81,12 @@
       }
       .personal-information {
         display: flex;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        width: 100%;
+
         .ant-card-body {
           width: 100%;
         }

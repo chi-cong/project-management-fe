@@ -1,4 +1,3 @@
-import { Headbar, Sidebar } from "src/components/v2";
 import "./profile.css";
 import { ProfileForm } from "src/layouts/v2/profile-form";
 import { OUserRole, UserRole } from "src/share/models";
@@ -65,21 +64,21 @@ export const Profile = () => {
                 </h1>
             </header>
             <div className="profile-container">
-                <Row className="profile-content" gutter={[16, 8]}>
-                    <Col sm={24} md={7} className="user-profile-container">
-                        <Space direction="vertical" style={{width:"100%"}}>
-                            <Card className="card-box-shadow">
+                <Row className="profile-content" gutter={[16, 8]} style={{ alignItems: 'stretch' }}>
+                    <Col sm={24} md={10} lg={7} className="user-profile-container">
+                        <Space direction="vertical" style={{ width: "100%", height: '100%' }}>
+                            <Card className="card-box-shadow" style={{ height: '100%' }}>
                                 <UserInfo user={user} />
                             </Card>
-                            <Card className="card-box-shadow">
+                            <Card className="card-box-shadow" style={{ height: '100%' }}>
                                 <SelectNewAvatar />
                             </Card>
                         </Space>
                     </Col>
-                    <Col sm={24} md={17} > 
-                        <Card className="personal-information" >
+                    <Col sm={24} md={14} lg={17}>
+                        <Card className="personal-information" style={{ height: '100%' }}>
                             <h2>Personal Information</h2>
-                            <ProfileForm user={user} />  
+                            <ProfileForm user={user} />
                         </Card>
                     </Col>
                 </Row>
