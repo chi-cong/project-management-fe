@@ -34,16 +34,16 @@ export const Projects = () => {
     onClick: handleMenuClick,
   };
   return (
-    <div className="v2-projects-page">
-      <section className="main">
-        <header className="main-header">
-          <section className="first-sec">
-            <div className="title-des">
-              <div className="title-row">
+    <div className='v2-projects-page'>
+      <section className='main'>
+        <header className='main-header'>
+          <section className='first-sec'>
+            <div className='title-des'>
+              <div className='title-row'>
                 <h2>Project</h2>
               </div>
             </div>
-            <div className="action">
+            <div className='action'>
               <Space>
                 <Dropdown menu={menuProps}>
                   <Button>
@@ -53,17 +53,17 @@ export const Projects = () => {
                     </Space>
                   </Button>
                 </Dropdown>
-                <Input placeholder="Search..." prefix={<SearchOutlined />} />
+                <Input placeholder='Search...' prefix={<SearchOutlined />} />
                 <Button
-                  type="default"
-                  className="title-row-btn"
+                  type='default'
+                  className='title-row-btn'
                   icon={<DeleteOutlined />}
                 >
                   Trash
                 </Button>
                 <Button
-                  type="primary"
-                  className="title-row-btn"
+                  type='primary'
+                  className='title-row-btn'
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
                 >
@@ -88,9 +88,9 @@ export const Projects = () => {
             renderItem={() => (
               <List.Item>
                 <CardProject
-                  name="Tính năng thanh toán zalopay"
-                  description="Code giao diện bằng ReactJS và sử dụng các framwork liên quan
-                như là...."
+                  name='Tính năng thanh toán zalopay'
+                  description='Code giao diện bằng ReactJS và sử dụng các framwork liên quan
+                như là....'
                 />
               </List.Item>
             )}
