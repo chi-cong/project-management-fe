@@ -18,9 +18,9 @@ interface User {
   }
 
   const UserInfo: React.FC<{ user: User }> = ({ user }) => (
-    <div className="user-info-form">
-        <div className="user-info">
-            <CustomAvatar size={300} userName={user.username} avatarSrc={user.avatar} className="user-info-avatar"/>
+    <div className="user-profile-form">
+        <div className="user-profile">
+            <CustomAvatar size={350} userName={user.username} avatarSrc={user.avatar} className="user-profile-avatar"/>
             <div className="user-details">
                 <h3>{user.name}</h3>
                 <span className="role-label">{user.role}</span>
@@ -67,19 +67,19 @@ export const Profile = () => {
             <div className="profile-container">
                 <Row className="profile-content" gutter={[16, 8]}>
                     <Col sm={24} md={7} className="user-profile-container">
-                        <Space direction="vertical">
-                            <Card>
+                        <Space direction="vertical" style={{width:"100%"}}>
+                            <Card className="card-box-shadow">
                                 <UserInfo user={user} />
                             </Card>
-                            <Card>
+                            <Card className="card-box-shadow">
                                 <SelectNewAvatar />
                             </Card>
                         </Space>
                     </Col>
                     <Col sm={24} md={17} > 
-                        <Card className="personal-information" style={{width:"100%"}}>
+                        <Card className="personal-information" >
                             <h2>Personal Information</h2>
-                            <ProfileForm user={user} />
+                            <ProfileForm user={user} />  
                         </Card>
                     </Col>
                 </Row>
