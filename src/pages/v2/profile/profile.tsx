@@ -33,11 +33,11 @@ const SelectNewAvatar: React.FC = () => (
     <div className="select-new-avatar-form">
         <h3>Select new avatar</h3>
         <div className="avatar-upload">
-            <img src="/src/assets/imgs/loginbg.jpg" alt="Placeholder Avatar" className="img" style={{width:"30%", height:"100%"}}/>
+            <img src="/src/assets/imgs/profile image.png" alt="Placeholder Avatar" className="img" style={{width:"30%", height:"100%"}}/>
             <div>
                 <UploadOutlined className="upload-icon"/>
             </div>
-            <div className="text-content">
+            <div className="text-content" onClick={() =>{}}>
                 <p style={{fontWeight: "bolder"}}>Choose new file</p>
                 <p>JPG, PNG, WEBP, JEPG,... Max size of 800GB</p>
             </div>

@@ -93,7 +93,7 @@ export const ProfileForm: React.FC<ProfileForm> = ({
         </div>
         <Form.Item className='update-infor-btn'>
           <Space>
-            <Button type='primary' htmlType='submit' size='large'>
+            <Button type='primary' htmlType='submit' size='large' onClick={() =>{}}>
               Update
             </Button>
           </Space>
