@@ -84,11 +84,11 @@ const SelectNewAvatar: React.FC<{
           className='img'
           style={{ width: "30%", height: "100%" }}
         />
-        <Upload {...avaFileProps}>
-          <div>
+        <div>
             <UploadOutlined className='upload-icon' />
-          </div>
-          <div className='text-content' onClick={() => {}}>
+        </div>
+        <Upload {...avaFileProps}>
+          <div className='text-content'>
             <p style={{ fontWeight: "bolder" }}>Choose new file</p>
             <p>JPG, PNG, WEBP, JEPG,... Max size of 800GB</p>
           </div>
