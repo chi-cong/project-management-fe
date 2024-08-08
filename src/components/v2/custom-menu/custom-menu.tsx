@@ -12,6 +12,7 @@ export interface CustomMenuItem {
 
 interface CustomMenuProp {
   items: CustomMenuItem[];
+  defaultSelectedItem: number;
 }
 
 export const CustomMenu = ({ items }: CustomMenuProp) => {
@@ -19,19 +20,22 @@ export const CustomMenu = ({ items }: CustomMenuProp) => {
 
   const setDefaultItem = () => {
     const currPath = window.location.pathname.replace(
-      "/v2/dashboard/admin/",
+      "v2/dashboard/admin/",
       ""
     );
 
     switch (currPath) {
-      case "account":
+      case "accounts":
         setSelectedItem(0);
         break;
       case "departments":
         setSelectedItem(1);
         break;
-      default:
+      case "projects":
         setSelectedItem(2);
+        break;
+      default:
+        setSelectedItem(10);
     }
   };
 

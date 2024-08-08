@@ -35,6 +35,19 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
         response.data,
       providesTags: ["department"],
     }),
+    getDepartment: build.query<Department, { id: string }>({
+      query: ({ id }) => {
+        return {
+          url: `departments/detail/${id}`,
+          method: "GET",
+          headers: {
+            authorization: accessToken(),
+          },
+        };
+      },
+      transformResponse: (response: Response<Department>) => response.data,
+      providesTags: ["department"],
+    }),
 
     deleteDepartments: build.mutation<
       Response<Department>,
@@ -221,6 +234,7 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
 
 export const {
   useGetDepartmentsQuery,
+  useGetDepartmentQuery,
   useDeleteDepartmentsMutation,
   useAddDepartmentMutation,
   useUpdateManagerDepartmentMutation,
