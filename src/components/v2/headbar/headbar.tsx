@@ -15,7 +15,7 @@ export const Headbar = () => {
     sessionStorageUtil.delete("accessToken");
     localStorageUtil.delete("refreshToken");
     dispatch(hrManagementApi.util.resetApiState());
-    navigate("/login");
+    navigate("/v2/login");
   };
 
   const UserHeadbarOption = () => {
@@ -31,7 +31,9 @@ export const Headbar = () => {
         <Button
           type='text'
           className='user-headbar-option-btn'
-          onClick={() => navigate("./profile")}
+          onClick={() =>
+            navigate(`./${sessionStorageUtil.get("role")}/profile`)
+          }
         >
           <Person />
           <Typography.Text>Profile</Typography.Text>

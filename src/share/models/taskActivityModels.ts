@@ -1,5 +1,11 @@
 import type { User } from "./accountModels";
 
+const OTaskStatus = {
+  Todo: 0,
+  OnProgress: 1,
+  Done: 2,
+} as const;
+
 export interface Task {
   task_id: string;
   description: string;

@@ -25,7 +25,7 @@ export interface User {
 }
 
 export interface RoleResponse {
-  name: UserRole;
+  name?: UserRole;
   role_id: string;
 }
 

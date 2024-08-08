@@ -82,7 +82,11 @@ const ModalCreateUser: React.FC<ModalCreateUser> = ({
       </h2>
       <Form name='user-info' onFinish={onFinish} layout='vertical'>
         <div>
-          <Form.Item<ICreateUser> name='name' label='Name'>
+          <Form.Item<ICreateUser>
+            name='name'
+            label='Name'
+            rules={[{ required: true, message: "name is required" }]}
+          >
             <Input placeholder='Name...' size='large' />
           </Form.Item>
         </div>
@@ -105,7 +109,11 @@ const ModalCreateUser: React.FC<ModalCreateUser> = ({
           </Form.Item>
         </div>
         <div>
-          <Form.Item<ICreateUser> name='phone' label='Phone'>
+          <Form.Item<ICreateUser>
+            name='phone'
+            label='Phone'
+            rules={[{ required: true, message: "Phone is required" }]}
+          >
             <Input placeholder='Phone...' size='large' />
           </Form.Item>
         </div>
