@@ -13,10 +13,13 @@ import { PlusOutlined } from "@ant-design/icons";
 import { CustomAvatar, DocumentSection } from "src/components/v2";
 import { TaskList, TaskDetail } from "src/layouts/v2";
 import { useState } from "react";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 export const AdminProject = () => {
   const [taskDetailModal, setTaskDetailModal] = useState<boolean>(false);
   const [docSec, setDocSec] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const taskListSrc: {
     color: string;
@@ -68,6 +71,14 @@ export const AdminProject = () => {
                 <MenuDots />
               </Button>
             </Popover>
+            <Button
+              shape='round'
+              style={{ display: "" }}
+              onClick={() => navigate("/v2/dashboard/admin/projects")}
+            >
+              <ArrowLeftOutlined />
+              Back to Projects
+            </Button>
           </div>
           <div className='second-part'>
             <Button type='primary' className='create-task-btn'>
@@ -89,8 +100,8 @@ export const AdminProject = () => {
             gutter: 16,
             xs: 1,
             sm: 1,
-            md: 2,
-            lg: 2,
+            md: 1,
+            lg: 1,
             xl: 3,
             xxl: 3,
           }}

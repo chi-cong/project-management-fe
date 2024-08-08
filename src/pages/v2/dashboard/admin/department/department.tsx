@@ -9,14 +9,17 @@ import {
   List,
 } from "antd";
 import { ResponsivePie } from "@nivo/pie";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import { CustomAvatar } from "src/components/v2";
 import { DepartmentProjects } from "src/layouts/v2";
 import { useState } from "react";
 import { DepartmentReport } from "src/layouts/v2/department-report";
 import { Pen, Trash, MenuDots, PieChart, UserPlus } from "src/assets/icons";
+import { useNavigate } from "react-router-dom";
 
 export const AdminDepartment = () => {
   const [reportModal, setReportModal] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const DepartmentOptions = () => {
     return (
@@ -25,7 +28,7 @@ export const AdminDepartment = () => {
           <Pen />
           <Typography.Text>Edit</Typography.Text>
         </Button>
-        <Popconfirm title='Delete department ?'>
+        <Popconfirm title='Delete this department ?'>
           <Button className='department-option-btn' type='text'>
             <Trash />
             <Typography.Text>Delete</Typography.Text>
@@ -41,12 +44,10 @@ export const AdminDepartment = () => {
           <UserPlus />
           <Typography.Text>Add Member </Typography.Text>
         </Button>
-        <Popconfirm title='Delete department ?'>
-          <Button className='department-option-btn' type='text'>
-            <Trash />
-            <Typography.Text>Remove Member</Typography.Text>
-          </Button>
-        </Popconfirm>
+        <Button className='department-option-btn' type='text'>
+          <Trash />
+          <Typography.Text>Remove Member</Typography.Text>
+        </Button>
       </div>
     );
   };
@@ -58,19 +59,29 @@ export const AdminDepartment = () => {
           <header className='main-header'>
             <div className='title-row'>
               <Typography.Title level={2}>Deparment Detail</Typography.Title>
-              <Popover content={<DepartmentOptions />}>
-                <Button type='text' className='title-row-btn' size='small'>
-                  <MenuDots />
+              <div style={{ display: "flex" }}>
+                <Popover content={<DepartmentOptions />}>
+                  <Button type='text' className='title-row-btn' size='small'>
+                    <MenuDots />
+                  </Button>
+                </Popover>
+                <Button
+                  type='default'
+                  className='title-row-btn'
+                  shape='round'
+                  onClick={() => setReportModal(true)}
+                >
+                  <PieChart />
+                  Reports
                 </Button>
-              </Popover>
+              </div>
               <Button
-                type='default'
-                className='title-row-btn'
                 shape='round'
-                onClick={() => setReportModal(true)}
+                style={{ display: "" }}
+                onClick={() => navigate("/v2/dashboard/admin/departments")}
               >
-                <PieChart />
-                Reports
+                <ArrowLeftOutlined />
+                Back to department
               </Button>
             </div>
             <section className='second-sec'>
@@ -83,13 +94,12 @@ export const AdminDepartment = () => {
                   <Card.Meta
                     title={"Nguyen Van A"}
                     description={
-                      <>
+                      <div className='department-manager-card-des'>
                         <Typography.Text>nguyenvana@gmail.com</Typography.Text>
-                        <br />
                         <Typography.Text type='secondary'>
                           Department Manager
                         </Typography.Text>
-                      </>
+                      </div>
                     }
                     avatar={<CustomAvatar size={60} userName='Nguyen Van A' />}
                   />
@@ -176,17 +186,7 @@ export const AdminDepartment = () => {
                   <List.Item>
                     <List.Item.Meta
                       title={"Nguyen Van A"}
-                      description={
-                        <>
-                          <Typography.Text>
-                            nguyenvana@gmail.com
-                          </Typography.Text>
-                          <br />
-                          <Typography.Text type='secondary'>
-                            Staff
-                          </Typography.Text>
-                        </>
-                      }
+                      description={"Staff"}
                       avatar={
                         <CustomAvatar size={60} userName='Nguyen Van A' />
                       }

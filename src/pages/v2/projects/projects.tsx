@@ -19,6 +19,7 @@ import {
 import { useState } from "react";
 import ModalCreatePost from "src/components/modal-create-project";
 import { CardProject } from "src/components/card-project";
+import { useNavigate } from "react-router-dom";
 export const Projects = () => {
   const items: MenuProps["items"] = [
     {
@@ -35,14 +36,16 @@ export const Projects = () => {
     },
   ];
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleMenuClick: MenuProps["onClick"] = (e) => {
+  const handleMenuClick: MenuProps["onClick"] = () => {
     message.info("Click on menu item.");
-    console.log("click", e);
   };
   const menuProps = {
     items,
     onClick: handleMenuClick,
   };
+
+  const navigate = useNavigate();
+
   return (
     <div className='v2-projects-page'>
       <section className='main'>
@@ -53,7 +56,7 @@ export const Projects = () => {
                 <h2>Project</h2>
               </div>
             </div>
-            <Row className="action" gutter={[8, 8]}>
+            <Row className='action' gutter={[8, 8]}>
               <Col xs={12} sm={12} md={6}>
                 <Dropdown menu={menuProps}>
                   <Button style={{ width: "100%" }}>
@@ -72,7 +75,7 @@ export const Projects = () => {
               </Col>
               <Col xs={12} sm={12} md={6}>
                 <Input
-                  placeholder="Search..."
+                  placeholder='Search...'
                   prefix={<SearchOutlined />}
                   style={{ width: "100%" }}
                 />
@@ -101,7 +104,7 @@ export const Projects = () => {
             </Row>
           </section>
         </header>
-        <main className="">
+        <main className=''>
           <List
             grid={{
               gutter: 12,
@@ -119,6 +122,7 @@ export const Projects = () => {
                   name='Tính năng thanh toán zalopay'
                   description='Code giao diện bằng ReactJS và sử dụng các framwork liên quan
                 như là....'
+                  onClick={() => navigate("/v2/dashboard/admin/project")}
                 />
               </List.Item>
             )}

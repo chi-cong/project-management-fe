@@ -1,3 +1,4 @@
+@import "../../../../../mixin/mixin.css";
 .department-page {
   display: flex;
   justify-content: flex-start;
@@ -8,6 +9,10 @@
     flex-direction: column;
     gap: var(--gap-m);
     width: 99%;
+    @mixin tablet {
+      overflow-x: auto;
+      width: 500px;
+    }
     .main-header {
       width: 100%;
       display: flex;
@@ -18,6 +23,10 @@
         align-items: center;
         gap: var(--gap-xs);
         margin-bottom: 20px;
+        @mixin tabletAndMobile {
+          flex-direction: column;
+          align-items: flex-start;
+        }
         .title-row-btn {
           display: flex;
           align-items: center;
@@ -34,15 +43,36 @@
       .second-sec {
         display: flex;
         width: 100%;
-        height: 30dvh;
+        height: fit-content;
+        @mixin tabletAndMobile {
+          flex-direction: column;
+          align-items: flex-start;
+        }
         .des-manager-sec {
           width: 70%;
           margin-bottom: 20px;
+          @mixin tabletAndMobile {
+            width: 100%;
+          }
+          .department-manager-card-des {
+            display: flex;
+            align-items: center;
+            gap: var(--gap-s);
+            @media screen and (max-width: 1280px) {
+              align-items: flex-start;
+              gap: var(--gap-xs);
+              flex-direction: column;
+            }
+          }
         }
         .pie-chart {
+          margin: auto;
           width: 30%;
           height: 95%;
           max-width: 300px;
+          @mixin tabletAndMobile {
+            height: 300px;
+          }
         }
       }
     }
@@ -55,10 +85,16 @@
   .team-member-sec {
     width: 20vw;
     padding-left: var(--padding-xs);
+    @mixin tabletAndMobile {
+      width: 300px;
+    }
     .member-list-container {
       position: fixed;
       height: 85dvh;
-      width: 15vw;
+
+      @mixin tabletAndMobile {
+        width: 250px;
+      }
       overflow-y: auto;
       .title {
         display: flex;
