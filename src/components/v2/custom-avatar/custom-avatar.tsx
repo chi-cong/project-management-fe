@@ -3,7 +3,7 @@ import { CSSProperties, useState } from "react";
 import { randAvaBg } from "src/share/utils";
 
 interface AvatarProp {
-  size: number;
+  size?: number;
   avatarSrc?: string;
   userName?: string;
   className?: string;
@@ -26,7 +26,7 @@ export const CustomAvatar = ({
         width: `${size}px`,
         height: `${size}px`,
         background: !avatarSrc ? bgColor : "none",
-        fontSize: `${size / 2}px`,
+        fontSize: `${size ? size / 2 :''}px`,
         ...style,
       }}
       className={className}

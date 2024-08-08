@@ -1,0 +1,102 @@
+.v2-profile-page {
+  flex-direction: column;
+  .profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .profile-content {
+      display: flex;
+      width: 100%;
+      align-items: stretch;
+      .user-profile-container {
+        display: flex;
+        flex-direction: column;
+        .card-box-shadow {
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          height: 100%;
+        }
+        .user-profile-form {
+          text-align: center;
+        }
+        .user-profile {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 20px;
+          .user-details {
+            text-align: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            h3 {
+              margin: 10px 0;
+              font-size: 1.5em;
+            }
+            .role-label {
+              background-color: #cdcbf9;
+              color: #6358dc;
+              width: 70%;
+              font-weight: bold;
+              padding: 5px 10px;
+              border-radius: 5px;
+              margin: 5px 0;
+            }
+            .user-profile-avatar {
+              max-width: 100%;
+              height: auto;
+            }
+          }
+        }
+        .select-new-avatar-form {
+          h3 {
+            margin-bottom: 15px;
+          }
+          .avatar-upload {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: 20px;
+            img {
+              border-radius: 8px;
+            }
+            .upload-icon {
+              margin-top: 40px;
+              font-size: 24px;
+            }
+            p {
+              margin: 0;
+              font-size: 16px;
+              cursor: pointer;
+            }
+            .text-content {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              p:first-of-type {
+                margin-bottom: 10px;
+              }
+            }
+          }
+        }
+      }
+      .personal-information {
+        display: flex;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
+        .ant-card-body {
+          width: 100%;
+        }
+        h2 {
+          margin-bottom: 1rem;
+          font-size: 1.5em;
+          text-align: center;
+          color: #6358dc;
+        }
+      }
+    }
+  }
+}
