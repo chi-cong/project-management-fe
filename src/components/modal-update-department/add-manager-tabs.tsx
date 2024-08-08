@@ -1,6 +1,5 @@
 import { Button, Table } from "antd";
-import React from "react";
-import { CustomAvatar } from "../v2";
+import { CustomAvatar } from "src/components/v2";
 
 interface DataType {
   key: string;
@@ -15,7 +14,7 @@ const AddManagerTabs = () => {
       title: "Avatar",
       dataIndex: "avatar",
       key: "avatar",
-      render: (text: string) => <CustomAvatar size={50} userName="Dat" />,
+      render: () => <CustomAvatar size={50} userName='Dat' />,
     },
     {
       title: "Name",
@@ -36,9 +35,7 @@ const AddManagerTabs = () => {
     {
       title: "Action",
       key: "action",
-      render: (_: any, record: DataType) => (
-        <Button type="primary">Assign</Button>
-      ),
+      render: () => <Button type='primary'>Assign</Button>,
     },
   ];
   const data: DataType[] = [

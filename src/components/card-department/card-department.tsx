@@ -19,7 +19,7 @@ import { useDeleteDepartmentsMutation } from "src/share/services";
 import ModalAddUserToProject from "../modal-add-user-to-project";
 import { CustomAvatar } from "src/components/v2";
 import { UserOutlined, PlusOutlined } from "@ant-design/icons";
-import ModalUpdateDepartment from "../modal-update-department";
+import { ModalUpdateDepartment } from "src/components/";
 type CardDepartmentProps = {
   name?: string;
   description?: string;

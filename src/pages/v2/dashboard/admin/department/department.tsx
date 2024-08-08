@@ -21,10 +21,13 @@ import {
   useGetAllProjectDepartmentQuery,
   useGetDepartmentStaffsQuery,
 } from "src/share/services";
-import { Project } from "src/share/models";
+import { Project, RoleResponse } from "src/share/models";
+import { ModalUpdateDepartment, ModalUpdateProject } from "src/components";
 
 export const AdminDepartment = () => {
   const [reportModal, setReportModal] = useState<boolean>(false);
+  const [updateModal, setUpdateModal] = useState<boolean>(false);
+  const [updatePrjModal, setUpdatePrjModal] = useState<boolean>(false);
   const { data } = useGetDepartmentQuery({ id: "66aa0782193b7aa0827eace0" });
   const { data: departmentProjects } = useGetAllProjectDepartmentQuery({
     departmentId: `66aa0782193b7aa0827eace0`,
@@ -72,12 +75,16 @@ export const AdminDepartment = () => {
 
   useEffect(() => {
     setupProjectFilter();
-  }, []);
+  }, [departmentProjects]);
 
   const DepartmentOptions = () => {
     return (
       <div className='department-option'>
-        <Button type='text' className='department-option-btn'>
+        <Button
+          type='text'
+          className='department-option-btn'
+          onClick={() => setUpdateModal(true)}
+        >
           <Pen />
           <Typography.Text>Edit</Typography.Text>
         </Button>
@@ -240,14 +247,18 @@ export const AdminDepartment = () => {
             <List
               className='memeber-list'
               dataSource={departmentStaffs?.users}
-              renderItem={() => {
+              renderItem={(user) => {
                 return (
                   <List.Item>
                     <List.Item.Meta
-                      title={"Nguyen Van A"}
-                      description={"Staff"}
+                      title={user?.name || user.username}
+                      description={(user?.role as RoleResponse).name}
                       avatar={
-                        <CustomAvatar size={60} userName='Nguyen Van A' />
+                        <CustomAvatar
+                          size={60}
+                          userName={user.username}
+                          avatarSrc={user.avatar}
+                        />
                       }
                     />
                   </List.Item>
@@ -266,6 +277,10 @@ export const AdminDepartment = () => {
       >
         <DepartmentReport />
       </Modal>
+      <ModalUpdateDepartment
+        isModalOpen={updateModal}
+        setIsModalOpen={setUpdateModal}
+      />
     </>
   );
 };

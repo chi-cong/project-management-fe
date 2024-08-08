@@ -16,7 +16,7 @@ const columns: ColumnsType<DataType> = [
     title: "Avatar",
     dataIndex: "avatar",
     key: "avatar",
-    render: (text: string) => <CustomAvatar size={50} userName="Dat" />,
+    render: () => <CustomAvatar size={50} userName='Dat' />,
   },
   {
     title: "Name",
@@ -36,9 +36,7 @@ const columns: ColumnsType<DataType> = [
   {
     title: "Action",
     key: "action",
-    render: (_: any, record: DataType) => (
-      <Button type="primary">Assign</Button>
-    ),
+    render: () => <Button type='primary'>Assign</Button>,
   },
 ];
 
@@ -94,7 +92,7 @@ const AddStaffTabs: React.FC = () => {
             marginBottom: "10px",
           }}
         >
-          <Button type="primary">Assign</Button>
+          <Button type='primary'>Assign</Button>
         </div>
       )}
       <Table

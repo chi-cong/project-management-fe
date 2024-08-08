@@ -9,12 +9,17 @@ import {
 } from "antd";
 import { MenuDots, Pen, Trash } from "src/assets/icons";
 import type { Project } from "src/share/models";
+import { ModalUpdateProject } from "src/components";
+import { useState } from "react";
 
 interface ProjectCardProp {
   project: Project;
 }
 
 export const ProjectCard = ({ project }: ProjectCardProp) => {
+  const [updateModal, setUpdateModal] = useState<boolean>(false);
+  const [popover, setPopover] = useState<boolean>(false);
+
   const calculateProgress = (): number => {
     if (
       parseFloat(project.total_task!.total_task_is_done) === 0 ||
@@ -47,7 +52,14 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
   const ProjectCardOption = () => {
     return (
       <div className='project-option'>
-        <Button type='text' className='project-option-btn'>
+        <Button
+          type='text'
+          className='project-option-btn'
+          onClick={() => {
+            setUpdateModal(true);
+            setPopover(false);
+          }}
+        >
           <Pen />
           <Typography.Text>Edit</Typography.Text>
         </Button>
@@ -62,34 +74,44 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
   };
 
   return (
-    <div className='project-card-v2'>
-      <div className='project-card-head'>
-        <Typography.Title level={4}>{project.name}</Typography.Title>
-        <Popover trigger='click' content={ProjectCardOption}>
-          <Button type='text' size='small'>
-            <MenuDots />
-          </Button>
-        </Popover>
-      </div>
-      <div className='project-card-body'>
-        <Typography.Text>{project.description}</Typography.Text>
-        <div className='progress-sec'>
-          <Progress
-            percent={progress}
-            showInfo={false}
-            strokeColor={progressColor(progress)}
-          />
-          <div className='progress-second-line'>
-            <Typography.Text>progress</Typography.Text>
-            <Typography.Text>{`${progress}%`}</Typography.Text>
+    <>
+      <div className='project-card-v2'>
+        <div className='project-card-head'>
+          <Typography.Title level={4}>{project.name}</Typography.Title>
+          <Popover content={ProjectCardOption}>
+            <Button
+              type='text'
+              size='small'
+              onClick={() => setPopover(!popover)}
+            >
+              <MenuDots />
+            </Button>
+          </Popover>
+        </div>
+        <div className='project-card-body'>
+          <Typography.Text>{project.description}</Typography.Text>
+          <div className='progress-sec'>
+            <Progress
+              percent={progress}
+              showInfo={false}
+              strokeColor={progressColor(progress)}
+            />
+            <div className='progress-second-line'>
+              <Typography.Text>progress</Typography.Text>
+              <Typography.Text>{`${progress}%`}</Typography.Text>
+            </div>
           </div>
         </div>
+        <Divider />
+        <div className='project-card-footer'>
+          <Typography.Text>Nov 2, 2021</Typography.Text>
+          <Typography.Text>3 hours left</Typography.Text>
+        </div>
       </div>
-      <Divider />
-      <div className='project-card-footer'>
-        <Typography.Text>Nov 2, 2021</Typography.Text>
-        <Typography.Text>3 hours left</Typography.Text>
-      </div>
-    </div>
+      <ModalUpdateProject
+        isModalOpen={updateModal}
+        setIsModalOpen={setUpdateModal}
+      />
+    </>
   );
 };

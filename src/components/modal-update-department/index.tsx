@@ -6,9 +6,9 @@ import AddManagerTabs from "./add-manager-tabs";
 import AddStaffTabs from "./add-staff-tabs";
 type ModalUpdateDepartment = {
   isModalOpen: boolean;
-  setIsModalOpen: any;
+  setIsModalOpen: (show: boolean) => void;
 };
-const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
+export const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
   isModalOpen,
   setIsModalOpen,
 }) => {
@@ -22,7 +22,7 @@ const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
 
   return (
     <Modal
-      className="wrapper"
+      className='wrapper'
       open={isModalOpen}
       centered
       onOk={handleOk}
@@ -38,24 +38,22 @@ const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
       >
         Update Department
       </h2>
-      <Tabs defaultActiveKey="1">
-        <Tabs.TabPane tab="Info" key="1">
+      <Tabs defaultActiveKey='1'>
+        <Tabs.TabPane tab='Info' key='1'>
           <InfoTabs />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Manager" key="2">
+        <Tabs.TabPane tab='Manager' key='2'>
           <AddManagerTabs />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Staff" key="3">
+        <Tabs.TabPane tab='Staff' key='3'>
           <AddStaffTabs />
         </Tabs.TabPane>
       </Tabs>
       <Space
-        direction="vertical"
-        size="middle"
+        direction='vertical'
+        size='middle'
         style={{ display: "flex" }}
       ></Space>
     </Modal>
   );
 };
-
-export default ModalUpdateDepartment;
