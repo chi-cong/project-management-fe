@@ -42,6 +42,8 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
     return "#28A745";
   };
 
+  const progress: number = calculateProgress();
+
   const ProjectCardOption = () => {
     return (
       <div className='project-option'>
@@ -73,13 +75,13 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
         <Typography.Text>{project.description}</Typography.Text>
         <div className='progress-sec'>
           <Progress
-            percent={100}
+            percent={progress}
             showInfo={false}
-            strokeColor={progressColor(100)}
+            strokeColor={progressColor(progress)}
           />
           <div className='progress-second-line'>
             <Typography.Text>progress</Typography.Text>
-            <Typography.Text>50%</Typography.Text>
+            <Typography.Text>{`${progress}%`}</Typography.Text>
           </div>
         </div>
       </div>

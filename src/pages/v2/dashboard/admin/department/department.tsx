@@ -12,16 +12,67 @@ import { ResponsivePie } from "@nivo/pie";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { CustomAvatar } from "src/components/v2";
 import { DepartmentProjects } from "src/layouts/v2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DepartmentReport } from "src/layouts/v2/department-report";
 import { Pen, Trash, MenuDots, PieChart, UserPlus } from "src/assets/icons";
 import { useNavigate } from "react-router-dom";
-import { useGetDepartmentQuery } from "src/share/services";
+import {
+  useGetDepartmentQuery,
+  useGetAllProjectDepartmentQuery,
+  useGetDepartmentStaffsQuery,
+} from "src/share/services";
+import { Project } from "src/share/models";
 
 export const AdminDepartment = () => {
   const [reportModal, setReportModal] = useState<boolean>(false);
   const { data } = useGetDepartmentQuery({ id: "66aa0782193b7aa0827eace0" });
+  const { data: departmentProjects } = useGetAllProjectDepartmentQuery({
+    departmentId: `66aa0782193b7aa0827eace0`,
+  });
+  const { data: departmentStaffs } = useGetDepartmentStaffsQuery({
+    itemsPerPage: "ALL",
+    departmentId: "66aa0782193b7aa0827eace0",
+  });
   const navigate = useNavigate();
+  const [projectFilter, setProjectFilter] = useState<{
+    onProgress: Project[];
+    todo: Project[];
+    done: Project[];
+  }>({ done: [], onProgress: [], todo: [] });
+
+  const calculateProgress = (information: {
+    total_task_is_done: string;
+    total_task_is_not_done: string;
+  }): number => {
+    return Math.ceil(
+      (parseInt(information.total_task_is_done) /
+        parseInt(information.total_task_is_not_done)) *
+        100
+    );
+  };
+
+  const setupProjectFilter = (): void => {
+    const onProgress: Project[] = [];
+    const todo: Project[] = [];
+    const done: Project[] = [];
+
+    departmentProjects?.data.forEach((project) => {
+      const status = calculateProgress(project.total_task!);
+      if (status === 100) {
+        done.push(project);
+      } else if (status === 0) {
+        todo.push(project);
+      } else {
+        onProgress.push(project);
+      }
+    });
+
+    setProjectFilter({ onProgress, todo, done });
+  };
+
+  useEffect(() => {
+    setupProjectFilter();
+  }, []);
 
   const DepartmentOptions = () => {
     return (
@@ -89,20 +140,26 @@ export const AdminDepartment = () => {
             <section className='second-sec'>
               <div className='des-manager-sec'>
                 <Typography.Text>{data?.description}</Typography.Text>
-                <Card className='manager-card'>
-                  <Card.Meta
-                    title={"Nguyen Van A"}
-                    description={
-                      <div className='department-manager-card-des'>
-                        <Typography.Text>nguyenvana@gmail.com</Typography.Text>
-                        <Typography.Text type='secondary'>
-                          Department Manager
-                        </Typography.Text>
-                      </div>
-                    }
-                    avatar={<CustomAvatar size={60} userName='Nguyen Van A' />}
-                  />
-                </Card>
+                {data?.manager_info && (
+                  <Card className='manager-card'>
+                    <Card.Meta
+                      title={"Nguyen Van A"}
+                      description={
+                        <div className='department-manager-card-des'>
+                          <Typography.Text>
+                            nguyenvana@gmail.com
+                          </Typography.Text>
+                          <Typography.Text type='secondary'>
+                            Department Manager
+                          </Typography.Text>
+                        </div>
+                      }
+                      avatar={
+                        <CustomAvatar size={60} userName='Nguyen Van A' />
+                      }
+                    />
+                  </Card>
+                )}
               </div>
 
               <div className='pie-chart'>
@@ -162,9 +219,12 @@ export const AdminDepartment = () => {
             </section>
           </header>
           <section className='project-section'>
-            <DepartmentProjects title='On Progress' />
-            <DepartmentProjects title='Done' />
-            <DepartmentProjects title='Todo' />
+            <DepartmentProjects title='Todo' projects={projectFilter.todo} />
+            <DepartmentProjects
+              title='On Progress'
+              projects={projectFilter.onProgress}
+            />
+            <DepartmentProjects title='Done' projects={projectFilter.done} />
           </section>
         </section>
         <section className='team-member-sec'>
@@ -179,7 +239,7 @@ export const AdminDepartment = () => {
             </div>
             <List
               className='memeber-list'
-              dataSource={[1, 2, 3]}
+              dataSource={departmentStaffs?.users}
               renderItem={() => {
                 return (
                   <List.Item>

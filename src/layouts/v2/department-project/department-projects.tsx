@@ -2,18 +2,23 @@ import "./department-projects.css";
 
 import { Typography, List } from "antd";
 import { ProjectCard } from "src/components/v2/project-card";
+import { Project } from "src/share/models";
 
 interface DepartmentProjectsProp {
   title: string;
+  projects: Project[];
 }
 
-export const DepartmentProjects = ({ title }: DepartmentProjectsProp) => {
+export const DepartmentProjects = ({
+  title,
+  projects,
+}: DepartmentProjectsProp) => {
   return (
     <div className='department-projects'>
       <Typography.Title level={3}>{title}</Typography.Title>
 
       <List
-        dataSource={[1, 2, 3]}
+        dataSource={projects}
         grid={{
           gutter: 16,
           xs: 1,
@@ -23,15 +28,10 @@ export const DepartmentProjects = ({ title }: DepartmentProjectsProp) => {
           xl: 3,
           xxl: 3,
         }}
-        renderItem={() => {
+        renderItem={(project) => {
           return (
             <List.Item>
-              <ProjectCard
-                project={{
-                  name: "chat app",
-                  description: "what ever, bye bye bye",
-                }}
-              />
+              <ProjectCard project={project} />
             </List.Item>
           );
         }}
