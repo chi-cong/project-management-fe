@@ -6,11 +6,14 @@ import {
   Form,
   Input,
   Select,
+  FormProps,
   Space,
+  message,
 } from "antd";
 import { userRoleOptions } from "src/share/utils";
 import dayjs, { Dayjs } from "dayjs";
 import { RoleResponse, User, UserRole } from "src/share/models";
+import { useUpdateUserMutation } from "src/share/services";
 interface UserInfor {
   user_id?: string;
   username?: string;
@@ -30,7 +33,28 @@ export const ProfileForm: React.FC<ProfileForm> = ({
 }) => {
     const [form] = Form.useForm();
     const [isEdit, setIsEdit] = useState(false);
-    useEffect(() => {
+    const [updateUser] =  useUpdateUserMutation({});
+
+  const onFinish: FormProps<UserInfor>["onFinish"] = async (values) => {
+    const sentValues = {
+      username: values.username!,
+      email: values.email,
+      name: values.name,
+      role: values.role!,
+      birthday: values.birthday,
+      phone: values.phone || "",
+    };
+    await updateUser({ userId: user.user_id, values: sentValues })
+      .unwrap()
+      .then(() => {
+        message.success("New user is created");
+      })
+      .catch((e) => {
+        message.error(e.data.message);
+      });
+  };
+
+  useEffect(() => {
     form.setFieldsValue({
       ...user,
       email: user.email,
@@ -48,7 +72,7 @@ export const ProfileForm: React.FC<ProfileForm> = ({
   }
 
   const handleSaveClick = () =>{
-
+    
   }
 
   const handleCancelClick = () => {
@@ -58,7 +82,7 @@ export const ProfileForm: React.FC<ProfileForm> = ({
 
   return (
     <>
-      <Form name='user-info' layout='vertical' form={form}>
+      <Form name='user-info' onFinish={onFinish} layout='vertical' form={form}>
         <div>
           <Form.Item<UserInfor> name='name' label='Name'>
             <Input placeholder='Name...' size='large' className={isEdit ? "input-enable" : "input-disable"} disabled={!isEdit}/>
