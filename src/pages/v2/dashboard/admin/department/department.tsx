@@ -16,9 +16,11 @@ import { useState } from "react";
 import { DepartmentReport } from "src/layouts/v2/department-report";
 import { Pen, Trash, MenuDots, PieChart, UserPlus } from "src/assets/icons";
 import { useNavigate } from "react-router-dom";
+import { useGetDepartmentQuery } from "src/share/services";
 
 export const AdminDepartment = () => {
   const [reportModal, setReportModal] = useState<boolean>(false);
+  const { data } = useGetDepartmentQuery({ id: "66aa0782193b7aa0827eace0" });
   const navigate = useNavigate();
 
   const DepartmentOptions = () => {
@@ -58,7 +60,7 @@ export const AdminDepartment = () => {
         <section className='main'>
           <header className='main-header'>
             <div className='title-row'>
-              <Typography.Title level={2}>Deparment Detail</Typography.Title>
+              <Typography.Title level={2}>{data?.name}</Typography.Title>
               <div style={{ display: "flex" }}>
                 <Popover content={<DepartmentOptions />}>
                   <Button type='text' className='title-row-btn' size='small'>
@@ -86,10 +88,7 @@ export const AdminDepartment = () => {
             </div>
             <section className='second-sec'>
               <div className='des-manager-sec'>
-                <Typography.Text>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Nobis ipsam, aperiam ipsum delectus dolores iste.
-                </Typography.Text>
+                <Typography.Text>{data?.description}</Typography.Text>
                 <Card className='manager-card'>
                   <Card.Meta
                     title={"Nguyen Van A"}

@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 
 export const AdminProject = () => {
   const [taskDetailModal, setTaskDetailModal] = useState<boolean>(false);
+  const [createTask, setCreateTask] = useState<boolean>(false);
   const [docSec, setDocSec] = useState<boolean>(false);
   const navigate = useNavigate();
 
