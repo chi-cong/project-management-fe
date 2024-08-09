@@ -60,7 +60,8 @@
               border-radius: 8px;
             }
             .upload-icon {
-              font-size: 24px;
+              font-size: 27px;
+              justify-content: center;
             }
             p {
               margin: 0;
@@ -70,7 +71,7 @@
             .text-content {
               display: flex;
               flex-direction: column;
-              /* justify-content: center; */
+              justify-content: center;
               p:first-of-type {
                 margin-bottom: 10px;
               }

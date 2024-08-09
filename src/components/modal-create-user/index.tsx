@@ -23,7 +23,7 @@ type ModalCreateUser = {
 interface ICreateUser {
   user_id?: string;
   username?: string;
-  password?: string;
+  // password?: string;
   name: string;
   email: string;
   phone: string;
@@ -43,7 +43,7 @@ const ModalCreateUser: React.FC<ModalCreateUser> = ({
 
   const onFinish: FormProps<ICreateUser>["onFinish"] = async (values) => {
     const sentValues = {
-      password: values.password!,
+      // password: values.password!,
       username: values.username!,
       email: values.email,
       name: values.name,
@@ -97,15 +97,6 @@ const ModalCreateUser: React.FC<ModalCreateUser> = ({
             label='Username'
           >
             <Input placeholder='Username...' size='large' />
-          </Form.Item>
-        </div>
-        <div>
-          <Form.Item<ICreateUser>
-            name='password'
-            rules={[{ required: true, message: "Password is required" }]}
-            label='Password'
-          >
-            <Input.Password placeholder='Password...' size='large' />
           </Form.Item>
         </div>
         <div>
