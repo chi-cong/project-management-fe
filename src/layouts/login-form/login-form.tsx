@@ -43,30 +43,30 @@ export const LoginForm = () => {
   return (
     <>
       {contextHolder}
-      <Spin spinning={loginStatus.isLoading} size='large' tip=''>
+      <Spin spinning={loginStatus.isLoading} size="large" tip="">
         <Form
-          name='login'
+          name="login"
           onFinish={onFinish}
-          className='login-form'
-          autoComplete='off'
+          className="login-form"
+          autoComplete="off"
         >
           <Form.Item<LoginFieldType>
-            name='username'
+            name="username"
             rules={[{ required: true, message: "Username is required" }]}
           >
-            <Input placeholder='Email' />
+            <Input placeholder="Email" />
           </Form.Item>
           <Form.Item<LoginFieldType>
-            name='password'
+            name="password"
             rules={[{ required: true, message: "Password is required" }]}
           >
-            <Input.Password placeholder='Password' />
+            <Input.Password placeholder="Password" />
           </Form.Item>
           <Form.Item>
             <Link to={"/forgot-password"}>Forgot Password ?</Link>
           </Form.Item>
           <Form.Item>
-            <Button className='login-button' type='primary' htmlType='submit'>
+            <Button className="login-button" type="primary" htmlType="submit">
               Login
             </Button>
           </Form.Item>

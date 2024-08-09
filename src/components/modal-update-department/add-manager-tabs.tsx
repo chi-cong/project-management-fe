@@ -1,14 +1,22 @@
 import { Button, Table } from "antd";
 import { CustomAvatar } from "src/components/v2";
+import { RoleResponse } from "src/share/models";
+import {
+  useGetUsersQuery,
+  useUpdateManagerDepartmentMutation,
+} from "src/share/services";
 
 interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  role: string;
-  email: string;
+  key?: string;
+  name?: string;
+  age?: number;
+  role?: string;
+  email?: string;
 }
 const AddManagerTabs = () => {
+  const { data } = useGetUsersQuery({ role: "MANAGER", items_per_page: "ALL" });
+  const [updateManager] = useUpdateManagerDepartmentMutation();
+
   const columns = [
     {
       title: "Avatar",
@@ -35,33 +43,40 @@ const AddManagerTabs = () => {
     {
       title: "Action",
       key: "action",
-      render: () => <Button type='primary'>Assign</Button>,
+      render: (_text: string, record: DataType) => (
+        <Button
+          type='primary'
+          onClick={() => {
+            updateManager({
+              managerId: record.key,
+              departmentId: "66aa0782193b7aa0827eace0",
+            });
+          }}
+        >
+          manager
+        </Button>
+      ),
     },
   ];
-  const data: DataType[] = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      role: "Manager",
-      email: "datvuhp2002@gmail.com",
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-      role: "Manager",
-      email: "123456@gmail.com",
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: 32,
-      role: "Manager",
-      email: "abcdefg@gmail.com",
-    },
-  ];
-  return <Table columns={columns} dataSource={data} pagination={false} />;
+
+  const dataTableMapper = () => {
+    return data?.users.map((user): DataType => {
+      return {
+        key: user.user_id,
+        email: user.email,
+        name: user.name,
+        role: (user?.role as RoleResponse).name,
+      };
+    });
+  };
+
+  return (
+    <Table
+      columns={columns}
+      dataSource={dataTableMapper()}
+      pagination={false}
+    />
+  );
 };
 
 export default AddManagerTabs;

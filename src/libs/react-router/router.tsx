@@ -18,6 +18,7 @@ import {
 import App from "src/App";
 import { Projects } from "src/pages/v2/projects";
 import { Departments } from "src/pages/v2/departments";
+// import { Profile } from "src/pages/v2/profile";
 
 export const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
             ],
           },
         ],
+      },
+      {
+        path: "profile",
+        element: <Profile />,
       },
       {
         path: "test-route",

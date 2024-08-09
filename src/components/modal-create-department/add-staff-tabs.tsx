@@ -2,13 +2,17 @@ import { Button, Table } from "antd";
 import React, { useState } from "react";
 import { CustomAvatar } from "../v2";
 import { ColumnsType } from "antd/es/table";
+import {
+  useManagerGetStaffNoDepartmentQuery,
+  useAddStaffDepartmentMutation,
+} from "src/share/services";
+import { RoleResponse } from "src/share/models";
 
 interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  role: string;
-  email: string;
+  key?: string;
+  name?: string;
+  role?: string;
+  email?: string;
 }
 
 const columns: ColumnsType<DataType> = [
@@ -16,7 +20,7 @@ const columns: ColumnsType<DataType> = [
     title: "Avatar",
     dataIndex: "avatar",
     key: "avatar",
-    render: (text: string) => <CustomAvatar size={50} userName="Dat" />,
+    render: (text: string) => <CustomAvatar size={50} userName='Dat' />,
   },
   {
     title: "Name",
@@ -37,7 +41,7 @@ const columns: ColumnsType<DataType> = [
     title: "Action",
     key: "action",
     render: (_: any, record: DataType) => (
-      <Button type="primary">Assign</Button>
+      <Button type='primary'>Assign</Button>
     ),
   },
 ];
@@ -46,21 +50,18 @@ const data: DataType[] = [
   {
     key: "1",
     name: "John Brown",
-    age: 32,
     role: "Manager",
     email: "datvuhp2002@gmail.com",
   },
   {
     key: "2",
     name: "Jim Green",
-    age: 42,
     role: "Manager",
     email: "123456@gmail.com",
   },
   {
     key: "3",
     name: "Joe Black",
-    age: 32,
     role: "Manager",
     email: "abcdefg@gmail.com",
   },
@@ -68,19 +69,27 @@ const data: DataType[] = [
 
 const AddStaffTabs: React.FC = () => {
   const [selectedRows, setSelectedRows] = useState<DataType[]>([]);
+  const [addDepartmentStaff] = useAddStaffDepartmentMutation();
+  const { data: noDepartStaffs } = useManagerGetStaffNoDepartmentQuery({});
   const rowSelection = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
+    onChange: (_selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
       setSelectedRows(selectedRows);
     },
     getCheckboxProps: (record: DataType) => ({
       disabled: record.name === "Disabled User",
       name: record.name,
     }),
+  };
+
+  const dataTableMapper = () => {
+    return noDepartStaffs?.users.map((user): DataType => {
+      return {
+        key: user.user_id,
+        email: user.email,
+        name: user.name,
+        role: (user?.role as RoleResponse).name,
+      };
+    });
   };
 
   return (
@@ -94,7 +103,16 @@ const AddStaffTabs: React.FC = () => {
             marginBottom: "10px",
           }}
         >
-          <Button type="primary">Assign</Button>
+          <Button
+            type='primary'
+            onClick={() => {
+              addDepartmentStaff({
+                listStaff: selectedRows.map((row) => row.key),
+              });
+            }}
+          >
+            Assign
+          </Button>
         </div>
       )}
       <Table
@@ -103,7 +121,7 @@ const AddStaffTabs: React.FC = () => {
           ...rowSelection,
         }}
         columns={columns}
-        dataSource={data}
+        dataSource={dataTableMapper()}
       />
     </div>
   );

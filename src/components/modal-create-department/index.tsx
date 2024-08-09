@@ -1,24 +1,9 @@
-import {
-  Button,
-  DatePicker,
-  Dropdown,
-  Flex,
-  Input,
-  MenuProps,
-  message,
-  Modal,
-  Space,
-  Table,
-  Tabs,
-} from "antd";
+import { Modal, Space, Tabs } from "antd";
 import React from "react";
 import "./modal-create-department.css";
-import { DownOutlined } from "@ant-design/icons";
-import { CustomAvatar } from "../v2";
 import InfoTabs from "./info-tabs";
 import AddManagerTabs from "./add-manager-tabs";
 import AddStaffTabs from "./add-staff-tabs";
-const { RangePicker } = DatePicker;
 
 type ModalCreateDepartment = {
   isModalOpen: boolean;
@@ -38,7 +23,7 @@ const ModalCreateDepartment: React.FC<ModalCreateDepartment> = ({
 
   return (
     <Modal
-      className="wrapper"
+      className='wrapper'
       open={isModalOpen}
       centered
       onOk={handleOk}
@@ -54,20 +39,20 @@ const ModalCreateDepartment: React.FC<ModalCreateDepartment> = ({
       >
         Create Department
       </h2>
-      <Tabs defaultActiveKey="1">
-        <Tabs.TabPane tab="Info" key="1">
+      <Tabs defaultActiveKey='1'>
+        <Tabs.TabPane tab='Info' key='1'>
           <InfoTabs />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Manager" key="2">
+        <Tabs.TabPane tab='Manager' key='2'>
           <AddManagerTabs />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Staff" key="3">
+        <Tabs.TabPane tab='Staff' key='3'>
           <AddStaffTabs />
         </Tabs.TabPane>
       </Tabs>
       <Space
-        direction="vertical"
-        size="middle"
+        direction='vertical'
+        size='middle'
         style={{ display: "flex" }}
       ></Space>
     </Modal>

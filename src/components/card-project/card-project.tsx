@@ -18,7 +18,7 @@ import "./card-project.css";
 import { useDeleteDepartmentsMutation } from "src/share/services";
 import { UserOutlined, PlusOutlined } from "@ant-design/icons";
 import ModalAddUserToProject from "../modal-add-user-to-project";
-import ModalUpdatePost from "../modal-update-project";
+import { ModalUpdateProject } from "../modal-update-project";
 type CardProject = {
   name?: string;
   description?: string;
@@ -144,10 +144,12 @@ export const CardProject: React.FC<CardProject> = ({
             isModalOpen={isModalAddUserOpen}
             setIsModalOpen={setIsModalAddUserOpen}
           ></ModalAddUserToProject>
-          <ModalUpdatePost
+          <ModalUpdateProject
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
-          ></ModalUpdatePost>
+            userDetail={{}}
+            project={{}}
+          ></ModalUpdateProject>
         </div>
       </Card>
     </div>

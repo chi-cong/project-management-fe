@@ -10,7 +10,7 @@ import {
 } from "antd";
 import { ResponsivePie } from "@nivo/pie";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { CustomAvatar } from "src/components/v2";
+import { CustomAvatar, RmDepartmentStaff } from "src/components/v2";
 import { DepartmentProjects } from "src/layouts/v2";
 import { useEffect, useState } from "react";
 import { DepartmentReport } from "src/layouts/v2/department-report";
@@ -20,14 +20,17 @@ import {
   useGetDepartmentQuery,
   useGetAllProjectDepartmentQuery,
   useGetDepartmentStaffsQuery,
+  useDeleteDepartmentsMutation,
 } from "src/share/services";
 import { Project, RoleResponse } from "src/share/models";
-import { ModalUpdateDepartment, ModalUpdateProject } from "src/components";
+import { ModalUpdateDepartment } from "src/components";
+import AddStaffTabs from "src/components/modal-update-department/add-staff-tabs";
 
 export const AdminDepartment = () => {
   const [reportModal, setReportModal] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
-  const [updatePrjModal, setUpdatePrjModal] = useState<boolean>(false);
+  const [addStaffModal, setAddStaffModal] = useState<boolean>(false);
+  const [rmStaffModal, setRmStaffModal] = useState<boolean>(false);
   const { data } = useGetDepartmentQuery({ id: "66aa0782193b7aa0827eace0" });
   const { data: departmentProjects } = useGetAllProjectDepartmentQuery({
     departmentId: `66aa0782193b7aa0827eace0`,
@@ -36,6 +39,7 @@ export const AdminDepartment = () => {
     itemsPerPage: "ALL",
     departmentId: "66aa0782193b7aa0827eace0",
   });
+  const [deleteDepartment] = useDeleteDepartmentsMutation();
   const navigate = useNavigate();
   const [projectFilter, setProjectFilter] = useState<{
     onProgress: Project[];
@@ -88,7 +92,13 @@ export const AdminDepartment = () => {
           <Pen />
           <Typography.Text>Edit</Typography.Text>
         </Button>
-        <Popconfirm title='Delete this department ?'>
+        <Popconfirm
+          title='Delete this department ?'
+          onConfirm={() => {
+            deleteDepartment({ departmentId: "66aa0782193b7aa0827eace0" });
+            navigate("/v2/department");
+          }}
+        >
           <Button className='department-option-btn' type='text'>
             <Trash />
             <Typography.Text>Delete</Typography.Text>
@@ -100,11 +110,19 @@ export const AdminDepartment = () => {
   const TeamMemberOptions = () => {
     return (
       <div className='department-option'>
-        <Button type='text' className='department-option-btn'>
+        <Button
+          type='text'
+          className='department-option-btn'
+          onClick={() => setAddStaffModal(true)}
+        >
           <UserPlus />
           <Typography.Text>Add Member </Typography.Text>
         </Button>
-        <Button className='department-option-btn' type='text'>
+        <Button
+          className='department-option-btn'
+          type='text'
+          onClick={() => setRmStaffModal(true)}
+        >
           <Trash />
           <Typography.Text>Remove Member</Typography.Text>
         </Button>
@@ -147,14 +165,14 @@ export const AdminDepartment = () => {
             <section className='second-sec'>
               <div className='des-manager-sec'>
                 <Typography.Text>{data?.description}</Typography.Text>
-                {data?.manager_info && (
+                {data?.information && (
                   <Card className='manager-card'>
                     <Card.Meta
                       title={"Nguyen Van A"}
                       description={
                         <div className='department-manager-card-des'>
                           <Typography.Text>
-                            nguyenvana@gmail.com
+                            {data.information.manager?.name}
                           </Typography.Text>
                           <Typography.Text type='secondary'>
                             Department Manager
@@ -172,18 +190,23 @@ export const AdminDepartment = () => {
               <div className='pie-chart'>
                 <ResponsivePie
                   data={[
-                    { id: "todo", title: "Todo", color: "#1677ff", value: 100 },
+                    {
+                      id: "todo",
+                      title: "Todo",
+                      color: "#1677ff",
+                      value: projectFilter.todo.length,
+                    },
                     {
                       id: "on progress",
                       title: "On progress",
                       color: "#1677ff",
-                      value: 100,
+                      value: projectFilter.onProgress.length,
                     },
                     {
                       id: "done",
                       title: "Done",
                       color: "#h1h1h1",
-                      value: 100,
+                      value: projectFilter.done.length,
                     },
                   ]}
                   margin={{ top: 5, right: 0, bottom: 5, left: 0 }}
@@ -280,7 +303,22 @@ export const AdminDepartment = () => {
       <ModalUpdateDepartment
         isModalOpen={updateModal}
         setIsModalOpen={setUpdateModal}
+        department={data}
       />
+      <Modal
+        open={addStaffModal}
+        onCancel={() => setAddStaffModal(false)}
+        width={"80vw"}
+      >
+        <AddStaffTabs />
+      </Modal>
+      <Modal
+        open={rmStaffModal}
+        onCancel={() => setRmStaffModal(false)}
+        width={"80vw"}
+      >
+        <RmDepartmentStaff />
+      </Modal>
     </>
   );
 };

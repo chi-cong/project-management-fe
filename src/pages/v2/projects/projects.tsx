@@ -47,16 +47,16 @@ export const Projects = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='v2-projects-page'>
-      <section className='main'>
-        <header className='main-header'>
-          <section className='first-sec'>
-            <div className='title-des'>
-              <div className='title-row'>
+    <div className="v2-projects-page">
+      <section className="main">
+        <header className="main-header">
+          <section className="first-sec">
+            <div className="title-des">
+              <div className="title-row">
                 <h2>Project</h2>
               </div>
             </div>
-            <Row className='action' gutter={[8, 8]}>
+            <Row className="action" gutter={[8, 8]}>
               <Col xs={12} sm={12} md={6}>
                 <Dropdown menu={menuProps}>
                   <Button style={{ width: "100%" }}>
@@ -75,15 +75,15 @@ export const Projects = () => {
               </Col>
               <Col xs={12} sm={12} md={6}>
                 <Input
-                  placeholder='Search...'
+                  placeholder="Search..."
                   prefix={<SearchOutlined />}
                   style={{ width: "100%" }}
                 />
               </Col>
               <Col xs={12} sm={12} md={6}>
                 <Button
-                  type='default'
-                  className='title-row-btn'
+                  type="default"
+                  className="title-row-btn"
                   icon={<DeleteOutlined />}
                   style={{ width: "100%" }}
                 >
@@ -92,8 +92,8 @@ export const Projects = () => {
               </Col>
               <Col xs={12} sm={12} md={6}>
                 <Button
-                  type='primary'
-                  className='title-row-btn'
+                  type="primary"
+                  className="title-row-btn"
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
                   style={{ width: "100%" }}
@@ -104,7 +104,7 @@ export const Projects = () => {
             </Row>
           </section>
         </header>
-        <main className=''>
+        <main className="">
           <List
             grid={{
               gutter: 12,
@@ -119,9 +119,9 @@ export const Projects = () => {
             renderItem={() => (
               <List.Item>
                 <CardProject
-                  name='Tính năng thanh toán zalopay'
-                  description='Code giao diện bằng ReactJS và sử dụng các framwork liên quan
-                như là....'
+                  name="Tính năng thanh toán zalopay"
+                  description="Code giao diện bằng ReactJS và sử dụng các framwork liên quan
+                như là...."
                   onClick={() => navigate("/v2/dashboard/admin/project")}
                 />
               </List.Item>

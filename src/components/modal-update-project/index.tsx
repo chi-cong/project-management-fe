@@ -6,12 +6,17 @@ import {
   Input,
   message,
   Modal,
+  Select,
 } from "antd";
 import React, { useEffect } from "react";
 import "./modal-update-project.css";
 import { OUserRole, Project, RoleResponse, User } from "src/share/models";
 import dayjs, { Dayjs } from "dayjs";
-import { useUpdateProjectMutation } from "src/share/services";
+import {
+  useUpdateProjectMutation,
+  useGetDepartmentsQuery,
+  useGetUsersQuery,
+} from "src/share/services";
 
 type ModalUpdateProjectProp = {
   isModalOpen: boolean;
@@ -27,6 +32,13 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   project,
 }) => {
   const [updateProject] = useUpdateProjectMutation();
+  const { data: departmentData } = useGetDepartmentsQuery({
+    itemsPerPage: "ALL",
+  });
+  const { data: pms } = useGetUsersQuery({
+    items_per_page: "ALL",
+    role: "PROJECT_MANAGER",
+  });
 
   const [form] = Form.useForm();
 
@@ -57,19 +69,19 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
     form.setFieldsValue({
       ...project,
       startAt: dayjs(
-        typeof project.startAt === "string"
+        typeof project?.startAt === "string"
           ? project.startAt.substring(0, 10)
           : new Date()
       ),
       endAt: dayjs(
-        typeof project.endAt === "string"
+        typeof project?.endAt === "string"
           ? project.endAt.substring(0, 10)
           : new Date()
       ),
       department_id: project?.department_id,
-      pms: project.project_manager_id,
+      pms: project?.project_manager_id,
     });
-  }, [project, departFetch, allFetch]);
+  }, [project]);
 
   return (
     <Modal
@@ -135,7 +147,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
           <Select
             options={pms?.users?.map((pm) => {
               return {
-                label: <Text>{pm.username}</Text>,
+                label: pm.username,
                 value: pm.user_id,
               };
             })}

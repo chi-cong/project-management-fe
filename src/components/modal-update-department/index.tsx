@@ -4,13 +4,16 @@ import "./modal-update-department.css";
 import InfoTabs from "./info-tabs";
 import AddManagerTabs from "./add-manager-tabs";
 import AddStaffTabs from "./add-staff-tabs";
+import { Department } from "src/share/models";
 type ModalUpdateDepartment = {
   isModalOpen: boolean;
   setIsModalOpen: (show: boolean) => void;
+  department?: Department;
 };
 export const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
   isModalOpen,
   setIsModalOpen,
+  department,
 }) => {
   const handleOk = () => {
     setIsModalOpen(true);
@@ -28,6 +31,7 @@ export const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
       onOk={handleOk}
       onCancel={handleCancel}
       width={1000}
+      footer={[]}
     >
       <h2
         style={{
@@ -40,7 +44,10 @@ export const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
       </h2>
       <Tabs defaultActiveKey='1'>
         <Tabs.TabPane tab='Info' key='1'>
-          <InfoTabs />
+          <InfoTabs
+            name={department?.name}
+            description={department?.description}
+          />
         </Tabs.TabPane>
         <Tabs.TabPane tab='Manager' key='2'>
           <AddManagerTabs />

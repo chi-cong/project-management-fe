@@ -1,10 +1,10 @@
 import { Button, Table } from "antd";
 import React, { useState } from "react";
-import { CustomAvatar } from "../v2";
+import { CustomAvatar } from "src/components/v2";
 import { ColumnsType } from "antd/es/table";
 import {
-  useManagerGetStaffNoDepartmentQuery,
-  useAddStaffDepartmentMutation,
+  useGetDepartmentStaffsQuery,
+  useDeleteStaffDepartmentMutation,
 } from "src/share/services";
 import { RoleResponse } from "src/share/models";
 
@@ -15,7 +15,7 @@ interface DataType {
   email?: string;
 }
 
-const AddStaffTabs: React.FC = () => {
+export const RmDepartmentStaff: React.FC = () => {
   const columns: ColumnsType<DataType> = [
     {
       title: "Avatar",
@@ -45,20 +45,23 @@ const AddStaffTabs: React.FC = () => {
         <Button
           type='primary'
           onClick={() => [
-            addDepartmentStaff({
+            rmDepartmentStaff({
               departmentId: "66aa0782193b7aa0827eace0",
-              listStaff: [record.key],
+              listStaff: [record.key] as string[],
             }),
           ]}
         >
-          Assign
+          Remove
         </Button>
       ),
     },
   ];
   const [selectedRows, setSelectedRows] = useState<DataType[]>([]);
-  const [addDepartmentStaff] = useAddStaffDepartmentMutation();
-  const { data: noDepartStaffs } = useManagerGetStaffNoDepartmentQuery({});
+  const [rmDepartmentStaff] = useDeleteStaffDepartmentMutation();
+  const { data: departStaffs } = useGetDepartmentStaffsQuery({
+    itemsPerPage: "ALL",
+    departmentId: "66aa0782193b7aa0827eace0",
+  });
   const rowSelection = {
     onChange: (_selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
       setSelectedRows(selectedRows);
@@ -70,7 +73,7 @@ const AddStaffTabs: React.FC = () => {
   };
 
   const dataTableMapper = () => {
-    return noDepartStaffs?.users.map((user): DataType => {
+    return departStaffs?.users.map((user): DataType => {
       return {
         key: user.user_id,
         email: user.email,
@@ -94,9 +97,9 @@ const AddStaffTabs: React.FC = () => {
           <Button
             type='primary'
             onClick={() => {
-              addDepartmentStaff({
+              rmDepartmentStaff({
                 departmentId: "66aa0782193b7aa0827eace0",
-                listStaff: selectedRows.map((row) => row.key),
+                listStaff: selectedRows.map((row) => row.key) as string[],
               });
             }}
           >
@@ -115,5 +118,3 @@ const AddStaffTabs: React.FC = () => {
     </div>
   );
 };
-
-export default AddStaffTabs;

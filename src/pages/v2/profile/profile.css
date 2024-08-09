@@ -53,15 +53,15 @@
           }
           .avatar-upload {
             display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
+            align-items: center;
+            justify-content: space-around;
             gap: 20px;
             img {
               border-radius: 8px;
             }
             .upload-icon {
-              margin-top: 40px;
-              font-size: 24px;
+              font-size: 27px;
+              justify-content: center;
             }
             p {
               margin: 0;
