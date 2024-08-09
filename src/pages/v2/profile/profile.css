@@ -70,7 +70,7 @@
             .text-content {
               display: flex;
               flex-direction: column;
-              /* justify-content: center; */
+              justify-content: center;
               p:first-of-type {
                 margin-bottom: 10px;
               }
