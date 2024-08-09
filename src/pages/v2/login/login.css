@@ -5,7 +5,6 @@
   gap: var(--gap-l);
   background-image: url(../../../assets/imgs/loginbg.jpg);
   background-size: cover;
-
   .content-container {
     display: flex;
     justify-content: space-between;
