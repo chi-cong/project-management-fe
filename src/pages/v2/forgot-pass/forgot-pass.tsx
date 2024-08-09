@@ -5,7 +5,7 @@ import {
   ConfirmOtpForm,
   ConfirNewPassForm,
 } from "src/layouts/v2/forgot-pass-form";
-import { Typography } from "antd";
+import { Col, Row, Typography } from "antd";
 import { useState } from "react";
 
 export const ForgotPass = () => {
@@ -17,7 +17,7 @@ export const ForgotPass = () => {
       case 0:
         return (
           <>
-            <Typography.Title level={3} className='title'>
+            <Typography.Title level={3} className="title">
               Reset Password
             </Typography.Title>
             <ConfirmEmailForm
@@ -31,7 +31,7 @@ export const ForgotPass = () => {
       case 1:
         return (
           <>
-            <Typography.Title level={3} className='title'>
+            <Typography.Title level={3} className="title">
               Verify Token
             </Typography.Title>
             <ConfirmOtpForm
@@ -43,7 +43,7 @@ export const ForgotPass = () => {
       default:
         return (
           <>
-            <Typography.Title level={3} className='title'>
+            <Typography.Title level={3} className="title">
               Change Password
             </Typography.Title>
             <ConfirNewPassForm email={email} />
@@ -56,25 +56,25 @@ export const ForgotPass = () => {
     switch (currStep) {
       case 0:
         return (
-          <div className='forgot-password-title'>
-            <h1 className='title'>Reset password </h1>
-            <h1 className='title emphasized-text'>Project management</h1>
+          <div className="forgot-password-title">
+            <h1 className="title">Reset password </h1>
+            <h1 className="title emphasized-text">Project management</h1>
           </div>
         );
       case 1:
         return (
-          <div className='forgot-password-title'>
-            <h1 className='title'>Reset password </h1>
-            <h1 className='title emphasized-text'>Project management</h1>
+          <div className="forgot-password-title">
+            <h1 className="title">Reset password </h1>
+            <h1 className="title emphasized-text">Project management</h1>
           </div>
         );
       default:
         return (
           <>
-            <div className='forgot-password-title'>
-              <h1 className='title'>Change your </h1>
-              <h1 className='title emphasized-text'>Project management</h1>
-              <h1 className='title'>account password</h1>
+            <div className="forgot-password-title">
+              <h1 className="title">Change your </h1>
+              <h1 className="title emphasized-text">Project management</h1>
+              <h1 className="title">account password</h1>
             </div>
           </>
         );
@@ -83,15 +83,23 @@ export const ForgotPass = () => {
 
   return (
     <>
-      <div className='forgot-pass-page'>
-        {titleMap()}
-        <div className='forgot-form-container'>
+      <Row className="forgot-pass-page">
+        <Col> {titleMap()}</Col>
+        <Col
+          xxl={11}
+          xl={11}
+          lg={11}
+          md={24}
+          sm={24}
+          xs={24}
+          className="forgot-form-container"
+        >
           {formMap()}
           <Typography.Text>
             Remember Password ? <Link to={"/v2/login"}>Login Now</Link>
           </Typography.Text>
-        </div>
-      </div>
+        </Col>
+      </Row>
     </>
   );
 };
