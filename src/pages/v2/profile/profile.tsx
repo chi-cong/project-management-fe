@@ -51,7 +51,6 @@ const SelectNewAvatar: React.FC<{
     headers: {
       authorization: sessionStorageUtil.get("accessToken")! as string,
     },
-
     onChange(info) {
       if (info.file.status === "done") {
         message.success(`Avatar upload successfully`);
@@ -61,7 +60,6 @@ const SelectNewAvatar: React.FC<{
       }
     },
   };
-
   const fetchAvatar = async () => {
     await getAvatar({ avatar: user?.avatar })
       .unwrap()
