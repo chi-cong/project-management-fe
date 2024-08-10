@@ -205,7 +205,9 @@ export const Projects = () => {
                 <CardProject
                   name={project?.name}
                   description={project?.description}
-                  onClick={() => navigate("/v2/dashboard/admin/project")}
+                  onClick={() =>
+                    navigate(`/v2/dashboard/admin/${project.project_id}`)
+                  }
                 />
               </List.Item>
             )}
