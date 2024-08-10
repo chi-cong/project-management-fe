@@ -1,20 +1,34 @@
-import { Modal, Space, Tabs } from "antd";
-import React from "react";
+import { Button, Modal, Space, Tabs } from "antd";
+import React, { useState } from "react";
 import "./modal-create-department.css";
 import InfoTabs from "./info-tabs";
 import AddManagerTabs from "./add-manager-tabs";
 import AddStaffTabs from "./add-staff-tabs";
+import { useAddDepartmentMutation } from "src/share/services";
 
 type ModalCreateDepartment = {
   isModalOpen: boolean;
-  setIsModalOpen: any;
+  setIsModalOpen: (show: boolean) => void;
 };
 const ModalCreateDepartment: React.FC<ModalCreateDepartment> = ({
   isModalOpen,
   setIsModalOpen,
 }) => {
-  const handleOk = () => {
-    setIsModalOpen(true);
+  const [departInfo, setDepartInfo] = useState<{
+    name?: string;
+    description?: string;
+  }>();
+  const [managerId, setManagerId] = useState<string>("");
+  const [staffList, setStaffList] = useState<string[]>([]);
+  const [createDepartment] = useAddDepartmentMutation();
+
+  const createDepart = () => {
+    createDepartment({
+      name: departInfo?.name,
+      description: departInfo?.description,
+      list_user_ids: staffList,
+      manager_id: managerId,
+    });
   };
 
   const handleCancel = () => {
@@ -26,9 +40,13 @@ const ModalCreateDepartment: React.FC<ModalCreateDepartment> = ({
       className='wrapper'
       open={isModalOpen}
       centered
-      onOk={handleOk}
       onCancel={handleCancel}
       width={1000}
+      footer={[
+        <Button onClick={createDepart} size='large' type='primary'>
+          Create Department
+        </Button>,
+      ]}
     >
       <h2
         style={{
@@ -41,13 +59,13 @@ const ModalCreateDepartment: React.FC<ModalCreateDepartment> = ({
       </h2>
       <Tabs defaultActiveKey='1'>
         <Tabs.TabPane tab='Info' key='1'>
-          <InfoTabs />
+          <InfoTabs setFields={setDepartInfo} />
         </Tabs.TabPane>
         <Tabs.TabPane tab='Manager' key='2'>
-          <AddManagerTabs />
+          <AddManagerTabs setManagerId={setManagerId} managerId={managerId} />
         </Tabs.TabPane>
         <Tabs.TabPane tab='Staff' key='3'>
-          <AddStaffTabs />
+          <AddStaffTabs setStaffList={setStaffList} staffList={staffList} />
         </Tabs.TabPane>
       </Tabs>
       <Space

@@ -12,14 +12,12 @@ const InfoTabs: React.FC<DepartmentInfo> = ({ name, description }) => {
   const [updateDepartment] = useUpdateDepartmentMutation();
 
   const onFinish: FormProps<DepartmentInfo>["onFinish"] = async (values) => {
-    console.log(values);
-
     const sentValues = {
       name: values.name,
       description: values.description,
     };
     await updateDepartment({
-      ...sentValues,
+      body: { ...sentValues },
       departmentId: "66aa0782193b7aa0827eace0",
     })
       .unwrap()
