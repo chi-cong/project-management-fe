@@ -60,9 +60,7 @@ const ModalCreateProject: React.FC<ModalCreateProject> = ({
       key: "MANAGER",
     },
   ];
-  const handleMenuClick: MenuProps["onClick"] = (e) => {
-    console.log("click", e);
-  };
+  const handleMenuClick: MenuProps["onClick"] = (e) => {};
   const menuProps = {
     items,
     onClick: handleMenuClick,
