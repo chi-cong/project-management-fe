@@ -7,6 +7,7 @@ import {
   List,
   MenuProps,
   message,
+  PaginationProps,
   Row,
   Space,
 } from "antd";
@@ -16,13 +17,22 @@ import {
   DeleteOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalCreatePost from "src/components/modal-create-project";
 import { CardProject } from "src/components/card-project";
 import { useNavigate } from "react-router-dom";
-import { useGetAllProjectQuery } from "src/share/services";
+import {
+  useGetAllProjectDepartmentQuery,
+  useGetAllProjectQuery,
+  useGetUserDetailQuery,
+  useGetUserProjectQuery,
+} from "src/share/services";
 import { queries } from "@storybook/test";
+import { useRoleChecker } from "src/share/hooks";
+import { OUserRole } from "src/share/models";
+import { ProjectCard } from "src/components/project-card";
 export const Projects = () => {
+  //components
   const items: MenuProps["items"] = [
     {
       label: "On Progress",
@@ -38,6 +48,9 @@ export const Projects = () => {
     },
   ];
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [queries, setQueries] = useState<{ page: number }>({ page: 1 });
+  const navigate = useNavigate();
+  const checkRole = useRoleChecker();
   const handleMenuClick: MenuProps["onClick"] = () => {
     message.info("Click on menu item.");
   };
@@ -46,12 +59,58 @@ export const Projects = () => {
     onClick: handleMenuClick,
   };
 
-  const navigate = useNavigate();
+  //fetching data
+  const { data: allProject, isFetching } = useGetAllProjectQuery(
+    { ...queries, items_per_page: 9 },
+    { skip: !checkRole(OUserRole.Admin) }
+  );
 
-  const { data: allProject, isFetching } = useGetAllProjectQuery({
-    ...queries,
-    items_per_page: 9,
-  });
+  const { data: userDetail } = useGetUserDetailQuery();
+
+  const { data: departmentProject, isFetching: departProjectFetch } =
+    useGetAllProjectDepartmentQuery(
+      {
+        ...queries,
+        departmentId: userDetail?.department_id,
+      },
+      {
+        skip: checkRole(OUserRole.Admin) || checkRole(OUserRole.ProjectManager),
+      }
+    );
+
+  const { data: userProjects } = useGetUserProjectQuery(
+    {
+      ...queries,
+      items_per_page: 9,
+    },
+    { skip: !checkRole(OUserRole.Staff) }
+  );
+
+  //pagination
+  const onChangePage: PaginationProps["onChange"] = (page) => {
+    setQueries({ ...queries, page });
+  };
+
+  // useEffect(() => {
+  //   subRefetch();
+  // }, [departmentProject, allProject]);
+
+  // const subRefetch = () => {
+  //   setSelectedProject((oldState) => {
+  //     if (checkRole(OUserRole.Admin)) {
+  //       return allProject?.data.find(
+  //         (newState) => newState.project_id === oldState?.project_id
+  //       );
+  //     } else if (checkRole(OUserRole.Manager)) {
+  //       return departmentProject?.data.find(
+  //         (newState) => newState.project_id === oldState?.project_id
+  //       );
+  //     }
+  //     return userProjects?.data.find(
+  //       (newState) => newState.project_id === oldState?.project_id
+  //     );
+  //   });
+  // };
 
   return (
     <div className="v2-projects-page">
@@ -134,13 +193,18 @@ export const Projects = () => {
               onChange: onChangePage,
               showSizeChanger: false,
             }}
-            dataSource={[0, 1, 2, 4]}
-            renderItem={() => (
+            dataSource={
+              checkRole(OUserRole.Admin)
+                ? allProject?.data
+                : checkRole(OUserRole.Manager)
+                  ? departmentProject?.data
+                  : userProjects?.data
+            }
+            renderItem={(project) => (
               <List.Item>
                 <CardProject
-                  name="Tính năng thanh toán zalopay"
-                  description="Code giao diện bằng ReactJS và sử dụng các framwork liên quan
-                như là...."
+                  name={project?.name}
+                  description={project?.description}
                   onClick={() => navigate("/v2/dashboard/admin/project")}
                 />
               </List.Item>
@@ -155,3 +219,9 @@ export const Projects = () => {
     </div>
   );
 };
+// function subRefetch() {
+//   throw new Error("Function not implemented.");
+// }
+// function setSelectedProject(arg0: (oldState: any) => any) {
+//   throw new Error("Function not implemented.");
+// }
