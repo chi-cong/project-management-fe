@@ -19,7 +19,7 @@ export interface Department {
   createdBy?: string;
   createdAt?: string;
   manager_id?: string;
-  manager_info: User;
+  manager_info?: User;
   information?: DepartInformation;
 }
 

@@ -50,7 +50,9 @@ export const CardAccount: React.FC<CardAccount> = ({
           <Row className='account-header'>
             <Col span={12} className='account-header-info'>
               <h3>{account.username}</h3>
-              <div className='account-role'>Admin</div>
+              <div className='account-role'>
+                {(account?.role as RoleResponse).name}
+              </div>
             </Col>
             <Col span={12} className='account-header-action'>
               {(account.role as RoleResponse).name !== "MANAGER" ? (

@@ -172,10 +172,12 @@ export const CardProject: React.FC<CardProject> = ({
             isModalOpen={isModalAddUserOpen}
             setIsModalOpen={setIsModalAddUserOpen}
           ></ModalAddUserToProject>
-          <ModalUpdatePost
+          <ModalUpdateProject
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
-          ></ModalUpdatePost>
+            userDetail={{}}
+            project={{}}
+          ></ModalUpdateProject>
         </div>
       </Card>
     </div>
