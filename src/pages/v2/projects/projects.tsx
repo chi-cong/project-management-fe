@@ -20,6 +20,8 @@ import { useState } from "react";
 import ModalCreatePost from "src/components/modal-create-project";
 import { CardProject } from "src/components/card-project";
 import { useNavigate } from "react-router-dom";
+import { useGetAllProjectQuery } from "src/share/services";
+import { queries } from "@storybook/test";
 export const Projects = () => {
   const items: MenuProps["items"] = [
     {
@@ -45,6 +47,11 @@ export const Projects = () => {
   };
 
   const navigate = useNavigate();
+
+  const { data: allProject, isFetching } = useGetAllProjectQuery({
+    ...queries,
+    items_per_page: 9,
+  });
 
   return (
     <div className="v2-projects-page">
@@ -114,6 +121,18 @@ export const Projects = () => {
               lg: 2,
               xl: 2,
               xxl: 3,
+            }}
+            pagination={{
+              position: "bottom",
+              align: "center",
+              pageSize: 9,
+              total: checkRole(OUserRole.Admin)
+                ? allProject?.total
+                : checkRole(OUserRole.Manager)
+                  ? departmentProject?.total
+                  : userProjects?.total,
+              onChange: onChangePage,
+              showSizeChanger: false,
             }}
             dataSource={[0, 1, 2, 4]}
             renderItem={() => (

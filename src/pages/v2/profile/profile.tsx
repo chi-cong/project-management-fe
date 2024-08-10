@@ -1,7 +1,7 @@
 import "./profile.css";
 import { ProfileForm } from "src/layouts/v2/profile-form";
 import { RoleResponse } from "src/share/models";
-import { UploadOutlined } from "@ant-design/icons";
+import { CloudUploadOutlined } from "@ant-design/icons";
 import { CustomAvatar } from "src/components/v2";
 import {
   useGetUserDetailQuery,
@@ -83,7 +83,7 @@ const SelectNewAvatar: React.FC<{
           style={{ width: "30%", height: "100%" }}
         />
         <div>
-          <UploadOutlined className="upload-icon" />
+          <CloudUploadOutlined className="upload-icon" />
         </div>
         <Upload {...avaFileProps}>
           <div className="text-content">
