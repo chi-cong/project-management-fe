@@ -111,6 +111,8 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
       <ModalUpdateProject
         isModalOpen={updateModal}
         setIsModalOpen={setUpdateModal}
+        isUpdate={true}
+        project={project}
       />
     </>
   );

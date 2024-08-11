@@ -7,10 +7,11 @@ import {
   message,
   Modal,
   Select,
+  Space,
 } from "antd";
 import React, { useEffect } from "react";
 import "./modal-update-project.css";
-import { OUserRole, Project, RoleResponse, User } from "src/share/models";
+import { Project, User } from "src/share/models";
 import dayjs, { Dayjs } from "dayjs";
 import {
   useUpdateProjectMutation,
@@ -23,13 +24,14 @@ type ModalUpdateProjectProp = {
   setIsModalOpen: (show: boolean) => void;
   userDetail: User;
   project: Project;
+  isUpdate: boolean;
 };
 
 export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   isModalOpen,
   setIsModalOpen,
-  userDetail,
   project,
+  isUpdate,
 }) => {
   const [updateProject] = useUpdateProjectMutation();
   const { data: departmentData } = useGetDepartmentsQuery({
@@ -49,9 +51,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
     if (values.startAt) {
       values.startAt = (values.startAt as Dayjs).add(1, "day");
     }
-    if ((userDetail?.role as RoleResponse).name === OUserRole.Manager) {
-      values.department_id = userDetail?.department_id;
-    }
+    values.department_id = project.department_id;
 
     await updateProject({ values, projectId: project.project_id })
       .unwrap()
@@ -81,7 +81,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
       department_id: project?.department_id,
       pms: project?.project_manager_id,
     });
-  }, [project]);
+  }, [form, project]);
 
   return (
     <Modal
@@ -106,23 +106,25 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
         layout='vertical'
         form={form}
         onFinish={onFinish}
+        // if its detail modal, disable form
+        disabled={!isUpdate}
       >
         <Form.Item<Project>
           name={"name"}
           label='Project name'
           rules={[{ required: true, message: "Project name is required" }]}
         >
-          <Input />
+          <Input size='large' />
         </Form.Item>
         <Form.Item<Project>
           name={"projectCode"}
           label='Project Code'
           rules={[{ required: true, message: "Project code is required" }]}
         >
-          <Input />
+          <Input size='large' />
         </Form.Item>
         <Form.Item<Project> name={"investor"} label='Investor'>
-          <Input />
+          <Input size='large' />
         </Form.Item>
         <Form.Item<Project>
           name={"description"}
@@ -131,7 +133,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
             { required: true, message: "Project description is required" },
           ]}
         >
-          <Input.TextArea />
+          <Input.TextArea size='large' />
         </Form.Item>
         <Form.Item<Project> name={"department_id"} label='Department'>
           <Select
@@ -141,6 +143,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
                 value: department.department_id,
               };
             })}
+            size='large'
           />
         </Form.Item>
         <Form.Item<Project> name={"project_manager_id"} label='Project Manager'>
@@ -151,24 +154,34 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
                 value: pm.user_id,
               };
             })}
+            size='large'
           />
         </Form.Item>
 
         <Form.Item<Project> name={"startAt"} label='Start'>
-          <DatePicker />
+          <DatePicker size='large' style={{ width: "100%" }} />
         </Form.Item>
         <Form.Item<Project> name={"endAt"} label='End'>
-          <DatePicker />
+          <DatePicker size='large' style={{ width: "100%" }} />
         </Form.Item>
 
-        <Form.Item>
-          <Button type='primary' htmlType='submit'>
-            {project ? "Save Changes" : "Create Project"}
-          </Button>
-          {project && (
-            <Button className='project-form-cancel-btn'>Cancel</Button>
-          )}
-        </Form.Item>
+        {isUpdate && (
+          <Form.Item className='create-user-form-btn'>
+            <Space>
+              <Button type='primary' htmlType='submit' size='large'>
+                Update
+              </Button>
+              <Button
+                type='primary'
+                ghost
+                size='large'
+                onClick={() => setIsModalOpen(false)}
+              >
+                Cancel
+              </Button>
+            </Space>
+          </Form.Item>
+        )}
       </Form>
     </Modal>
   );

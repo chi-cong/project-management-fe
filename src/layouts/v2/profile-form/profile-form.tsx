@@ -5,12 +5,10 @@ import {
   DatePicker,
   Form,
   Input,
-  Select,
   FormProps,
   Space,
   message,
 } from "antd";
-import { userRoleOptions } from "src/share/utils";
 import dayjs, { Dayjs } from "dayjs";
 import { RoleResponse, User, UserRole } from "src/share/models";
 import { useUpdateUserDetailMutation } from "src/share/services";
@@ -137,19 +135,6 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
               placeholder='Birthday...'
               size='large'
               style={{ width: "100%" }}
-              className={isEdit ? "input-enable" : "input-disable"}
-            />
-          </Form.Item>
-        </div>
-        <div>
-          <Form.Item<UserInfor>
-            name='role'
-            label='Roles'
-            rules={[{ required: true, message: "Role is required" }]}
-          >
-            <Select
-              options={userRoleOptions}
-              size='large'
               className={isEdit ? "input-enable" : "input-disable"}
             />
           </Form.Item>

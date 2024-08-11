@@ -58,26 +58,26 @@ export const AdminDepartment = () => {
     );
   };
 
-  const setupProjectFilter = (): void => {
-    const onProgress: Project[] = [];
-    const todo: Project[] = [];
-    const done: Project[] = [];
-
-    departmentProjects?.data.forEach((project) => {
-      const status = calculateProgress(project.total_task!);
-      if (status === 100) {
-        done.push(project);
-      } else if (status === 0) {
-        todo.push(project);
-      } else {
-        onProgress.push(project);
-      }
-    });
-
-    setProjectFilter({ onProgress, todo, done });
-  };
-
   useEffect(() => {
+    const setupProjectFilter = (): void => {
+      const onProgress: Project[] = [];
+      const todo: Project[] = [];
+      const done: Project[] = [];
+
+      departmentProjects?.data.forEach((project) => {
+        const status = calculateProgress(project.total_task!);
+        if (status === 100) {
+          done.push(project);
+        } else if (status === 0) {
+          todo.push(project);
+        } else {
+          onProgress.push(project);
+        }
+      });
+
+      setProjectFilter({ onProgress, todo, done });
+    };
+
     setupProjectFilter();
   }, [departmentProjects]);
 

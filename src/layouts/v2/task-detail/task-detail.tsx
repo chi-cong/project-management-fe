@@ -1,7 +1,6 @@
 import "./task-detail.css";
 import {
   Modal,
-  Select,
   Input,
   Button,
   Typography,
@@ -10,49 +9,101 @@ import {
   Popconfirm,
   Popover,
   Tooltip,
+  message,
 } from "antd";
 import { useState } from "react";
 import { UserPlus, MenuDots, Down, Folder, Pen, Trash } from "src/assets/icons";
 import { DocumentSection, CustomAvatar } from "src/components/v2";
+import {
+  useCreateActivityMutation,
+  useGetTaskActivityQuery,
+  useGetDepartmentStaffsQuery,
+  useUpdateAssignmentMutation,
+  useGetAssignmentQuery,
+  useDeleteAssignmentMutation,
+  useDeleteTaskMutation,
+} from "src/share/services";
+import { useSelector, useDispatch } from "react-redux";
+import { selectTaskAssign } from "src/libs/redux/taskAssignSlice";
 
-import type { Assignment, Task, Project, Activity } from "src/share/models";
+import { UpdateTaskForm } from "../update-task-form";
+import type { RootState } from "src/libs/redux";
+
+import type { Project, User } from "src/share/models";
 
 interface TaskFormProps {
-  assignment?: Assignment;
-  task?: Task;
-  project: Project;
+  project?: Project;
   open: boolean;
   setShowTaskDetail: (isOpen: boolean) => void;
 }
 
 export const TaskDetail = ({
-  assignment,
-  task,
+  project,
   open,
   setShowTaskDetail,
 }: TaskFormProps) => {
+  const taskAssignment = useSelector(
+    (state: RootState) => state.taskAssignment
+  );
+  const dispatch = useDispatch();
+
+  const { data: assignment } = useGetAssignmentQuery({
+    assignmentId: taskAssignment.assignment?.assignment_id,
+  });
+  const { data: departmentStaffs } = useGetDepartmentStaffsQuery(
+    {
+      departmentId: project?.department_id,
+      itemsPerPage: "ALL",
+    },
+    { skip: !project?.department_id }
+  );
+
+  const [deleteTask] = useDeleteTaskMutation();
+  const [deleteAssignment] = useDeleteAssignmentMutation();
+  const [updateAssignment] = useUpdateAssignmentMutation();
+  const [createActi] = useCreateActivityMutation();
+  const { data: acties } = useGetTaskActivityQuery({
+    items_per_page: "ALL",
+    taskId: taskAssignment.task?.task_id,
+  });
+
   const [actiDesc, setActiDesc] = useState<string>("");
+  const [editModal, setEditModal] = useState<boolean>(false);
   const [modalWidth, setModalWidth] = useState<number>(750);
-  const activityData: Activity[] = [
-    {
-      user: { username: "Trinh Van Musk" },
-      description: "Lorem ipsum odor amet, consectetuer adipiscing elit.",
-    },
-    {
-      user: { username: "Elon Quyet" },
-      description: "Lorem ipsum odor amet, consectetuer adipiscing elit.",
-    },
-  ];
+  const [assignableUsers, setAssignableUsers] = useState<User[] | undefined>(
+    departmentStaffs?.users
+  );
 
   const TaskOption = () => {
     return (
       <div className='task-option'>
-        <Button type='text' className='task-option-btn'>
+        <Button
+          type='text'
+          className='task-option-btn'
+          onClick={() => {
+            setEditModal(true);
+          }}
+        >
           <Pen />
           <Typography.Text>Edit</Typography.Text>
         </Button>
-        <Popconfirm title='Delete task ?'>
-          <Button className='task-option-btn' type='text'>
+        <Popconfirm title='Delete this task ?'>
+          <Button
+            className='task-option-btn'
+            type='text'
+            onClick={async () => {
+              await deleteTask({ taskId: taskAssignment.task?.task_id });
+              await deleteAssignment({
+                assigmentId: taskAssignment.assignment!.assignment_id,
+              })
+                .unwrap()
+                .then(() => {
+                  setShowTaskDetail(false);
+                  message.success("Task is deleted");
+                })
+                .catch(() => message.error("failed to delete this task"));
+            }}
+          >
             <Trash />
             <Typography.Text>Delete</Typography.Text>
           </Button>
@@ -61,24 +112,79 @@ export const TaskDetail = ({
     );
   };
 
+  const AssignUserPopover = () => {
+    return (
+      <div className='assign-user-popover'>
+        <Input.Search
+          placeholder='Search'
+          onSearch={(value) => {
+            if (value) {
+              const searchResult = departmentStaffs?.users.filter(
+                (staff) => staff.name === value || staff.username === value
+              );
+              setAssignableUsers(searchResult);
+            } else {
+              setAssignableUsers(departmentStaffs?.users);
+            }
+          }}
+        />
+        {assignableUsers?.map((staff) => {
+          return (
+            <Card
+              hoverable
+              className='assignable-user-card'
+              style={{ marginTop: "10px" }}
+              onClick={() => {
+                updateAssignment({
+                  assignmentId: taskAssignment.assignment!.assignment_id!,
+                  value: { user_id: staff.user_id },
+                })
+                  .unwrap()
+                  .then(() => {
+                    dispatch(
+                      selectTaskAssign({
+                        task: taskAssignment.task,
+                        assignment: assignment,
+                      })
+                    );
+                    message.success("Staff is assigned to this task");
+                  })
+                  .catch(() => message.error("Failed to assign staff"));
+              }}
+            >
+              <Card.Meta
+                avatar={<CustomAvatar size={32} userName={staff.name} />}
+                title={staff.name}
+                description={staff.email}
+              />
+            </Card>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <Modal
+      centered
       width={modalWidth}
       open={open}
       onCancel={() => setShowTaskDetail(false)}
       className='task-detail-modal'
       title={
         <div className='task-detail-modal-title'>
-          <Select
-            className='task-assignment-selector'
-            defaultValue={assignment ? assignment.user_id : ""}
-            options={[]}
-          />
-          <div className='assign-task-btn'>
-            <UserPlus className='assign-task-icon' />
-            <h5>Assign task to</h5>
-            <Down className='assign-task-icon' />
-          </div>
+          <Popover
+            content={AssignUserPopover}
+            placement='bottomLeft'
+            onOpenChange={() => setAssignableUsers(departmentStaffs?.users)}
+            trigger='click'
+          >
+            <Button className='assign-task-btn' size='small' type='text'>
+              <UserPlus className='assign-task-icon' />
+              <h5>Assign task to</h5>
+              <Down className='assign-task-icon' />
+            </Button>
+          </Popover>
           <div className='task-detail-head-right-size'>
             <Tooltip title='files'>
               <Button
@@ -109,25 +215,33 @@ export const TaskDetail = ({
         <div
           className={`main-task-detail-section ${modalWidth === 750 && "main-task-detail-section-full"}`}
         >
-          <Card loading={false} className='assigned-user-card'>
-            <Card.Meta
-              avatar={<CustomAvatar size={40} userName='ABC' />}
-              title={"Nguyen Thi A"}
-              description={"abc@gmail.com"}
-            />
-          </Card>
+          {taskAssignment.assignment?.user && (
+            <Card loading={false} className='assigned-user-card'>
+              <Card.Meta
+                {...(taskAssignment && {
+                  avatar: <CustomAvatar size={40} userName='ABC' />,
+                })}
+                title={taskAssignment.assignment.user?.name}
+                description={taskAssignment.assignment.user?.email}
+              />
+            </Card>
+          )}
           <div className='task-description'>
             <Typography.Title level={3}>
-              {task?.description || "Design User Interfaces"}
+              {taskAssignment.task?.name}
             </Typography.Title>
+            <Typography.Text>
+              {taskAssignment.task?.description}
+            </Typography.Text>
           </div>
           <div className='acti-section'>
+            {/* create activities */}
             <Typography.Title level={4}>Activity</Typography.Title>
             <div className='acti-des-row'>
               <CustomAvatar size={40} userName='Nguyen Van A' />
               <div className='acti-des-container'>
                 <Input.TextArea
-                  style={{ resize: "none", height: "100px" }}
+                  style={{ resize: "none", height: "100px", width: "100%" }}
                   className='task-text-area'
                   placeholder='New activity'
                   value={actiDesc}
@@ -135,15 +249,26 @@ export const TaskDetail = ({
                     setActiDesc(e.target.value);
                   }}
                 />
-                <Button type='primary' className='add-acti-btn'>
+                <Button
+                  type='primary'
+                  className='add-acti-btn'
+                  onClick={() =>
+                    createActi({
+                      task_id: taskAssignment.task?.task_id,
+                      description: actiDesc,
+                    })
+                  }
+                >
                   Send
                 </Button>
               </div>
             </div>
-            {activityData && (
+
+            {/* activities list */}
+            {acties && (
               <List
                 style={{ width: "100%" }}
-                dataSource={activityData ? activityData : []}
+                dataSource={acties || []}
                 renderItem={(activity) => (
                   <List.Item>
                     <List.Item.Meta
@@ -153,14 +278,16 @@ export const TaskDetail = ({
                           size={40}
                         />
                       }
-                      title={activity.description}
+                      title={activity.user?.name}
                       description={
                         <Typography.Paragraph>
-                          Make America Great Again
+                          {activity.description}
                         </Typography.Paragraph>
                       }
                     />
-                    <Typography.Text>1 hour ago</Typography.Text>
+                    <Typography.Text>
+                      {activity.createdAt?.substring(0, 10)}
+                    </Typography.Text>
                   </List.Item>
                 )}
               />
@@ -169,6 +296,11 @@ export const TaskDetail = ({
         </div>
         {modalWidth === 1000 && <DocumentSection />}
       </div>
+      <UpdateTaskForm
+        isModalOpen={editModal}
+        setIsModalOpen={setEditModal}
+        project={project}
+      />
     </Modal>
   );
 };

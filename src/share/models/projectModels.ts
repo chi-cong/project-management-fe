@@ -1,6 +1,15 @@
 import type { Dayjs } from "dayjs";
 import { Task, User } from "src/share/models";
 
+export const OAssignmentStatus = {
+  Todo: 0,
+  OnProgress: 1,
+  Done: 2,
+} as const;
+
+export type AssignmentStatus =
+  (typeof OAssignmentStatus)[keyof typeof OAssignmentStatus];
+
 export interface Project {
   project_id?: string;
   name?: string;
