@@ -1,4 +1,4 @@
-import "./create-task-form.css";
+import "./update-task-form.css";
 import {
   Button,
   DatePicker,
@@ -8,14 +8,21 @@ import {
   Form,
   FormProps,
   message,
+  Select,
 } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { Dayjs } from "dayjs";
 import {
-  useCreateTaskMutation,
-  useCreateAssigmentMutation,
+  useUpdateTaskMutation,
+  useUpdateAssignmentMutation,
+  useGetAssignmentQuery,
+  useGetTaskQuery,
 } from "src/share/services";
-import { OAssignmentStatus, Project } from "src/share/models";
+import { useSelector, useDispatch } from "react-redux";
+import { selectTaskAssign } from "src/libs/redux/taskAssignSlice";
+
+import { AssignmentStatus, OAssignmentStatus, Project } from "src/share/models";
+import { RootState } from "src/libs/redux";
 
 type TaskForm = {
   isModalOpen: boolean;
@@ -27,42 +34,64 @@ interface TaskFormFields {
   description: string;
   start: string;
   deadline: string | Dayjs;
-  status: boolean;
+  status: AssignmentStatus;
   assignedStaff: string;
 }
 
-export const CreateTaskForm: React.FC<TaskForm> = ({
+export const UpdateTaskForm: React.FC<TaskForm> = ({
   isModalOpen,
   setIsModalOpen,
-  project,
 }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
-  const [createTask] = useCreateTaskMutation();
-  const [createAssignment] = useCreateAssigmentMutation();
+  const [form] = Form.useForm();
+
+  const taskAssigment = useSelector((state: RootState) => state.taskAssignment);
+  const dispatch = useDispatch();
+
+  const { data: assignment } = useGetAssignmentQuery({
+    assignmentId: taskAssigment.assignment?.assignment_id,
+  });
+  const { data: task } = useGetTaskQuery({
+    taskId: taskAssigment.task?.task_id,
+  });
+
+  const [updateTask] = useUpdateTaskMutation();
+  const [updateAssignment] = useUpdateAssignmentMutation();
 
   const onFinish: FormProps<TaskFormFields>["onFinish"] = async (values) => {
-    const newTask = await createTask({
-      description: values.description,
-      name: values.name,
+    await updateTask({
+      taskId: taskAssigment.task!.task_id,
+      value: {
+        description: values.description,
+        name: values.name,
+      },
     }).unwrap();
-    await createAssignment({
-      ...{
-        project_id: project?.project_id,
-        task_id: newTask.task_id,
-        user_id: values.assignedStaff,
-        endAt: values?.deadline,
-        status: OAssignmentStatus.Todo,
+    await updateAssignment({
+      assignmentId: taskAssigment.assignment!.assignment_id!,
+      value: {
+        endAt: values.deadline,
+        status: values.status,
+        user_id: taskAssigment.assignment?.user_id,
       },
     })
       .unwrap()
       .then(() => {
-        message.success("successful create task");
+        message.success("successful update task");
       })
-      .catch(() => message.error("Failed to create task"));
+      .catch(() => message.error("Failed to update task"));
   };
+
+  useEffect(() => {
+    form.setFieldsValue({
+      name: task?.name,
+      description: task?.description,
+      status: assignment?.status,
+    });
+    dispatch(selectTaskAssign({ task, assignment }));
+  }, [form, task, assignment, dispatch]);
 
   return (
     <Modal
@@ -82,7 +111,7 @@ export const CreateTaskForm: React.FC<TaskForm> = ({
       >
         Create Task
       </h2>
-      <Form name='user-info' onFinish={onFinish} layout='vertical'>
+      <Form form={form} name='user-info' onFinish={onFinish} layout='vertical'>
         <div>
           <Form.Item<TaskFormFields>
             name='name'
@@ -114,10 +143,23 @@ export const CreateTaskForm: React.FC<TaskForm> = ({
             />
           </Form.Item>
         </div>
+        <div>
+          <Form.Item<TaskFormFields> name='status' label='Status'>
+            <Select
+              options={[
+                { label: "Todo", value: OAssignmentStatus.Todo },
+                { label: "On Progress", value: OAssignmentStatus.OnProgress },
+                { label: "Done", value: OAssignmentStatus.Done },
+              ]}
+              size='large'
+              style={{ width: "100%" }}
+            />
+          </Form.Item>
+        </div>
         <Form.Item className='create-task-form-btn'>
           <Space>
             <Button type='primary' htmlType='submit' size='large'>
-              Create
+              Update
             </Button>
             <Button
               type='primary'

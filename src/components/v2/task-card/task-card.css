@@ -1,5 +1,7 @@
 .task-card {
   width: 100%;
+  height: fit-content !important;
+
   .task-card-title {
     display: flex;
     justify-content: space-between;
@@ -8,11 +10,15 @@
   .task-card-footer {
     display: flex;
     justify-content: space-between;
+    height: fit-content;
     align-items: center;
     margin-top: 20px;
     .avatar {
       .custom-avatar {
         margin-right: var(--gap-s);
+        * {
+          height: fit-content;
+        }
       }
     }
     .task-card-footer-btn {

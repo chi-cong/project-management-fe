@@ -17,7 +17,7 @@ import {
   DeleteOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ModalCreatePost from "src/components/modal-create-project";
 import { CardProject } from "src/components/card-project";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +27,6 @@ import {
   useGetUserDetailQuery,
   useGetUserProjectQuery,
 } from "src/share/services";
-import { queries } from "@storybook/test";
 import { useRoleChecker } from "src/share/hooks";
 import { OUserRole } from "src/share/models";
 import { ProjectCard } from "src/components/project-card";
@@ -60,23 +59,22 @@ export const Projects = () => {
   };
 
   //fetching data
-  const { data: allProject, isFetching } = useGetAllProjectQuery(
+  const { data: allProject } = useGetAllProjectQuery(
     { ...queries, items_per_page: 9 },
     { skip: !checkRole(OUserRole.Admin) }
   );
 
   const { data: userDetail } = useGetUserDetailQuery();
 
-  const { data: departmentProject, isFetching: departProjectFetch } =
-    useGetAllProjectDepartmentQuery(
-      {
-        ...queries,
-        departmentId: userDetail?.department_id,
-      },
-      {
-        skip: checkRole(OUserRole.Admin) || checkRole(OUserRole.ProjectManager),
-      }
-    );
+  const { data: departmentProject } = useGetAllProjectDepartmentQuery(
+    {
+      ...queries,
+      departmentId: userDetail?.department_id,
+    },
+    {
+      skip: checkRole(OUserRole.Admin) || checkRole(OUserRole.ProjectManager),
+    }
+  );
 
   const { data: userProjects } = useGetUserProjectQuery(
     {
@@ -113,16 +111,16 @@ export const Projects = () => {
   // };
 
   return (
-    <div className="v2-projects-page">
-      <section className="main">
-        <header className="main-header">
-          <section className="first-sec">
-            <div className="title-des">
-              <div className="title-row">
+    <div className='v2-projects-page'>
+      <section className='main'>
+        <header className='main-header'>
+          <section className='first-sec'>
+            <div className='title-des'>
+              <div className='title-row'>
                 <h2>Project</h2>
               </div>
             </div>
-            <Row className="action" gutter={[8, 8]}>
+            <Row className='action' gutter={[8, 8]}>
               <Col xs={12} sm={12} md={6}>
                 <Dropdown menu={menuProps}>
                   <Button style={{ width: "100%" }}>
@@ -141,15 +139,15 @@ export const Projects = () => {
               </Col>
               <Col xs={12} sm={12} md={6}>
                 <Input
-                  placeholder="Search..."
+                  placeholder='Search...'
                   prefix={<SearchOutlined />}
                   style={{ width: "100%" }}
                 />
               </Col>
               <Col xs={12} sm={12} md={6}>
                 <Button
-                  type="default"
-                  className="title-row-btn"
+                  type='default'
+                  className='title-row-btn'
                   icon={<DeleteOutlined />}
                   style={{ width: "100%" }}
                 >
@@ -158,8 +156,8 @@ export const Projects = () => {
               </Col>
               <Col xs={12} sm={12} md={6}>
                 <Button
-                  type="primary"
-                  className="title-row-btn"
+                  type='primary'
+                  className='title-row-btn'
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
                   style={{ width: "100%" }}
@@ -170,7 +168,7 @@ export const Projects = () => {
             </Row>
           </section>
         </header>
-        <main className="">
+        <main className=''>
           <List
             grid={{
               gutter: 12,

@@ -1,5 +1,6 @@
 .task-list {
   display: flex;
+  height: 100%;
   flex-direction: column;
   align-items: center;
   gap: var(--gap-m);
@@ -8,6 +9,7 @@
   border-top-left-radius: var(--rounded-border-l);
   border-top-right-radius: var(--rounded-border-l);
   .title {
+    height: fit-content !important;
     width: 100%;
     display: flex;
     gap: var(--gap-s);
@@ -19,5 +21,11 @@
       min-width: 10px !important;
       min-height: 10px !important;
     }
+  }
+  .tasks {
+    width: 100%;
+  }
+  svg {
+    width: 16px;
   }
 }

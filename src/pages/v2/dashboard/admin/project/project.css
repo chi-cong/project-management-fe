@@ -1,4 +1,5 @@
 .admin-project-page {
+  height: 100%;
   .header-row {
     display: flex;
     justify-content: space-between;
@@ -31,6 +32,13 @@
     }
     svg {
       width: 16px;
+    }
+  }
+  .task-sec {
+    height: 100%;
+    /* override libs */
+    * {
+      height: 100%;
     }
   }
 }

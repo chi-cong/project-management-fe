@@ -11,6 +11,7 @@ import type {
   ProjectReportResp,
   ActivityResp,
   GetUserResp,
+  AssignmentStatus,
 } from "src/share/models";
 import { hrManagementApi } from "src/share/services";
 import { localStorageUtil } from "src/share/utils";
@@ -40,6 +41,16 @@ const projectServices = hrManagementApi.injectEndpoints({
         };
       },
       transformResponse: (response: Response<ProjectResp>) => response.data,
+      providesTags: ["project"],
+    }),
+    getProject: build.query<Project, { projectId: string }>({
+      query: ({ projectId }) => {
+        return {
+          url: `projects/detail/${projectId}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: Response<Project>) => response.data,
       providesTags: ["project"],
     }),
     createProject: build.mutation<boolean, Partial<Project>>({
@@ -73,10 +84,10 @@ const projectServices = hrManagementApi.injectEndpoints({
       transformResponse: (response: Response<Project>) => response.data,
       invalidatesTags: ["project"],
     }),
-    deleteProject: build.mutation<boolean, Partial<string>>({
+    deleteProject: build.mutation<boolean, Partial<{ projectId: string }>>({
       query: (body) => {
         return {
-          url: `projects/delete/${body}`,
+          url: `projects/delete/${body.projectId}`,
           method: "DELETE",
           headers: {
             authorization: accessToken(),
@@ -109,6 +120,7 @@ const projectServices = hrManagementApi.injectEndpoints({
         project_id: string;
         task_id?: string;
         endAt?: string | Dayjs;
+        status: AssignmentStatus;
       }>
     >({
       query({ user_id, project_id, task_id }) {
@@ -131,6 +143,7 @@ const projectServices = hrManagementApi.injectEndpoints({
     createTask: build.mutation<
       Task,
       Partial<{
+        name: string;
         description: string;
       }>
     >({
@@ -205,10 +218,28 @@ const projectServices = hrManagementApi.injectEndpoints({
       },
       transformResponse: (response: Response<string>) => response.data,
     }),
+    deleteFile: build.mutation<
+      boolean,
+      Partial<{ taskId: string; filename: string }>
+    >({
+      query({ taskId, filename }) {
+        return {
+          url: `/tasks/delete-file/${taskId}`,
+          method: "POST",
+          headers: {
+            authorization: accessToken(),
+          },
+          body: {
+            filename,
+          },
+        };
+      },
+      transformResponse: (response: Response<boolean>) => response.data,
+    }),
     updateTask: build.mutation<
       Response<boolean>,
       {
-        value: { description: string };
+        value: { description: string; name: string };
         taskId: string;
       }
     >({
@@ -228,7 +259,7 @@ const projectServices = hrManagementApi.injectEndpoints({
       Response<boolean>,
       {
         value: {
-          status?: boolean;
+          status?: AssignmentStatus;
           endAt?: string | Dayjs;
           user_id?: string;
         };
@@ -332,12 +363,12 @@ const projectServices = hrManagementApi.injectEndpoints({
         items_per_page?: number | "ALL";
         page?: number;
         target?: "user" | "project" | "task";
-        status?: boolean;
         isAssignment?: boolean;
         targetId: string;
+        status: AssignmentStatus;
       }
     >({
-      query({ items_per_page, page, target, isAssignment, targetId }) {
+      query({ items_per_page, page, target, isAssignment, targetId, status }) {
         return {
           url: `/assignments/get-all-assignment/${targetId}`,
           method: "GET",
@@ -349,10 +380,26 @@ const projectServices = hrManagementApi.injectEndpoints({
             items_per_page: items_per_page || 10,
             target: target || "",
             isAssignment: isAssignment || false,
+            status,
           },
         };
       },
       transformResponse: (response: Response<AssignmentResp>) => response.data,
+      providesTags: ["assignment"],
+    }),
+    getAssignment: build.query<
+      Assignment,
+      {
+        assignmentId?: string;
+      }
+    >({
+      query({ assignmentId }) {
+        return {
+          url: `assignments/detail/${assignmentId}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: Response<Assignment>) => response.data,
       providesTags: ["assignment"],
     }),
     deleteAssignment: build.mutation<
@@ -451,6 +498,24 @@ const projectServices = hrManagementApi.injectEndpoints({
       transformResponse: (response: Response<TaskResp>) => response.data,
       providesTags: ["task"],
     }),
+    getTask: build.query<
+      Task,
+      {
+        taskId?: string;
+      }
+    >({
+      query({ taskId }) {
+        return {
+          url: `tasks/detail/${taskId}`,
+          method: "GET",
+          headers: {
+            authorization: accessToken(),
+          },
+        };
+      },
+      transformResponse: (response: Response<Task>) => response.data,
+      providesTags: ["task"],
+    }),
     getUserProject: build.query<
       ProjectResp,
       {
@@ -479,6 +544,7 @@ const projectServices = hrManagementApi.injectEndpoints({
 
 export const {
   useGetAllProjectQuery,
+  useGetProjectQuery,
   useCreateProjectMutation,
   useDeleteProjectMutation,
   useUpdateProjectMutation,
@@ -499,5 +565,8 @@ export const {
   useDeleteActivityMutation,
   useGetUserProjectInDepartmentQuery,
   useGetDepartmentProjectInfoQuery,
-  useGetUserProjectQuery
+  useGetUserProjectQuery,
+  useGetTaskQuery,
+  useDeleteFileMutation,
+  useGetAssignmentQuery,
 } = projectServices;
