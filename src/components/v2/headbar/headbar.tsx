@@ -20,17 +20,17 @@ export const Headbar = () => {
 
   const UserHeadbarOption = () => {
     return (
-      <div className='user-headbar-options'>
-        <Card className='user-headbar-options-card'>
+      <div className="user-headbar-options">
+        <Card className="user-headbar-options-card">
           <Card.Meta
-            avatar={<CustomAvatar size={45} userName='N' />}
+            avatar={<CustomAvatar size={45} userName="N" />}
             title={"Nguyen Van A"}
             description={"nguyenvana@gmail.com"}
           />
         </Card>
         <Button
-          type='text'
-          className='user-headbar-option-btn'
+          type="text"
+          className="user-headbar-option-btn"
           onClick={() =>
             navigate(`./${sessionStorageUtil.get("role")}/profile`)
           }
@@ -38,14 +38,20 @@ export const Headbar = () => {
           <Person />
           <Typography.Text>Profile</Typography.Text>
         </Button>
-        <Button type='text' className='user-headbar-option-btn'>
+        <Button
+          type="text"
+          className="user-headbar-option-btn"
+          onClick={() =>
+            navigate(`./${sessionStorageUtil.get("role")}/password`)
+          }
+        >
           <Lock />
           <Typography.Text>Password</Typography.Text>
         </Button>
         <Button
-          className='user-headbar-option-btn'
+          className="user-headbar-option-btn"
           onClick={() => logout()}
-          type='text'
+          type="text"
         >
           <Logout />
           <Typography.Text>Logout</Typography.Text>
@@ -56,15 +62,15 @@ export const Headbar = () => {
 
   return (
     <>
-      <header className='headbar'>
+      <header className="headbar">
         <Typography.Title level={5}>Project Management</Typography.Title>
-        <Popover content={<UserHeadbarOption />} trigger='click'>
-          <div className='headbar-avatar-wraper'>
-            <CustomAvatar size={45} userName='N' />
+        <Popover content={<UserHeadbarOption />} trigger="click">
+          <div className="headbar-avatar-wraper">
+            <CustomAvatar size={45} userName="N" />
           </div>
         </Popover>
       </header>
-      <div className='headbar-placeholder'></div>
+      <div className="headbar-placeholder"></div>
     </>
   );
 };
