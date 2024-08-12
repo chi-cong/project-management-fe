@@ -104,8 +104,9 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
         </div>
         <Divider />
         <div className='project-card-footer'>
-          <Typography.Text>Nov 2, 2021</Typography.Text>
-          <Typography.Text>3 hours left</Typography.Text>
+          <Typography.Text>
+            {(project?.endAt as string).substring(0, 10)}
+          </Typography.Text>
         </div>
       </div>
       <ModalUpdateProject

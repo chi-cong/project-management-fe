@@ -18,7 +18,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
-import ModalCreatePost from "src/components/modal-create-project";
+import { ModalCreateProject } from "src/components/";
 import { CardProject } from "src/components/card-project";
 import { useNavigate } from "react-router-dom";
 import {
@@ -29,8 +29,12 @@ import {
 } from "src/share/services";
 import { useRoleChecker } from "src/share/hooks";
 import { OUserRole } from "src/share/models";
-import { ProjectCard } from "src/components/project-card";
+import { selectProject } from "src/libs/redux/selectProjectSlice";
+import { useDispatch } from "react-redux";
+
 export const Projects = () => {
+  const dispatch = useDispatch();
+
   //components
   const items: MenuProps["items"] = [
     {
@@ -88,27 +92,6 @@ export const Projects = () => {
   const onChangePage: PaginationProps["onChange"] = (page) => {
     setQueries({ ...queries, page });
   };
-
-  // useEffect(() => {
-  //   subRefetch();
-  // }, [departmentProject, allProject]);
-
-  // const subRefetch = () => {
-  //   setSelectedProject((oldState) => {
-  //     if (checkRole(OUserRole.Admin)) {
-  //       return allProject?.data.find(
-  //         (newState) => newState.project_id === oldState?.project_id
-  //       );
-  //     } else if (checkRole(OUserRole.Manager)) {
-  //       return departmentProject?.data.find(
-  //         (newState) => newState.project_id === oldState?.project_id
-  //       );
-  //     }
-  //     return userProjects?.data.find(
-  //       (newState) => newState.project_id === oldState?.project_id
-  //     );
-  //   });
-  // };
 
   return (
     <div className='v2-projects-page'>
@@ -203,19 +186,23 @@ export const Projects = () => {
                 <CardProject
                   name={project?.name}
                   description={project?.description}
-                  onClick={() =>
-                    navigate(`/v2/dashboard/admin/${project.project_id}`)
-                  }
+                  onClick={() => {
+                    dispatch(selectProject(project!.project_id!));
+                    navigate(
+                      `/v2/dashboard/admin/project/${project!.project_id!}`
+                    );
+                  }}
+                  project={project}
                 />
               </List.Item>
             )}
           />
         </main>
       </section>
-      <ModalCreatePost
+      <ModalCreateProject
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-      ></ModalCreatePost>
+      ></ModalCreateProject>
     </div>
   );
 };

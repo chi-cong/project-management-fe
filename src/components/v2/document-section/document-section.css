@@ -1,6 +1,7 @@
 @import url("src/index.css");
 
 .doc-sec {
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   height: 500px;

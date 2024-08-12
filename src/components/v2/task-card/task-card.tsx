@@ -11,7 +11,7 @@ import {
   DoubleCheck,
 } from "src/assets/icons";
 import { CustomAvatar } from "../custom-avatar";
-import { OAssignmentStatus } from "src/share/models";
+import { OAssignmentStatus } from "src/share/models/projectModels";
 import { useUpdateAssignmentMutation } from "src/share/services";
 import { useDispatch } from "react-redux";
 import { selectTaskAssign } from "src/libs/redux/taskAssignSlice";
@@ -108,16 +108,19 @@ export const TaskCard = ({
         <div className='avatar'>
           <CustomAvatar
             size={32}
-            userName='Deadpool'
+            userName={assignment.user?.name}
+            avatarSrc={assignment.user?.avatar}
             className='custom-avatar'
           />
-          <Typography.Text>Today</Typography.Text>
+          <Typography.Text>{assignment.user?.name}</Typography.Text>
         </div>
         <Button
           className='task-card-footer-btn'
           type='text'
           size='small'
-          onClick={() => openActivities()}
+          onClick={() => {
+            openActivities();
+          }}
         >
           <Chat />
           <Typography.Text>{`${task.total_activities} activities`}</Typography.Text>
@@ -126,7 +129,10 @@ export const TaskCard = ({
           className='task-card-footer-btn'
           type='text'
           size='small'
-          onClick={() => openFile()}
+          onClick={() => {
+            dispatch(selectTaskAssign({ task, assignment }));
+            openFile();
+          }}
         >
           <Folder />
           <Typography.Text>{`${task.document.length} Files`}</Typography.Text>

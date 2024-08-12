@@ -224,8 +224,8 @@ const projectServices = hrManagementApi.injectEndpoints({
     >({
       query({ taskId, filename }) {
         return {
-          url: `/tasks/delete-file/${taskId}`,
-          method: "POST",
+          url: `/upload/delete-file-for-task/${taskId}`,
+          method: "PUT",
           headers: {
             authorization: accessToken(),
           },
@@ -235,6 +235,26 @@ const projectServices = hrManagementApi.injectEndpoints({
         };
       },
       transformResponse: (response: Response<boolean>) => response.data,
+      invalidatesTags: ["task"],
+    }),
+    deleteProjectFile: build.mutation<
+      boolean,
+      Partial<{ projectId: string; filename: string }>
+    >({
+      query({ projectId, filename }) {
+        return {
+          url: `/upload/delete-file-for-project/${projectId}`,
+          method: "PUT",
+          headers: {
+            authorization: accessToken(),
+          },
+          body: {
+            filename,
+          },
+        };
+      },
+      transformResponse: (response: Response<boolean>) => response.data,
+      invalidatesTags: ["project"],
     }),
     updateTask: build.mutation<
       Response<boolean>,
@@ -364,7 +384,7 @@ const projectServices = hrManagementApi.injectEndpoints({
         page?: number;
         target?: "user" | "project" | "task";
         isAssignment?: boolean;
-        targetId: string;
+        targetId?: string;
         status: AssignmentStatus;
       }
     >({
@@ -569,4 +589,5 @@ export const {
   useGetTaskQuery,
   useDeleteFileMutation,
   useGetAssignmentQuery,
+  useDeleteProjectFileMutation,
 } = projectServices;

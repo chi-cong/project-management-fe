@@ -5,7 +5,6 @@ import {
   Button,
   Typography,
   Card,
-  List,
   Popconfirm,
   Popover,
   Tooltip,
@@ -15,8 +14,6 @@ import { useState } from "react";
 import { UserPlus, MenuDots, Down, Folder, Pen, Trash } from "src/assets/icons";
 import { DocumentSection, CustomAvatar } from "src/components/v2";
 import {
-  useCreateActivityMutation,
-  useGetTaskActivityQuery,
   useGetDepartmentStaffsQuery,
   useUpdateAssignmentMutation,
   useGetAssignmentQuery,
@@ -25,6 +22,7 @@ import {
 } from "src/share/services";
 import { useSelector, useDispatch } from "react-redux";
 import { selectTaskAssign } from "src/libs/redux/taskAssignSlice";
+import { Activities } from "./activities";
 
 import { UpdateTaskForm } from "../update-task-form";
 import type { RootState } from "src/libs/redux";
@@ -47,9 +45,12 @@ export const TaskDetail = ({
   );
   const dispatch = useDispatch();
 
-  const { data: assignment } = useGetAssignmentQuery({
-    assignmentId: taskAssignment.assignment?.assignment_id,
-  });
+  const { data: assignment } = useGetAssignmentQuery(
+    {
+      assignmentId: taskAssignment.assignment?.assignment_id,
+    },
+    { skip: !taskAssignment.assignment?.assignment_id }
+  );
   const { data: departmentStaffs } = useGetDepartmentStaffsQuery(
     {
       departmentId: project?.department_id,
@@ -61,13 +62,7 @@ export const TaskDetail = ({
   const [deleteTask] = useDeleteTaskMutation();
   const [deleteAssignment] = useDeleteAssignmentMutation();
   const [updateAssignment] = useUpdateAssignmentMutation();
-  const [createActi] = useCreateActivityMutation();
-  const { data: acties } = useGetTaskActivityQuery({
-    items_per_page: "ALL",
-    taskId: taskAssignment.task?.task_id,
-  });
 
-  const [actiDesc, setActiDesc] = useState<string>("");
   const [editModal, setEditModal] = useState<boolean>(false);
   const [modalWidth, setModalWidth] = useState<number>(750);
   const [assignableUsers, setAssignableUsers] = useState<User[] | undefined>(
@@ -234,65 +229,7 @@ export const TaskDetail = ({
               {taskAssignment.task?.description}
             </Typography.Text>
           </div>
-          <div className='acti-section'>
-            {/* create activities */}
-            <Typography.Title level={4}>Activity</Typography.Title>
-            <div className='acti-des-row'>
-              <CustomAvatar size={40} userName='Nguyen Van A' />
-              <div className='acti-des-container'>
-                <Input.TextArea
-                  style={{ resize: "none", height: "100px", width: "100%" }}
-                  className='task-text-area'
-                  placeholder='New activity'
-                  value={actiDesc}
-                  onChange={(e) => {
-                    setActiDesc(e.target.value);
-                  }}
-                />
-                <Button
-                  type='primary'
-                  className='add-acti-btn'
-                  onClick={() =>
-                    createActi({
-                      task_id: taskAssignment.task?.task_id,
-                      description: actiDesc,
-                    })
-                  }
-                >
-                  Send
-                </Button>
-              </div>
-            </div>
-
-            {/* activities list */}
-            {acties && (
-              <List
-                style={{ width: "100%" }}
-                dataSource={acties || []}
-                renderItem={(activity) => (
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={
-                        <CustomAvatar
-                          userName={activity.user?.username}
-                          size={40}
-                        />
-                      }
-                      title={activity.user?.name}
-                      description={
-                        <Typography.Paragraph>
-                          {activity.description}
-                        </Typography.Paragraph>
-                      }
-                    />
-                    <Typography.Text>
-                      {activity.createdAt?.substring(0, 10)}
-                    </Typography.Text>
-                  </List.Item>
-                )}
-              />
-            )}
-          </div>
+          <Activities />
         </div>
         {modalWidth === 1000 && <DocumentSection />}
       </div>

@@ -26,18 +26,22 @@ import { Project, RoleResponse } from "src/share/models";
 import { ModalUpdateDepartment } from "src/components";
 import AddStaffTabs from "src/components/modal-update-department/add-staff-tabs";
 
+import { useParams } from "react-router-dom";
+
 export const AdminDepartment = () => {
+  const { id: departmentId } = useParams();
+
   const [reportModal, setReportModal] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const [addStaffModal, setAddStaffModal] = useState<boolean>(false);
   const [rmStaffModal, setRmStaffModal] = useState<boolean>(false);
-  const { data } = useGetDepartmentQuery({ id: "66aa0782193b7aa0827eace0" });
+  const { data } = useGetDepartmentQuery({ id: departmentId! });
   const { data: departmentProjects } = useGetAllProjectDepartmentQuery({
-    departmentId: `66aa0782193b7aa0827eace0`,
+    departmentId,
   });
   const { data: departmentStaffs } = useGetDepartmentStaffsQuery({
     itemsPerPage: "ALL",
-    departmentId: "66aa0782193b7aa0827eace0",
+    departmentId,
   });
   const [deleteDepartment] = useDeleteDepartmentsMutation();
   const navigate = useNavigate();
@@ -95,7 +99,7 @@ export const AdminDepartment = () => {
         <Popconfirm
           title='Delete this department ?'
           onConfirm={() => {
-            deleteDepartment({ departmentId: "66aa0782193b7aa0827eace0" });
+            deleteDepartment({ departmentId });
             navigate("/v2/department");
           }}
         >

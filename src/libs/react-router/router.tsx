@@ -71,9 +71,9 @@ export const router = createBrowserRouter([
             path: "admin",
             element: <Admin />,
             children: [
-              { path: "department", element: <AdminDepartment /> },
+              { path: "department/:id", element: <AdminDepartment /> },
               { path: "projects", element: <Projects /> },
-              { path: "project", element: <AdminProject /> },
+              { path: "project/:id", element: <AdminProject /> },
               { path: "account", element: <Account /> },
               { path: "departments", element: <Departments /> },
               {
