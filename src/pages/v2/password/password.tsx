@@ -10,50 +10,61 @@ export const Password = () => {
           <div className="title-row">
             <h2>Change Password</h2>
           </div>
-          <div className="form-wrapper">
-            <Card>
-              <Form
-                name="password"
-                className="password-form"
-                autoComplete="off"
-              >
-                <Form.Item<LoginFieldType>
+          <Row className="form-wrapper">
+            <Col span={12}>
+              <Card>
+                <Form
                   name="password"
-                  rules={[{ required: true, message: "Password is required" }]}
-                  style={{ width: "100%" }}
+                  className="password-form"
+                  autoComplete="off"
                 >
-                  <Input.Password placeholder="Old Password.." size="large" />
-                </Form.Item>
-                <Form.Item<LoginFieldType>
-                  name="password"
-                  rules={[{ required: true, message: "Password is required" }]}
-                  style={{ width: "100%" }}
-                >
-                  <Input.Password placeholder="New Password..." size="large" />
-                </Form.Item>
-                <Form.Item<LoginFieldType>
-                  name="password"
-                  rules={[{ required: true, message: "Password is required" }]}
-                  style={{ width: "100%" }}
-                >
-                  <Input.Password
-                    placeholder="Confirm new Password...."
-                    size="large"
-                  />
-                </Form.Item>
-                <Form.Item>
-                  <Button
-                    className="password-button"
-                    type="primary"
-                    htmlType="submit"
-                    size="large"
+                  <Form.Item<LoginFieldType>
+                    name="password"
+                    rules={[
+                      { required: true, message: "Password is required" },
+                    ]}
+                    style={{ width: "100%" }}
                   >
-                    Change
-                  </Button>
-                </Form.Item>
-              </Form>
-            </Card>
-          </div>
+                    <Input.Password placeholder="Old Password.." size="large" />
+                  </Form.Item>
+                  <Form.Item<LoginFieldType>
+                    name="password"
+                    rules={[
+                      { required: true, message: "Password is required" },
+                    ]}
+                    style={{ width: "100%" }}
+                  >
+                    <Input.Password
+                      placeholder="New Password..."
+                      size="large"
+                    />
+                  </Form.Item>
+                  <Form.Item<LoginFieldType>
+                    name="password"
+                    rules={[
+                      { required: true, message: "Password is required" },
+                    ]}
+                    style={{ width: "100%" }}
+                  >
+                    <Input.Password
+                      placeholder="Confirm new Password...."
+                      size="large"
+                    />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button
+                      className="password-button"
+                      type="primary"
+                      htmlType="submit"
+                      size="large"
+                    >
+                      Change
+                    </Button>
+                  </Form.Item>
+                </Form>
+              </Card>
+            </Col>
+          </Row>
         </Space>
       </Row>
     </div>
