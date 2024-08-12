@@ -1,5 +1,5 @@
 import "./project.css";
-import { MenuDots, Pen, Trash, Page } from "src/assets/icons";
+import { MenuDots, Pen, Trash, Page, Folder } from "src/assets/icons";
 import {
   Typography,
   Button,
@@ -11,11 +11,11 @@ import {
   message,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { CustomAvatar, DocumentSection } from "src/components/v2";
+import { CustomAvatar, ProjectDocument } from "src/components/v2";
 import { TaskList, TaskDetail, CreateTaskForm } from "src/layouts/v2";
 import { useState } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AssignmentStatus, OAssignmentStatus } from "src/share/models";
 import {
   useGetProjectQuery,
@@ -24,28 +24,31 @@ import {
   useGetProjectStaffsQuery,
 } from "src/share/services";
 import { ModalUpdateProject } from "src/components";
-
+import { Activities } from "src/layouts/v2/task-detail/activities";
 export const AdminProject = () => {
-  const { data: projectData } = useGetProjectQuery({
-    projectId: "66aa0f19c16d87c10c297035",
-  });
-  const { data: tasks } = useGetProjectTasksQuery({
-    items_per_page: "ALL",
-    projectId: "66aa0f19c16d87c10c297035",
-    page: 1,
-  });
-  const [deleteProject] = useDeleteProjectMutation();
-  const { data: projectStaffs } = useGetProjectStaffsQuery({
-    items_per_page: "ALL",
-    projectId: "66aa0f19c16d87c10c297035",
-  });
+  const { id: projectId } = useParams();
 
   const [taskDetailModal, setTaskDetailModal] = useState<boolean>(false);
   const [createTaskModal, setCreateTaskModal] = useState<boolean>(false);
   const [projectUpdateModal, setProjectUpdateModal] = useState<boolean>(false);
   const [isUpdateProject, setIsUpdateProject] = useState<boolean>(false);
   const [docSec, setDocSec] = useState<boolean>(false);
+  const [activitySec, setActivitySec] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const { data: projectData } = useGetProjectQuery({
+    projectId: projectId!,
+  });
+  const { data: tasks } = useGetProjectTasksQuery({
+    items_per_page: "ALL",
+    projectId,
+    page: 1,
+  });
+  const [deleteProject] = useDeleteProjectMutation();
+  const { data: projectStaffs } = useGetProjectStaffsQuery({
+    items_per_page: "ALL",
+    projectId,
+  });
 
   const taskListSrc: {
     color: string;
@@ -87,6 +90,16 @@ export const AdminProject = () => {
           type='text'
           className='project-option-btn'
           onClick={() => {
+            setDocSec(true);
+          }}
+        >
+          <Folder />
+          <Typography.Text>Documents</Typography.Text>
+        </Button>
+        <Button
+          type='text'
+          className='project-option-btn'
+          onClick={() => {
             setIsUpdateProject(true);
             setProjectUpdateModal(true);
           }}
@@ -120,7 +133,7 @@ export const AdminProject = () => {
         <header className='header-row'>
           <div className='first-part'>
             <Typography.Title level={2}>{projectData?.name}</Typography.Title>
-            <Popover content={ProjectOptions} trigger='click'>
+            <Popover content={ProjectOptions}>
               <Button type='text' size='small'>
                 <MenuDots />
               </Button>
@@ -174,6 +187,7 @@ export const AdminProject = () => {
                   title={taskList.title}
                   showTaskDetail={setTaskDetailModal}
                   showDocSec={setDocSec}
+                  showActies={setActivitySec}
                   type={taskList.type}
                   project={projectData}
                   tasks={tasks?.data}
@@ -190,13 +204,19 @@ export const AdminProject = () => {
         project={projectData}
       />
       <Modal open={docSec} onCancel={() => setDocSec(false)} footer={[]}>
-        <DocumentSection />
+        <ProjectDocument />
+      </Modal>
+      <Modal
+        open={activitySec}
+        onCancel={() => setActivitySec(false)}
+        footer={[]}
+      >
+        <Activities />
       </Modal>
       <ModalUpdateProject
         project={projectData!}
         isModalOpen={projectUpdateModal}
         setIsModalOpen={setProjectUpdateModal}
-        userDetail={{}}
         isUpdate={isUpdateProject}
       />
       <CreateTaskForm

@@ -11,7 +11,7 @@ import {
 } from "antd";
 import React, { useEffect } from "react";
 import "./modal-update-project.css";
-import { Project, User } from "src/share/models";
+import { Project } from "src/share/models";
 import dayjs, { Dayjs } from "dayjs";
 import {
   useUpdateProjectMutation,
@@ -22,7 +22,6 @@ import {
 type ModalUpdateProjectProp = {
   isModalOpen: boolean;
   setIsModalOpen: (show: boolean) => void;
-  userDetail: User;
   project: Project;
   isUpdate: boolean;
 };

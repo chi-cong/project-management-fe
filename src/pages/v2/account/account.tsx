@@ -7,26 +7,22 @@ import {
   Input,
   List,
   MenuProps,
-  message,
+  PaginationProps,
   Row,
   Space,
 } from "antd";
-import {
-  DownOutlined,
-  SearchOutlined,
-  DeleteOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { DownOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useGetUsersQuery } from "src/share/services";
 import ModalCreateUser from "src/components/modal-create-user";
 import { UserRole, OUserRole } from "src/share/models";
 
 export const Account = () => {
-  const [queries] = useState<{
+  const [queries, setQueries] = useState<{
     role: UserRole;
     page: number | undefined;
-  }>({ role: OUserRole.All, page: 1 });
+    search: string | undefined;
+  }>({ role: OUserRole.All, page: 1, search: "" });
 
   const { data } = useGetUsersQuery({
     ...queries,
@@ -34,21 +30,41 @@ export const Account = () => {
   });
 
   const items: MenuProps["items"] = [
-    { label: "Admin", key: OUserRole.Admin },
-    { label: "Staff", key: OUserRole.Staff },
-    { label: "Project Manager", key: OUserRole.ProjectManager },
-    { label: "Manager", key: OUserRole.Manager },
+    {
+      label: "ALL",
+      key: OUserRole.All,
+      onClick: () => setQueries({ ...queries, role: OUserRole.All }),
+    },
+    {
+      label: "Admin",
+      key: OUserRole.Admin,
+      onClick: () => setQueries({ ...queries, role: OUserRole.Admin }),
+    },
+    {
+      label: "Staff",
+      key: OUserRole.Staff,
+      onClick: () => setQueries({ ...queries, role: OUserRole.Staff }),
+    },
+    {
+      label: "Project Manager",
+      key: OUserRole.ProjectManager,
+      onClick: () => setQueries({ ...queries, role: OUserRole.ProjectManager }),
+    },
+    {
+      label: "Manager",
+      key: OUserRole.Manager,
+      onClick: () => setQueries({ ...queries, role: OUserRole.Manager }),
+    },
   ];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleMenuClick: MenuProps["onClick"] = () => {
-    message.info("Click on menu item.");
-  };
-
   const menuProps = {
     items,
-    onClick: handleMenuClick,
+  };
+
+  const onChangePage: PaginationProps["onChange"] = (page) => {
+    setQueries({ ...queries, page });
   };
 
   return (
@@ -79,10 +95,13 @@ export const Account = () => {
                 </Dropdown>
               </Col>
               <Col xs={12} sm={12} md={8}>
-                <Input
+                <Input.Search
                   placeholder='Search...'
-                  prefix={<SearchOutlined />}
                   style={{ width: "100%" }}
+                  allowClear
+                  onSearch={(value) =>
+                    setQueries({ ...queries, search: value })
+                  }
                 />
               </Col>
               <Col xs={12} sm={12} md={5}>
@@ -119,6 +138,13 @@ export const Account = () => {
               lg: 2,
               xl: 2,
               xxl: 2,
+            }}
+            pagination={{
+              position: "bottom",
+              align: "center",
+              pageSize: 9,
+              total: data?.total,
+              onChange: onChangePage,
             }}
             dataSource={data?.users}
             renderItem={(user) => (
