@@ -1,4 +1,4 @@
-// import "./task-form.css";
+import "./create-task-form.css";
 import {
   Button,
   DatePicker,
@@ -15,7 +15,7 @@ import {
   useCreateTaskMutation,
   useCreateAssigmentMutation,
 } from "src/share/services";
-import { Project } from "src/share/models";
+import { OAssignmentStatus, Project } from "src/share/models";
 
 type TaskForm = {
   isModalOpen: boolean;
@@ -31,7 +31,7 @@ interface TaskFormFields {
   assignedStaff: string;
 }
 
-const ModalCreateUser: React.FC<TaskForm> = ({
+export const CreateTaskForm: React.FC<TaskForm> = ({
   isModalOpen,
   setIsModalOpen,
   project,
@@ -46,6 +46,7 @@ const ModalCreateUser: React.FC<TaskForm> = ({
   const onFinish: FormProps<TaskFormFields>["onFinish"] = async (values) => {
     const newTask = await createTask({
       description: values.description,
+      name: values.name,
     }).unwrap();
     await createAssignment({
       ...{
@@ -53,14 +54,7 @@ const ModalCreateUser: React.FC<TaskForm> = ({
         task_id: newTask.task_id,
         user_id: values.assignedStaff,
         endAt: values?.deadline,
-      },
-    });
-    await createAssignment({
-      ...{
-        project_id: project?.project_id,
-        task_id: newTask.task_id,
-        user_id: values.assignedStaff,
-        endAt: values?.deadline,
+        status: OAssignmentStatus.Todo,
       },
     })
       .unwrap()
@@ -90,7 +84,11 @@ const ModalCreateUser: React.FC<TaskForm> = ({
       </h2>
       <Form name='user-info' onFinish={onFinish} layout='vertical'>
         <div>
-          <Form.Item<TaskFormFields> name='name' label='Name'>
+          <Form.Item<TaskFormFields>
+            name='name'
+            label='Name'
+            rules={[{ required: true, message: "Username is required" }]}
+          >
             <Input placeholder='Name...' size='large' />
           </Form.Item>
         </div>
@@ -135,5 +133,3 @@ const ModalCreateUser: React.FC<TaskForm> = ({
     </Modal>
   );
 };
-
-export default ModalCreateUser;

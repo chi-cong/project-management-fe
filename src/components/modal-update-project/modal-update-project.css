@@ -2,4 +2,7 @@
   span {
     /* margin-bottom: 10px; */
   }
+  input:disabled {
+    color: rgb(0, 0, 0, 1);
+  }
 }

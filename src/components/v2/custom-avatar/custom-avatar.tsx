@@ -26,7 +26,7 @@ export const CustomAvatar = ({
         width: `${size}px`,
         height: `${size}px`,
         background: !avatarSrc ? bgColor : "none",
-        fontSize: `${size ? size / 2 :''}px`,
+        fontSize: `${size ? size / 2 : ""}px`,
         ...style,
       }}
       className={className}

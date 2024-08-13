@@ -18,17 +18,17 @@ const baseApi = import.meta.env.VITE_REQUEST_API_URL;
 
 const UserInfo: React.FC<{ user?: User }> = ({ user }) => {
   return (
-    <div className="user-profile-form">
-      <div className="user-profile">
+    <div className='user-profile-form'>
+      <div className='user-profile'>
         <CustomAvatar
           size={350}
           userName={user?.username}
           avatarSrc={user?.avatar}
-          className="user-profile-avatar"
+          className='user-profile-avatar'
         />
-        <div className="user-details">
+        <div className='user-details'>
           <h3>{user?.name}</h3>
-          <span className="role-label">
+          <span className='role-label'>
             {user?.role ? (user?.role as RoleResponse).name : ""}
           </span>
           <p>{user?.email}</p>
@@ -73,20 +73,20 @@ const SelectNewAvatar: React.FC<{
   }, [user]);
 
   return (
-    <div className="select-new-avatar-form">
+    <div className='select-new-avatar-form'>
       <h3>Select new avatar</h3>
-      <div className="avatar-upload">
+      <div className='avatar-upload'>
         <img
-          src="/src/assets/imgs/profile image.png"
-          alt="Placeholder Avatar"
-          className="img"
+          src='/src/assets/imgs/profile image.png'
+          alt='Placeholder Avatar'
+          className='img'
           style={{ width: "30%", height: "100%" }}
         />
         <div>
-          <CloudUploadOutlined className="upload-icon" />
+          <CloudUploadOutlined className='upload-icon' />
         </div>
         <Upload {...avaFileProps}>
-          <div className="text-content">
+          <div className='text-content'>
             <p style={{ fontWeight: "bolder" }}>Choose new file</p>
             <p>JPG, PNG, WEBP, JEPG,... Max size of 800GB</p>
           </div>
@@ -97,29 +97,29 @@ const SelectNewAvatar: React.FC<{
 };
 
 export const Profile = () => {
-  const { data: user, isLoading, refetch } = useGetUserDetailQuery();
+  const { data: user, refetch } = useGetUserDetailQuery();
   const [avatar, setAvatar] = useState<string>("");
 
   return (
-    <div className="v2-profile-page">
+    <div className='v2-profile-page'>
       <header>
         <h1>Profile</h1>
       </header>
-      <div className="profile-container">
+      <div className='profile-container'>
         <Row
-          className="profile-content"
+          className='profile-content'
           gutter={[16, 8]}
           style={{ alignItems: "stretch" }}
         >
-          <Col sm={24} md={10} lg={7} className="user-profile-container">
+          <Col sm={24} md={10} lg={7} className='user-profile-container'>
             <Space
-              direction="vertical"
+              direction='vertical'
               style={{ width: "100%", height: "100%" }}
             >
-              <Card className="card-box-shadow" style={{ height: "100%" }}>
+              <Card className='card-box-shadow' style={{ height: "100%" }}>
                 <UserInfo user={user} />
               </Card>
-              <Card className="card-box-shadow" style={{ height: "100%" }}>
+              <Card className='card-box-shadow' style={{ height: "100%" }}>
                 <SelectNewAvatar
                   refetch={refetch}
                   setAvatar={setAvatar}
@@ -129,7 +129,7 @@ export const Profile = () => {
             </Space>
           </Col>
           <Col sm={24} md={14} lg={17}>
-            <Card className="personal-information" style={{ height: "100%" }}>
+            <Card className='personal-information' style={{ height: "100%" }}>
               <h2>Personal Information</h2>
               <ProfileForm user={user} />
             </Card>

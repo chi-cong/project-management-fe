@@ -1,7 +1,16 @@
 .department-projects {
-  .projects {
-    .project-card-wrapper {
-      width: 30%;
+  width: 100%;
+
+  .project-list {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-x: auto;
+    gap: var(--gap-s);
+    .wrapper {
+      min-width: 350px;
+      max-width: 350px;
     }
   }
 }

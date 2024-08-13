@@ -3,11 +3,11 @@ import {
   Avatar,
   Card,
   Col,
-  Divider,
+  // Divider,
   Popconfirm,
   Row,
   Space,
-  Tooltip,
+  // Tooltip,
 } from "antd";
 import {
   EditOutlined,
@@ -15,14 +15,17 @@ import {
   QuestionCircleOutlined,
 } from "@ant-design/icons";
 import "./card-department.css";
-import { useDeleteDepartmentsMutation } from "src/share/services";
+import {
+  useDeleteDepartmentsMutation,
+  useGetDepartmentStaffsQuery,
+} from "src/share/services";
 import ModalAddUserToProject from "../modal-add-user-to-project";
 import { CustomAvatar } from "src/components/v2";
-import { UserOutlined, PlusOutlined } from "@ant-design/icons";
-import ModalUpdateDepartment from "../modal-update-department";
+// import { UserOutlined, PlusOutlined } from "@ant-design/icons";
+import { ModalUpdateDepartment } from "src/components/";
+import { Department } from "src/share/models";
 type CardDepartmentProps = {
-  name?: string;
-  description?: string;
+  department: Department;
   manager?: string;
   onClick?: () => void;
   departmentId?: string;
@@ -31,10 +34,8 @@ type CardDepartmentProps = {
 };
 
 export const CardDepartment: React.FC<CardDepartmentProps> = ({
-  name,
-  description,
+  department,
   onClick,
-  departmentId,
   role,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,6 +50,10 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
   };
 
   const [deleteDepartment] = useDeleteDepartmentsMutation();
+  const { data: departmentStaffs } = useGetDepartmentStaffsQuery({
+    itemsPerPage: "ALL",
+    departmentId: department.department_id,
+  });
 
   const handleDeleteClick = async (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
@@ -56,7 +61,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
 
   const deleteDepartmentHandler = async () => {
     try {
-      await deleteDepartment({ departmentId: departmentId! }).unwrap();
+      await deleteDepartment({ departmentId: department.manager_id! }).unwrap();
     } catch (error) {
       console.error("Failed to delete department:", error);
     }
@@ -70,7 +75,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
             {/* title */}
             <Col span={12} className='department-header-info'>
               <h2 className='department-name' onClick={onClick}>
-                {name}
+                {department.name}
               </h2>
             </Col>
             {/* action (delete, update) */}
@@ -101,7 +106,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
           </Row>
           <div className='department-body'>
             <div className='department-manager-info' onClick={onClick}>
-              <span>{description}</span>
+              <span>{department.name}</span>
             </div>
             {/* info */}
             <Row className='department-body-info'>
@@ -109,10 +114,15 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                 <Card className='department-body-manager-card'>
                   <div className='department-body-manager-info-wrapper'>
                     <div style={{ display: "flex", alignItems: "center" }}>
-                      <CustomAvatar size={40} userName={name} />
+                      <CustomAvatar
+                        size={40}
+                        userName={department.information?.manager?.name}
+                      />
                     </div>
                     <div className='department-manager-main-info'>
-                      <h3 style={{ textWrap: "nowrap" }}>{name}</h3>
+                      <h3 style={{ textWrap: "nowrap" }}>
+                        {department.information?.manager?.name}
+                      </h3>
                       <span className='department-body-manager-role'>
                         Manger
                       </span>
@@ -132,14 +142,14 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                     cursor: "pointer",
                   }}
                 >
-                  <Avatar
-                    src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
-                    gap={1}
-                  />
-                  <Avatar style={{ backgroundColor: "#f56a00" }} gap={1}>
-                    K
-                  </Avatar>
-                  <Tooltip placement='bottom'>
+                  {departmentStaffs?.users.map((staff) => (
+                    <CustomAvatar
+                      avatarSrc={staff.avatar}
+                      size={40}
+                      userName={staff.name}
+                    />
+                  ))}
+                  {/* <Tooltip placement='bottom'>
                     <Space direction='vertical' style={{ display: "flex" }}>
                       <div>
                         <Space direction='vertical'>
@@ -179,7 +189,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                         />
                       </Space>
                     </Space>
-                  </Tooltip>
+                  </Tooltip> */}
                 </Avatar.Group>
               </Col>
               {/* progress */}

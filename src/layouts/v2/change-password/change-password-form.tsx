@@ -8,7 +8,7 @@ export type ChangePasswordFormType = {
   confirm: string;
 };
 
-export const ChangePasswordForm = ({ email }: { email: string }) => {
+export const ChangePasswordForm = ({ email }: { email?: string }) => {
   const [changePassword, changePasswordStatus] = useChangePasswordMutation();
 
   const onFinish: FormProps<ChangePasswordFormType>["onFinish"] = async (
@@ -42,7 +42,9 @@ export const ChangePasswordForm = ({ email }: { email: string }) => {
         >
           <Form.Item<ChangePasswordFormType>
             name='currentPassword'
-            rules={[{ required: true, message: "Current password is required" }]}
+            rules={[
+              { required: true, message: "Current password is required" },
+            ]}
           >
             <Input.Password placeholder='Current Password' />
           </Form.Item>

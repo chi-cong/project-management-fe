@@ -1,35 +1,34 @@
-import {
-  Button,
-  DatePicker,
-  Dropdown,
-  Flex,
-  Input,
-  MenuProps,
-  message,
-  Modal,
-  Space,
-  Table,
-  Tabs,
-} from "antd";
-import React from "react";
+import { Button, Modal, Space, Tabs } from "antd";
+import React, { useState } from "react";
 import "./modal-create-department.css";
-import { DownOutlined } from "@ant-design/icons";
-import { CustomAvatar } from "../v2";
 import InfoTabs from "./info-tabs";
 import AddManagerTabs from "./add-manager-tabs";
 import AddStaffTabs from "./add-staff-tabs";
-const { RangePicker } = DatePicker;
+import { useAddDepartmentMutation } from "src/share/services";
 
 type ModalCreateDepartment = {
   isModalOpen: boolean;
-  setIsModalOpen: any;
+  setIsModalOpen: (show: boolean) => void;
 };
 const ModalCreateDepartment: React.FC<ModalCreateDepartment> = ({
   isModalOpen,
   setIsModalOpen,
 }) => {
-  const handleOk = () => {
-    setIsModalOpen(true);
+  const [departInfo, setDepartInfo] = useState<{
+    name?: string;
+    description?: string;
+  }>();
+  const [managerId, setManagerId] = useState<string>("");
+  const [staffList, setStaffList] = useState<string[]>([]);
+  const [createDepartment] = useAddDepartmentMutation();
+
+  const createDepart = () => {
+    createDepartment({
+      name: departInfo?.name,
+      description: departInfo?.description,
+      list_user_ids: staffList,
+      manager_id: managerId,
+    });
   };
 
   const handleCancel = () => {
@@ -38,12 +37,16 @@ const ModalCreateDepartment: React.FC<ModalCreateDepartment> = ({
 
   return (
     <Modal
-      className="wrapper"
+      className='wrapper'
       open={isModalOpen}
       centered
-      onOk={handleOk}
       onCancel={handleCancel}
       width={1000}
+      footer={[
+        <Button onClick={createDepart} size='large' type='primary'>
+          Create Department
+        </Button>,
+      ]}
     >
       <h2
         style={{
@@ -54,20 +57,20 @@ const ModalCreateDepartment: React.FC<ModalCreateDepartment> = ({
       >
         Create Department
       </h2>
-      <Tabs defaultActiveKey="1">
-        <Tabs.TabPane tab="Info" key="1">
-          <InfoTabs />
+      <Tabs defaultActiveKey='1'>
+        <Tabs.TabPane tab='Info' key='1'>
+          <InfoTabs setFields={setDepartInfo} />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Manager" key="2">
-          <AddManagerTabs />
+        <Tabs.TabPane tab='Manager' key='2'>
+          <AddManagerTabs setManagerId={setManagerId} managerId={managerId} />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Staff" key="3">
-          <AddStaffTabs />
+        <Tabs.TabPane tab='Staff' key='3'>
+          <AddStaffTabs setStaffList={setStaffList} staffList={staffList} />
         </Tabs.TabPane>
       </Tabs>
       <Space
-        direction="vertical"
-        size="middle"
+        direction='vertical'
+        size='middle'
         style={{ display: "flex" }}
       ></Space>
     </Modal>

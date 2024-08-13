@@ -10,27 +10,99 @@ import {
 } from "antd";
 import { ResponsivePie } from "@nivo/pie";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { CustomAvatar } from "src/components/v2";
+import { CustomAvatar, RmDepartmentStaff } from "src/components/v2";
 import { DepartmentProjects } from "src/layouts/v2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DepartmentReport } from "src/layouts/v2/department-report";
 import { Pen, Trash, MenuDots, PieChart, UserPlus } from "src/assets/icons";
 import { useNavigate } from "react-router-dom";
-import { useGetDepartmentQuery } from "src/share/services";
+import {
+  useGetDepartmentQuery,
+  useGetAllProjectDepartmentQuery,
+  useGetDepartmentStaffsQuery,
+  useDeleteDepartmentsMutation,
+} from "src/share/services";
+import { Project, RoleResponse } from "src/share/models";
+import { ModalUpdateDepartment } from "src/components";
+import AddStaffTabs from "src/components/modal-update-department/add-staff-tabs";
+
+import { useParams } from "react-router-dom";
 
 export const AdminDepartment = () => {
+  const { id: departmentId } = useParams();
+
   const [reportModal, setReportModal] = useState<boolean>(false);
-  const { data } = useGetDepartmentQuery({ id: "66aa0782193b7aa0827eace0" });
+  const [updateModal, setUpdateModal] = useState<boolean>(false);
+  const [addStaffModal, setAddStaffModal] = useState<boolean>(false);
+  const [rmStaffModal, setRmStaffModal] = useState<boolean>(false);
+  const { data } = useGetDepartmentQuery({ id: departmentId! });
+  const { data: departmentProjects } = useGetAllProjectDepartmentQuery({
+    departmentId,
+  });
+  const { data: departmentStaffs } = useGetDepartmentStaffsQuery({
+    itemsPerPage: "ALL",
+    departmentId,
+  });
+  const [deleteDepartment] = useDeleteDepartmentsMutation();
   const navigate = useNavigate();
+  const [projectFilter, setProjectFilter] = useState<{
+    onProgress: Project[];
+    todo: Project[];
+    done: Project[];
+  }>({ done: [], onProgress: [], todo: [] });
+
+  const calculateProgress = (information: {
+    total_task_is_done: string;
+    total_task_is_not_done: string;
+  }): number => {
+    return Math.ceil(
+      (parseInt(information.total_task_is_done) /
+        parseInt(information.total_task_is_not_done)) *
+        100
+    );
+  };
+
+  useEffect(() => {
+    const setupProjectFilter = (): void => {
+      const onProgress: Project[] = [];
+      const todo: Project[] = [];
+      const done: Project[] = [];
+
+      departmentProjects?.data.forEach((project) => {
+        const status = calculateProgress(project.total_task!);
+        if (status === 100) {
+          done.push(project);
+        } else if (status === 0) {
+          todo.push(project);
+        } else {
+          onProgress.push(project);
+        }
+      });
+
+      setProjectFilter({ onProgress, todo, done });
+    };
+
+    setupProjectFilter();
+  }, [departmentProjects]);
 
   const DepartmentOptions = () => {
     return (
       <div className='department-option'>
-        <Button type='text' className='department-option-btn'>
+        <Button
+          type='text'
+          className='department-option-btn'
+          onClick={() => setUpdateModal(true)}
+        >
           <Pen />
           <Typography.Text>Edit</Typography.Text>
         </Button>
-        <Popconfirm title='Delete this department ?'>
+        <Popconfirm
+          title='Delete this department ?'
+          onConfirm={() => {
+            deleteDepartment({ departmentId });
+            navigate("/v2/department");
+          }}
+        >
           <Button className='department-option-btn' type='text'>
             <Trash />
             <Typography.Text>Delete</Typography.Text>
@@ -42,11 +114,19 @@ export const AdminDepartment = () => {
   const TeamMemberOptions = () => {
     return (
       <div className='department-option'>
-        <Button type='text' className='department-option-btn'>
+        <Button
+          type='text'
+          className='department-option-btn'
+          onClick={() => setAddStaffModal(true)}
+        >
           <UserPlus />
           <Typography.Text>Add Member </Typography.Text>
         </Button>
-        <Button className='department-option-btn' type='text'>
+        <Button
+          className='department-option-btn'
+          type='text'
+          onClick={() => setRmStaffModal(true)}
+        >
           <Trash />
           <Typography.Text>Remove Member</Typography.Text>
         </Button>
@@ -89,37 +169,48 @@ export const AdminDepartment = () => {
             <section className='second-sec'>
               <div className='des-manager-sec'>
                 <Typography.Text>{data?.description}</Typography.Text>
-                <Card className='manager-card'>
-                  <Card.Meta
-                    title={"Nguyen Van A"}
-                    description={
-                      <div className='department-manager-card-des'>
-                        <Typography.Text>nguyenvana@gmail.com</Typography.Text>
-                        <Typography.Text type='secondary'>
-                          Department Manager
-                        </Typography.Text>
-                      </div>
-                    }
-                    avatar={<CustomAvatar size={60} userName='Nguyen Van A' />}
-                  />
-                </Card>
+                {data?.information && (
+                  <Card className='manager-card'>
+                    <Card.Meta
+                      title={"Nguyen Van A"}
+                      description={
+                        <div className='department-manager-card-des'>
+                          <Typography.Text>
+                            {data.information.manager?.name}
+                          </Typography.Text>
+                          <Typography.Text type='secondary'>
+                            Department Manager
+                          </Typography.Text>
+                        </div>
+                      }
+                      avatar={
+                        <CustomAvatar size={60} userName='Nguyen Van A' />
+                      }
+                    />
+                  </Card>
+                )}
               </div>
 
               <div className='pie-chart'>
                 <ResponsivePie
                   data={[
-                    { id: "todo", title: "Todo", color: "#1677ff", value: 100 },
+                    {
+                      id: "todo",
+                      title: "Todo",
+                      color: "#1677ff",
+                      value: projectFilter.todo.length,
+                    },
                     {
                       id: "on progress",
                       title: "On progress",
                       color: "#1677ff",
-                      value: 100,
+                      value: projectFilter.onProgress.length,
                     },
                     {
                       id: "done",
                       title: "Done",
                       color: "#h1h1h1",
-                      value: 100,
+                      value: projectFilter.done.length,
                     },
                   ]}
                   margin={{ top: 5, right: 0, bottom: 5, left: 0 }}
@@ -162,9 +253,12 @@ export const AdminDepartment = () => {
             </section>
           </header>
           <section className='project-section'>
-            <DepartmentProjects title='On Progress' />
-            <DepartmentProjects title='Done' />
-            <DepartmentProjects title='Todo' />
+            <DepartmentProjects title='Todo' projects={projectFilter.todo} />
+            <DepartmentProjects
+              title='On Progress'
+              projects={projectFilter.onProgress}
+            />
+            <DepartmentProjects title='Done' projects={projectFilter.done} />
           </section>
         </section>
         <section className='team-member-sec'>
@@ -179,15 +273,19 @@ export const AdminDepartment = () => {
             </div>
             <List
               className='memeber-list'
-              dataSource={[1, 2, 3]}
-              renderItem={() => {
+              dataSource={departmentStaffs?.users}
+              renderItem={(user) => {
                 return (
                   <List.Item>
                     <List.Item.Meta
-                      title={"Nguyen Van A"}
-                      description={"Staff"}
+                      title={user?.name || user.username}
+                      description={(user?.role as RoleResponse).name}
                       avatar={
-                        <CustomAvatar size={60} userName='Nguyen Van A' />
+                        <CustomAvatar
+                          size={60}
+                          userName={user.username}
+                          avatarSrc={user.avatar}
+                        />
                       }
                     />
                   </List.Item>
@@ -205,6 +303,25 @@ export const AdminDepartment = () => {
         width={"80%"}
       >
         <DepartmentReport />
+      </Modal>
+      <ModalUpdateDepartment
+        isModalOpen={updateModal}
+        setIsModalOpen={setUpdateModal}
+        department={data}
+      />
+      <Modal
+        open={addStaffModal}
+        onCancel={() => setAddStaffModal(false)}
+        width={"80vw"}
+      >
+        <AddStaffTabs />
+      </Modal>
+      <Modal
+        open={rmStaffModal}
+        onCancel={() => setRmStaffModal(false)}
+        width={"80vw"}
+      >
+        <RmDepartmentStaff />
       </Modal>
     </>
   );
