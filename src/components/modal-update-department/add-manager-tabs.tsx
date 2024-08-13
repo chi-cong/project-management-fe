@@ -1,4 +1,4 @@
-import { Button, Table } from "antd";
+import { Button, message, Table } from "antd";
 import { CustomAvatar } from "src/components/v2";
 import { RoleResponse } from "src/share/models";
 import {
@@ -13,7 +13,7 @@ interface DataType {
   role?: string;
   email?: string;
 }
-const AddManagerTabs = () => {
+const AddManagerTabs = ({ id }: { id?: string }) => {
   const { data } = useGetUsersQuery({ role: "MANAGER", items_per_page: "ALL" });
   const [updateManager] = useUpdateManagerDepartmentMutation();
 
@@ -49,11 +49,14 @@ const AddManagerTabs = () => {
           onClick={() => {
             updateManager({
               managerId: record.key,
-              departmentId: "66aa0782193b7aa0827eace0",
-            });
+              departmentId: id,
+            })
+              .unwrap()
+              .then(() => message.success("Updated User"))
+              .catch(() => message.error("failed to update manager"));
           }}
         >
-          manager
+          Assign
         </Button>
       ),
     },

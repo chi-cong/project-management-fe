@@ -1,4 +1,4 @@
-import { Button, Modal, Space, Tabs } from "antd";
+import { Button, message, Modal, Space, Tabs } from "antd";
 import React, { useState } from "react";
 import "./modal-create-department.css";
 import InfoTabs from "./info-tabs";
@@ -22,17 +22,22 @@ const ModalCreateDepartment: React.FC<ModalCreateDepartment> = ({
   const [staffList, setStaffList] = useState<string[]>([]);
   const [createDepartment] = useAddDepartmentMutation();
 
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const createDepart = () => {
     createDepartment({
       name: departInfo?.name,
       description: departInfo?.description,
       list_user_ids: staffList,
       manager_id: managerId,
-    });
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
+    })
+      .unwrap()
+      .then(() => {
+        message.success("Department is created ");
+        handleCancel();
+      })
+      .catch(() => message.error("Failed to create department"));
   };
 
   return (

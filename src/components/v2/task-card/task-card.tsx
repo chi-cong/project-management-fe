@@ -90,8 +90,8 @@ export const TaskCard = ({
             type='text'
             size='small'
             onClick={() => {
-              openDetail();
               dispatch(selectTaskAssign({ task, assignment }));
+              openDetail();
             }}
           >
             <Eye />
@@ -119,6 +119,7 @@ export const TaskCard = ({
           type='text'
           size='small'
           onClick={() => {
+            dispatch(selectTaskAssign({ task, assignment }));
             openActivities();
           }}
         >
