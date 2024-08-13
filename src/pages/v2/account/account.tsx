@@ -26,7 +26,7 @@ export const Account = () => {
 
   const { data } = useGetUsersQuery({
     ...queries,
-    items_per_page: 9,
+    items_per_page: 10,
   });
 
   const items: MenuProps["items"] = [
@@ -142,7 +142,7 @@ export const Account = () => {
             pagination={{
               position: "bottom",
               align: "center",
-              pageSize: 9,
+              pageSize: 10,
               total: data?.total,
               onChange: onChangePage,
             }}

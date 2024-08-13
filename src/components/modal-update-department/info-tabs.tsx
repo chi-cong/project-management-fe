@@ -5,9 +5,10 @@ import React, { useEffect } from "react";
 interface DepartmentInfo {
   name?: string;
   description?: string;
+  id?: string;
 }
 
-const InfoTabs: React.FC<DepartmentInfo> = ({ name, description }) => {
+const InfoTabs: React.FC<DepartmentInfo> = ({ name, description, id }) => {
   const [form] = Form.useForm();
   const [updateDepartment] = useUpdateDepartmentMutation();
 
@@ -18,7 +19,7 @@ const InfoTabs: React.FC<DepartmentInfo> = ({ name, description }) => {
     };
     await updateDepartment({
       body: { ...sentValues },
-      departmentId: "66aa0782193b7aa0827eace0",
+      departmentId: id,
     })
       .unwrap()
       .then(() => {

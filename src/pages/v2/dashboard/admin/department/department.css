@@ -49,6 +49,9 @@
           align-items: flex-start;
         }
         .des-manager-sec {
+          display: flex;
+          flex-direction: column;
+          gap: var(--gap-xl);
           width: 70%;
           margin-bottom: 20px;
           @mixin tabletAndMobile {

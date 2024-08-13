@@ -1,62 +1,117 @@
-import { LoginFieldType } from "src/layouts";
 import "./password.css";
-import { Button, Card, Col, Form, Input, Row, Space, Typography } from "antd";
+import { LoginFieldType } from "src/layouts";
+import {
+  useChangePasswordMutation,
+  useGetUserDetailQuery,
+} from "src/share/services";
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  FormProps,
+  Input,
+  message,
+  Row,
+  Space,
+} from "antd";
+
+export type ChangePasswordFormType = {
+  currentPassword: string;
+  newPassword: string;
+  confirm: string;
+};
 
 export const Password = () => {
+  const [changePassword] = useChangePasswordMutation();
+  const { data: user } = useGetUserDetailQuery();
+
+  const onFinish: FormProps<ChangePasswordFormType>["onFinish"] = async (
+    values
+  ) => {
+    await changePassword({
+      password: values.newPassword,
+      email: user?.email,
+    })
+      .unwrap()
+      .then(() => {
+        message.success("Pasword Changed");
+      })
+      .catch(() => {
+        message.error("There was an error");
+      });
+  };
+
   return (
-    <div className="v2-password-page">
-      <Row className="content-container">
-        <Space direction="vertical" size="middle" style={{ width: "100%" }}>
-          <div className="title-row">
+    <div className='v2-password-page'>
+      <Row className='content-container'>
+        <Space direction='vertical' size='middle' style={{ width: "100%" }}>
+          <div className='title-row'>
             <h2>Change Password</h2>
           </div>
-          <Row className="form-wrapper">
+          <Row className='form-wrapper'>
             <Col span={12}>
               <Card>
                 <Form
-                  name="password"
-                  className="password-form"
-                  autoComplete="off"
+                  onFinish={onFinish}
+                  name='password'
+                  className='password-form'
+                  autoComplete='off'
                 >
-                  <Form.Item<LoginFieldType>
-                    name="password"
+                  <Form.Item<ChangePasswordFormType>
+                    name='currentPassword'
                     rules={[
                       { required: true, message: "Password is required" },
                     ]}
                     style={{ width: "100%" }}
                   >
-                    <Input.Password placeholder="Old Password.." size="large" />
+                    <Input.Password placeholder='Old Password..' size='large' />
                   </Form.Item>
-                  <Form.Item<LoginFieldType>
-                    name="password"
+                  <Form.Item<ChangePasswordFormType>
+                    name='newPassword'
                     rules={[
                       { required: true, message: "Password is required" },
                     ]}
                     style={{ width: "100%" }}
                   >
                     <Input.Password
-                      placeholder="New Password..."
-                      size="large"
+                      placeholder='New Password...'
+                      size='large'
                     />
                   </Form.Item>
-                  <Form.Item<LoginFieldType>
-                    name="password"
+                  <Form.Item<ChangePasswordFormType>
+                    name='confirm'
                     rules={[
                       { required: true, message: "Password is required" },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (
+                            !value ||
+                            getFieldValue("newPassword") === value
+                          ) {
+                            return Promise.resolve();
+                          }
+                          return Promise.reject(
+                            new Error(
+                              "The new password that you entered do not match!"
+                            )
+                          );
+                        },
+                      }),
                     ]}
                     style={{ width: "100%" }}
                   >
                     <Input.Password
-                      placeholder="Confirm new Password...."
-                      size="large"
+                      placeholder='Confirm new Password....'
+                      size='large'
                     />
                   </Form.Item>
                   <Form.Item>
                     <Button
-                      className="password-button"
-                      type="primary"
-                      htmlType="submit"
-                      size="large"
+                      className='password-button'
+                      type='primary'
+                      htmlType='submit'
+                      size='large'
                     >
                       Change
                     </Button>
