@@ -16,39 +16,28 @@ import {
   QuestionCircleOutlined,
 } from "@ant-design/icons";
 import "./card-project.css";
-import {
-  useDeleteDepartmentsMutation,
-  useDeleteProjectMutation,
-} from "src/share/services";
+import { useDeleteProjectMutation } from "src/share/services";
 import { UserOutlined, PlusOutlined } from "@ant-design/icons";
 import ModalAddUserToProject from "../modal-add-user-to-project";
 import ModalUpdatePost from "../modal-update-project";
-import { Project } from "src/share/models";
 type CardProject = {
   name?: string;
   description?: string;
-  manager?: string;
   onClick?: () => void;
-  departmentId?: string;
-  staffCount?: number;
   role?: string;
+  projectId?: string;
 };
 
 export const CardProject: React.FC<CardProject> = ({
   name,
   description,
-  manager,
   onClick,
-  departmentId,
-  staffCount,
   role,
+  projectId,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalAddUserOpen, setIsModalAddUserOpen] = useState(false);
   const [deleteProject] = useDeleteProjectMutation();
-  const [selectedProject, setSelectedProject] = useState<Project | undefined>();
-  const [messageApi, contextHolder] = message.useMessage();
-
   const showModalAddUser = () => {
     setIsModalAddUserOpen(true);
   };
@@ -57,13 +46,15 @@ export const CardProject: React.FC<CardProject> = ({
     setIsModalOpen(true);
   };
 
-  const [deleteDepartment] = useDeleteDepartmentsMutation();
-
   const handleDeleteClick = async (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
   };
-  const deleteDapartment = async () => {
-    await deleteDepartment({ departmentId }).unwrap().then().catch();
+  const deleteProjectHandler = async () => {
+    try {
+      await deleteProject(projectId!).unwrap();
+    } catch (error) {
+      console.error("Failed to delete project:", error);
+    }
   };
 
   return (
@@ -89,30 +80,10 @@ export const CardProject: React.FC<CardProject> = ({
                     className="project-header-action-button icon-delete-Project"
                     onClick={handleDeleteClick}
                   >
-                    {/* <Popconfirm
-                      title='Are you sure to delete this Project?'
-                      icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-                      onConfirm={deleteDapartment}
-                    >
-                      <DeleteOutlined />
-                    </Popconfirm> */}
                     <Popconfirm
-                      key={1}
-                      title="Delete Project"
-                      description="Are you sure to delete this Project?"
-                      okText="Yes"
-                      onConfirm={async () => {
-                        await deleteProject(selectedProject!.project_id!)
-                          .unwrap()
-                          .then(() => {
-                            messageApi.success("Project deleted");
-                            // setOpenProjectTab(false);
-                          })
-                          .catch(() => {
-                            messageApi.error("Failed to delete project");
-                          });
-                      }}
-                      cancelText="No"
+                      title="Are you sure to delete this Project?"
+                      icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+                      onConfirm={deleteProjectHandler}
                     >
                       <DeleteOutlined />
                     </Popconfirm>
