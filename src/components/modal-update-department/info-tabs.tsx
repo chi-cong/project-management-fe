@@ -59,10 +59,7 @@ const InfoTabs: React.FC<DepartmentInfo> = ({ name, description, id }) => {
         <Form.Item className='create-user-form-btn'>
           <Space>
             <Button type='primary' htmlType='submit' size='large'>
-              Save
-            </Button>
-            <Button type='primary' ghost size='large'>
-              Cancel
+              Update
             </Button>
           </Space>
         </Form.Item>
