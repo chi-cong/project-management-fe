@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import {
   useGetDepartmentQuery,
   useGetAllProjectDepartmentQuery,
-  useGetDepartmentStaffsQuery,
+  useManagerGetAllStaffDepartmentQuery,
 } from "src/share/services";
 import { Project, RoleResponse } from "src/share/models";
 import { ModalUpdateDepartment } from "src/components";
@@ -30,9 +30,8 @@ export const ManagerDepartment = () => {
   const { data: departmentProjects } = useGetAllProjectDepartmentQuery({
     departmentId,
   });
-  const { data: departmentStaffs } = useGetDepartmentStaffsQuery({
-    itemsPerPage: "ALL",
-    departmentId,
+  const { data: departmentStaffs } = useManagerGetAllStaffDepartmentQuery({
+    items_per_page: "ALL",
   });
   const navigate = useNavigate();
   const [projectFilter, setProjectFilter] = useState<{
@@ -292,7 +291,7 @@ export const ManagerDepartment = () => {
         onCancel={() => setAddStaffModal(false)}
         width={"80vw"}
       >
-        <AddStaffTabs />
+        <AddStaffTabs id={departmentId} />
       </Modal>
       <Modal
         open={rmStaffModal}

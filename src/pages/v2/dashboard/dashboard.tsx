@@ -17,6 +17,8 @@ export const Dashboard = () => {
     }
     if (route <= 1) {
       if ((data?.role as RoleResponse)?.name) {
+        console.log(data);
+
         localStorageUtil.set("role", (data?.role as RoleResponse).name);
         return (
           <Navigate
