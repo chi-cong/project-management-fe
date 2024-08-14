@@ -440,6 +440,27 @@ const projectServices = hrManagementApi.injectEndpoints({
       },
       invalidatesTags: ["assignment"],
     }),
+    rmStaffFromPj: build.mutation<
+      Response<boolean>,
+      Partial<{
+        projectId: string;
+        ids?: string[];
+      }>
+    >({
+      query({ ids, projectId }) {
+        return {
+          url: `/assignments/remove-staff-from-project/${projectId}`,
+          method: "DELETE",
+          headers: {
+            authorization: accessToken(),
+          },
+          body: {
+            ids,
+          },
+        };
+      },
+      invalidatesTags: ["assignment"],
+    }),
     deleteTask: build.mutation<
       Response<boolean>,
       Partial<{
@@ -591,4 +612,5 @@ export const {
   useDeleteFileMutation,
   useGetAssignmentQuery,
   useDeleteProjectFileMutation,
+  useRmStaffFromPjMutation,
 } = projectServices;
