@@ -41,17 +41,17 @@ const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
     {
       title: "Action",
       key: "action",
-      render: (_: any, _record: DataType) => (
+      render: (_: any, record: DataType) => (
         <Button
           type='primary'
           onClick={() => [
             addDepartmentStaff({
               departmentId: id,
-              listStaff: selectedRows.map((row) => row.key),
+              listStaff: [record.key],
             })
               .unwrap()
               .then(() => message.success("User added"))
-              .catch(message.error("Failed to add user")),
+              .catch(() => message.error("Failed to add user")),
           ]}
         >
           Add

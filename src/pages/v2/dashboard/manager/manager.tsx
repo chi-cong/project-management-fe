@@ -1,5 +1,5 @@
 import "./manager.css";
-import { Sidebar } from "src/components/v2/sidebar";
+import { ManagerSidebar } from "src/components/v2/sidebar";
 import { Navigate, Outlet } from "react-router-dom";
 import { useGetUserDetailQuery } from "src/share/services";
 
@@ -13,7 +13,7 @@ export const Manager = () => {
 
   return (
     <div className='manager-page'>
-      <Sidebar />
+      <ManagerSidebar />
       <div className='route-content'>
         {route <= 1 && <Navigate to={`department/${data?.department_id}`} />}
         <Outlet />

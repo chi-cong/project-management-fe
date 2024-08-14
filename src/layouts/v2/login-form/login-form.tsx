@@ -33,7 +33,7 @@ export const LoginForm = () => {
       .unwrap()
       .then((resp) => {
         sessionStorageUtil.set("accessToken", resp.data.tokens.accessToken);
-        sessionStorageUtil.set("role", resp.data.role);
+        localStorageUtil.set("role", resp.data.role);
         if (values.remember) {
           localStorageUtil.set("refreshToken", resp.data.tokens.refreshToken);
         }
