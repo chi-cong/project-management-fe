@@ -20,6 +20,7 @@ import App from "src/App";
 import { Projects } from "src/pages/v2/projects";
 import { Departments } from "src/pages/v2/departments";
 import { Password } from "src/pages/v2/password";
+import { Staff } from "src/pages/v2/dashboard/staff";
 
 export const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -76,6 +77,40 @@ export const router = createBrowserRouter([
               { path: "project/:id", element: <AdminProject /> },
               { path: "account", element: <Account /> },
               { path: "departments", element: <Departments /> },
+              {
+                path: "profile",
+                element: <Profile />,
+              },
+              {
+                path: "password",
+                element: <Password />,
+              },
+            ],
+          },
+          {
+            path: "manager",
+            element: <Manager />,
+            children: [
+              {
+                path: "department/:id",
+                element: <ManagerDepartment />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: "dashboard",
+        element: <DashboardV2 />,
+        children: [
+          {
+            path: "staff",
+            element: <Staff />,
+            children: [
+              { path: "department/:id", element: <AdminDepartment /> },
+              { path: "projects", element: <Projects /> },
+              { path: "project/:id", element: <AdminProject /> },
+              { path: "account", element: <Account /> },
               {
                 path: "profile",
                 element: <Profile />,

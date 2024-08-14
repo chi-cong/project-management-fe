@@ -1,4 +1,4 @@
-import "./sidebar.css";
+import "./staff-sidebar.css";
 import { Layout } from "antd";
 import { useState } from "react";
 import {
@@ -13,7 +13,7 @@ import ModalCreateUser from "src/components/modal-create-user";
 import { ModalCreateProject } from "src/components";
 import ModalCreateDepartment from "src/components/modal-create-department";
 
-export const Sidebar = () => {
+export const StaffSidebar = () => {
   const navigate = useNavigate();
 
   const [createUser, setCreateUser] = useState<boolean>(false);
@@ -22,19 +22,9 @@ export const Sidebar = () => {
 
   const items: CustomMenuItem[] = [
     {
-      title: "Account",
-      onClick() {
-        navigate("/v2/dashboard/admin/account");
-      },
-      icon: <TeamOutlined />,
-      addCallBack() {
-        setCreateUser(true);
-      },
-    },
-    {
       title: "Department",
       onClick() {
-        navigate("/v2/dashboard/admin/departments");
+        navigate("/v2/dashboard/staff/department/:id");
       },
       icon: <ClusterOutlined />,
       addCallBack() {
@@ -44,7 +34,7 @@ export const Sidebar = () => {
     {
       title: "Project",
       onClick() {
-        navigate("/v2/dashboard/admin/projects");
+        navigate("/v2/dashboard/staff/projects");
       },
       icon: <RocketOutlined />,
       addCallBack() {
@@ -52,13 +42,6 @@ export const Sidebar = () => {
       },
     },
   ];
-
-  // const getSublistNode = () => {
-  //   return (
-  //     <div className='sublist-node' style={{ background: randAvaBg() }}></div>
-  //   );
-  // };
-
   return (
     <>
       <Layout.Sider className="sidebar">

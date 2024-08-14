@@ -44,7 +44,7 @@ export const CustomMenu = ({ items }: CustomMenuProp) => {
   }, []);
 
   return (
-    <div className='custom-menu'>
+    <div className="custom-menu">
       {items.map((item, index) => {
         return (
           <div
@@ -55,15 +55,15 @@ export const CustomMenu = ({ items }: CustomMenuProp) => {
               item.onClick();
             }}
           >
-            <div className='menu-option-content'>
+            <div className="menu-option-content">
               {item.icon && item.icon}
-              <Typography.Text className='item-title'>
+              <Typography.Text className="item-title">
                 {item.title}
               </Typography.Text>
             </div>
             {item.addCallBack && (
               <div
-                className='add-icon'
+                className="add-icon"
                 onClick={() => {
                   item.addCallBack!();
                 }}
