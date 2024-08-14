@@ -40,8 +40,7 @@ export const StaffDepartment = () => {
     departmentId,
   });
   const { data: departmentStaffs } = useManagerGetAllStaffDepartmentQuery({
-    itemsPerPage: "ALL",
-    departmentId,
+    items_per_page: "ALL",
   });
   const [deleteDepartment] = useDeleteDepartmentsMutation();
   const navigate = useNavigate();
