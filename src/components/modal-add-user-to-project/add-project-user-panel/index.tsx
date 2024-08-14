@@ -1,14 +1,13 @@
+import "./add-project-user-panel.css";
 import { Button, Col, Input, message, Modal, Row, Table } from "antd";
 import React, { useState } from "react";
-import "./modal-add-user-to-project.css";
 import {
   useCreateAssigmentMutation,
-  useGetDepartmentStaffsQuery,
-  useGetUsersQuery,
+  useManagerGetAllStaffDepartmentQuery,
 } from "src/share/services";
 import { SearchOutlined } from "@ant-design/icons";
-import { CustomAvatar } from "../v2/custom-avatar";
-import { OUserRole, Project, RoleResponse } from "src/share/models";
+import { CustomAvatar } from "src/components/v2/custom-avatar";
+import { Project, RoleResponse } from "src/share/models";
 interface ModalAddUserToProjectProps {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,27 +21,16 @@ interface DataType {
   email: string;
 }
 
-export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
+export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
   project,
   isModalOpen,
   setIsModalOpen,
 }) => {
   const [staffPage, setStaffPage] = useState<number>(1);
 
-  const { data: staffs } = useGetDepartmentStaffsQuery(
-    {
-      itemsPerPage: 5,
-      departmentId: project?.department_id,
-    },
-    { skip: project?.department_id ? false : true }
-  );
-  const { data: allStaffs } = useGetUsersQuery(
-    {
-      items_per_page: 5,
-      role: OUserRole.All,
-    },
-    { skip: project?.department_id ? true : false }
-  );
+  const { data: staffs } = useManagerGetAllStaffDepartmentQuery({
+    items_per_page: 5,
+  });
 
   const [createAssignment] = useCreateAssigmentMutation();
 
@@ -108,14 +96,6 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
         };
       });
     }
-    return allStaffs?.users.map((staff): DataType => {
-      return {
-        name: staff.name!,
-        email: staff.email!,
-        role: (staff.role as RoleResponse).name!,
-        key: staff.user_id!,
-      };
-    });
   };
   return (
     <Modal

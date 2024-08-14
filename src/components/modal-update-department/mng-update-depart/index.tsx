@@ -2,7 +2,6 @@ import { Modal, Space, Tabs } from "antd";
 import React from "react";
 import "./modal-update-department.css";
 import InfoTabs from "./info-tabs";
-import AddManagerTabs from "./add-manager-tabs";
 import AddStaffTabs from "./add-staff-tabs";
 import { Department } from "src/share/models";
 type ModalUpdateDepartment = {
@@ -10,7 +9,7 @@ type ModalUpdateDepartment = {
   setIsModalOpen: (show: boolean) => void;
   department?: Department;
 };
-export const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
+export const MngUpdateDepart: React.FC<ModalUpdateDepartment> = ({
   isModalOpen,
   setIsModalOpen,
   department,
@@ -50,10 +49,7 @@ export const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
             id={department?.department_id}
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab='Manager' key='2'>
-          <AddManagerTabs id={department?.department_id} />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab='Staff' key='3'>
+        <Tabs.TabPane tab='Staff' key='2'>
           <AddStaffTabs id={department?.department_id} />
         </Tabs.TabPane>
       </Tabs>

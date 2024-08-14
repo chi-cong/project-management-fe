@@ -1,7 +1,4 @@
-.wrapper {
-  span {
-    /* margin-bottom: 10px; */
-  }
+.update-project-modal {
   input:disabled {
     color: rgb(0, 0, 0, 1);
   }

@@ -40,6 +40,7 @@ export const ManagerSidebar = () => {
       <ManagerCreateProject
         isModalOpen={createProject}
         setIsModalOpen={setCreateProject}
+        departmentId={data?.department_id}
       />
       <div className='sidebar-placeholder' style={{ width: 0 }} />
     </>

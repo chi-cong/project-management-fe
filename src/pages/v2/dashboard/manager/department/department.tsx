@@ -1,20 +1,18 @@
 import "./department.css";
 import { Typography, Card, Modal, Button, Popover, List } from "antd";
 import { ResponsivePie } from "@nivo/pie";
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import { CustomAvatar, RmDepartmentStaff } from "src/components/v2";
+import { CustomAvatar, MngRmDepartStaff } from "src/components/v2";
 import { DepartmentProjects } from "src/layouts/v2";
 import { useEffect, useState } from "react";
 import { DepartmentReport } from "src/layouts/v2/department-report";
 import { Pen, Trash, MenuDots, PieChart, UserPlus } from "src/assets/icons";
-import { useNavigate } from "react-router-dom";
 import {
   useGetDepartmentQuery,
   useGetAllProjectDepartmentQuery,
   useManagerGetAllStaffDepartmentQuery,
 } from "src/share/services";
 import { Project, RoleResponse } from "src/share/models";
-import { ModalUpdateDepartment } from "src/components";
+import { MngUpdateDepart } from "src/components";
 import AddStaffTabs from "src/components/modal-update-department/add-staff-tabs";
 
 import { useParams } from "react-router-dom";
@@ -33,7 +31,6 @@ export const ManagerDepartment = () => {
   const { data: departmentStaffs } = useManagerGetAllStaffDepartmentQuery({
     items_per_page: "ALL",
   });
-  const navigate = useNavigate();
   const [projectFilter, setProjectFilter] = useState<{
     onProgress: Project[];
     todo: Project[];
@@ -74,20 +71,6 @@ export const ManagerDepartment = () => {
     setupProjectFilter();
   }, [departmentProjects]);
 
-  const DepartmentOptions = () => {
-    return (
-      <div className='department-option'>
-        <Button
-          type='text'
-          className='department-option-btn'
-          onClick={() => setUpdateModal(true)}
-        >
-          <Pen />
-          <Typography.Text>Edit</Typography.Text>
-        </Button>
-      </div>
-    );
-  };
   const TeamMemberOptions = () => {
     return (
       <div className='department-option'>
@@ -117,13 +100,16 @@ export const ManagerDepartment = () => {
         <section className='main'>
           <header className='main-header'>
             <div className='title-row'>
-              <Typography.Title level={2}>{data?.name}</Typography.Title>
-              <div style={{ display: "flex" }}>
-                <Popover content={<DepartmentOptions />}>
-                  <Button type='text' className='title-row-btn' size='small'>
-                    <MenuDots />
-                  </Button>
-                </Popover>
+              <h2>{data?.name}</h2>
+              <div style={{ display: "flex", gap: "var(--gap-xs)" }}>
+                <Button
+                  className='title-row-btn'
+                  shape='round'
+                  onClick={() => setUpdateModal(true)}
+                >
+                  <Pen />
+                  <Typography.Text>Edit</Typography.Text>
+                </Button>
                 <Button
                   type='default'
                   className='title-row-btn'
@@ -134,14 +120,6 @@ export const ManagerDepartment = () => {
                   Reports
                 </Button>
               </div>
-              <Button
-                shape='round'
-                style={{ display: "" }}
-                onClick={() => navigate("/v2/dashboard/admin/departments")}
-              >
-                <ArrowLeftOutlined />
-                Back to department
-              </Button>
             </div>
             <section className='second-sec'>
               <div className='des-manager-sec'>
@@ -281,7 +259,7 @@ export const ManagerDepartment = () => {
       >
         <DepartmentReport departmentId={departmentId} />
       </Modal>
-      <ModalUpdateDepartment
+      <MngUpdateDepart
         isModalOpen={updateModal}
         setIsModalOpen={setUpdateModal}
         department={data}
@@ -298,7 +276,7 @@ export const ManagerDepartment = () => {
         onCancel={() => setRmStaffModal(false)}
         width={"80vw"}
       >
-        <RmDepartmentStaff />
+        <MngRmDepartStaff departmentId={departmentId} />
       </Modal>
     </>
   );

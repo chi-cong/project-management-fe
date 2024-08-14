@@ -18,7 +18,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
-import { ModalCreateProject } from "src/components/";
+import { ManagerCreateProject } from "src/components/";
 import { CardProject } from "src/components/card-project";
 import { useNavigate } from "react-router-dom";
 import {
@@ -157,7 +157,7 @@ export const ManagerProjects = () => {
                   onClick={() => {
                     dispatch(selectProject(project!.project_id!));
                     navigate(
-                      `/v2/dashboard/admin/project/${project!.project_id!}`
+                      `/v2/dashboard/manager/project/${project!.project_id!}`
                     );
                   }}
                   project={project}
@@ -167,10 +167,11 @@ export const ManagerProjects = () => {
           />
         </main>
       </section>
-      <ModalCreateProject
+      <ManagerCreateProject
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-      ></ModalCreateProject>
+        departmentId={user?.department_id}
+      ></ManagerCreateProject>
     </div>
   );
 };

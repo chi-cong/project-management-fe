@@ -1,4 +1,4 @@
-import { Button, Table } from "antd";
+import { Button, message, Table } from "antd";
 import React, { useState } from "react";
 import { CustomAvatar } from "src/components/v2";
 import { ColumnsType } from "antd/es/table";
@@ -15,13 +15,17 @@ interface DataType {
   email?: string;
 }
 
-export const RmDepartmentStaff: React.FC = () => {
+export const RmDepartmentStaff = ({
+  departmentId,
+}: {
+  departmentId?: string;
+}) => {
   const columns: ColumnsType<DataType> = [
     {
       title: "Avatar",
       dataIndex: "avatar",
       key: "avatar",
-      render: (_text: string) => <CustomAvatar size={50} userName='Dat' />,
+      render: () => <CustomAvatar size={50} userName='Dat' />,
     },
     {
       title: "Name",
@@ -41,14 +45,17 @@ export const RmDepartmentStaff: React.FC = () => {
     {
       title: "Action",
       key: "action",
-      render: (_: any, record: DataType) => (
+      render: (_: string, record: DataType) => (
         <Button
           type='primary'
           onClick={() => [
             rmDepartmentStaff({
-              departmentId: "66aa0782193b7aa0827eace0",
+              departmentId,
               listStaff: [record.key] as string[],
-            }),
+            })
+              .unwrap()
+              .then(() => message.success("Removed memeber"))
+              .catch(() => message.error("Failed to remove member")),
           ]}
         >
           Remove
@@ -60,7 +67,7 @@ export const RmDepartmentStaff: React.FC = () => {
   const [rmDepartmentStaff] = useDeleteStaffDepartmentMutation();
   const { data: departStaffs } = useGetDepartmentStaffsQuery({
     itemsPerPage: "ALL",
-    departmentId: "66aa0782193b7aa0827eace0",
+    departmentId,
   });
   const rowSelection = {
     onChange: (_selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
@@ -91,16 +98,18 @@ export const RmDepartmentStaff: React.FC = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "start",
-            marginBottom: "10px",
           }}
         >
           <Button
             type='primary'
             onClick={() => {
               rmDepartmentStaff({
-                departmentId: "66aa0782193b7aa0827eace0",
+                departmentId,
                 listStaff: selectedRows.map((row) => row.key) as string[],
-              });
+              })
+                .unwrap()
+                .then(() => message.success("Removed memebers"))
+                .catch(() => message.error("Failed to remove members"));
             }}
           >
             Assign

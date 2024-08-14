@@ -84,7 +84,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
 
   return (
     <Modal
-      className='wrapper'
+      className='update-project-modal'
       open={isModalOpen}
       centered
       footer={[]}

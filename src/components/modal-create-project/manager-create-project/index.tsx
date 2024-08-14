@@ -14,29 +14,27 @@ import "./manager-create-project.css";
 import { Project } from "src/share/models";
 import {
   useCreateProjectMutation,
-  useGetDepartmentsQuery,
   useManagerGetAllStaffDepartmentQuery,
 } from "src/share/services";
 
 type ModalUpdateProjectProp = {
   isModalOpen: boolean;
   setIsModalOpen: (show: boolean) => void;
+  departmentId?: string;
 };
 
 export const ManagerCreateProject: React.FC<ModalUpdateProjectProp> = ({
   isModalOpen,
   setIsModalOpen,
+  departmentId,
 }) => {
   const [createProject] = useCreateProjectMutation();
-  const { data: departmentData } = useGetDepartmentsQuery({
-    itemsPerPage: "ALL",
-  });
   const { data: staffs } = useManagerGetAllStaffDepartmentQuery({
     items_per_page: "ALL",
   });
 
   const onFinish: FormProps<Project>["onFinish"] = async (values) => {
-    await createProject(values)
+    await createProject({ ...values, department_id: departmentId })
       .unwrap()
       .then(() => {
         message.success("Success create project");
@@ -66,7 +64,12 @@ export const ManagerCreateProject: React.FC<ModalUpdateProjectProp> = ({
       >
         Create Project
       </h2>
-      <Form className='project-form' layout='vertical' onFinish={onFinish}>
+      <Form
+        className='project-form'
+        layout='vertical'
+        onFinish={onFinish}
+        disabled={departmentId ? false : true}
+      >
         <Form.Item<Project>
           name={"name"}
           label='Project name'
@@ -92,17 +95,6 @@ export const ManagerCreateProject: React.FC<ModalUpdateProjectProp> = ({
           ]}
         >
           <Input.TextArea size='large' />
-        </Form.Item>
-        <Form.Item<Project> name={"department_id"} label='Department'>
-          <Select
-            options={departmentData?.departments?.map((department) => {
-              return {
-                label: department.name,
-                value: department.department_id,
-              };
-            })}
-            size='large'
-          />
         </Form.Item>
         <Form.Item<Project> name={"project_manager_id"} label='Project Manager'>
           <Select

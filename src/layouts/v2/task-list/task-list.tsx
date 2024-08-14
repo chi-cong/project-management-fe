@@ -72,7 +72,7 @@ export const TaskList = ({
           </Typography.Title>
         </div>
         <div className='tasks'>
-          {tasks?.map((task) => {
+          {tasks?.map((task, index) => {
             const matchedAssignment: Assignment | undefined =
               assigments?.assignments?.find(
                 (assignment) => task.task_id === assignment.task_id
@@ -80,6 +80,7 @@ export const TaskList = ({
             if (matchedAssignment) {
               return (
                 <TaskCard
+                  key={index}
                   openDetail={() => showTaskDetail(true)}
                   openFile={() => showDocSec(true)}
                   assignment={matchedAssignment}
