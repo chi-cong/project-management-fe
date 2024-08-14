@@ -1,30 +1,17 @@
 import "./department.css";
-import {
-  Typography,
-  Card,
-  Modal,
-  Button,
-  Popconfirm,
-  Popover,
-  List,
-} from "antd";
+import { Typography, Card, Modal, Button, List } from "antd";
 import { ResponsivePie } from "@nivo/pie";
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import { CustomAvatar, RmDepartmentStaff } from "src/components/v2";
+import { CustomAvatar } from "src/components/v2";
 import { DepartmentProjects } from "src/layouts/v2";
 import { useEffect, useState } from "react";
 import { DepartmentReport } from "src/layouts/v2/department-report";
-import { Pen, Trash, MenuDots, PieChart, UserPlus } from "src/assets/icons";
-import { useNavigate } from "react-router-dom";
+import { PieChart } from "src/assets/icons";
 import {
   useGetDepartmentQuery,
-  useGetAllProjectDepartmentQuery,
+  useGetDepartmentProjectInfoQuery,
   useManagerGetAllStaffDepartmentQuery,
-  useDeleteDepartmentsMutation,
 } from "src/share/services";
 import { Project, RoleResponse } from "src/share/models";
-import { ModalUpdateDepartment } from "src/components";
-import AddStaffTabs from "src/components/modal-update-department/add-staff-tabs";
 
 import { useParams } from "react-router-dom";
 
@@ -32,18 +19,13 @@ export const StaffDepartment = () => {
   const { id: departmentId } = useParams();
 
   const [reportModal, setReportModal] = useState<boolean>(false);
-  const [updateModal, setUpdateModal] = useState<boolean>(false);
-  const [addStaffModal, setAddStaffModal] = useState<boolean>(false);
-  const [rmStaffModal, setRmStaffModal] = useState<boolean>(false);
   const { data } = useGetDepartmentQuery({ id: departmentId! });
-  const { data: departmentProjects } = useGetAllProjectDepartmentQuery({
+  const { data: departmentProjects } = useGetDepartmentProjectInfoQuery({
     departmentId,
   });
   const { data: departmentStaffs } = useManagerGetAllStaffDepartmentQuery({
     items_per_page: "ALL",
   });
-  const [deleteDepartment] = useDeleteDepartmentsMutation();
-  const navigate = useNavigate();
   const [projectFilter, setProjectFilter] = useState<{
     onProgress: Project[];
     todo: Project[];
@@ -86,16 +68,16 @@ export const StaffDepartment = () => {
 
   return (
     <>
-      <div className="department-page">
-        <section className="main">
-          <header className="main-header">
-            <div className="title-row">
+      <div className='department-page'>
+        <section className='main'>
+          <header className='main-header'>
+            <div className='title-row'>
               <Typography.Title level={2}>{data?.name}</Typography.Title>
               <div style={{ display: "flex" }}>
                 <Button
-                  type="default"
-                  className="title-row-btn"
-                  shape="round"
+                  type='default'
+                  className='title-row-btn'
+                  shape='round'
                   onClick={() => setReportModal(true)}
                 >
                   <PieChart />
@@ -103,32 +85,32 @@ export const StaffDepartment = () => {
                 </Button>
               </div>
             </div>
-            <section className="second-sec">
-              <div className="des-manager-sec">
+            <section className='second-sec'>
+              <div className='des-manager-sec'>
                 <Typography.Text>{data?.description}</Typography.Text>
                 {data?.information && (
-                  <Card className="manager-card">
+                  <Card className='manager-card'>
                     <Card.Meta
                       title={data.information.manager?.name}
                       description={
-                        <div className="department-manager-card-des">
+                        <div className='department-manager-card-des'>
                           <Typography.Text>
                             {data.information.manager?.email}
                           </Typography.Text>
-                          <Typography.Text type="secondary">
+                          <Typography.Text type='secondary'>
                             Department Manager
                           </Typography.Text>
                         </div>
                       }
                       avatar={
-                        <CustomAvatar size={60} userName="Nguyen Van A" />
+                        <CustomAvatar size={60} userName='Nguyen Van A' />
                       }
                     />
                   </Card>
                 )}
               </div>
 
-              <div className="pie-chart">
+              <div className='pie-chart'>
                 <ResponsivePie
                   data={[
                     {
@@ -189,22 +171,22 @@ export const StaffDepartment = () => {
               </div>
             </section>
           </header>
-          <section className="project-section">
-            <DepartmentProjects title="Todo" projects={projectFilter.todo} />
+          <section className='project-section'>
+            <DepartmentProjects title='Todo' projects={projectFilter.todo} />
             <DepartmentProjects
-              title="On Progress"
+              title='On Progress'
               projects={projectFilter.onProgress}
             />
-            <DepartmentProjects title="Done" projects={projectFilter.done} />
+            <DepartmentProjects title='Done' projects={projectFilter.done} />
           </section>
         </section>
-        <section className="team-member-sec">
-          <div className="member-list-container">
-            <div className="title">
+        <section className='team-member-sec'>
+          <div className='member-list-container'>
+            <div className='title'>
               <Typography.Title level={5}>Team Members</Typography.Title>
             </div>
             <List
-              className="memeber-list"
+              className='memeber-list'
               dataSource={departmentStaffs?.users}
               renderItem={(user) => {
                 return (
@@ -231,29 +213,10 @@ export const StaffDepartment = () => {
         open={reportModal}
         onCancel={() => setReportModal(false)}
         footer={[]}
-        title="Department Report"
+        title='Department Report'
         width={"80%"}
       >
         <DepartmentReport departmentId={departmentId} />
-      </Modal>
-      <ModalUpdateDepartment
-        isModalOpen={updateModal}
-        setIsModalOpen={setUpdateModal}
-        department={data}
-      />
-      <Modal
-        open={addStaffModal}
-        onCancel={() => setAddStaffModal(false)}
-        width={"80vw"}
-      >
-        <AddStaffTabs />
-      </Modal>
-      <Modal
-        open={rmStaffModal}
-        onCancel={() => setRmStaffModal(false)}
-        width={"80vw"}
-      >
-        <RmDepartmentStaff />
       </Modal>
     </>
   );

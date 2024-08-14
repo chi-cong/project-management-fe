@@ -9,14 +9,12 @@ import {
   ForgotPass,
   TestRoute,
   Dashboard as DashboardV2,
-  Admin,
   AdminDepartment,
   AdminProject,
   Account,
   Profile,
 } from "src/pages/v2";
 import {
-  Manager,
   ManagerDepartment,
   ManagerProjects,
   ManagerProject,
@@ -75,7 +73,10 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "admin",
-            element: <Admin />,
+            async lazy() {
+              const { Admin } = await import("src/pages/v2/dashboard/admin");
+              return { Component: Admin };
+            },
             children: [
               { path: "department/:id", element: <AdminDepartment /> },
               { path: "projects", element: <Projects /> },
@@ -94,7 +95,12 @@ export const router = createBrowserRouter([
           },
           {
             path: "manager",
-            element: <Manager />,
+            async lazy() {
+              const { Manager } = await import(
+                "src/pages/v2/dashboard/manager"
+              );
+              return { Component: Manager };
+            },
             children: [
               {
                 path: "department/:id",
@@ -105,17 +111,11 @@ export const router = createBrowserRouter([
                 element: <ManagerProjects />,
               },
               {
-                path: "project",
+                path: "project/:id",
                 element: <ManagerProject />,
               },
             ],
           },
-        ],
-      },
-      {
-        path: "dashboard",
-        element: <DashboardV2 />,
-        children: [
           {
             path: "staff",
             element: <Staff />,
@@ -131,16 +131,6 @@ export const router = createBrowserRouter([
               {
                 path: "password",
                 element: <Password />,
-              },
-            ],
-          },
-          {
-            path: "manager",
-            element: <Manager />,
-            children: [
-              {
-                path: "department/:id",
-                element: <ManagerDepartment />,
               },
             ],
           },

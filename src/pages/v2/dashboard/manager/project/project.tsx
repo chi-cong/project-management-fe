@@ -32,10 +32,13 @@ import {
   useDeleteProjectMutation,
   useGetProjectStaffsQuery,
 } from "src/share/services";
-import { ModalUpdateProject, ModalAddUserToProject } from "src/components";
+import { ModalUpdateProject } from "src/components";
 import { Activities } from "src/layouts/v2/task-detail/activities";
+import { AddProjectUserPanel } from "src/components/modal-add-user-to-project";
+
 export const ManagerProject = () => {
   const { id: projectId } = useParams();
+  const navigate = useNavigate();
 
   const [reportModal, setReportModal] = useState<boolean>(false);
   const [taskDetailModal, setTaskDetailModal] = useState<boolean>(false);
@@ -46,7 +49,6 @@ export const ManagerProject = () => {
   const [docSec, setDocSec] = useState<boolean>(false);
   const [taskDocSec, setTaskDocSec] = useState<boolean>(false);
   const [activitySec, setActivitySec] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   const { data: projectData } = useGetProjectQuery({
     projectId: projectId!,
@@ -270,7 +272,7 @@ export const ManagerProject = () => {
       >
         <ProjectReport projectId={projectId} />
       </Modal>
-      <ModalAddUserToProject
+      <AddProjectUserPanel
         isModalOpen={addUserModal}
         setIsModalOpen={setAddUserModal}
         project={projectData}

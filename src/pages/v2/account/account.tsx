@@ -16,18 +16,24 @@ import { useState } from "react";
 import { useGetUsersQuery } from "src/share/services";
 import ModalCreateUser from "src/components/modal-create-user";
 import { UserRole, OUserRole } from "src/share/models";
+import { useRoleChecker } from "src/share/hooks";
 
 export const Account = () => {
+  const checkRole = useRoleChecker();
+
   const [queries, setQueries] = useState<{
     role: UserRole;
     page: number | undefined;
     search: string | undefined;
   }>({ role: OUserRole.All, page: 1, search: "" });
 
-  const { data } = useGetUsersQuery({
-    ...queries,
-    items_per_page: 10,
-  });
+  const { data } = useGetUsersQuery(
+    {
+      ...queries,
+      items_per_page: 10,
+    },
+    { skip: !checkRole(OUserRole.Admin) }
+  );
 
   const items: MenuProps["items"] = [
     {

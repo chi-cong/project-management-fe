@@ -1,5 +1,5 @@
 import { Button, Form, FormProps, Input, message, Space } from "antd";
-import { useUpdateDepartmentMutation } from "src/share/services";
+import { useUpdateMngDepartmentMutation } from "src/share/services";
 import React, { useEffect } from "react";
 
 interface DepartmentInfo {
@@ -10,7 +10,7 @@ interface DepartmentInfo {
 
 const InfoTabs: React.FC<DepartmentInfo> = ({ name, description, id }) => {
   const [form] = Form.useForm();
-  const [updateDepartment] = useUpdateDepartmentMutation();
+  const [updateDepartment] = useUpdateMngDepartmentMutation();
 
   const onFinish: FormProps<DepartmentInfo>["onFinish"] = async (values) => {
     const sentValues = {
@@ -32,7 +32,7 @@ const InfoTabs: React.FC<DepartmentInfo> = ({ name, description, id }) => {
 
   useEffect(() => {
     form.setFieldsValue({ name, description });
-  }, [name, description]);
+  }, [name, description, form]);
 
   return (
     <>

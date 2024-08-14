@@ -40,10 +40,7 @@ export const Departments = () => {
       departmentId: userDetail?.department_id,
     },
     {
-      skip:
-        checkRole(OUserRole.Admin) ||
-        checkRole(OUserRole.ProjectManager) ||
-        !userDetail?.department_id,
+      skip: !checkRole(OUserRole.Admin),
     }
   );
   const navigate = useNavigate();

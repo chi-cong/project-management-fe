@@ -166,6 +166,22 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
       },
       invalidatesTags: ["department", "User"],
     }),
+    updateMngDepartment: build.mutation<
+      Response<boolean>,
+      Partial<{ body: Department; departmentId: string }>
+    >({
+      query({ departmentId, body }) {
+        return {
+          url: `/departments/update/${departmentId}`,
+          method: "PUT",
+          headers: {
+            authorization: accessToken(),
+          },
+          body,
+        };
+      },
+      invalidatesTags: ["department", "User"],
+    }),
     addStaffDepartment: build.mutation<
       Response<{ count: number }>,
       { departmentId?: string; listStaff?: (string | undefined)[] }
@@ -250,4 +266,5 @@ export const {
   useManagerGetAllStaffDepartmentQuery,
   useManagerGetStaffNoDepartmentQuery,
   useUpdateDepartmentMutation,
+  useUpdateMngDepartmentMutation,
 } = DepartmentServices;

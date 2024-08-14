@@ -1,6 +1,6 @@
 import "./activities.css";
-import { Button, Input, List, Typography } from "antd";
-import { useState } from "react";
+import { Button, Input, List, message, Typography } from "antd";
+import { useEffect, useState } from "react";
 import { CustomAvatar } from "src/components/v2";
 import {
   useCreateActivityMutation,
@@ -19,6 +19,8 @@ export const Activities = () => {
     items_per_page: "ALL",
     taskId: task?.task_id,
   });
+
+  useEffect(() => {});
 
   return (
     <div className='acti-section'>
@@ -44,7 +46,7 @@ export const Activities = () => {
                 createActi({
                   task_id: task?.task_id,
                   description: actiDesc,
-                });
+                }).catch(() => message.error("Failed to create activity"));
               }
             }}
           >
@@ -57,7 +59,7 @@ export const Activities = () => {
       {acties && (
         <List
           style={{ width: "100%" }}
-          dataSource={acties || []}
+          dataSource={acties}
           renderItem={(activity) => (
             <List.Item>
               <List.Item.Meta
