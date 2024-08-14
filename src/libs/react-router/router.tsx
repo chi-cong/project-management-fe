@@ -118,6 +118,40 @@ export const router = createBrowserRouter([
         ],
       },
       {
+        path: "dashboard",
+        element: <DashboardV2 />,
+        children: [
+          {
+            path: "staff",
+            element: <Staff />,
+            children: [
+              { path: "department/:id", element: <AdminDepartment /> },
+              { path: "projects", element: <Projects /> },
+              { path: "project/:id", element: <AdminProject /> },
+              { path: "account", element: <Account /> },
+              {
+                path: "profile",
+                element: <Profile />,
+              },
+              {
+                path: "password",
+                element: <Password />,
+              },
+            ],
+          },
+          {
+            path: "manager",
+            element: <Manager />,
+            children: [
+              {
+                path: "department/:id",
+                element: <ManagerDepartment />,
+              },
+            ],
+          },
+        ],
+      },
+      {
         path: "profile",
         element: <Profile />,
       },

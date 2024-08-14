@@ -1,6 +1,6 @@
 import "./staff.css";
-import { Sidebar } from "src/components/v2/sidebar";
 import { Navigate, Outlet } from "react-router-dom";
+import { StaffSidebar } from "src/components/v2/staff-sidebar";
 
 export const Staff = () => {
   const route = window.location.pathname.replace(
@@ -10,7 +10,7 @@ export const Staff = () => {
 
   return (
     <div className="staff-page">
-      <Sidebar />
+      <StaffSidebar />
       <div className="route-content">
         {route <= 1 && <Navigate to={"account"} />}
         <Outlet />

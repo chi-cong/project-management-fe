@@ -9,9 +9,9 @@ export const Admin = () => {
   ).length;
 
   return (
-    <div className='admin-page'>
+    <div className="admin-page">
       <Sidebar />
-      <div className='route-content'>
+      <div className="route-content">
         {route <= 1 && <Navigate to={"account"} />}
         <Outlet />
       </div>
