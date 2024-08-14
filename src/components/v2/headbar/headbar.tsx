@@ -6,10 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { localStorageUtil, sessionStorageUtil } from "src/share/utils";
 import { useDispatch } from "react-redux";
 import { hrManagementApi } from "src/share/services/";
+import { useGetUserDetailQuery } from "src/share/services/";
 
 export const Headbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { data: user } = useGetUserDetailQuery();
 
   const logout = (): void => {
     sessionStorageUtil.delete("accessToken");
@@ -20,38 +22,34 @@ export const Headbar = () => {
 
   const UserHeadbarOption = () => {
     return (
-      <div className="user-headbar-options">
-        <Card className="user-headbar-options-card">
+      <div className='user-headbar-options'>
+        <Card className='user-headbar-options-card'>
           <Card.Meta
-            avatar={<CustomAvatar size={45} userName="N" />}
-            title={"Nguyen Van A"}
-            description={"nguyenvana@gmail.com"}
+            avatar={<CustomAvatar size={45} userName={user?.name} />}
+            title={user?.name}
+            description={user?.email}
           />
         </Card>
         <Button
-          type="text"
-          className="user-headbar-option-btn"
-          onClick={() =>
-            navigate(`./${sessionStorageUtil.get("role")}/profile`)
-          }
+          type='text'
+          className='user-headbar-option-btn'
+          onClick={() => navigate(`./${localStorageUtil.get("role")}/profile`)}
         >
           <Person />
           <Typography.Text>Profile</Typography.Text>
         </Button>
         <Button
-          type="text"
-          className="user-headbar-option-btn"
-          onClick={() =>
-            navigate(`./${sessionStorageUtil.get("role")}/password`)
-          }
+          type='text'
+          className='user-headbar-option-btn'
+          onClick={() => navigate(`./${localStorageUtil.get("role")}/password`)}
         >
           <Lock />
           <Typography.Text>Password</Typography.Text>
         </Button>
         <Button
-          className="user-headbar-option-btn"
+          className='user-headbar-option-btn'
           onClick={() => logout()}
-          type="text"
+          type='text'
         >
           <Logout />
           <Typography.Text>Logout</Typography.Text>
@@ -62,15 +60,15 @@ export const Headbar = () => {
 
   return (
     <>
-      <header className="headbar">
+      <header className='headbar'>
         <Typography.Title level={5}>Project Management</Typography.Title>
-        <Popover content={<UserHeadbarOption />} trigger="click">
-          <div className="headbar-avatar-wraper">
-            <CustomAvatar size={45} userName="N" />
+        <Popover content={<UserHeadbarOption />} trigger='click'>
+          <div className='headbar-avatar-wraper'>
+            <CustomAvatar size={45} userName={user?.name} />
           </div>
         </Popover>
       </header>
-      <div className="headbar-placeholder"></div>
+      <div className='headbar-placeholder'></div>
     </>
   );
 };

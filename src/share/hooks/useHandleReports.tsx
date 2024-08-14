@@ -39,7 +39,7 @@ export const useHandleReports = (
       (reports as ProjectReportResp).tasks.forEach((task) => {
         for (const date in task.activities) {
           const newReport: PrepareReports = {};
-          newReport.taskDesc = task.description;
+          newReport.taskDesc = task.name;
           newReport.date = date;
           (newReport.activities as unknown) = task.activities[date];
           newReportList.push(newReport);
@@ -55,7 +55,8 @@ export const useHandleReports = (
       const tempTimeChildren: ReactNode[] = [];
       sortedList?.forEach((report, index) => {
         if (index === 0) {
-          timeItem.label = <Typography.Text
+          timeItem.label = (
+            <Typography.Text
               style={{
                 paddingLeft: "var(--padding-s)",
                 paddingRight: "var(--padding-s)",
@@ -66,6 +67,7 @@ export const useHandleReports = (
             >
               {report.date}
             </Typography.Text>
+          );
           timeItem.key = index;
         }
         if (index !== 0 && sortedList[index - 1].date !== report.date) {
@@ -73,7 +75,8 @@ export const useHandleReports = (
           tempTimeChildren.length = 0;
           finalTimeline.push(timeItem);
           timeItem = {};
-          timeItem.label = <Typography.Text
+          timeItem.label = (
+            <Typography.Text
               style={{
                 paddingLeft: "var(--padding-s)",
                 paddingRight: "var(--padding-s)",
@@ -83,13 +86,14 @@ export const useHandleReports = (
               }}
             >
               {report.date}
-            </Typography.Text>;
+            </Typography.Text>
+          );
           timeItem.key = index;
         }
         tempTimeChildren.push(
           <div
             className='project-report-detail'
-            style={{ wordBreak: "break-all", width: "600px" }}
+            style={{ wordBreak: "break-all" }}
             key={index}
           >
             <Text style={{ fontWeight: 700 }}>{report.taskDesc}</Text>
@@ -100,8 +104,16 @@ export const useHandleReports = (
                     <br />
                     <span style={{ color: "#8c8c8c", fontWeight: 500 }}>
                       {`${activity.description}  `}{" "}
-                      {activity.user_information &&
-                        `- by ${activity.user_information.username}`}
+                      {activity.user_information && (
+                        <p
+                          style={{
+                            font: "0.9em",
+                            color: "var(--primary-color)",
+                          }}
+                        >
+                          {`- by ` + activity.user_information.username}
+                        </p>
+                      )}
                     </span>
                   </React.Fragment>
                 );
@@ -117,6 +129,7 @@ export const useHandleReports = (
       setTimelineItem(finalTimeline);
     }
 
+    /************* Department report *********/
     if (type === "department" && reports) {
       const finalTimeline: TimelineItemProps[] = [];
 
@@ -125,7 +138,7 @@ export const useHandleReports = (
           Object.entries(task.activities).forEach(([dateKey, value]) => {
             const newReport: PrepareReports = {};
             newReport.projectCode = projectReport.projectCode;
-            newReport.taskDesc = task.description;
+            newReport.taskDesc = task.name;
             newReport.date = dateKey;
             (newReport.activities as unknown) = value;
             newReportList.push(newReport);
@@ -219,7 +232,7 @@ export const useHandleReports = (
       });
       setTimelineItem(finalTimeline);
     }
-  }, [reports, type]);
+  }, [reports, type, Text]);
 
   useEffect(() => {
     handleReport();

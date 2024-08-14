@@ -3,11 +3,11 @@ import {
   Avatar,
   Card,
   Col,
-  // Divider,
+  Divider,
   Popconfirm,
+  Popover,
   Row,
   Space,
-  // Tooltip,
 } from "antd";
 import {
   EditOutlined,
@@ -19,9 +19,9 @@ import {
   useDeleteDepartmentsMutation,
   useGetDepartmentStaffsQuery,
 } from "src/share/services";
-import ModalAddUserToProject from "../modal-add-user-to-project";
+import { ModalAddUserToProject } from "src/components/";
 import { CustomAvatar } from "src/components/v2";
-// import { UserOutlined, PlusOutlined } from "@ant-design/icons";
+import { UserOutlined, PlusOutlined } from "@ant-design/icons";
 import { ModalUpdateDepartment } from "src/components/";
 import { Department } from "src/share/models";
 type CardDepartmentProps = {
@@ -132,24 +132,10 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
               </Col>
               {/* avatar group */}
               <Col>
-                <Avatar.Group
-                  maxCount={2}
-                  maxPopoverTrigger='click'
-                  size={40}
-                  maxStyle={{
-                    color: "#f56a00",
-                    backgroundColor: "#fde3cf",
-                    cursor: "pointer",
-                  }}
-                >
-                  {departmentStaffs?.users.map((staff) => (
-                    <CustomAvatar
-                      avatarSrc={staff.avatar}
-                      size={40}
-                      userName={staff.name}
-                    />
-                  ))}
-                  {/* <Tooltip placement='bottom'>
+                <Popover
+                  placement='bottom'
+                  trigger='hover'
+                  content={
                     <Space direction='vertical' style={{ display: "flex" }}>
                       <div>
                         <Space direction='vertical'>
@@ -189,8 +175,27 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                         />
                       </Space>
                     </Space>
-                  </Tooltip> */}
-                </Avatar.Group>
+                  }
+                >
+                  <Avatar.Group
+                    maxCount={2}
+                    maxPopoverTrigger='click'
+                    size={40}
+                    maxStyle={{
+                      color: "#f56a00",
+                      backgroundColor: "#fde3cf",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {departmentStaffs?.users.map((staff) => (
+                      <CustomAvatar
+                        avatarSrc={staff.avatar}
+                        size={40}
+                        userName={staff.name}
+                      />
+                    ))}
+                  </Avatar.Group>
+                </Popover>
               </Col>
               {/* progress */}
             </Row>

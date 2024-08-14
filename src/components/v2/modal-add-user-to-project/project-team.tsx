@@ -1,14 +1,13 @@
+import "./project-team.css";
 import { Button, Col, Input, message, Modal, Row, Table } from "antd";
 import React, { useState } from "react";
-import "./modal-add-user-to-project.css";
 import {
-  useCreateAssigmentMutation,
-  useGetDepartmentStaffsQuery,
-  useGetUsersQuery,
+  useGetProjectStaffsQuery,
+  useRmStaffFromPjMutation,
 } from "src/share/services";
 import { SearchOutlined } from "@ant-design/icons";
-import { CustomAvatar } from "../v2/custom-avatar";
-import { OUserRole, Project, RoleResponse } from "src/share/models";
+import { CustomAvatar } from "src/components/v2/custom-avatar";
+import { Project, RoleResponse } from "src/share/models";
 interface ModalAddUserToProjectProps {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,29 +21,19 @@ interface DataType {
   email: string;
 }
 
-export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
+export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
   project,
   isModalOpen,
   setIsModalOpen,
 }) => {
   const [staffPage, setStaffPage] = useState<number>(1);
 
-  const { data: staffs } = useGetDepartmentStaffsQuery(
-    {
-      itemsPerPage: 5,
-      departmentId: project?.department_id,
-    },
-    { skip: project?.department_id ? false : true }
-  );
-  const { data: allStaffs } = useGetUsersQuery(
-    {
-      items_per_page: 5,
-      role: OUserRole.All,
-    },
-    { skip: project?.department_id ? true : false }
-  );
+  const { data: staffs } = useGetProjectStaffsQuery({
+    items_per_page: 5,
+    projectId: project?.project_id,
+  });
 
-  const [createAssignment] = useCreateAssigmentMutation();
+  const [removeFromPj] = useRmStaffFromPjMutation();
 
   const columns = [
     {
@@ -76,18 +65,18 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
         <Button
           type='primary'
           onClick={() => {
-            createAssignment({
-              project_id: project?.project_id,
-              user_id: record.key,
+            removeFromPj({
+              projectId: project?.project_id,
+              ids: [record.key],
             })
               .unwrap()
               .then(() => {
-                message.success("User added");
+                message.success("Staff is removed");
               })
-              .catch(() => message.error("Failed to add user"));
+              .catch(() => message.error("Failed to remove staff"));
           }}
         >
-          Add
+          Remove
         </Button>
       ),
     },
@@ -108,14 +97,6 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
         };
       });
     }
-    return allStaffs?.users.map((staff): DataType => {
-      return {
-        name: staff.name!,
-        email: staff.email!,
-        role: (staff.role as RoleResponse).name!,
-        key: staff.user_id!,
-      };
-    });
   };
   return (
     <Modal
@@ -133,7 +114,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
           textAlign: "center",
         }}
       >
-        Add User To Project
+        Project Team
       </h2>
       {/* search */}
       <Row className='modal-add-user-search-input'>

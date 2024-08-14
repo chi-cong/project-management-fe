@@ -13,6 +13,7 @@
   }
   .project-card-body {
     width: 100%;
+    cursor: pointer;
     .progress-sec {
       width: 100%;
       .progress-second-line {
@@ -27,6 +28,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
   }
   svg {
     width: 20px;

@@ -2,7 +2,6 @@ import "./document-section.css";
 import { handleFile, sessionStorageUtil } from "src/share/utils";
 import { Typography, Button, Popconfirm, Upload, message } from "antd";
 import { useEffect, useState } from "react";
-import { Folder } from "src/assets/icons";
 import { useGetDocFileMutation } from "src/share/services";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "src/libs/redux";
@@ -92,7 +91,6 @@ export const DocumentSection = () => {
     <div className='doc-sec'>
       <div className='doc-sec-first-part'>
         <div className='doc-sec-head'>
-          <Folder />
           <Typography.Title level={4}>File Attachment</Typography.Title>
         </div>
 

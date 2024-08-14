@@ -48,7 +48,6 @@ import { randAvaBg } from "src/share/utils";
 
 dayjs.extend(timezone);
 dayjs.extend(utc);
-dayjs.locale("vi-VN");
 
 interface TaskFormFields {
   description: string;

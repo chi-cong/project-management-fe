@@ -1,17 +1,13 @@
 import { Empty, Spin, Timeline } from "antd";
-import { useGetReportDepartmentsQuery } from "src/share/services/departmentServices";
+import { useGetProjectReportsQuery } from "src/share/services/";
 import { useHandleReports } from "src/share/hooks";
 
-export const DepartmentReport = ({
-  departmentId,
-}: {
-  departmentId?: string;
-}) => {
-  const { data: reportData, isFetching } = useGetReportDepartmentsQuery({
-    departmentId,
+export const ProjectReport = ({ projectId }: { projectId?: string }) => {
+  const { data: reportData, isFetching } = useGetProjectReportsQuery({
+    projectId,
   });
 
-  const reportTimelineItem = useHandleReports("department", reportData);
+  const reportTimelineItem = useHandleReports("project", reportData);
 
   return (
     <>

@@ -1,5 +1,5 @@
 import "./project.css";
-import { MenuDots, Pen, Trash, Page, Folder } from "src/assets/icons";
+import { MenuDots, Pen, Trash, Page, Folder, PieChart } from "src/assets/icons";
 import {
   Typography,
   Button,
@@ -11,8 +11,17 @@ import {
   message,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { CustomAvatar, ProjectDocument } from "src/components/v2";
-import { TaskList, TaskDetail, CreateTaskForm } from "src/layouts/v2";
+import {
+  CustomAvatar,
+  ProjectDocument,
+  DocumentSection as TaskDocument,
+} from "src/components/v2";
+import {
+  TaskList,
+  TaskDetail,
+  CreateTaskForm,
+  ProjectReport,
+} from "src/layouts/v2";
 import { useState } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
@@ -23,16 +32,19 @@ import {
   useDeleteProjectMutation,
   useGetProjectStaffsQuery,
 } from "src/share/services";
-import { ModalUpdateProject } from "src/components";
+import { ModalUpdateProject, ModalAddUserToProject } from "src/components";
 import { Activities } from "src/layouts/v2/task-detail/activities";
 export const AdminProject = () => {
   const { id: projectId } = useParams();
 
+  const [reportModal, setReportModal] = useState<boolean>(false);
   const [taskDetailModal, setTaskDetailModal] = useState<boolean>(false);
   const [createTaskModal, setCreateTaskModal] = useState<boolean>(false);
   const [projectUpdateModal, setProjectUpdateModal] = useState<boolean>(false);
   const [isUpdateProject, setIsUpdateProject] = useState<boolean>(false);
+  const [addUserModal, setAddUserModal] = useState<boolean>(false);
   const [docSec, setDocSec] = useState<boolean>(false);
+  const [taskDocSec, setTaskDocSec] = useState<boolean>(false);
   const [activitySec, setActivitySec] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -139,6 +151,15 @@ export const AdminProject = () => {
               </Button>
             </Popover>
             <Button
+              type='default'
+              className='title-row-btn'
+              shape='round'
+              onClick={() => setReportModal(true)}
+            >
+              <PieChart />
+              Reports
+            </Button>
+            <Button
               shape='round'
               style={{ display: "" }}
               onClick={() => navigate(-1)}
@@ -160,11 +181,20 @@ export const AdminProject = () => {
                 Create Task
               </Typography.Text>
             </Button>
-            <Avatar.Group maxCount={3}>
-              {projectStaffs?.users.map((staff) => (
-                <CustomAvatar size={32} userName={staff.name} />
-              ))}
-            </Avatar.Group>
+            <div
+              className='avatar-group-wrapper'
+              onClick={() => setAddUserModal(true)}
+            >
+              {projectStaffs?.users.length ? (
+                <Avatar.Group maxCount={3}>
+                  {projectStaffs?.users.map((staff) => (
+                    <CustomAvatar size={32} userName={staff.name} />
+                  ))}
+                </Avatar.Group>
+              ) : (
+                <CustomAvatar size={32} userName='+' />
+              )}
+            </div>
           </div>
         </header>
         <List
@@ -186,7 +216,7 @@ export const AdminProject = () => {
                   color={taskList.color}
                   title={taskList.title}
                   showTaskDetail={setTaskDetailModal}
-                  showDocSec={setDocSec}
+                  showDocSec={setTaskDocSec}
                   showActies={setActivitySec}
                   type={taskList.type}
                   project={projectData}
@@ -207,6 +237,13 @@ export const AdminProject = () => {
         <ProjectDocument />
       </Modal>
       <Modal
+        open={taskDocSec}
+        onCancel={() => setTaskDocSec(false)}
+        footer={[]}
+      >
+        <TaskDocument />
+      </Modal>
+      <Modal
         open={activitySec}
         onCancel={() => setActivitySec(false)}
         footer={[]}
@@ -222,6 +259,20 @@ export const AdminProject = () => {
       <CreateTaskForm
         isModalOpen={createTaskModal}
         setIsModalOpen={setCreateTaskModal}
+        project={projectData}
+      />
+      <Modal
+        open={reportModal}
+        onCancel={() => setReportModal(false)}
+        footer={[]}
+        title='Department Report'
+        width={"80%"}
+      >
+        <ProjectReport projectId={projectId} />
+      </Modal>
+      <ModalAddUserToProject
+        isModalOpen={addUserModal}
+        setIsModalOpen={setAddUserModal}
         project={projectData}
       />
     </>

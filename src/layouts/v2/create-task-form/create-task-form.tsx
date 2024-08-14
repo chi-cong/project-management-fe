@@ -9,8 +9,8 @@ import {
   FormProps,
   message,
 } from "antd";
-import React from "react";
-import { Dayjs } from "dayjs";
+import React, { useEffect } from "react";
+import dayjs, { Dayjs } from "dayjs";
 import {
   useCreateTaskMutation,
   useCreateAssigmentMutation,
@@ -40,6 +40,7 @@ export const CreateTaskForm: React.FC<TaskForm> = ({
     setIsModalOpen(false);
   };
 
+  const [form] = Form.useForm();
   const [createTask] = useCreateTaskMutation();
   const [createAssignment] = useCreateAssigmentMutation();
 
@@ -60,9 +61,18 @@ export const CreateTaskForm: React.FC<TaskForm> = ({
       .unwrap()
       .then(() => {
         message.success("successful create task");
+        handleCancel();
       })
       .catch(() => message.error("Failed to create task"));
   };
+
+  useEffect(() => {
+    form.setFieldsValue({
+      description: "",
+      name: "",
+      deadline: dayjs(),
+    });
+  });
 
   return (
     <Modal
@@ -82,7 +92,8 @@ export const CreateTaskForm: React.FC<TaskForm> = ({
       >
         Create Task
       </h2>
-      <Form name='user-info' onFinish={onFinish} layout='vertical'>
+
+      <Form form={form} name='user-info' onFinish={onFinish} layout='vertical'>
         <div>
           <Form.Item<TaskFormFields>
             name='name'

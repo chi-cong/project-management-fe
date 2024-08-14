@@ -33,6 +33,12 @@
     svg {
       width: 16px;
     }
+    .avatar-group-wrapper {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
   .task-sec {
     height: 100%;

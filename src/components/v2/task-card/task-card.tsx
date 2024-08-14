@@ -105,15 +105,17 @@ export const TaskCard = ({
       </div>
       <Typography.Text>{task.description}</Typography.Text>
       <div className='task-card-footer'>
-        <div className='avatar'>
-          <CustomAvatar
-            size={32}
-            userName={assignment.user?.name}
-            avatarSrc={assignment.user?.avatar}
-            className='custom-avatar'
-          />
-          <Typography.Text>{assignment.user?.name}</Typography.Text>
-        </div>
+        {assignment.user && (
+          <div className='avatar'>
+            <CustomAvatar
+              size={32}
+              userName={assignment.user?.name}
+              avatarSrc={assignment.user?.avatar}
+              className='custom-avatar'
+            />
+            <Typography.Text>{assignment.user?.name}</Typography.Text>
+          </div>
+        )}
         <Button
           className='task-card-footer-btn'
           type='text'

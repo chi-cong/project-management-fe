@@ -8,7 +8,6 @@ import {
   Progress,
   Row,
   Space,
-  // Tooltip,
 } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./card-project.css";
@@ -16,11 +15,9 @@ import {
   useDeleteProjectMutation,
   useGetProjectStaffsQuery,
 } from "src/share/services";
-// import { UserOutlined, PlusOutlined } from "@ant-design/icons";
-import ModalAddUserToProject from "../modal-add-user-to-project";
-import { ModalUpdateProject } from "src/components/modal-update-project";
+import { ModalAddUserToProject, ModalUpdateProject } from "src/components/";
 import { Project } from "src/share/models";
-import { CustomAvatar } from "../v2";
+import { CustomAvatar } from "src/components/v2";
 
 type CardProject = {
   name?: string;
@@ -47,9 +44,31 @@ export const CardProject: React.FC<CardProject> = ({
     projectId: project?.project_id,
   });
 
-  // const showModalAddUser = () => {
-  //   setIsModalAddUserOpen(true);
-  // };
+  const calculateProgress = (): number => {
+    if (project) {
+      return Math.ceil(
+        (parseInt(project.total_task!.total_task_is_done) /
+          parseInt(project.total_task!.total_task_is_not_done)) *
+          100
+      );
+    }
+    return 0;
+  };
+
+  const progressColor = (percent: number) => {
+    if (percent <= 33) {
+      return "#f5222d";
+    }
+    if (33 < percent && percent <= 66) {
+      return "#ffc008";
+    }
+    if (66 < percent && percent <= 99) {
+      return "#14A2B8";
+    }
+    return "#28A745";
+  };
+
+  const progress: number = calculateProgress();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -119,7 +138,11 @@ export const CardProject: React.FC<CardProject> = ({
                 <span>{description}</span>
                 {/* progress */}
                 <div className="project-progress">
-                  <Progress percent={50} status="active" />
+                  <Progress
+                    percent={progress}
+                    status="active"
+                    strokeColor={progressColor(progress)}
+                  />
                 </div>
               </div>
             </div>
@@ -128,46 +151,43 @@ export const CardProject: React.FC<CardProject> = ({
                 <span>{(project?.endAt as string).substring(0, 10)}</span>
               </div>
               <div className="project-footer-action">
-                <Avatar.Group
-                  maxCount={2}
-                  maxPopoverTrigger="click"
-                  size="small"
-                  maxStyle={{
-                    color: "#f56a00",
-                    backgroundColor: "#fde3cf",
-                    cursor: "pointer",
-                  }}
+                <div
+                  className="avatat-group-wrapper"
+                  onClick={() => setIsModalAddUserOpen(true)}
                 >
-                  {projectStaffs?.users.map((staff) => {
-                    return (
-                      <CustomAvatar
-                        avatarSrc={staff.avatar}
-                        size={40}
-                        userName={staff.name}
-                      />
-                    );
-                  })}
-                  {/* <Tooltip placement='bottom' autoAdjustOverflow>
-                    <Avatar
-                      size='large'
-                      style={{ backgroundColor: "#87d068" }}
-                      icon={<UserOutlined />}
-                    />
-                    <Avatar
-                      onClick={() => {
-                        showModalAddUser();
+                  {projectStaffs?.users.length ? (
+                    <Avatar.Group
+                      maxCount={2}
+                      maxPopoverTrigger="hover"
+                      size="small"
+                      maxStyle={{
+                        color: "#f56a00",
+                        backgroundColor: "#fde3cf",
+                        width: "40px",
+                        height: "40px",
+                        cursor: "pointer",
                       }}
-                      size='large'
-                      style={{ backgroundColor: "#87d068", cursor: "pointer" }}
-                      icon={<PlusOutlined />}
-                    />
-                  </Tooltip> */}
-                </Avatar.Group>
+                    >
+                      {projectStaffs?.users.map((staff) => {
+                        return (
+                          <CustomAvatar
+                            avatarSrc={staff.avatar}
+                            size={40}
+                            userName={staff.name}
+                          />
+                        );
+                      })}
+                    </Avatar.Group>
+                  ) : (
+                    <CustomAvatar size={40} userName="+" />
+                  )}
+                </div>
               </div>
             </div>
             <ModalAddUserToProject
               isModalOpen={isModalAddUserOpen}
               setIsModalOpen={setIsModalAddUserOpen}
+              project={project}
             ></ModalAddUserToProject>
             <ModalUpdateProject
               isModalOpen={isModalOpen}
