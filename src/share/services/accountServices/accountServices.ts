@@ -113,10 +113,7 @@ const accountServices = hrManagementApi.injectEndpoints({
           headers: {
             authorization: accessToken(),
           },
-          body: {
-            ...body,
-            genAvatarColor: randAvaBg(),
-          },
+          body,
         };
       },
       invalidatesTags: ["User"],

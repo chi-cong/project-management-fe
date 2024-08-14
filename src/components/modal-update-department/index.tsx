@@ -5,6 +5,7 @@ import InfoTabs from "./info-tabs";
 import AddManagerTabs from "./add-manager-tabs";
 import AddStaffTabs from "./add-staff-tabs";
 import { Department } from "src/share/models";
+import { log } from "winston";
 type ModalUpdateDepartment = {
   isModalOpen: boolean;
   setIsModalOpen: (show: boolean) => void;
@@ -23,9 +24,11 @@ export const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
     setIsModalOpen(false);
   };
 
+  // console.log(department?);
+
   return (
     <Modal
-      className='wrapper'
+      className="wrapper"
       open={isModalOpen}
       centered
       onOk={handleOk}
@@ -42,24 +45,24 @@ export const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
       >
         Update Department
       </h2>
-      <Tabs defaultActiveKey='1'>
-        <Tabs.TabPane tab='Info' key='1'>
+      <Tabs defaultActiveKey="1">
+        <Tabs.TabPane tab="Info" key="1">
           <InfoTabs
             name={department?.name}
             description={department?.description}
             id={department?.department_id}
           />
         </Tabs.TabPane>
-        <Tabs.TabPane tab='Manager' key='2'>
+        <Tabs.TabPane tab="Manager" key="2">
           <AddManagerTabs id={department?.department_id} />
         </Tabs.TabPane>
-        <Tabs.TabPane tab='Staff' key='3'>
+        <Tabs.TabPane tab="Staff" key="3">
           <AddStaffTabs id={department?.department_id} />
         </Tabs.TabPane>
       </Tabs>
       <Space
-        direction='vertical'
-        size='middle'
+        direction="vertical"
+        size="middle"
         style={{ display: "flex" }}
       ></Space>
     </Modal>

@@ -1,0 +1,127 @@
+@import "../../../../../mixin/mixin.css";
+.department-page {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--gap-s);
+  width: 100%;
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-m);
+    width: 85%;
+    @mixin tablet {
+      overflow-x: auto;
+      width: 500px;
+    }
+    .main-header {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-s);
+      .title-row {
+        display: flex;
+        align-items: center;
+        gap: var(--gap-xs);
+        margin-bottom: 20px;
+        @mixin tabletAndMobile {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .title-row-btn {
+          display: flex;
+          align-items: center;
+          gap: var(--gap-xs);
+        }
+        svg {
+          margin: auto;
+          width: 16px;
+        }
+        h2 {
+          font-size: 32px;
+        }
+      }
+      .second-sec {
+        display: flex;
+        width: 100%;
+        height: fit-content;
+        @mixin tabletAndMobile {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .des-manager-sec {
+          display: flex;
+          flex-direction: column;
+          gap: var(--gap-xl);
+          width: 70%;
+          margin-bottom: 20px;
+          @mixin tabletAndMobile {
+            width: 100%;
+          }
+          .department-manager-card-des {
+            display: flex;
+            align-items: center;
+            gap: var(--gap-s);
+            @media screen and (max-width: 1280px) {
+              align-items: flex-start;
+              gap: var(--gap-xs);
+              flex-direction: column;
+            }
+          }
+        }
+        .pie-chart {
+          margin: auto;
+          width: 30%;
+          height: 97%;
+          max-width: 300px;
+          @mixin tabletAndMobile {
+            height: 300px;
+          }
+        }
+      }
+    }
+    .project-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-s);
+    }
+  }
+  .team-member-sec {
+    width: 19%;
+    padding-left: var(--padding-xs);
+    .member-list-container {
+      position: fixed;
+      height: 85dvh;
+      width: calc((100vw - 250px) * 0.2 - 60px);
+
+      overflow-y: auto;
+      border-radius: var(--rounded-border);
+      padding: var(--padding-s);
+      .title {
+        display: flex;
+        width: 9.85rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      border: 1px solid var(--gray-color);
+    }
+    svg {
+      width: 16px;
+    }
+  }
+}
+
+.department-option {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  .department-option-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    gap: var(--gap-s);
+    svg {
+      width: 16px;
+    }
+  }
+}
