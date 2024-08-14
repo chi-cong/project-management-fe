@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import {
   useGetDepartmentQuery,
   useGetAllProjectDepartmentQuery,
-  useGetDepartmentStaffsQuery,
+  useManagerGetAllStaffDepartmentQuery,
   useDeleteDepartmentsMutation,
 } from "src/share/services";
 import { Project, RoleResponse } from "src/share/models";
@@ -39,7 +39,7 @@ export const StaffDepartment = () => {
   const { data: departmentProjects } = useGetAllProjectDepartmentQuery({
     departmentId,
   });
-  const { data: departmentStaffs } = useGetDepartmentStaffsQuery({
+  const { data: departmentStaffs } = useManagerGetAllStaffDepartmentQuery({
     itemsPerPage: "ALL",
     departmentId,
   });
