@@ -22,9 +22,7 @@ export const StaffSidebar = () => {
   const [createUser, setCreateUser] = useState<boolean>(false);
   const [createDepartment, setCreateDepartment] = useState<boolean>(false);
   const [createProject, setCreateProject] = useState<boolean>(false);
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+
   const items: CustomStaffMenuItem[] = [
     {
       title: "Department",

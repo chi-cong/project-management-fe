@@ -85,29 +85,6 @@ export const StaffDepartment = () => {
     setupProjectFilter();
   }, [departmentProjects]);
 
-  const TeamMemberOptions = () => {
-    return (
-      <div className="department-option">
-        <Button
-          type="text"
-          className="department-option-btn"
-          onClick={() => setAddStaffModal(true)}
-        >
-          <UserPlus />
-          <Typography.Text>Add Member </Typography.Text>
-        </Button>
-        <Button
-          className="department-option-btn"
-          type="text"
-          onClick={() => setRmStaffModal(true)}
-        >
-          <Trash />
-          <Typography.Text>Remove Member</Typography.Text>
-        </Button>
-      </div>
-    );
-  };
-
   return (
     <>
       <div className="department-page">
@@ -226,11 +203,6 @@ export const StaffDepartment = () => {
           <div className="member-list-container">
             <div className="title">
               <Typography.Title level={5}>Team Members</Typography.Title>
-              <Popover content={<TeamMemberOptions />}>
-                <Button type="text" size="small">
-                  <MenuDots />
-                </Button>
-              </Popover>
             </div>
             <List
               className="memeber-list"
