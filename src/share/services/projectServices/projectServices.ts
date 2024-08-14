@@ -224,13 +224,13 @@ const projectServices = hrManagementApi.injectEndpoints({
     >({
       query({ taskId, filename }) {
         return {
-          url: `/upload/delete-file-for-task/${taskId}`,
+          url: `upload/delete-file-for-task/${taskId}`,
           method: "PUT",
           headers: {
             authorization: accessToken(),
           },
           body: {
-            filename,
+            file: filename,
           },
         };
       },
@@ -376,6 +376,7 @@ const projectServices = hrManagementApi.injectEndpoints({
         };
       },
       transformResponse: (response: Response<GetUserResp>) => response.data,
+      providesTags: ["assignment"],
     }),
     getAssignments: build.query<
       AssignmentResp,

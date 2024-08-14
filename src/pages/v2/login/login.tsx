@@ -1,9 +1,32 @@
 import "./login.css";
 import { LoginForm } from "src/layouts/v2";
 import { Col, Row, Typography } from "antd";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { sessionStorageUtil } from "src/share/utils";
+import { useRefreshTokenQuery } from "src/share/services";
+import { useEffect } from "react";
 
 export const Login = () => {
+  const navigate = useNavigate();
+  const getAccessToken = () => sessionStorageUtil.get("accessToken");
+  const { data: newAccessToken, isSuccess } = useRefreshTokenQuery();
+
+  useEffect(() => {
+    const checkToken = () => {
+      const accessToken = getAccessToken();
+      if (!accessToken) {
+        if (isSuccess) {
+          sessionStorageUtil.set("accessToken", newAccessToken.accessToken);
+          navigate("/v2/dashboard");
+        }
+      } else {
+        navigate("/v2/dashboard");
+      }
+    };
+
+    checkToken();
+  }, [navigate, isSuccess, newAccessToken]);
+
   return (
     <div className='v2-login-page'>
       <Row className='content-container'>

@@ -5,3 +5,5 @@ export * from "./department-project";
 export * from "./task-list";
 export * from "./create-task-form";
 export * from "./update-task-form";
+export * from "./project-report";
+export * from "./department-report";

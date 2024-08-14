@@ -21,14 +21,7 @@ import { useState } from "react";
 import { ModalCreateProject } from "src/components/";
 import { CardProject } from "src/components/card-project";
 import { useNavigate } from "react-router-dom";
-import {
-  useGetAllProjectDepartmentQuery,
-  useGetAllProjectQuery,
-  useGetUserDetailQuery,
-  useGetUserProjectQuery,
-} from "src/share/services";
-import { useRoleChecker } from "src/share/hooks";
-import { OUserRole } from "src/share/models";
+import { useGetAllProjectQuery } from "src/share/services";
 import { selectProject } from "src/libs/redux/selectProjectSlice";
 import { useDispatch } from "react-redux";
 
@@ -53,7 +46,6 @@ export const Projects = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [queries, setQueries] = useState<{ page: number }>({ page: 1 });
   const navigate = useNavigate();
-  const checkRole = useRoleChecker();
   const handleMenuClick: MenuProps["onClick"] = () => {
     message.info("Click on menu item.");
   };
@@ -63,30 +55,10 @@ export const Projects = () => {
   };
 
   //fetching data
-  const { data: allProject } = useGetAllProjectQuery(
-    { ...queries, items_per_page: 9 },
-    { skip: !checkRole(OUserRole.Admin) }
-  );
-
-  const { data: userDetail } = useGetUserDetailQuery();
-
-  const { data: departmentProject } = useGetAllProjectDepartmentQuery(
-    {
-      ...queries,
-      departmentId: userDetail?.department_id,
-    },
-    {
-      skip: checkRole(OUserRole.Admin) || checkRole(OUserRole.ProjectManager),
-    }
-  );
-
-  const { data: userProjects } = useGetUserProjectQuery(
-    {
-      ...queries,
-      items_per_page: 9,
-    },
-    { skip: !checkRole(OUserRole.Staff) }
-  );
+  const { data: allProject } = useGetAllProjectQuery({
+    ...queries,
+    items_per_page: 9,
+  });
 
   //pagination
   const onChangePage: PaginationProps["onChange"] = (page) => {
@@ -166,21 +138,11 @@ export const Projects = () => {
               position: "bottom",
               align: "center",
               pageSize: 9,
-              total: checkRole(OUserRole.Admin)
-                ? allProject?.total
-                : checkRole(OUserRole.Manager)
-                  ? departmentProject?.total
-                  : userProjects?.total,
+              total: allProject?.total,
               onChange: onChangePage,
               showSizeChanger: false,
             }}
-            dataSource={
-              checkRole(OUserRole.Admin)
-                ? allProject?.data
-                : checkRole(OUserRole.Manager)
-                  ? departmentProject?.data
-                  : userProjects?.data
-            }
+            dataSource={allProject?.data}
             renderItem={(project) => (
               <List.Item>
                 <CardProject
@@ -206,9 +168,3 @@ export const Projects = () => {
     </div>
   );
 };
-// function subRefetch() {
-//   throw new Error("Function not implemented.");
-// }
-// function setSelectedProject(arg0: (oldState: any) => any) {
-//   throw new Error("Function not implemented.");
-// }

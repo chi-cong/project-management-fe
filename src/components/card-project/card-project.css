@@ -52,6 +52,11 @@
       .project-footer-info {
         color: #0d062d;
         opacity: 0.5;
+        .avatar-group-wrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       }
     }
   }

@@ -15,11 +15,11 @@ import {
   Account,
   Profile,
 } from "src/pages/v2";
+import { Manager, ManagerDepartment } from "src/pages/v2/dashboard/manager";
 import App from "src/App";
 import { Projects } from "src/pages/v2/projects";
 import { Departments } from "src/pages/v2/departments";
 import { Password } from "src/pages/v2/password";
-// import { Profile } from "src/pages/v2/profile";
 
 export const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -83,6 +83,16 @@ export const router = createBrowserRouter([
               {
                 path: "password",
                 element: <Password />,
+              },
+            ],
+          },
+          {
+            path: "manager",
+            element: <Manager />,
+            children: [
+              {
+                path: "department/:id",
+                element: <ManagerDepartment />,
               },
             ],
           },
