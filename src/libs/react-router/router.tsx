@@ -20,7 +20,7 @@ import App from "src/App";
 import { Projects } from "src/pages/v2/projects";
 import { Departments } from "src/pages/v2/departments";
 import { Password } from "src/pages/v2/password";
-import { Staff } from "src/pages/v2/dashboard/staff";
+import { Staff, StaffDepartment } from "src/pages/v2/dashboard/staff";
 
 export const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -107,7 +107,7 @@ export const router = createBrowserRouter([
             path: "staff",
             element: <Staff />,
             children: [
-              { path: "department/:id", element: <AdminDepartment /> },
+              { path: "department/:id", element: <StaffDepartment /> },
               { path: "projects", element: <Projects /> },
               { path: "project/:id", element: <AdminProject /> },
               { path: "account", element: <Account /> },

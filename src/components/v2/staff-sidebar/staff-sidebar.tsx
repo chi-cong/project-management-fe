@@ -1,6 +1,6 @@
 import "./staff-sidebar.css";
 import { Layout } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ClusterOutlined,
   TeamOutlined,
@@ -13,19 +13,23 @@ import { ModalCreateProject } from "src/components";
 import ModalCreateDepartment from "src/components/modal-create-department";
 import { CustomStaffMenu, CustomStaffMenuItem } from "../custom-staff-menu";
 import { CustomMenuItem } from "../custom-menu";
+import { useGetUserDetailQuery } from "src/share/services";
 
 export const StaffSidebar = () => {
   const navigate = useNavigate();
+  const { data: user, refetch } = useGetUserDetailQuery();
 
   const [createUser, setCreateUser] = useState<boolean>(false);
   const [createDepartment, setCreateDepartment] = useState<boolean>(false);
   const [createProject, setCreateProject] = useState<boolean>(false);
-
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
   const items: CustomStaffMenuItem[] = [
     {
       title: "Department",
       onClick() {
-        navigate("/v2/dashboard/staff/department/:id");
+        navigate(`/v2/dashboard/staff/department/${user?.department_id}`);
       },
       icon: <ClusterOutlined />,
       addCallBack() {
