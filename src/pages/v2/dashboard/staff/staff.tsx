@@ -1,16 +1,16 @@
-import "./admin.css";
-import { Sidebar } from "src/components/v2/sidebar";
+import "./staff.css";
 import { Navigate, Outlet } from "react-router-dom";
+import { StaffSidebar } from "src/components/v2/staff-sidebar";
 
-export const Admin = () => {
+export const Staff = () => {
   const route = window.location.pathname.replace(
-    "/v2/dashboard/admin",
+    "/v2/dashboard/staff",
     ""
   ).length;
 
   return (
-    <div className="admin-page">
-      <Sidebar />
+    <div className="staff-page">
+      <StaffSidebar />
       <div className="route-content">
         {route <= 1 && <Navigate to={"account"} />}
         <Outlet />
