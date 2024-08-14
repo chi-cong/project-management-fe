@@ -28,7 +28,7 @@ import AddStaffTabs from "src/components/modal-update-department/add-staff-tabs"
 
 import { useParams } from "react-router-dom";
 
-export const AdminDepartment = () => {
+export const StaffDepartment = () => {
   const { id: departmentId } = useParams();
 
   const [reportModal, setReportModal] = useState<boolean>(false);
@@ -85,32 +85,6 @@ export const AdminDepartment = () => {
     setupProjectFilter();
   }, [departmentProjects]);
 
-  const DepartmentOptions = () => {
-    return (
-      <div className="department-option">
-        <Button
-          type="text"
-          className="department-option-btn"
-          onClick={() => setUpdateModal(true)}
-        >
-          <Pen />
-          <Typography.Text>Edit</Typography.Text>
-        </Button>
-        <Popconfirm
-          title="Delete this department ?"
-          onConfirm={() => {
-            deleteDepartment({ departmentId });
-            navigate("/v2/department");
-          }}
-        >
-          <Button className="department-option-btn" type="text">
-            <Trash />
-            <Typography.Text>Delete</Typography.Text>
-          </Button>
-        </Popconfirm>
-      </div>
-    );
-  };
   const TeamMemberOptions = () => {
     return (
       <div className="department-option">
@@ -142,11 +116,6 @@ export const AdminDepartment = () => {
             <div className="title-row">
               <Typography.Title level={2}>{data?.name}</Typography.Title>
               <div style={{ display: "flex" }}>
-                <Popover content={<DepartmentOptions />}>
-                  <Button type="text" className="title-row-btn" size="small">
-                    <MenuDots />
-                  </Button>
-                </Popover>
                 <Button
                   type="default"
                   className="title-row-btn"
@@ -157,14 +126,6 @@ export const AdminDepartment = () => {
                   Reports
                 </Button>
               </div>
-              <Button
-                shape="round"
-                style={{ display: "" }}
-                onClick={() => navigate("/v2/dashboard/admin/departments")}
-              >
-                <ArrowLeftOutlined />
-                Back to department
-              </Button>
             </div>
             <section className="second-sec">
               <div className="des-manager-sec">
