@@ -63,4 +63,5 @@ export interface CreateUserPartial {
   department_id?: string;
   phone?: string;
   birthday?: string | Dayjs;
+  genAvatarColor?: string;
 }

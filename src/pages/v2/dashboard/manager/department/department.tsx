@@ -1,13 +1,5 @@
 import "./department.css";
-import {
-  Typography,
-  Card,
-  Modal,
-  Button,
-  Popconfirm,
-  Popover,
-  List,
-} from "antd";
+import { Typography, Card, Modal, Button, Popover, List } from "antd";
 import { ResponsivePie } from "@nivo/pie";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { CustomAvatar, RmDepartmentStaff } from "src/components/v2";
@@ -20,7 +12,6 @@ import {
   useGetDepartmentQuery,
   useGetAllProjectDepartmentQuery,
   useGetDepartmentStaffsQuery,
-  useDeleteDepartmentsMutation,
 } from "src/share/services";
 import { Project, RoleResponse } from "src/share/models";
 import { ModalUpdateDepartment } from "src/components";
@@ -28,7 +19,7 @@ import AddStaffTabs from "src/components/modal-update-department/add-staff-tabs"
 
 import { useParams } from "react-router-dom";
 
-export const AdminDepartment = () => {
+export const ManagerDepartment = () => {
   const { id: departmentId } = useParams();
 
   const [reportModal, setReportModal] = useState<boolean>(false);
@@ -43,7 +34,6 @@ export const AdminDepartment = () => {
     itemsPerPage: "ALL",
     departmentId,
   });
-  const [deleteDepartment] = useDeleteDepartmentsMutation();
   const navigate = useNavigate();
   const [projectFilter, setProjectFilter] = useState<{
     onProgress: Project[];
@@ -96,18 +86,6 @@ export const AdminDepartment = () => {
           <Pen />
           <Typography.Text>Edit</Typography.Text>
         </Button>
-        <Popconfirm
-          title='Delete this department ?'
-          onConfirm={() => {
-            deleteDepartment({ departmentId });
-            navigate("/v2/department");
-          }}
-        >
-          <Button className='department-option-btn' type='text'>
-            <Trash />
-            <Typography.Text>Delete</Typography.Text>
-          </Button>
-        </Popconfirm>
       </div>
     );
   };

@@ -96,11 +96,6 @@ export const CardAccount: React.FC<CardAccount> = ({
                   <strong>Contact:</strong> {account.phone}
                 </span>
               </div>
-              <div>
-                <span>
-                  <strong>Department:</strong> It department
-                </span>
-              </div>
             </Col>
             <Col span={12} className='account-body-avatar'>
               <CustomAvatar size={100} userName='Dat' />

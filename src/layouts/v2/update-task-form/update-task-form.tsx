@@ -109,7 +109,7 @@ export const UpdateTaskForm: React.FC<TaskForm> = ({
           textAlign: "center",
         }}
       >
-        Create Task
+        Update Task
       </h2>
       <Form form={form} name='user-info' onFinish={onFinish} layout='vertical'>
         <div>

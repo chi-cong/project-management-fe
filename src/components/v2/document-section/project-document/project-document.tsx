@@ -1,7 +1,6 @@
 import { handleFile, sessionStorageUtil } from "src/share/utils";
 import { Typography, Button, Popconfirm, Upload, message } from "antd";
 import { useEffect, useState } from "react";
-import { Folder } from "src/assets/icons";
 import {
   useGetDocFileMutation,
   useGetProjectQuery,
@@ -75,7 +74,6 @@ export const ProjectDocument = ({ project }: { project?: Project }) => {
     <div className='doc-sec'>
       <div className='doc-sec-first-part'>
         <div className='doc-sec-head'>
-          <Folder />
           <Typography.Title level={4}>File Attachment</Typography.Title>
         </div>
 

@@ -11,14 +11,21 @@ import { MenuDots, Pen, Trash } from "src/assets/icons";
 import type { Project } from "src/share/models";
 import { ModalUpdateProject } from "src/components";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 interface ProjectCardProp {
   project: Project;
 }
 
 export const ProjectCard = ({ project }: ProjectCardProp) => {
+  const navigate = useNavigate();
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const [popover, setPopover] = useState<boolean>(false);
+
+  const goToDetail = () => {
+    navigate(`/v2/dashboard/admin/project/${project!.project_id!}`);
+  };
 
   const calculateProgress = (): number => {
     if (
@@ -88,7 +95,7 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
             </Button>
           </Popover>
         </div>
-        <div className='project-card-body'>
+        <div className='project-card-body' onClick={goToDetail}>
           <Typography.Text>{project.description}</Typography.Text>
           <div className='progress-sec'>
             <Progress
@@ -103,9 +110,9 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
           </div>
         </div>
         <Divider />
-        <div className='project-card-footer'>
+        <div className='project-card-footer' onClick={goToDetail}>
           <Typography.Text>
-            {(project?.endAt as string).substring(0, 10)}
+            {dayjs((project?.endAt as string).substring(0, 10)).fromNow()}
           </Typography.Text>
         </div>
       </div>

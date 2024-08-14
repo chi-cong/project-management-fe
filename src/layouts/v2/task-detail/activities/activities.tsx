@@ -8,6 +8,7 @@ import {
 } from "src/share/services";
 import { useSelector } from "react-redux";
 import { RootState } from "src/libs/redux";
+import dayjs from "dayjs";
 
 export const Activities = () => {
   const task = useSelector((state: RootState) => state.taskAssignment.task);
@@ -71,7 +72,7 @@ export const Activities = () => {
                 }
               />
               <Typography.Text>
-                {activity.createdAt?.substring(0, 10)}
+                {dayjs(activity.createdAt?.substring(0, 10)).fromNow()}
               </Typography.Text>
             </List.Item>
           )}

@@ -1,4 +1,4 @@
-import { Button, Form, FormProps, Input, Space } from "antd";
+import { Form, FormProps, Input } from "antd";
 
 interface CreateDepartment {
   name?: string;
@@ -9,18 +9,15 @@ const InfoTabs = ({
 }: {
   setFields: (field: CreateDepartment) => void;
 }) => {
-  const [form] = Form.useForm();
-
-  const onFinish: FormProps<CreateDepartment>["onFinish"] = async (values) => {
-    setFields(values);
-  };
   return (
     <>
       <Form
-        form={form}
         name='update-department'
-        onFinish={onFinish}
         layout='vertical'
+        onValuesChange={(_changedValue, values) => {
+          console.log(values);
+          setFields(values);
+        }}
       >
         <div>
           <Form.Item<CreateDepartment>
@@ -36,16 +33,6 @@ const InfoTabs = ({
             <Input placeholder='Description...' size='large' />
           </Form.Item>
         </div>
-        <Form.Item className='create-user-form-btn'>
-          <Space>
-            <Button type='primary' htmlType='submit' size='large'>
-              Save
-            </Button>
-            <Button type='primary' ghost size='large'>
-              Cancel
-            </Button>
-          </Space>
-        </Form.Item>
       </Form>
     </>
   );

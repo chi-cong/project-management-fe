@@ -23,6 +23,8 @@ const ModalCreateDepartment: React.FC<ModalCreateDepartment> = ({
   const [createDepartment] = useAddDepartmentMutation();
 
   const handleCancel = () => {
+    setManagerId("");
+    setStaffList([]);
     setIsModalOpen(false);
   };
   const createDepart = () => {

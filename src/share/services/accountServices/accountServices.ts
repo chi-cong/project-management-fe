@@ -1,6 +1,6 @@
 import { hrManagementApi } from "src/share/services/baseApi";
 import { User, Response, LoginResp, OUserRole } from "src/share/models";
-import { localStorageUtil } from "src/share/utils";
+import { localStorageUtil, randAvaBg } from "src/share/utils";
 
 import type { LoginReqBody } from "src/layouts/login-form";
 import type {
@@ -113,7 +113,10 @@ const accountServices = hrManagementApi.injectEndpoints({
           headers: {
             authorization: accessToken(),
           },
-          body,
+          body: {
+            ...body,
+            genAvatarColor: randAvaBg(),
+          },
         };
       },
       invalidatesTags: ["User"],
@@ -233,28 +236,15 @@ const accountServices = hrManagementApi.injectEndpoints({
       providesTags: ["User", "assignment"],
       transformResponse: (response: Response<GetUserResp>) => response.data,
     }),
-    refreshToken: build.query<
-      GetUserResp,
-      {
-        page?: number;
-        itemsPerPage?: number | "ALL";
-      }
-    >({
-      query({ page, itemsPerPage }) {
+    refreshToken: build.query<{ accessToken: string }, void>({
+      query() {
         return {
-          url: `users/get-all-staff-in-department`,
+          url: `gateway/api/access/handle-refresh-token`,
           method: "GET",
-          headers: {
-            authorization: accessToken(),
-          },
-          params: {
-            page: page || 1,
-            items_per_page: itemsPerPage,
-          },
         };
       },
-      providesTags: ["User", "assignment"],
-      transformResponse: (response: Response<GetUserResp>) => response.data,
+      transformResponse: (response: Response<{ accessToken: string }>) =>
+        response.data,
     }),
   }),
 });
@@ -274,4 +264,5 @@ export const {
   useGetAvatarMutation,
   useVerifyOtpMutation,
   useGetUserDepartmentStaffsQuery,
+  useRefreshTokenQuery,
 } = accountServices;

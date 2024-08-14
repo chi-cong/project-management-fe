@@ -120,6 +120,7 @@ export interface ProjectReportResp {
     };
   };
   tasks: {
+    name?: string;
     task_id: string;
     description?: string;
     document: [];
