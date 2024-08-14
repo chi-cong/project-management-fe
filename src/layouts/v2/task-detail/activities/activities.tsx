@@ -38,12 +38,14 @@ export const Activities = () => {
           <Button
             type='primary'
             className='add-acti-btn'
-            onClick={() =>
-              createActi({
-                task_id: task?.task_id,
-                description: actiDesc,
-              })
-            }
+            onClick={() => {
+              if (actiDesc) {
+                createActi({
+                  task_id: task?.task_id,
+                  description: actiDesc,
+                });
+              }
+            }}
           >
             Send
           </Button>

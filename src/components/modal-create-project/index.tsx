@@ -65,7 +65,7 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
           textAlign: "center",
         }}
       >
-        Update Project
+        Create Project
       </h2>
       <Form className='project-form' layout='vertical' onFinish={onFinish}>
         <Form.Item<Project>

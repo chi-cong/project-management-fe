@@ -9,7 +9,7 @@ import "./card-account.css";
 import { useDeleteUserMutation } from "src/share/services";
 import { CustomAvatar } from "src/components/v2";
 import UpdateUserModal from "src/components/modal-update-user";
-import { RoleResponse, User } from "src/share/models";
+import { OUserRole, RoleResponse, User } from "src/share/models";
 type CardAccount = {
   account: User;
   manager?: string;
@@ -55,7 +55,7 @@ export const CardAccount: React.FC<CardAccount> = ({
               </div>
             </Col>
             <Col span={12} className='account-header-action'>
-              {(account.role as RoleResponse).name !== "MANAGER" ? (
+              {(account.role as RoleResponse).name !== OUserRole.Admin ? (
                 <Space>
                   <div
                     onClick={showModal}

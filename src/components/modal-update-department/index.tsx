@@ -47,13 +47,14 @@ export const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
           <InfoTabs
             name={department?.name}
             description={department?.description}
+            id={department?.department_id}
           />
         </Tabs.TabPane>
         <Tabs.TabPane tab='Manager' key='2'>
-          <AddManagerTabs />
+          <AddManagerTabs id={department?.department_id} />
         </Tabs.TabPane>
         <Tabs.TabPane tab='Staff' key='3'>
-          <AddStaffTabs />
+          <AddStaffTabs id={department?.department_id} />
         </Tabs.TabPane>
       </Tabs>
       <Space

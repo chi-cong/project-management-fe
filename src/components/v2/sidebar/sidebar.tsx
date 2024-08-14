@@ -1,7 +1,11 @@
 import "./sidebar.css";
 import { Layout } from "antd";
 import { useState } from "react";
-import { MultiUser } from "src/assets/icons";
+import {
+  ClusterOutlined,
+  TeamOutlined,
+  RocketOutlined,
+} from "@ant-design/icons";
 import { CustomMenu, CustomMenuItem } from "src/components/v2/custom-menu";
 // import { randAvaBg } from "src/share/utils";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +26,7 @@ export const Sidebar = () => {
       onClick() {
         navigate("/v2/dashboard/admin/account");
       },
-      icon: <MultiUser />,
+      icon: <TeamOutlined />,
       addCallBack() {
         setCreateUser(true);
       },
@@ -32,7 +36,7 @@ export const Sidebar = () => {
       onClick() {
         navigate("/v2/dashboard/admin/departments");
       },
-      icon: <MultiUser />,
+      icon: <ClusterOutlined />,
       addCallBack() {
         setCreateDepartment(true);
       },
@@ -42,7 +46,7 @@ export const Sidebar = () => {
       onClick() {
         navigate("/v2/dashboard/admin/projects");
       },
-      icon: <MultiUser />,
+      icon: <RocketOutlined />,
       addCallBack() {
         setCreateProject(true);
       },

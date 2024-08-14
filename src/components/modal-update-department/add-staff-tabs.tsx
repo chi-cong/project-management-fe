@@ -1,4 +1,4 @@
-import { Button, Table } from "antd";
+import { Button, Table, message } from "antd";
 import React, { useState } from "react";
 import { CustomAvatar } from "../v2";
 import { ColumnsType } from "antd/es/table";
@@ -15,7 +15,7 @@ interface DataType {
   email?: string;
 }
 
-const AddStaffTabs: React.FC = () => {
+const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
   const columns: ColumnsType<DataType> = [
     {
       title: "Avatar",
@@ -41,17 +41,20 @@ const AddStaffTabs: React.FC = () => {
     {
       title: "Action",
       key: "action",
-      render: (_: any, record: DataType) => (
+      render: (_: any, _record: DataType) => (
         <Button
           type='primary'
           onClick={() => [
             addDepartmentStaff({
-              departmentId: "66aa0782193b7aa0827eace0",
-              listStaff: [record.key],
-            }),
+              departmentId: id,
+              listStaff: selectedRows.map((row) => row.key),
+            })
+              .unwrap()
+              .then(() => message.success("User added"))
+              .catch(message.error("Failed to add user")),
           ]}
         >
-          Assign
+          Add
         </Button>
       ),
     },
@@ -93,11 +96,14 @@ const AddStaffTabs: React.FC = () => {
         >
           <Button
             type='primary'
-            onClick={() => {
+            onClick={async () => {
               addDepartmentStaff({
-                departmentId: "66aa0782193b7aa0827eace0",
+                departmentId: id,
                 listStaff: selectedRows.map((row) => row.key),
-              });
+              })
+                .unwrap()
+                .then(() => message.success("User added"))
+                .catch(() => message.error("Failed to add user"));
             }}
           >
             Assign
