@@ -6,12 +6,13 @@ import {
   TeamOutlined,
   RocketOutlined,
 } from "@ant-design/icons";
-import { CustomMenu, CustomMenuItem } from "src/components/v2/custom-menu";
 // import { randAvaBg } from "src/share/utils";
 import { useNavigate } from "react-router-dom";
 import ModalCreateUser from "src/components/modal-create-user";
 import { ModalCreateProject } from "src/components";
 import ModalCreateDepartment from "src/components/modal-create-department";
+import { CustomStaffMenu, CustomStaffMenuItem } from "../custom-staff-menu";
+import { CustomMenuItem } from "../custom-menu";
 
 export const StaffSidebar = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export const StaffSidebar = () => {
   const [createDepartment, setCreateDepartment] = useState<boolean>(false);
   const [createProject, setCreateProject] = useState<boolean>(false);
 
-  const items: CustomMenuItem[] = [
+  const items: CustomStaffMenuItem[] = [
     {
       title: "Department",
       onClick() {
@@ -33,9 +34,7 @@ export const StaffSidebar = () => {
     },
     {
       title: "Project",
-      onClick() {
-        navigate("/v2/dashboard/staff/projects");
-      },
+      onClick() {},
       icon: <RocketOutlined />,
       addCallBack() {
         setCreateProject(true);
@@ -45,7 +44,7 @@ export const StaffSidebar = () => {
   return (
     <>
       <Layout.Sider className="sidebar">
-        <CustomMenu items={items} defaultSelectedItem={0} />
+        <CustomStaffMenu items={items} defaultSelectedItem={0} />
       </Layout.Sider>
       <div className="sidebar-placeholder" style={{ width: 0 }} />
       <ModalCreateDepartment
