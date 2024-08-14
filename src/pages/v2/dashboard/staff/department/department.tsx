@@ -8,8 +8,8 @@ import { DepartmentReport } from "src/layouts/v2/department-report";
 import { PieChart } from "src/assets/icons";
 import {
   useGetDepartmentQuery,
-  useGetDepartmentStaffsQuery,
   useGetDepartmentProjectInfoQuery,
+  useManagerGetAllStaffDepartmentQuery,
 } from "src/share/services";
 import { Project, RoleResponse } from "src/share/models";
 
@@ -23,9 +23,8 @@ export const StaffDepartment = () => {
   const { data: departmentProjects } = useGetDepartmentProjectInfoQuery({
     departmentId,
   });
-  const { data: departmentStaffs } = useGetDepartmentStaffsQuery({
-    itemsPerPage: "ALL",
-    departmentId,
+  const { data: departmentStaffs } = useManagerGetAllStaffDepartmentQuery({
+    items_per_page: "ALL",
   });
   const [projectFilter, setProjectFilter] = useState<{
     onProgress: Project[];
