@@ -4,7 +4,7 @@ import { ClusterOutlined, RocketOutlined } from "@ant-design/icons";
 import { CustomMenu, CustomMenuItem } from "src/components/v2/custom-menu";
 import { useNavigate } from "react-router-dom";
 import { useGetUserDetailQuery } from "src/share/services";
-import { ModalCreateProject } from "src/components";
+import { ManagerCreateProject } from "src/components";
 import { useState } from "react";
 
 export const ManagerSidebar = () => {
@@ -37,7 +37,7 @@ export const ManagerSidebar = () => {
       <Layout.Sider className='sidebar'>
         <CustomMenu items={items} defaultSelectedItem={0} />
       </Layout.Sider>
-      <ModalCreateProject
+      <ManagerCreateProject
         isModalOpen={createProject}
         setIsModalOpen={setCreateProject}
       />
