@@ -130,7 +130,7 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
         };
       },
       transformResponse: (response: Response<ProjectResp>) => response.data,
-      providesTags: ["project"],
+      providesTags: ["project", "assignment"],
     }),
     deleteStaffDepartment: build.mutation<
       Response<{ count: number }>,

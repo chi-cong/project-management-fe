@@ -25,9 +25,10 @@ const projectServices = hrManagementApi.injectEndpoints({
       {
         page: number;
         items_per_page: number | undefined;
+        search?: string;
       }
     >({
-      query: ({ page, items_per_page }) => {
+      query: ({ page, items_per_page, search }) => {
         return {
           url: `projects/admin/get-all`,
           method: "GET",
@@ -37,6 +38,7 @@ const projectServices = hrManagementApi.injectEndpoints({
           params: {
             page,
             items_per_page,
+            search: search || "",
           },
         };
       },
@@ -293,11 +295,7 @@ const projectServices = hrManagementApi.injectEndpoints({
           headers: {
             authorization: accessToken(),
           },
-          body: {
-            status: value.status,
-            endAt: value.endAt ? value.endAt : null,
-            user_id: value.user_id ? value.user_id : null,
-          },
+          body: { ...value },
         };
       },
       invalidatesTags: ["assignment", "project"],

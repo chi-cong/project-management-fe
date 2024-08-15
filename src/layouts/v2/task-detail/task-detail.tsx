@@ -178,7 +178,9 @@ export const TaskDetail = ({
           <Popover
             content={AssignUserPopover}
             placement='bottomLeft'
-            onOpenChange={() => setAssignableUsers(departmentStaffs?.users)}
+            onOpenChange={() => {
+              setAssignableUsers(departmentStaffs?.users);
+            }}
             trigger='click'
           >
             <Button className='assign-task-btn' size='small' type='text'>
