@@ -64,7 +64,11 @@ export const Headbar = () => {
         <Typography.Title level={5}>Project Management</Typography.Title>
         <Popover content={<UserHeadbarOption />} trigger='click'>
           <div className='headbar-avatar-wraper'>
-            <CustomAvatar size={45} userName={user?.name} />
+            <CustomAvatar
+              size={45}
+              userName={user?.name}
+              avatarSrc={user?.avatar}
+            />
           </div>
         </Popover>
       </header>
