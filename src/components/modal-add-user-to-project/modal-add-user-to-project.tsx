@@ -16,6 +16,10 @@ interface ModalAddUserToProjectProps {
 }
 
 interface DataType {
+  avatar: {
+    src?: string;
+    bgColor?: string;
+  };
   key: string;
   name: string;
   role: string;
@@ -48,7 +52,14 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
       title: "Avatar",
       dataIndex: "avatar",
       key: "avatar",
-      render: () => <CustomAvatar size={50} userName="Dat" />,
+      render: (_: string, record: DataType) => (
+        <CustomAvatar
+          size={50}
+          userName={record.name}
+          avatarSrc={record.avatar.src}
+          bgColor={record.avatar.src}
+        />
+      ),
     },
     {
       title: "Name",
@@ -71,7 +82,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
       key: "action",
       render: (_text: string, record: DataType) => (
         <Button
-          type="primary"
+          type='primary'
           onClick={() => {
             createAssignment({
               project_id: project?.project_id,
@@ -98,6 +109,10 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
     if (staffs?.users.length) {
       return staffs?.users.map((staff): DataType => {
         return {
+          avatar: {
+            src: staff.avatar,
+            bgColor: staff.avatar_color,
+          },
           name: staff.name!,
           email: staff.email!,
           role: (staff.role as RoleResponse).name!,
@@ -107,6 +122,10 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
     }
     return allStaffs?.users.map((staff): DataType => {
       return {
+        avatar: {
+          src: staff.avatar,
+          bgColor: staff.avatar_color,
+        },
         name: staff.name!,
         email: staff.email!,
         role: (staff.role as RoleResponse).name!,
@@ -116,7 +135,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
   };
   return (
     <Modal
-      className="wrapper"
+      className='wrapper'
       open={isModalOpen}
       onCancel={handleCancel}
       centered
@@ -133,12 +152,12 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
         Add User To Project
       </h2>
       {/* search */}
-      <Row className="modal-add-user-search-input">
+      <Row className='modal-add-user-search-input'>
         <Col span={8}>
           <Input
-            placeholder="Search..."
+            placeholder='Search...'
             prefix={<SearchOutlined />}
-            size="large"
+            size='large'
           />
         </Col>
       </Row>

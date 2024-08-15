@@ -88,33 +88,33 @@ export const CardProject: React.FC<CardProject> = ({
   return (
     <>
       {contextHolder}
-      <div className="card-project-container">
-        <Card hoverable bordered={false} className="card-Project">
-          <div className="project-wrapper">
-            <Row className="project-header">
+      <div className='card-project-container'>
+        <Card hoverable bordered={false} className='card-Project'>
+          <div className='project-wrapper'>
+            <Row className='project-header'>
               {/* title */}
-              <Col span={12} className="project-header-info" onClick={onClick}>
-                <h3 className="project-name">{name}</h3>
+              <Col span={12} className='project-header-info' onClick={onClick}>
+                <h3 className='project-name'>{name}</h3>
               </Col>
               {/* action (delete, update) */}
-              <Col span={12} className="project-header-action">
+              <Col span={12} className='project-header-action'>
                 {role !== "MANAGER" ? (
                   <Space>
                     <div
                       onClick={showModal}
-                      className="project-header-action-button"
+                      className='project-header-action-button'
                     >
                       <EditOutlined />
                     </div>
                     <div
-                      className="project-header-action-button icon-delete-Project"
+                      className='project-header-action-button icon-delete-Project'
                       onClick={handleDeleteClick}
                     >
                       <Popconfirm
                         key={1}
-                        title="Delete Project"
-                        description="Are you sure to delete this Project?"
-                        okText="Yes"
+                        title='Delete Project'
+                        description='Are you sure to delete this Project?'
+                        okText='Yes'
                         onConfirm={async () => {
                           await deleteProject({
                             projectId: project?.project_id,
@@ -128,7 +128,7 @@ export const CardProject: React.FC<CardProject> = ({
                               messageApi.error("Failed to delete project");
                             });
                         }}
-                        cancelText="No"
+                        cancelText='No'
                       >
                         <DeleteOutlined />
                       </Popconfirm>
@@ -139,34 +139,34 @@ export const CardProject: React.FC<CardProject> = ({
                 )}
               </Col>
             </Row>
-            <div className="project-body" onClick={onClick}>
+            <div className='project-body' onClick={onClick}>
               {/* info */}
-              <div className="project-body-info">
+              <div className='project-body-info'>
                 <span>{description}</span>
                 {/* progress */}
-                <div className="project-progress">
+                <div className='project-progress'>
                   <Progress
                     percent={progress}
-                    status="active"
+                    status='active'
                     strokeColor={progressColor(progress)}
                   />
                 </div>
               </div>
             </div>
-            <div className="project-footer">
-              <div className="project-footer-info">
+            <div className='project-footer'>
+              <div className='project-footer-info'>
                 <span>{(project?.endAt as string).substring(0, 10)}</span>
               </div>
-              <div className="project-footer-action">
+              <div className='project-footer-action'>
                 <div
-                  className="avatat-group-wrapper"
+                  className='avatat-group-wrapper'
                   onClick={() => setIsModalAddUserOpen(true)}
                 >
                   {projectStaffs?.users.length ? (
                     <Avatar.Group
                       maxCount={2}
-                      maxPopoverTrigger="hover"
-                      size="small"
+                      maxPopoverTrigger='hover'
+                      size='small'
                       maxStyle={{
                         color: "#f56a00",
                         backgroundColor: "#fde3cf",
@@ -181,12 +181,13 @@ export const CardProject: React.FC<CardProject> = ({
                             avatarSrc={staff.avatar}
                             size={40}
                             userName={staff.name}
+                            bgColor={staff.avatar_color}
                           />
                         );
                       })}
                     </Avatar.Group>
                   ) : (
-                    <CustomAvatar size={40} userName="+" />
+                    <CustomAvatar size={40} userName='+' />
                   )}
                 </div>
               </div>

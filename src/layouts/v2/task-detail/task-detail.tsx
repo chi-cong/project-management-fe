@@ -56,7 +56,7 @@ export const TaskDetail = ({
       departmentId: project?.department_id,
       itemsPerPage: "ALL",
     },
-    { skip: !project?.department_id }
+    { skip: project?.department_id ? false : true }
   );
 
   const [deleteTask] = useDeleteTaskMutation();
@@ -148,7 +148,14 @@ export const TaskDetail = ({
               }}
             >
               <Card.Meta
-                avatar={<CustomAvatar size={32} userName={staff.name} />}
+                avatar={
+                  <CustomAvatar
+                    size={32}
+                    userName={staff.name}
+                    avatarSrc={staff.avatar}
+                    bgColor={staff.avatar_color}
+                  />
+                }
                 title={staff.name}
                 description={staff.email}
               />

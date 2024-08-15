@@ -27,7 +27,7 @@ export const CustomAvatar = ({
       style={{
         width: `${size}px`,
         height: `${size}px`,
-        background: !avatarSrc ? bgColor || getBgColor : "none",
+        background: !avatarSrc ? (bgColor ? bgColor : getBgColor) : "none",
         fontSize: `${size ? size / 2 : ""}px`,
         ...style,
       }}

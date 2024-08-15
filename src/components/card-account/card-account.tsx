@@ -98,7 +98,11 @@ export const CardAccount: React.FC<CardAccount> = ({
               </div>
             </Col>
             <Col span={12} className='account-body-avatar'>
-              <CustomAvatar size={100} userName='Dat' />
+              <CustomAvatar
+                size={100}
+                userName={account.name}
+                bgColor={account.avatar_color}
+              />
             </Col>
           </Row>
           <UpdateUserModal
