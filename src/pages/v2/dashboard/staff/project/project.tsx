@@ -34,9 +34,8 @@ import {
 } from "src/share/services";
 import { ModalUpdateProject, ModalAddUserToProject } from "src/components";
 import { Activities } from "src/layouts/v2/task-detail/activities";
-export const AdminProject = () => {
+export const StaffProject = () => {
   const { id: projectId } = useParams();
-
   const [reportModal, setReportModal] = useState<boolean>(false);
   const [taskDetailModal, setTaskDetailModal] = useState<boolean>(false);
   const [createTaskModal, setCreateTaskModal] = useState<boolean>(false);
@@ -86,10 +85,10 @@ export const AdminProject = () => {
 
   const ProjectOptions = () => {
     return (
-      <div className='project-option'>
+      <div className="project-option">
         <Button
-          type='text'
-          className='project-option-btn'
+          type="text"
+          className="project-option-btn"
           onClick={() => {
             setIsUpdateProject(false);
             setProjectUpdateModal(true);
@@ -99,8 +98,8 @@ export const AdminProject = () => {
           <Typography.Text>Detail</Typography.Text>
         </Button>
         <Button
-          type='text'
-          className='project-option-btn'
+          type="text"
+          className="project-option-btn"
           onClick={() => {
             setDocSec(true);
           }}
@@ -108,19 +107,8 @@ export const AdminProject = () => {
           <Folder />
           <Typography.Text>Documents</Typography.Text>
         </Button>
-        <Button
-          type='text'
-          className='project-option-btn'
-          onClick={() => {
-            setIsUpdateProject(true);
-            setProjectUpdateModal(true);
-          }}
-        >
-          <Pen />
-          <Typography.Text>Edit</Typography.Text>
-        </Button>
         <Popconfirm
-          title='Delete this project ?'
+          title="Delete this project ?"
           onConfirm={() => {
             deleteProject({ projectId: projectData?.project_id })
               .unwrap()
@@ -129,60 +117,35 @@ export const AdminProject = () => {
               })
               .catch(() => message.error("failed to delete this project"));
           }}
-        >
-          <Button className='project-option-btn' type='text'>
-            <Trash />
-            <Typography.Text>Delete</Typography.Text>
-          </Button>
-        </Popconfirm>
+        ></Popconfirm>
       </div>
     );
   };
 
   return (
     <>
-      <div className='admin-project-page'>
-        <header className='header-row'>
-          <div className='first-part'>
+      <div className="admin-project-page">
+        <header className="header-row">
+          <div className="first-part">
             <Typography.Title level={2}>{projectData?.name}</Typography.Title>
             <Popover content={ProjectOptions}>
-              <Button type='text' size='small'>
+              <Button type="text" size="small">
                 <MenuDots />
               </Button>
             </Popover>
             <Button
-              type='default'
-              className='title-row-btn'
-              shape='round'
+              type="default"
+              className="title-row-btn"
+              shape="round"
               onClick={() => setReportModal(true)}
             >
               <PieChart />
               Reports
             </Button>
-            <Button
-              shape='round'
-              style={{ display: "" }}
-              onClick={() => navigate(-1)}
-            >
-              <ArrowLeftOutlined />
-              Back to Projects
-            </Button>
           </div>
-          <div className='second-part'>
-            <Button
-              type='primary'
-              className='create-task-btn'
-              onClick={() => {
-                setCreateTaskModal(true);
-              }}
-            >
-              <PlusOutlined />
-              <Typography.Text style={{ color: "white" }}>
-                Create Task
-              </Typography.Text>
-            </Button>
+          <div className="second-part">
             <div
-              className='avatar-group-wrapper'
+              className="avatar-group-wrapper"
               onClick={() => setAddUserModal(true)}
             >
               {projectStaffs?.users.length ? (
@@ -192,7 +155,7 @@ export const AdminProject = () => {
                   ))}
                 </Avatar.Group>
               ) : (
-                <CustomAvatar size={32} userName='+' />
+                <CustomAvatar size={32} userName="+" />
               )}
             </div>
           </div>
@@ -207,7 +170,7 @@ export const AdminProject = () => {
             xl: 3,
             xxl: 3,
           }}
-          className='task-sec'
+          className="task-sec"
           dataSource={taskListSrc}
           renderItem={(taskList) => {
             return (
@@ -250,31 +213,15 @@ export const AdminProject = () => {
       >
         <Activities />
       </Modal>
-      <ModalUpdateProject
-        project={projectData!}
-        isModalOpen={projectUpdateModal}
-        setIsModalOpen={setProjectUpdateModal}
-        isUpdate={isUpdateProject}
-      />
-      <CreateTaskForm
-        isModalOpen={createTaskModal}
-        setIsModalOpen={setCreateTaskModal}
-        project={projectData}
-      />
       <Modal
         open={reportModal}
         onCancel={() => setReportModal(false)}
         footer={[]}
-        title='Department Report'
+        title="Department Report"
         width={"80%"}
       >
         <ProjectReport projectId={projectId} />
       </Modal>
-      <ModalAddUserToProject
-        isModalOpen={addUserModal}
-        setIsModalOpen={setAddUserModal}
-        project={projectData}
-      />
     </>
   );
 };

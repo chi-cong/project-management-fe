@@ -4,7 +4,7 @@ import { Typography } from "antd";
 import { PlusSquare } from "src/assets/icons";
 
 export interface CustomStaffMenuItem {
-  title: string;
+  title: string | JSX.Element;
   onClick: () => unknown;
   addCallBack?: () => unknown;
   icon?: ReactNode;

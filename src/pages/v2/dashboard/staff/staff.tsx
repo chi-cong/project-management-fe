@@ -12,7 +12,7 @@ export const Staff = () => {
     <div className="staff-page">
       <StaffSidebar />
       <div className="route-content">
-        {route <= 1 && <Navigate to={"account"} />}
+        {route <= 1 && <Navigate to={"/v2/dashboard/staff/profile"} />}
         <Outlet />
       </div>
     </div>

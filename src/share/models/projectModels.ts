@@ -11,6 +11,7 @@ export type AssignmentStatus =
   (typeof OAssignmentStatus)[keyof typeof OAssignmentStatus];
 
 export interface Project {
+  id: any;
   project_id?: string;
   name?: string;
   projectCode?: string;
