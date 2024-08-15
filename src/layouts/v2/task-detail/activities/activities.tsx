@@ -5,6 +5,7 @@ import { CustomAvatar } from "src/components/v2";
 import {
   useCreateActivityMutation,
   useGetTaskActivityQuery,
+  useGetUserDetailQuery,
 } from "src/share/services";
 import { useSelector } from "react-redux";
 import { RootState } from "src/libs/redux";
@@ -19,6 +20,7 @@ export const Activities = () => {
     items_per_page: "ALL",
     taskId: task?.task_id,
   });
+  const { data: user } = useGetUserDetailQuery();
 
   useEffect(() => {});
 
@@ -27,7 +29,12 @@ export const Activities = () => {
       {/* create activities */}
       <Typography.Title level={4}>Activity</Typography.Title>
       <div className='acti-des-row'>
-        <CustomAvatar size={40} userName='Nguyen Van A' />
+        <CustomAvatar
+          size={40}
+          avatarSrc={user?.avatar}
+          userName={user?.name}
+          bgColor={user?.avatar_color}
+        />
         <div className='acti-des-container'>
           <Input.TextArea
             style={{ resize: "none", height: "100px", width: "100%" }}
@@ -64,7 +71,12 @@ export const Activities = () => {
             <List.Item>
               <List.Item.Meta
                 avatar={
-                  <CustomAvatar userName={activity.user?.username} size={40} />
+                  <CustomAvatar
+                    userName={activity.user?.username}
+                    size={40}
+                    avatarSrc={activity.user?.avatar}
+                    bgColor={activity.user?.avatar_color}
+                  />
                 }
                 title={activity.user?.name}
                 description={

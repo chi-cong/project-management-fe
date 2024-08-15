@@ -8,10 +8,11 @@ import {
   Popover,
 } from "antd";
 import { MenuDots, Pen, Trash } from "src/assets/icons";
-import type { Project } from "src/share/models";
+import { OUserRole, type Project } from "src/share/models";
 import { ModalUpdateProject } from "src/components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRoleChecker } from "src/share/hooks";
 import dayjs from "dayjs";
 
 interface ProjectCardProp {
@@ -20,11 +21,14 @@ interface ProjectCardProp {
 
 export const ProjectCard = ({ project }: ProjectCardProp) => {
   const navigate = useNavigate();
+  const checkRole = useRoleChecker();
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const [popover, setPopover] = useState<boolean>(false);
 
   const goToDetail = () => {
-    navigate(`/v2/dashboard/admin/project/${project!.project_id!}`);
+    if (!checkRole(OUserRole.Staff)) {
+      navigate(`/v2/dashboard/admin/project/${project!.project_id!}`);
+    }
   };
 
   const calculateProgress = (): number => {
@@ -85,17 +89,23 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
       <div className='project-card-v2'>
         <div className='project-card-head'>
           <Typography.Title level={4}>{project.name}</Typography.Title>
-          <Popover content={ProjectCardOption}>
-            <Button
-              type='text'
-              size='small'
-              onClick={() => setPopover(!popover)}
-            >
-              <MenuDots />
-            </Button>
-          </Popover>
+          {!checkRole(OUserRole.Staff) && (
+            <Popover content={ProjectCardOption}>
+              <Button
+                type='text'
+                size='small'
+                onClick={() => setPopover(!popover)}
+              >
+                <MenuDots />
+              </Button>
+            </Popover>
+          )}
         </div>
-        <div className='project-card-body' onClick={goToDetail}>
+        <div
+          className='project-card-body'
+          onClick={goToDetail}
+          style={{ cursor: !checkRole(OUserRole.Staff) ? "pointer" : "none" }}
+        >
           <Typography.Text>{project.description}</Typography.Text>
           <div className='progress-sec'>
             <Progress
@@ -110,7 +120,11 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
           </div>
         </div>
         <Divider />
-        <div className='project-card-footer' onClick={goToDetail}>
+        <div
+          className='project-card-footer'
+          onClick={goToDetail}
+          style={{ cursor: !checkRole(OUserRole.Staff) ? "pointer" : "none" }}
+        >
           <Typography.Text>
             {dayjs((project?.endAt as string).substring(0, 10)).fromNow()}
           </Typography.Text>

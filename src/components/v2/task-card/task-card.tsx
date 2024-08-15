@@ -114,7 +114,9 @@ export const TaskCard = ({
               size={32}
               userName={assignment.user?.name}
               avatarSrc={assignment.user?.avatar}
-              className="custom-avatar"
+              bgColor={assignment.user.avatar_color}
+              className='custom-avatar'
+
             />
             <Typography.Text>{assignment.user?.name}</Typography.Text>
           </div>

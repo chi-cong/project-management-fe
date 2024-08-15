@@ -4,6 +4,10 @@ import { useGetUsersQuery } from "src/share/services";
 import { RoleResponse } from "src/share/models";
 
 interface DataType {
+  avatar: {
+    src?: string;
+    bgColor?: string;
+  };
   key?: string;
   name?: string;
   age?: number;
@@ -24,7 +28,14 @@ const AddManagerTabs = ({
       title: "Avatar",
       dataIndex: "avatar",
       key: "avatar",
-      render: () => <CustomAvatar size={50} userName='Dat' />,
+      render: (_: string, record: DataType) => (
+        <CustomAvatar
+          size={50}
+          userName={record.name}
+          avatarSrc={record.avatar.src}
+          bgColor={record.avatar.src}
+        />
+      ),
     },
     {
       title: "Name",
@@ -73,6 +84,10 @@ const AddManagerTabs = ({
       })
       .map((user) => {
         return {
+          avatar: {
+            src: user.avatar,
+            bgColor: user.avatar_color,
+          },
           key: user.user_id,
           email: user.email,
           name: user.name,

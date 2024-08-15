@@ -190,7 +190,12 @@ export const ManagerProject = () => {
               {projectStaffs?.users.length ? (
                 <Avatar.Group maxCount={3}>
                   {projectStaffs?.users.map((staff) => (
-                    <CustomAvatar size={32} userName={staff.name} />
+                    <CustomAvatar
+                      size={32}
+                      userName={staff.name}
+                      avatarSrc={staff.avatar}
+                      bgColor={staff.avatar_color}
+                    />
                   ))}
                 </Avatar.Group>
               ) : (

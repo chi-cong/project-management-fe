@@ -8,7 +8,7 @@ import { DepartmentReport } from "src/layouts/v2/department-report";
 import { PieChart } from "src/assets/icons";
 import {
   useGetDepartmentQuery,
-  useGetDepartmentProjectInfoQuery,
+  useGetAllProjectDepartmentQuery,
   useManagerGetAllStaffDepartmentQuery,
 } from "src/share/services";
 import { Project, RoleResponse } from "src/share/models";
@@ -20,7 +20,7 @@ export const StaffDepartment = () => {
 
   const [reportModal, setReportModal] = useState<boolean>(false);
   const { data } = useGetDepartmentQuery({ id: departmentId! });
-  const { data: departmentProjects } = useGetDepartmentProjectInfoQuery({
+  const { data: departmentProjects } = useGetAllProjectDepartmentQuery({
     departmentId,
   });
   const { data: departmentStaffs } = useManagerGetAllStaffDepartmentQuery({
@@ -103,7 +103,12 @@ export const StaffDepartment = () => {
                         </div>
                       }
                       avatar={
-                        <CustomAvatar size={60} userName='Nguyen Van A' />
+                        <CustomAvatar
+                          size={60}
+                          userName={data.information.manager?.name}
+                          avatarSrc={data.information.manager?.avatar}
+                          bgColor={data.information.manager?.avatar_color}
+                        />
                       }
                     />
                   </Card>
@@ -199,6 +204,7 @@ export const StaffDepartment = () => {
                           size={60}
                           userName={user.username}
                           avatarSrc={user.avatar}
+                          bgColor={user.avatar_color}
                         />
                       }
                     />

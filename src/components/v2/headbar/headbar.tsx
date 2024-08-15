@@ -25,7 +25,14 @@ export const Headbar = () => {
       <div className='user-headbar-options'>
         <Card className='user-headbar-options-card'>
           <Card.Meta
-            avatar={<CustomAvatar size={45} userName={user?.name} />}
+            avatar={
+              <CustomAvatar
+                size={45}
+                userName={user?.name}
+                avatarSrc={user?.avatar}
+                bgColor={user?.avatar_color}
+              />
+            }
             title={user?.name}
             description={user?.email}
           />
@@ -64,7 +71,12 @@ export const Headbar = () => {
         <Typography.Title level={5}>Project Management</Typography.Title>
         <Popover content={<UserHeadbarOption />} trigger='click'>
           <div className='headbar-avatar-wraper'>
-            <CustomAvatar size={45} userName={user?.name} />
+            <CustomAvatar
+              size={45}
+              userName={user?.name}
+              avatarSrc={user?.avatar}
+              bgColor={user?.avatar_color}
+            />
           </div>
         </Popover>
       </header>
