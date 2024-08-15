@@ -82,7 +82,6 @@ export const TaskCard = ({
     );
   };
   const checkRole = useRoleChecker();
-  console.log("Is Staff:", checkRole(OUserRole.Staff));
   return (
     <Card className="task-card">
       <div className="task-card-title">

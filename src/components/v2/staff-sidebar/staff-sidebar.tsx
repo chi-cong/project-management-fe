@@ -30,7 +30,7 @@ export const StaffSidebar = () => {
       ),
       icon: null,
       onClick() {
-        navigate(`/v2/dashboard/staff/project/${project!.project_id!}`);
+        navigate(`/v2/dashboard/STAFF/project/${project!.project_id!}`);
       },
     }));
 
@@ -38,7 +38,7 @@ export const StaffSidebar = () => {
     {
       title: "Department",
       onClick() {
-        navigate(`/v2/dashboard/staff/department/${user?.department_id}`);
+        navigate(`/v2/dashboard/STAFF/department/${user?.department_id}`);
       },
       icon: <ClusterOutlined />,
     },
