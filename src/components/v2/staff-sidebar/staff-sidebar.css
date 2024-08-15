@@ -19,8 +19,8 @@
     align-items: start;
   }
   .sublist-node {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
   }
 }
@@ -33,7 +33,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 15px;
+  padding: 10px 10px;
   border-radius: 5px;
   cursor: pointer;
   transition:
