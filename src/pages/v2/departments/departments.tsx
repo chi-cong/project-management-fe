@@ -1,10 +1,6 @@
 import "./departments.css";
 import { Button, Col, Empty, Input, List, PaginationProps, Row } from "antd";
-import {
-  SearchOutlined,
-  DeleteOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { CardDepartment } from "src/components/card-department";
 import ModalCreateDepartment from "src/components/modal-create-department";
@@ -27,7 +23,8 @@ export const Departments = () => {
   const [queries, setQueries] = useState<{
     page: number;
     itemsPerPage: number;
-  }>({ page: 1, itemsPerPage: 9 });
+    search: string;
+  }>({ page: 1, itemsPerPage: 9, search: "" });
 
   const checkRole = useRoleChecker();
   const { data: userDetail } = useGetUserDetailQuery();
@@ -80,10 +77,13 @@ export const Departments = () => {
             </div>
             <Row className='header-action' gutter={[8, 8]}>
               <Col xs={12} sm={12} md={8}>
-                <Input
+                <Input.Search
                   placeholder='Search...'
-                  prefix={<SearchOutlined />}
                   style={{ width: "100%" }}
+                  allowClear
+                  onSearch={(value) =>
+                    setQueries({ ...queries, search: value })
+                  }
                 />
               </Col>
               <Col xs={12} sm={12} md={8}>
