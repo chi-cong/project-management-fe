@@ -26,7 +26,9 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
   const [popover, setPopover] = useState<boolean>(false);
 
   const goToDetail = () => {
-    navigate(`/v2/dashboard/admin/project/${project!.project_id!}`);
+    if (!checkRole(OUserRole.Staff)) {
+      navigate(`/v2/dashboard/admin/project/${project!.project_id!}`);
+    }
   };
 
   const calculateProgress = (): number => {
@@ -99,7 +101,11 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
             </Popover>
           )}
         </div>
-        <div className='project-card-body' onClick={goToDetail}>
+        <div
+          className='project-card-body'
+          onClick={goToDetail}
+          style={{ cursor: !checkRole(OUserRole.Staff) ? "pointer" : "none" }}
+        >
           <Typography.Text>{project.description}</Typography.Text>
           <div className='progress-sec'>
             <Progress
@@ -114,7 +120,11 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
           </div>
         </div>
         <Divider />
-        <div className='project-card-footer' onClick={goToDetail}>
+        <div
+          className='project-card-footer'
+          onClick={goToDetail}
+          style={{ cursor: !checkRole(OUserRole.Staff) ? "pointer" : "none" }}
+        >
           <Typography.Text>
             {dayjs((project?.endAt as string).substring(0, 10)).fromNow()}
           </Typography.Text>
