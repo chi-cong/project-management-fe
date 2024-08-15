@@ -30,7 +30,7 @@ export const StaffSidebar = () => {
       ),
       icon: null,
       onClick() {
-        navigate(`/v2/dashboard/admin/project/${project!.project_id!}`);
+        navigate(`/v2/dashboard/staff/project/${project!.project_id!}`);
       },
     }));
 
