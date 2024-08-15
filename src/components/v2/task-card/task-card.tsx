@@ -1,4 +1,4 @@
-import { Assignment, Task } from "src/share/models";
+import { Assignment, OUserRole, Task } from "src/share/models";
 import "./task-card.css";
 import { Button, Card, Typography, Popover } from "antd";
 import {
@@ -15,6 +15,7 @@ import { OAssignmentStatus } from "src/share/models/projectModels";
 import { useUpdateAssignmentMutation } from "src/share/services";
 import { useDispatch } from "react-redux";
 import { selectTaskAssign } from "src/libs/redux/taskAssignSlice";
+import { useRoleChecker } from "src/share/hooks";
 
 interface TaskCardProp {
   task: Task;
@@ -37,10 +38,10 @@ export const TaskCard = ({
 
   const TaskCardOptions = () => {
     return (
-      <div className='task-card-options'>
+      <div className="task-card-options">
         <Button
-          type='text'
-          className='task-card-option-btn'
+          type="text"
+          className="task-card-option-btn"
           onClick={() =>
             updateAssignment({
               assignmentId: assignment.assignment_id!,
@@ -52,8 +53,8 @@ export const TaskCard = ({
           <Typography.Text>Todo</Typography.Text>
         </Button>
         <Button
-          type='text'
-          className='task-card-option-btn'
+          type="text"
+          className="task-card-option-btn"
           onClick={() =>
             updateAssignment({
               assignmentId: assignment.assignment_id!,
@@ -65,8 +66,8 @@ export const TaskCard = ({
           <Typography.Text>On progress</Typography.Text>
         </Button>
         <Button
-          className='task-card-option-btn'
-          type='text'
+          className="task-card-option-btn"
+          type="text"
           onClick={() =>
             updateAssignment({
               assignmentId: assignment.assignment_id!,
@@ -80,46 +81,49 @@ export const TaskCard = ({
       </div>
     );
   };
-
+  const checkRole = useRoleChecker();
+  console.log("Is Staff:", checkRole(OUserRole.Staff));
   return (
-    <Card className='task-card'>
-      <div className='task-card-title'>
+    <Card className="task-card">
+      <div className="task-card-title">
         <Typography.Title level={5}>{task.name}</Typography.Title>
-        <div className='title-options'>
-          <Button
-            type='text'
-            size='small'
-            onClick={() => {
-              dispatch(selectTaskAssign({ task, assignment }));
-              openDetail();
-            }}
-          >
-            <Eye />
-          </Button>
-          <Popover content={<TaskCardOptions />} trigger='click'>
-            <Button type='text' size='small'>
+        <div className="title-options">
+          {!checkRole(OUserRole.Staff) && (
+            <Button
+              type="text"
+              size="small"
+              onClick={() => {
+                dispatch(selectTaskAssign({ task, assignment }));
+                openDetail();
+              }}
+            >
+              <Eye />
+            </Button>
+          )}
+          <Popover content={<TaskCardOptions />} trigger="click">
+            <Button type="text" size="small">
               <MenuDots />
             </Button>
           </Popover>
         </div>
       </div>
       <Typography.Text>{task.description}</Typography.Text>
-      <div className='task-card-footer'>
+      <div className="task-card-footer">
         {assignment.user && (
-          <div className='avatar'>
+          <div className="avatar">
             <CustomAvatar
               size={32}
               userName={assignment.user?.name}
               avatarSrc={assignment.user?.avatar}
-              className='custom-avatar'
+              className="custom-avatar"
             />
             <Typography.Text>{assignment.user?.name}</Typography.Text>
           </div>
         )}
         <Button
-          className='task-card-footer-btn'
-          type='text'
-          size='small'
+          className="task-card-footer-btn"
+          type="text"
+          size="small"
           onClick={() => {
             dispatch(selectTaskAssign({ task, assignment }));
             openActivities();
@@ -129,9 +133,9 @@ export const TaskCard = ({
           <Typography.Text>{`${task.total_activities} activities`}</Typography.Text>
         </Button>
         <Button
-          className='task-card-footer-btn'
-          type='text'
-          size='small'
+          className="task-card-footer-btn"
+          type="text"
+          size="small"
           onClick={() => {
             dispatch(selectTaskAssign({ task, assignment }));
             openFile();
