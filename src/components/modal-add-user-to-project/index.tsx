@@ -36,13 +36,10 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
     },
     { skip: project?.department_id ? false : true }
   );
-  const { data: allStaffs } = useGetUsersQuery(
-    {
-      items_per_page: 5,
-      role: OUserRole.All,
-    },
-    { skip: project?.department_id ? true : false }
-  );
+  const { data: allStaffs } = useGetUsersQuery({
+    items_per_page: 5,
+    role: OUserRole.Staff,
+  });
 
   const [createAssignment] = useCreateAssigmentMutation();
 
@@ -51,7 +48,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
       title: "Avatar",
       dataIndex: "avatar",
       key: "avatar",
-      render: () => <CustomAvatar size={50} userName='Dat' />,
+      render: () => <CustomAvatar size={50} userName="Dat" />,
     },
     {
       title: "Name",
@@ -74,7 +71,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
       key: "action",
       render: (_text: string, record: DataType) => (
         <Button
-          type='primary'
+          type="primary"
           onClick={() => {
             createAssignment({
               project_id: project?.project_id,
@@ -119,7 +116,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
   };
   return (
     <Modal
-      className='wrapper'
+      className="wrapper"
       open={isModalOpen}
       onCancel={handleCancel}
       centered
@@ -136,12 +133,12 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
         Add User To Project
       </h2>
       {/* search */}
-      <Row className='modal-add-user-search-input'>
+      <Row className="modal-add-user-search-input">
         <Col span={8}>
           <Input
-            placeholder='Search...'
+            placeholder="Search..."
             prefix={<SearchOutlined />}
-            size='large'
+            size="large"
           />
         </Col>
       </Row>
