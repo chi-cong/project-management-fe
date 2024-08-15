@@ -25,7 +25,14 @@ export const Headbar = () => {
       <div className='user-headbar-options'>
         <Card className='user-headbar-options-card'>
           <Card.Meta
-            avatar={<CustomAvatar size={45} userName={user?.name} />}
+            avatar={
+              <CustomAvatar
+                size={45}
+                userName={user?.name}
+                avatarSrc={user?.name}
+                bgColor={user?.avatarColor}
+              />
+            }
             title={user?.name}
             description={user?.email}
           />

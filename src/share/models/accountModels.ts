@@ -22,6 +22,7 @@ export interface User {
   createBy?: string;
   role?: RoleResponse | UserRole;
   department_id?: string;
+  avatarColor?: string;
 }
 
 export interface RoleResponse {

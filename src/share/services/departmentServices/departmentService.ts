@@ -247,7 +247,7 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
         };
       },
       transformResponse: (response: Response<GetUserResp>) => response.data,
-      providesTags: ["User"],
+      providesTags: ["User", "department"],
     }),
   }),
 });

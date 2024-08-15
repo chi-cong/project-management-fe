@@ -15,6 +15,10 @@ interface ModalAddUserToProjectProps {
 }
 
 interface DataType {
+  avatar: {
+    src?: string;
+    bgColor?: string;
+  };
   key: string;
   name: string;
   role: string;
@@ -40,7 +44,14 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
       title: "Avatar",
       dataIndex: "avatar",
       key: "avatar",
-      render: () => <CustomAvatar size={50} userName='Dat' />,
+      render: (_: string, record: DataType) => (
+        <CustomAvatar
+          size={50}
+          userName={record.name}
+          avatarSrc={record.avatar.src}
+          bgColor={record.avatar.src}
+        />
+      ),
     },
     {
       title: "Name",
@@ -90,6 +101,10 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
     if (staffs?.users.length) {
       return staffs?.users.map((staff): DataType => {
         return {
+          avatar: {
+            src: staff.avatar,
+            bgColor: staff.avatarColor,
+          },
           name: staff.name!,
           email: staff.email!,
           role: (staff.role as RoleResponse).name!,

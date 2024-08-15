@@ -7,6 +7,10 @@ import {
 } from "src/share/services";
 
 interface DataType {
+  avatar: {
+    src?: string;
+    bgColor?: string;
+  };
   key?: string;
   name?: string;
   age?: number;
@@ -22,7 +26,14 @@ const AddManagerTabs = ({ id }: { id?: string }) => {
       title: "Avatar",
       dataIndex: "avatar",
       key: "avatar",
-      render: () => <CustomAvatar size={50} userName='Dat' />,
+      render: (_: string, record: DataType) => (
+        <CustomAvatar
+          size={50}
+          userName={record.name}
+          avatarSrc={record.avatar.src}
+          bgColor={record.avatar.src}
+        />
+      ),
     },
     {
       title: "Name",
@@ -65,6 +76,10 @@ const AddManagerTabs = ({ id }: { id?: string }) => {
   const dataTableMapper = () => {
     return data?.users.map((user): DataType => {
       return {
+        avatar: {
+          bgColor: user.avatarColor,
+          src: user.avatar,
+        },
         key: user.user_id,
         email: user.email,
         name: user.name,

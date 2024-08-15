@@ -184,7 +184,12 @@ export const AdminDepartment = () => {
                         </div>
                       }
                       avatar={
-                        <CustomAvatar size={60} userName='Nguyen Van A' />
+                        <CustomAvatar
+                          size={60}
+                          userName={data.information.manager?.name}
+                          avatarSrc={data.information.manager?.avatar}
+                          bgColor={data.information.manager?.avatarColor}
+                        />
                       }
                     />
                   </Card>
@@ -285,6 +290,7 @@ export const AdminDepartment = () => {
                           size={60}
                           userName={user.username}
                           avatarSrc={user.avatar}
+                          bgColor={user.avatarColor}
                         />
                       }
                     />

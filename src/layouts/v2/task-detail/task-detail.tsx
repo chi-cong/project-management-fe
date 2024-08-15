@@ -148,7 +148,14 @@ export const TaskDetail = ({
               }}
             >
               <Card.Meta
-                avatar={<CustomAvatar size={32} userName={staff.name} />}
+                avatar={
+                  <CustomAvatar
+                    size={32}
+                    userName={staff.name}
+                    avatarSrc={staff.avatar}
+                    bgColor={staff.avatarColor}
+                  />
+                }
                 title={staff.name}
                 description={staff.email}
               />

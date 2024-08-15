@@ -117,6 +117,8 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                       <CustomAvatar
                         size={40}
                         userName={department.information?.manager?.name}
+                        avatarSrc={department.information?.manager?.avatar}
+                        bgColor={department.information?.manager?.avatarColor}
                       />
                     </div>
                     <div className='department-manager-main-info'>
