@@ -1,5 +1,4 @@
-import { CardAccount } from "src/components/card-account";
-import "./account.css";
+import "./projects.css";
 import {
   Button,
   Col,
@@ -7,80 +6,79 @@ import {
   Input,
   List,
   MenuProps,
+  message,
   PaginationProps,
   Row,
   Space,
 } from "antd";
-import { DownOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  SearchOutlined,
+  DeleteOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { useState } from "react";
-import { useGetUsersQuery } from "src/share/services";
-import ModalCreateUser from "src/components/modal-create-user";
-import { UserRole, OUserRole } from "src/share/models";
-import { useRoleChecker } from "src/share/hooks";
+import { ManagerCreateProject } from "src/components/";
+import { CardProject } from "src/components/card-project";
+import { useNavigate } from "react-router-dom";
+import {
+  useGetAllProjectDepartmentQuery,
+  useGetUserDetailQuery,
+} from "src/share/services";
+import { selectProject } from "src/libs/redux/selectProjectSlice";
+import { useDispatch } from "react-redux";
 
-export const Account = () => {
-  const checkRole = useRoleChecker();
+export const ManagerProjects = () => {
+  const dispatch = useDispatch();
 
-  const [queries, setQueries] = useState<{
-    role: UserRole;
-    page: number | undefined;
-    search: string | undefined;
-  }>({ role: OUserRole.All, page: 1, search: "" });
+  const { data: user } = useGetUserDetailQuery();
 
-  const { data } = useGetUsersQuery(
-    {
-      ...queries,
-      items_per_page: 10,
-    },
-    { skip: !checkRole(OUserRole.Admin) }
-  );
-
+  //components
   const items: MenuProps["items"] = [
     {
-      label: "ALL",
-      key: OUserRole.All,
-      onClick: () => setQueries({ ...queries, role: OUserRole.All }),
+      label: "On Progress",
+      key: "on_progress",
     },
     {
-      label: "Admin",
-      key: OUserRole.Admin,
-      onClick: () => setQueries({ ...queries, role: OUserRole.Admin }),
+      label: "Done",
+      key: "done",
     },
     {
-      label: "Staff",
-      key: OUserRole.Staff,
-      onClick: () => setQueries({ ...queries, role: OUserRole.Staff }),
-    },
-    {
-      label: "Project Manager",
-      key: OUserRole.ProjectManager,
-      onClick: () => setQueries({ ...queries, role: OUserRole.ProjectManager }),
-    },
-    {
-      label: "Manager",
-      key: OUserRole.Manager,
-      onClick: () => setQueries({ ...queries, role: OUserRole.Manager }),
+      label: "Expired",
+      key: "expired",
     },
   ];
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [queries, setQueries] = useState<{ page: number }>({ page: 1 });
+  const navigate = useNavigate();
+  const handleMenuClick: MenuProps["onClick"] = () => {
+    message.info("Click on menu item.");
+  };
   const menuProps = {
     items,
+    onClick: handleMenuClick,
   };
 
+  //fetching data
+  const { data: allProject } = useGetAllProjectDepartmentQuery({
+    ...queries,
+    items_per_page: 9,
+    departmentId: user?.department_id,
+  });
+
+  //pagination
   const onChangePage: PaginationProps["onChange"] = (page) => {
     setQueries({ ...queries, page });
   };
 
   return (
-    <div className='v2-account-page'>
+    <div className='v2-projects-page'>
       <section className='main'>
         <header className='main-header'>
           <section className='first-sec'>
             <div className='title-des'>
               <div className='title-row'>
-                <h2>Account</h2>
+                <h2>Project</h2>
               </div>
             </div>
             <Row className='action' gutter={[8, 8]}>
@@ -94,23 +92,20 @@ export const Account = () => {
                         justifyContent: "space-between",
                       }}
                     >
-                      Roles
+                      Progress
                       <DownOutlined />
                     </Space>
                   </Button>
                 </Dropdown>
               </Col>
-              <Col xs={12} sm={12} md={8}>
-                <Input.Search
+              <Col xs={12} sm={12} md={6}>
+                <Input
                   placeholder='Search...'
+                  prefix={<SearchOutlined />}
                   style={{ width: "100%" }}
-                  allowClear
-                  onSearch={(value) =>
-                    setQueries({ ...queries, search: value })
-                  }
                 />
               </Col>
-              <Col xs={12} sm={12} md={5}>
+              <Col xs={12} sm={12} md={6}>
                 <Button
                   type='default'
                   className='title-row-btn'
@@ -120,7 +115,7 @@ export const Account = () => {
                   Trash
                 </Button>
               </Col>
-              <Col xs={12} sm={12} md={5}>
+              <Col xs={12} sm={12} md={6}>
                 <Button
                   type='primary'
                   className='title-row-btn'
@@ -134,37 +129,49 @@ export const Account = () => {
             </Row>
           </section>
         </header>
-        <main>
+        <main className=''>
           <List
             grid={{
               gutter: 12,
               xs: 1,
               sm: 1,
-              md: 2,
+              md: 1,
               lg: 2,
               xl: 2,
-              xxl: 2,
+              xxl: 3,
             }}
             pagination={{
               position: "bottom",
               align: "center",
-              pageSize: 10,
-              total: data?.total,
+              pageSize: 9,
+              total: allProject?.total,
               onChange: onChangePage,
+              showSizeChanger: false,
             }}
-            dataSource={data?.users}
-            renderItem={(user) => (
+            dataSource={allProject?.data}
+            renderItem={(project) => (
               <List.Item>
-                <CardAccount userId={user.user_id} account={user} />
+                <CardProject
+                  name={project?.name}
+                  description={project?.description}
+                  onClick={() => {
+                    dispatch(selectProject(project!.project_id!));
+                    navigate(
+                      `/v2/dashboard/manager/project/${project!.project_id!}`
+                    );
+                  }}
+                  project={project}
+                />
               </List.Item>
             )}
           />
         </main>
       </section>
-      <ModalCreateUser
+      <ManagerCreateProject
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-      />
+        departmentId={user?.department_id}
+      ></ManagerCreateProject>
     </div>
   );
 };

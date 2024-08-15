@@ -1,6 +1,6 @@
 import { hrManagementApi } from "src/share/services/baseApi";
 import { User, Response, LoginResp, OUserRole } from "src/share/models";
-import { localStorageUtil, randAvaBg } from "src/share/utils";
+import { localStorageUtil } from "src/share/utils";
 
 import type { LoginReqBody } from "src/layouts/login-form";
 import type {

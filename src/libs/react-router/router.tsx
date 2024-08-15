@@ -9,18 +9,25 @@ import {
   ForgotPass,
   TestRoute,
   Dashboard as DashboardV2,
-  Admin,
   AdminDepartment,
   AdminProject,
   Account,
   Profile,
 } from "src/pages/v2";
-import { Manager, ManagerDepartment } from "src/pages/v2/dashboard/manager";
+import {
+  ManagerDepartment,
+  ManagerProjects,
+  ManagerProject,
+} from "src/pages/v2/dashboard/manager";
 import App from "src/App";
 import { Projects } from "src/pages/v2/projects";
 import { Departments } from "src/pages/v2/departments";
 import { Password } from "src/pages/v2/password";
-import { Staff, StaffProject } from "src/pages/v2/dashboard/staff";
+import {
+  Staff,
+  StaffProject,
+  StaffDepartment,
+} from "src/pages/v2/dashboard/staff";
 
 export const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -70,7 +77,10 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "admin",
-            element: <Admin />,
+            async lazy() {
+              const { Admin } = await import("src/pages/v2/dashboard/admin");
+              return { Component: Admin };
+            },
             children: [
               { path: "department/:id", element: <AdminDepartment /> },
               { path: "projects", element: <Projects /> },
@@ -88,10 +98,33 @@ export const router = createBrowserRouter([
             ],
           },
           {
+            path: "manager",
+            async lazy() {
+              const { Manager } = await import(
+                "src/pages/v2/dashboard/manager"
+              );
+              return { Component: Manager };
+            },
+            children: [
+              {
+                path: "department/:id",
+                element: <ManagerDepartment />,
+              },
+              {
+                path: "projects",
+                element: <ManagerProjects />,
+              },
+              {
+                path: "project/:id",
+                element: <ManagerProject />,
+              },
+            ],
+          },
+          {
             path: "staff",
             element: <Staff />,
             children: [
-              { path: "department/:id", element: <AdminDepartment /> },
+              { path: "department/:id", element: <StaffDepartment /> },
               { path: "projects", element: <Projects /> },
               { path: "project/:id", element: <StaffProject /> },
               { path: "departments", element: <Departments /> },
@@ -102,16 +135,6 @@ export const router = createBrowserRouter([
               {
                 path: "password",
                 element: <Password />,
-              },
-            ],
-          },
-          {
-            path: "manager",
-            element: <Manager />,
-            children: [
-              {
-                path: "department/:id",
-                element: <ManagerDepartment />,
               },
             ],
           },

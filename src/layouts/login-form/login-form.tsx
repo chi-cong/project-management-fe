@@ -2,7 +2,7 @@ import "./login-form.css";
 import { Form, Input, Button, message, Spin } from "antd";
 import { useLoginMutation } from "src/share/services/accountServices";
 import { useNavigate } from "react-router-dom";
-import { localStorageUtil } from "src/share/utils";
+import { localStorageUtil, sessionStorageUtil } from "src/share/utils";
 import { Link } from "react-router-dom";
 
 import type { FormProps } from "antd";
@@ -29,7 +29,7 @@ export const LoginForm = () => {
     } as LoginReqBody)
       .unwrap()
       .then((resp) => {
-        localStorageUtil.set("accessToken", resp.data.tokens.accessToken);
+        sessionStorageUtil.set("accessToken", resp.data.tokens.accessToken);
         localStorageUtil.set("refreshToken", resp.data.tokens.refreshToken);
         localStorageUtil.set("role", resp.data.role);
         localStorageUtil.set("accessDate", Date.now() + 86400000);

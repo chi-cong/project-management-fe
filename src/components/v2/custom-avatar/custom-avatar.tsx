@@ -7,6 +7,7 @@ interface AvatarProp {
   avatarSrc?: string;
   userName?: string;
   className?: string;
+  bgColor?: string;
   style?: CSSProperties;
 }
 
@@ -15,9 +16,10 @@ export const CustomAvatar = ({
   avatarSrc,
   userName,
   className,
+  bgColor,
   style,
 }: AvatarProp) => {
-  const [bgColor] = useState<"#f56a00" | "#87d068" | "#1677ff" | undefined>(
+  const [getBgColor] = useState<"#f56a00" | "#87d068" | "#1677ff" | undefined>(
     randAvaBg()
   );
   return (
@@ -25,7 +27,7 @@ export const CustomAvatar = ({
       style={{
         width: `${size}px`,
         height: `${size}px`,
-        background: !avatarSrc ? bgColor : "none",
+        background: !avatarSrc ? bgColor || getBgColor : "none",
         fontSize: `${size ? size / 2 : ""}px`,
         ...style,
       }}

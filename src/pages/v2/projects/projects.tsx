@@ -24,6 +24,8 @@ import { useNavigate } from "react-router-dom";
 import { useGetAllProjectQuery } from "src/share/services";
 import { selectProject } from "src/libs/redux/selectProjectSlice";
 import { useDispatch } from "react-redux";
+import { useRoleChecker } from "src/share/hooks";
+import { OUserRole } from "src/share/models";
 
 export const Projects = () => {
   const dispatch = useDispatch();
@@ -53,12 +55,16 @@ export const Projects = () => {
     items,
     onClick: handleMenuClick,
   };
+  const checkRole = useRoleChecker();
 
   //fetching data
-  const { data: allProject } = useGetAllProjectQuery({
-    ...queries,
-    items_per_page: 9,
-  });
+  const { data: allProject } = useGetAllProjectQuery(
+    {
+      ...queries,
+      items_per_page: 9,
+    },
+    { skip: !checkRole(OUserRole.Admin) }
+  );
 
   //pagination
   const onChangePage: PaginationProps["onChange"] = (page) => {

@@ -12,10 +12,12 @@ import {
 import VirtualList from "rc-virtual-list";
 import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import type { RadioChangeEvent } from "antd";
-import { useManagerGetStaffNoDepartmentQuery } from "src/share/services";
-import { useGetUsersQuery } from "src/share/services";
-import { useCreateUserMutation } from "src/share/services";
-import { useAddStaffDepartmentMutation } from "src/share/services";
+import {
+  useGetUsersQuery,
+  useCreateUserMutation,
+  useManagerGetStaffNoDepartmentQuery,
+  useAddStaffDepartmentMutation,
+} from "src/share/services";
 import { OUserRole, User } from "src/share/models/accountModels";
 import { Department } from "src/share/models";
 import "./modal-add-staffs-departments.css";

@@ -21,6 +21,7 @@
       .title-row {
         display: flex;
         align-items: center;
+        justify-content: flex-start;
         gap: var(--gap-xs);
         margin-bottom: 20px;
         @mixin tabletAndMobile {

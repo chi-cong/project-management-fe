@@ -7,7 +7,6 @@ import {
   RocketOutlined,
 } from "@ant-design/icons";
 import { CustomMenu, CustomMenuItem } from "src/components/v2/custom-menu";
-// import { randAvaBg } from "src/share/utils";
 import { useNavigate } from "react-router-dom";
 import ModalCreateUser from "src/components/modal-create-user";
 import { ModalCreateProject } from "src/components";
@@ -61,10 +60,10 @@ export const Sidebar = () => {
 
   return (
     <>
-      <Layout.Sider className="sidebar">
+      <Layout.Sider className='sidebar'>
         <CustomMenu items={items} defaultSelectedItem={0} />
       </Layout.Sider>
-      <div className="sidebar-placeholder" style={{ width: 0 }} />
+      <div className='sidebar-placeholder' style={{ width: 0 }} />
       <ModalCreateDepartment
         isModalOpen={createDepartment}
         setIsModalOpen={setCreateDepartment}

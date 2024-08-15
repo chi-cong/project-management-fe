@@ -15,9 +15,14 @@ import {
   useDeleteProjectMutation,
   useGetProjectStaffsQuery,
 } from "src/share/services";
-import { ModalAddUserToProject, ModalUpdateProject } from "src/components/";
-import { Project } from "src/share/models";
+import {
+  ModalAddUserToProject,
+  ModalUpdateProject,
+  AddProjectUserPanel,
+} from "src/components/";
+import { OUserRole, Project } from "src/share/models";
 import { CustomAvatar } from "src/components/v2";
+import { useRoleChecker } from "src/share/hooks";
 
 type CardProject = {
   name?: string;
@@ -34,6 +39,8 @@ export const CardProject: React.FC<CardProject> = ({
   role,
   project,
 }) => {
+  const checkRole = useRoleChecker();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalAddUserOpen, setIsModalAddUserOpen] = useState(false);
   const [deleteProject] = useDeleteProjectMutation();
@@ -184,11 +191,21 @@ export const CardProject: React.FC<CardProject> = ({
                 </div>
               </div>
             </div>
-            <ModalAddUserToProject
-              isModalOpen={isModalAddUserOpen}
-              setIsModalOpen={setIsModalAddUserOpen}
-              project={project}
-            ></ModalAddUserToProject>
+            {checkRole(OUserRole.Admin) ? (
+              <ModalAddUserToProject
+                isModalOpen={isModalAddUserOpen}
+                setIsModalOpen={setIsModalAddUserOpen}
+                project={project}
+              />
+            ) : (
+              checkRole(OUserRole.Manager) && (
+                <AddProjectUserPanel
+                  isModalOpen={isModalAddUserOpen}
+                  setIsModalOpen={setIsModalAddUserOpen}
+                  project={project}
+                />
+              )
+            )}
             <ModalUpdateProject
               isModalOpen={isModalOpen}
               setIsModalOpen={setIsModalOpen}

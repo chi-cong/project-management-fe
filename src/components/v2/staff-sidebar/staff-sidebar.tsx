@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { CustomStaffMenu, CustomStaffMenuItem } from "../custom-staff-menu";
 import { useGetUserProjectQuery } from "src/share/services";
 import { randAvaBg } from "src/share/utils";
-
+import { useGetUserDetailQuery } from "src/share/services";
 export const StaffSidebar = () => {
   const navigate = useNavigate();
   const { data: projectsResp } = useGetUserProjectQuery({
     page: 1,
     items_per_page: "ALL",
   });
-
+  const { data: user, refetch } = useGetUserDetailQuery();
   const getSublistNode = () => {
     return (
       <div className="sublist-node" style={{ background: randAvaBg() }}></div>
@@ -38,7 +38,7 @@ export const StaffSidebar = () => {
     {
       title: "Department",
       onClick() {
-        navigate("/v2/dashboard/staff/department/:id");
+        navigate(`/v2/dashboard/staff/department/${user?.department_id}`);
       },
       icon: <ClusterOutlined />,
     },

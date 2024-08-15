@@ -90,7 +90,9 @@ export const UpdateTaskForm: React.FC<TaskForm> = ({
       description: task?.description,
       status: assignment?.status,
     });
-    dispatch(selectTaskAssign({ task, assignment }));
+    if (task && assignment) {
+      dispatch(selectTaskAssign({ task, assignment }));
+    }
   }, [form, task, assignment, dispatch]);
 
   return (

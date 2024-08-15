@@ -87,23 +87,23 @@ export const AdminDepartment = () => {
 
   const DepartmentOptions = () => {
     return (
-      <div className="department-option">
+      <div className='department-option'>
         <Button
-          type="text"
-          className="department-option-btn"
+          type='text'
+          className='department-option-btn'
           onClick={() => setUpdateModal(true)}
         >
           <Pen />
           <Typography.Text>Edit</Typography.Text>
         </Button>
         <Popconfirm
-          title="Delete this department ?"
+          title='Delete this department ?'
           onConfirm={() => {
             deleteDepartment({ departmentId });
             navigate("/v2/department");
           }}
         >
-          <Button className="department-option-btn" type="text">
+          <Button className='department-option-btn' type='text'>
             <Trash />
             <Typography.Text>Delete</Typography.Text>
           </Button>
@@ -113,18 +113,18 @@ export const AdminDepartment = () => {
   };
   const TeamMemberOptions = () => {
     return (
-      <div className="department-option">
+      <div className='department-option'>
         <Button
-          type="text"
-          className="department-option-btn"
+          type='text'
+          className='department-option-btn'
           onClick={() => setAddStaffModal(true)}
         >
           <UserPlus />
           <Typography.Text>Add Member </Typography.Text>
         </Button>
         <Button
-          className="department-option-btn"
-          type="text"
+          className='department-option-btn'
+          type='text'
           onClick={() => setRmStaffModal(true)}
         >
           <Trash />
@@ -136,21 +136,21 @@ export const AdminDepartment = () => {
 
   return (
     <>
-      <div className="department-page">
-        <section className="main">
-          <header className="main-header">
-            <div className="title-row">
-              <Typography.Title level={2}>{data?.name}</Typography.Title>
+      <div className='department-page'>
+        <section className='main'>
+          <header className='main-header'>
+            <div className='title-row'>
+              <h2>{data?.name}</h2>
               <div style={{ display: "flex" }}>
                 <Popover content={<DepartmentOptions />}>
-                  <Button type="text" className="title-row-btn" size="small">
+                  <Button type='text' className='title-row-btn' size='small'>
                     <MenuDots />
                   </Button>
                 </Popover>
                 <Button
-                  type="default"
-                  className="title-row-btn"
-                  shape="round"
+                  type='default'
+                  className='title-row-btn'
+                  shape='round'
                   onClick={() => setReportModal(true)}
                 >
                   <PieChart />
@@ -158,7 +158,7 @@ export const AdminDepartment = () => {
                 </Button>
               </div>
               <Button
-                shape="round"
+                shape='round'
                 style={{ display: "" }}
                 onClick={() => navigate("/v2/dashboard/admin/departments")}
               >
@@ -166,32 +166,32 @@ export const AdminDepartment = () => {
                 Back to department
               </Button>
             </div>
-            <section className="second-sec">
-              <div className="des-manager-sec">
+            <section className='second-sec'>
+              <div className='des-manager-sec'>
                 <Typography.Text>{data?.description}</Typography.Text>
                 {data?.information && (
-                  <Card className="manager-card">
+                  <Card className='manager-card'>
                     <Card.Meta
                       title={data.information.manager?.name}
                       description={
-                        <div className="department-manager-card-des">
+                        <div className='department-manager-card-des'>
                           <Typography.Text>
                             {data.information.manager?.email}
                           </Typography.Text>
-                          <Typography.Text type="secondary">
+                          <Typography.Text type='secondary'>
                             Department Manager
                           </Typography.Text>
                         </div>
                       }
                       avatar={
-                        <CustomAvatar size={60} userName="Nguyen Van A" />
+                        <CustomAvatar size={60} userName='Nguyen Van A' />
                       }
                     />
                   </Card>
                 )}
               </div>
 
-              <div className="pie-chart">
+              <div className='pie-chart'>
                 <ResponsivePie
                   data={[
                     {
@@ -252,27 +252,27 @@ export const AdminDepartment = () => {
               </div>
             </section>
           </header>
-          <section className="project-section">
-            <DepartmentProjects title="Todo" projects={projectFilter.todo} />
+          <section className='project-section'>
+            <DepartmentProjects title='Todo' projects={projectFilter.todo} />
             <DepartmentProjects
-              title="On Progress"
+              title='On Progress'
               projects={projectFilter.onProgress}
             />
-            <DepartmentProjects title="Done" projects={projectFilter.done} />
+            <DepartmentProjects title='Done' projects={projectFilter.done} />
           </section>
         </section>
-        <section className="team-member-sec">
-          <div className="member-list-container">
-            <div className="title">
+        <section className='team-member-sec'>
+          <div className='member-list-container'>
+            <div className='title'>
               <Typography.Title level={5}>Team Members</Typography.Title>
               <Popover content={<TeamMemberOptions />}>
-                <Button type="text" size="small">
+                <Button type='text' size='small'>
                   <MenuDots />
                 </Button>
               </Popover>
             </div>
             <List
-              className="memeber-list"
+              className='memeber-list'
               dataSource={departmentStaffs?.users}
               renderItem={(user) => {
                 return (
@@ -299,7 +299,7 @@ export const AdminDepartment = () => {
         open={reportModal}
         onCancel={() => setReportModal(false)}
         footer={[]}
-        title="Department Report"
+        title='Department Report'
         width={"80%"}
       >
         <DepartmentReport departmentId={departmentId} />
@@ -314,14 +314,14 @@ export const AdminDepartment = () => {
         onCancel={() => setAddStaffModal(false)}
         width={"80vw"}
       >
-        <AddStaffTabs />
+        <AddStaffTabs id={departmentId} />
       </Modal>
       <Modal
         open={rmStaffModal}
         onCancel={() => setRmStaffModal(false)}
         width={"80vw"}
       >
-        <RmDepartmentStaff />
+        <RmDepartmentStaff departmentId={departmentId} />
       </Modal>
     </>
   );

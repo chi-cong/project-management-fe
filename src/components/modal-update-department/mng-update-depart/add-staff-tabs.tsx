@@ -1,6 +1,6 @@
 import { Button, Table, message } from "antd";
 import React, { useState } from "react";
-import { CustomAvatar } from "../v2";
+import { CustomAvatar } from "../../v2";
 import { ColumnsType } from "antd/es/table";
 import {
   useManagerGetStaffNoDepartmentQuery,

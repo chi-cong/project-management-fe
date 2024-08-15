@@ -1,10 +1,10 @@
-import { Button, Table, message } from "antd";
+import { Button, message, Table } from "antd";
 import React, { useState } from "react";
-import { CustomAvatar } from "../v2";
+import { CustomAvatar } from "src/components/v2";
 import { ColumnsType } from "antd/es/table";
 import {
-  useManagerGetStaffNoDepartmentQuery,
-  useAddStaffDepartmentMutation,
+  useManagerGetAllStaffDepartmentQuery,
+  useDeleteStaffDepartmentMutation,
 } from "src/share/services";
 import { RoleResponse } from "src/share/models";
 
@@ -15,13 +15,17 @@ interface DataType {
   email?: string;
 }
 
-const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
+export const MngRmDepartStaff = ({
+  departmentId,
+}: {
+  departmentId?: string;
+}) => {
   const columns: ColumnsType<DataType> = [
     {
       title: "Avatar",
       dataIndex: "avatar",
       key: "avatar",
-      render: (_text: string) => <CustomAvatar size={50} userName='Dat' />,
+      render: () => <CustomAvatar size={50} userName='Dat' />,
     },
     {
       title: "Name",
@@ -41,27 +45,29 @@ const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
     {
       title: "Action",
       key: "action",
-      render: (_: any, _record: DataType) => (
+      render: (_: string, record: DataType) => (
         <Button
           type='primary'
           onClick={() => [
-            addDepartmentStaff({
-              departmentId: id,
-              listStaff: selectedRows.map((row) => row.key),
+            rmDepartmentStaff({
+              departmentId,
+              listStaff: [record.key] as string[],
             })
               .unwrap()
-              .then(() => message.success("User added"))
-              .catch(message.error("Failed to add user")),
+              .then(() => message.success("Removed memeber"))
+              .catch(() => message.error("Failed to remove member")),
           ]}
         >
-          Add
+          Remove
         </Button>
       ),
     },
   ];
   const [selectedRows, setSelectedRows] = useState<DataType[]>([]);
-  const [addDepartmentStaff] = useAddStaffDepartmentMutation();
-  const { data: noDepartStaffs } = useManagerGetStaffNoDepartmentQuery({});
+  const [rmDepartmentStaff] = useDeleteStaffDepartmentMutation();
+  const { data: departStaffs } = useManagerGetAllStaffDepartmentQuery({
+    items_per_page: "ALL",
+  });
   const rowSelection = {
     onChange: (_selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
       setSelectedRows(selectedRows);
@@ -73,7 +79,7 @@ const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
   };
 
   const dataTableMapper = () => {
-    return noDepartStaffs?.users.map((user): DataType => {
+    return departStaffs?.users.map((user): DataType => {
       return {
         key: user.user_id,
         email: user.email,
@@ -91,19 +97,18 @@ const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "start",
-            marginBottom: "10px",
           }}
         >
           <Button
             type='primary'
-            onClick={async () => {
-              addDepartmentStaff({
-                departmentId: id,
-                listStaff: selectedRows.map((row) => row.key),
+            onClick={() => {
+              rmDepartmentStaff({
+                departmentId,
+                listStaff: selectedRows.map((row) => row.key) as string[],
               })
                 .unwrap()
-                .then(() => message.success("User added"))
-                .catch(() => message.error("Failed to add user"));
+                .then(() => message.success("Removed memebers"))
+                .catch(() => message.error("Failed to remove members"));
             }}
           >
             Assign
@@ -121,5 +126,3 @@ const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
     </div>
   );
 };
-
-export default AddStaffTabs;

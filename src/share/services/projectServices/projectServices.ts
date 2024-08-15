@@ -538,7 +538,7 @@ const projectServices = hrManagementApi.injectEndpoints({
         };
       },
       transformResponse: (response: Response<TaskResp>) => response.data,
-      providesTags: ["task"],
+      providesTags: ["task", "activity"],
     }),
     getTask: build.query<
       Task,
@@ -556,7 +556,7 @@ const projectServices = hrManagementApi.injectEndpoints({
         };
       },
       transformResponse: (response: Response<Task>) => response.data,
-      providesTags: ["task"],
+      providesTags: ["task", "activity"],
     }),
     getUserProject: build.query<
       ProjectResp,
