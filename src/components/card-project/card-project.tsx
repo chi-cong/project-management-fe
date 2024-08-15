@@ -175,13 +175,14 @@ export const CardProject: React.FC<CardProject> = ({
                         cursor: "pointer",
                       }}
                     >
-                      {projectStaffs?.users.map((staff) => {
+                      {projectStaffs?.users.map((staff, index) => {
                         return (
                           <CustomAvatar
                             avatarSrc={staff.avatar}
                             size={40}
                             userName={staff.name}
                             bgColor={staff.avatar_color}
+                            key={index}
                           />
                         );
                       })}

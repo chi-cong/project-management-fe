@@ -274,6 +274,7 @@ export const ManagerDepartment = () => {
         open={addStaffModal}
         onCancel={() => setAddStaffModal(false)}
         width={"80vw"}
+        footer={[]}
       >
         <AddStaffTabs id={departmentId} />
       </Modal>
@@ -281,6 +282,7 @@ export const ManagerDepartment = () => {
         open={rmStaffModal}
         onCancel={() => setRmStaffModal(false)}
         width={"80vw"}
+        footer={[]}
       >
         <MngRmDepartStaff departmentId={departmentId} />
       </Modal>

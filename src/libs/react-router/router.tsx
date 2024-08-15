@@ -122,6 +122,10 @@ export const router = createBrowserRouter([
                 path: "profile",
                 element: <Profile />,
               },
+              {
+                path: "password",
+                element: <Password />,
+              },
             ],
           },
           {
@@ -131,7 +135,6 @@ export const router = createBrowserRouter([
               { path: "department/:id", element: <StaffDepartment /> },
               { path: "projects", element: <Projects /> },
               { path: "project/:id", element: <StaffProject /> },
-              { path: "departments", element: <Departments /> },
               {
                 path: "profile",
                 element: <Profile />,
