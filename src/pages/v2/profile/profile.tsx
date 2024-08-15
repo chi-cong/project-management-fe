@@ -21,7 +21,6 @@ const UserInfo: React.FC<{ user?: User }> = ({ user }) => {
     <div className='user-profile-form'>
       <div className='user-profile'>
         <CustomAvatar
-          size={350}
           userName={user?.username}
           avatarSrc={user?.avatar}
           bgColor={user?.avatar_color}
@@ -42,7 +41,7 @@ const UserInfo: React.FC<{ user?: User }> = ({ user }) => {
 const SelectNewAvatar: React.FC<{
   user?: User;
   refetch: () => unknown;
-  setAvatar: (avaLink: string) => unknown;
+  setAvatar: (avaLink: string) => void;
 }> = ({ user, refetch, setAvatar }) => {
   const [getAvatar] = useGetAvatarMutation();
 
@@ -99,7 +98,7 @@ const SelectNewAvatar: React.FC<{
 
 export const Profile = () => {
   const { data: user, refetch } = useGetUserDetailQuery();
-  const [avatar, setAvatar] = useState<string>("");
+  const [setAvatar] = useState<string>("");
 
   return (
     <div className='v2-profile-page'>
