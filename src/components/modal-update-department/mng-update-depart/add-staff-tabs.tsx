@@ -87,7 +87,7 @@ const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
     return noDepartStaffs?.users.map((user): DataType => {
       return {
         avatar: {
-          bgColor: user.avatarColor,
+          bgColor: user.avatar_color,
           src: user.avatar,
         },
         key: user.user_id,

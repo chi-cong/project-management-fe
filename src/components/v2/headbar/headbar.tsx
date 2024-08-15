@@ -29,8 +29,8 @@ export const Headbar = () => {
               <CustomAvatar
                 size={45}
                 userName={user?.name}
-                avatarSrc={user?.name}
-                bgColor={user?.avatarColor}
+                avatarSrc={user?.avatar}
+                bgColor={user?.avatar_color}
               />
             }
             title={user?.name}
@@ -75,6 +75,7 @@ export const Headbar = () => {
               size={45}
               userName={user?.name}
               avatarSrc={user?.avatar}
+              bgColor={user?.avatar_color}
             />
           </div>
         </Popover>

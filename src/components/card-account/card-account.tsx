@@ -101,7 +101,7 @@ export const CardAccount: React.FC<CardAccount> = ({
               <CustomAvatar
                 size={100}
                 userName={account.name}
-                bgColor={account.avatarColor}
+                bgColor={account.avatar_color}
               />
             </Col>
           </Row>

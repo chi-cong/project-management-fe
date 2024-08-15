@@ -86,7 +86,7 @@ const AddManagerTabs = ({
         return {
           avatar: {
             src: user.avatar,
-            bgColor: user.avatarColor,
+            bgColor: user.avatar_color,
           },
           key: user.user_id,
           email: user.email,

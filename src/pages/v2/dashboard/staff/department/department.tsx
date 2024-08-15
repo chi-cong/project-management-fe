@@ -107,7 +107,7 @@ export const StaffDepartment = () => {
                           size={60}
                           userName={data.information.manager?.name}
                           avatarSrc={data.information.manager?.avatar}
-                          bgColor={data.information.manager?.avatarColor}
+                          bgColor={data.information.manager?.avatar_color}
                         />
                       }
                     />
@@ -204,7 +204,7 @@ export const StaffDepartment = () => {
                           size={60}
                           userName={user.username}
                           avatarSrc={user.avatar}
-                          bgColor={user.avatarColor}
+                          bgColor={user.avatar_color}
                         />
                       }
                     />

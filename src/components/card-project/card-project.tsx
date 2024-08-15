@@ -181,7 +181,7 @@ export const CardProject: React.FC<CardProject> = ({
                             avatarSrc={staff.avatar}
                             size={40}
                             userName={staff.name}
-                            bgColor={staff.avatarColor}
+                            bgColor={staff.avatar_color}
                           />
                         );
                       })}

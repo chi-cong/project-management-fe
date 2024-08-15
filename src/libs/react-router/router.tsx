@@ -118,6 +118,10 @@ export const router = createBrowserRouter([
                 path: "project/:id",
                 element: <ManagerProject />,
               },
+              {
+                path: "profile",
+                element: <Profile />,
+              },
             ],
           },
           {

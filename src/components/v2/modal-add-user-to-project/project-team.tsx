@@ -103,7 +103,7 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
         return {
           avatar: {
             src: staff.avatar,
-            bgColor: staff.avatarColor,
+            bgColor: staff.avatar_color,
           },
           name: staff.name!,
           email: staff.email!,

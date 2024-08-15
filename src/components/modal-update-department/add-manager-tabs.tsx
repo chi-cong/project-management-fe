@@ -77,7 +77,7 @@ const AddManagerTabs = ({ id }: { id?: string }) => {
     return data?.users.map((user): DataType => {
       return {
         avatar: {
-          bgColor: user.avatarColor,
+          bgColor: user.avatar_color,
           src: user.avatar,
         },
         key: user.user_id,

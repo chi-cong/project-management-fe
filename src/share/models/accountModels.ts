@@ -22,7 +22,7 @@ export interface User {
   createBy?: string;
   role?: RoleResponse | UserRole;
   department_id?: string;
-  avatarColor?: string;
+  avatar_color?: string;
 }
 
 export interface RoleResponse {
@@ -64,5 +64,5 @@ export interface CreateUserPartial {
   department_id?: string;
   phone?: string;
   birthday?: string | Dayjs;
-  genAvatarColor?: string;
+  genavatar_color?: string;
 }

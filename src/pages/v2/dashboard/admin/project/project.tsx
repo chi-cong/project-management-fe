@@ -192,7 +192,7 @@ export const AdminProject = () => {
                       size={32}
                       userName={staff.name}
                       avatarSrc={staff.avatar}
-                      bgColor={staff.avatarColor}
+                      bgColor={staff.avatar_color}
                     />
                   ))}
                 </Avatar.Group>

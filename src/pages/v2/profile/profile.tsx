@@ -24,7 +24,7 @@ const UserInfo: React.FC<{ user?: User }> = ({ user }) => {
           size={350}
           userName={user?.username}
           avatarSrc={user?.avatar}
-          bgColor={user?.avatarColor}
+          bgColor={user?.avatar_color}
           className='user-profile-avatar'
         />
         <div className='user-details'>

@@ -56,7 +56,7 @@ export const TaskDetail = ({
       departmentId: project?.department_id,
       itemsPerPage: "ALL",
     },
-    { skip: !project?.department_id }
+    { skip: project?.department_id ? false : true }
   );
 
   const [deleteTask] = useDeleteTaskMutation();
@@ -153,7 +153,7 @@ export const TaskDetail = ({
                     size={32}
                     userName={staff.name}
                     avatarSrc={staff.avatar}
-                    bgColor={staff.avatarColor}
+                    bgColor={staff.avatar_color}
                   />
                 }
                 title={staff.name}

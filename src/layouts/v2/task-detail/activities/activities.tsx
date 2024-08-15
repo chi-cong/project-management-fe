@@ -33,7 +33,7 @@ export const Activities = () => {
           size={40}
           avatarSrc={user?.avatar}
           userName={user?.name}
-          bgColor={user?.avatarColor}
+          bgColor={user?.avatar_color}
         />
         <div className='acti-des-container'>
           <Input.TextArea
@@ -75,7 +75,7 @@ export const Activities = () => {
                     userName={activity.user?.username}
                     size={40}
                     avatarSrc={activity.user?.avatar}
-                    bgColor={activity.user?.avatarColor}
+                    bgColor={activity.user?.avatar_color}
                   />
                 }
                 title={activity.user?.name}
