@@ -12,12 +12,13 @@ import {
 import React, { useEffect } from "react";
 import "./modal-update-project.css";
 import { Project } from "src/share/models";
-import dayjs, { Dayjs } from "dayjs";
 import {
   useUpdateProjectMutation,
   useGetDepartmentsQuery,
   useGetUsersQuery,
 } from "src/share/services";
+import { utcToLocal } from "src/share/utils";
+import dayjs from "dayjs";
 
 type ModalUpdateProjectProp = {
   isModalOpen: boolean;
@@ -42,14 +43,9 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   });
 
   const [form] = Form.useForm();
+  const startDate = Form.useWatch("startAt", { form, preserve: true });
 
   const onFinish: FormProps<Project>["onFinish"] = async (values) => {
-    if (values.endAt) {
-      values.endAt = (values.endAt as Dayjs).add(1, "day");
-    }
-    if (values.startAt) {
-      values.startAt = (values.startAt as Dayjs).add(1, "day");
-    }
     values.department_id = project.department_id;
 
     await updateProject({ values, projectId: project.project_id })
@@ -67,22 +63,8 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   useEffect(() => {
     form.setFieldsValue({
       ...project,
-      startAt: dayjs(
-        typeof project?.startAt === "string"
-          ? dayjs(project.startAt)
-              .utc()
-              .tz("Asia/Ho_Chi_Minh")
-              .format("ddd, MMM D, H:mm z")
-          : new Date()
-      ),
-      endAt: dayjs(
-        typeof project?.endAt === "string"
-          ? dayjs(project.endAt)
-              .utc()
-              .tz("Asia/Ho_Chi_Minh")
-              .format("ddd, MMM D, H:mm z")
-          : new Date()
-      ),
+      startAt: utcToLocal(project?.startAt),
+      endAt: utcToLocal(project?.endAt),
       department_id: project?.department_id,
       pms: project?.project_manager_id,
     });
@@ -167,7 +149,11 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
           <DatePicker size='large' style={{ width: "100%" }} />
         </Form.Item>
         <Form.Item<Project> name={"endAt"} label='End'>
-          <DatePicker size='large' style={{ width: "100%" }} />
+          <DatePicker
+            size='large'
+            style={{ width: "100%" }}
+            minDate={dayjs(startDate).add(1, "day")}
+          />
         </Form.Item>
 
         {isUpdate && (

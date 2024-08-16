@@ -28,6 +28,8 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
   isModalOpen,
   setIsModalOpen,
 }) => {
+  const [form] = Form.useForm();
+  const startDate = Form.useWatch("startAt", { form, preserve: true });
   const [createProject] = useCreateProjectMutation();
   const { data: departmentData } = useGetDepartmentsQuery({
     itemsPerPage: "ALL",
@@ -68,7 +70,12 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
       >
         Create Project
       </h2>
-      <Form className='project-form' layout='vertical' onFinish={onFinish}>
+      <Form
+        className='project-form'
+        layout='vertical'
+        onFinish={onFinish}
+        form={form}
+      >
         <Form.Item<Project>
           name={"name"}
           label='Project name'
@@ -122,11 +129,15 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
           <DatePicker
             size='large'
             style={{ width: "100%" }}
-            minDate={dayjs()}
+            minDate={dayjs().add(1, "day")}
           />
         </Form.Item>
         <Form.Item<Project> name={"endAt"} label='End'>
-          <DatePicker size='large' style={{ width: "100%" }} />
+          <DatePicker
+            size='large'
+            style={{ width: "100%" }}
+            minDate={dayjs(startDate).add(1, "day")}
+          />
         </Form.Item>
 
         <Form.Item className='create-user-form-btn'>

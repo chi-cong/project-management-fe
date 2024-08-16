@@ -10,7 +10,7 @@ import {
   Tooltip,
   message,
 } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { UserPlus, MenuDots, Down, Folder, Pen, Trash } from "src/assets/icons";
 import { DocumentSection, CustomAvatar } from "src/components/v2";
 import {
@@ -162,10 +162,6 @@ export const TaskDetail = ({
       </div>
     );
   };
-
-  useEffect(() => {
-    console.log(project, assignment);
-  });
 
   return (
     <Modal

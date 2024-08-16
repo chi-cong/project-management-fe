@@ -66,7 +66,7 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
           : new Date()
       ),
     });
-  }, []);
+  }, [form, user]);
 
   const handleUpdateClick = () => {
     setIsEdit(true);
