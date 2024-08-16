@@ -59,11 +59,14 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
       role: user?.role && (user?.role as RoleResponse).name,
       birthday: dayjs(
         user?.birthday
-          ? (user?.birthday as string).substring(0, 10)
+          ? dayjs(user.birthday)
+              .utc()
+              .tz("Asia/Ho_Chi_Minh")
+              .format("ddd, MMM D, H:mm z")
           : new Date()
       ),
     });
-  });
+  }, []);
 
   const handleUpdateClick = () => {
     setIsEdit(true);

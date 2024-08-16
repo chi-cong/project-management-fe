@@ -202,7 +202,7 @@ export const StaffProject = () => {
         project={projectData}
       />
       <Modal open={docSec} onCancel={() => setDocSec(false)} footer={[]}>
-        <ProjectDocument />
+        <ProjectDocument project={projectData} />
       </Modal>
       <Modal
         open={taskDocSec}
