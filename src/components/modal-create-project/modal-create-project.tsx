@@ -17,6 +17,7 @@ import {
   useGetDepartmentsQuery,
   useGetUsersQuery,
 } from "src/share/services";
+import dayjs from "dayjs";
 
 type ModalUpdateProjectProp = {
   isModalOpen: boolean;
@@ -118,7 +119,11 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
         </Form.Item>
 
         <Form.Item<Project> name={"startAt"} label='Start'>
-          <DatePicker size='large' style={{ width: "100%" }} />
+          <DatePicker
+            size='large'
+            style={{ width: "100%" }}
+            minDate={dayjs()}
+          />
         </Form.Item>
         <Form.Item<Project> name={"endAt"} label='End'>
           <DatePicker size='large' style={{ width: "100%" }} />

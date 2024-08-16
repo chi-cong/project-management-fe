@@ -1,5 +1,5 @@
 import "./department.css";
-import { Typography, Card, Modal, Button, Popover, List } from "antd";
+import { Typography, Card, Modal, Button, Popover, List, Empty } from "antd";
 import { ResponsivePie } from "@nivo/pie";
 import { CustomAvatar, MngRmDepartStaff } from "src/components/v2";
 import { DepartmentProjects } from "src/layouts/v2";
@@ -94,7 +94,7 @@ export const ManagerDepartment = () => {
     );
   };
 
-  return (
+  return departmentId !== "null" ? (
     <>
       <div className='department-page'>
         <section className='main'>
@@ -287,5 +287,7 @@ export const ManagerDepartment = () => {
         <MngRmDepartStaff departmentId={departmentId} />
       </Modal>
     </>
+  ) : (
+    <Empty />
   );
 };

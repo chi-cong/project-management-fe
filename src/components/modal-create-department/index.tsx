@@ -32,7 +32,7 @@ const ModalCreateDepartment: React.FC<ModalCreateDepartment> = ({
       name: departInfo?.name,
       description: departInfo?.description,
       list_user_ids: staffList,
-      manager_id: managerId,
+      ...(managerId && { manager_id: managerId }),
     })
       .unwrap()
       .then(() => {
