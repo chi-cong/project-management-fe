@@ -4,6 +4,7 @@ import {
   Card,
   Col,
   Divider,
+  message,
   Popconfirm,
   Popover,
   Row,
@@ -61,9 +62,12 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
 
   const deleteDepartmentHandler = async () => {
     try {
-      await deleteDepartment({ departmentId: department.manager_id! }).unwrap();
+      await deleteDepartment({
+        departmentId: department.department_id,
+      }).unwrap();
+      await message.success("Deleted department");
     } catch (error) {
-      console.error("Failed to delete department:", error);
+      message.error("Failed to department");
     }
   };
 
@@ -209,6 +213,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
           <ModalUpdateDepartment
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
+            department={department}
           />
         </div>
       </Card>

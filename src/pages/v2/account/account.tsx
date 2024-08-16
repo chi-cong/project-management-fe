@@ -92,9 +92,10 @@ export const Account = () => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
+                        textTransform: "capitalize",
                       }}
                     >
-                      Roles
+                      {queries.role.toLowerCase()}
                       <DownOutlined />
                     </Space>
                   </Button>

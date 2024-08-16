@@ -69,12 +69,18 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
       ...project,
       startAt: dayjs(
         typeof project?.startAt === "string"
-          ? project.startAt.substring(0, 10)
+          ? dayjs(project.startAt)
+              .utc()
+              .tz("Asia/Ho_Chi_Minh")
+              .format("ddd, MMM D, H:mm z")
           : new Date()
       ),
       endAt: dayjs(
         typeof project?.endAt === "string"
-          ? project.endAt.substring(0, 10)
+          ? dayjs(project.endAt)
+              .utc()
+              .tz("Asia/Ho_Chi_Minh")
+              .format("ddd, MMM D, H:mm z")
           : new Date()
       ),
       department_id: project?.department_id,

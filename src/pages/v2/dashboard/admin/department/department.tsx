@@ -7,6 +7,7 @@ import {
   Popconfirm,
   Popover,
   List,
+  message,
 } from "antd";
 import { ResponsivePie } from "@nivo/pie";
 import { ArrowLeftOutlined } from "@ant-design/icons";
@@ -99,9 +100,13 @@ export const AdminDepartment = () => {
         <Popconfirm
           title='Delete this department ?'
           onConfirm={() => {
-            deleteDepartment({ departmentId });
-            navigate("/v2/department");
+            deleteDepartment({ departmentId })
+              .unwrap()
+              .then(() => message.success("Deleted department"))
+              .catch(() => message.error("failed to delete department"));
+            navigate(-1);
           }}
+          
         >
           <Button className='department-option-btn' type='text'>
             <Trash />
