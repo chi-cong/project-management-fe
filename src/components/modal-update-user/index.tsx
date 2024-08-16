@@ -11,7 +11,7 @@ import {
   Select,
   Space,
 } from "antd";
-import { userRoleOptions } from "src/share/utils";
+import { userRoleOptions, utcToLocal } from "src/share/utils";
 import dayjs, { Dayjs } from "dayjs";
 import { RoleResponse, User, UserRole } from "src/share/models";
 import { useUpdateUserMutation } from "src/share/services";
@@ -71,9 +71,7 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
       name: user.name,
       phone: user.phone,
       role: user.role && (user.role as RoleResponse).name,
-      birthday: dayjs(
-        user.birthday ? (user.birthday as string).substring(0, 10) : new Date()
-      ),
+      birthday: user.birthday ? utcToLocal(user?.birthday!) : dayjs(),
     });
   }, []);
 

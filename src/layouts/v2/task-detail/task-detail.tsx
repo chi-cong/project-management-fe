@@ -10,7 +10,7 @@ import {
   Tooltip,
   message,
 } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UserPlus, MenuDots, Down, Folder, Pen, Trash } from "src/assets/icons";
 import { DocumentSection, CustomAvatar } from "src/components/v2";
 import {
@@ -51,13 +51,10 @@ export const TaskDetail = ({
     },
     { skip: !taskAssignment.assignment?.assignment_id }
   );
-  const { data: departmentStaffs } = useGetDepartmentStaffsQuery(
-    {
-      departmentId: project?.department_id,
-      itemsPerPage: "ALL",
-    },
-    { skip: project?.department_id ? false : true }
-  );
+  const { data: departmentStaffs } = useGetDepartmentStaffsQuery({
+    departmentId: project?.department_id,
+    itemsPerPage: "ALL",
+  });
 
   const [deleteTask] = useDeleteTaskMutation();
   const [deleteAssignment] = useDeleteAssignmentMutation();
@@ -165,6 +162,10 @@ export const TaskDetail = ({
       </div>
     );
   };
+
+  useEffect(() => {
+    console.log(project, assignment);
+  });
 
   return (
     <Modal
