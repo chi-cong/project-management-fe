@@ -20,7 +20,7 @@
           align-items: flex-start;
         }
         .title-des {
-          width: 80%;
+          width: fit-content;
           .title-row {
             display: flex;
             align-items: center;
@@ -35,7 +35,7 @@
         }
         .header-action {
           display: flex;
-
+          min-width: 40%;
           .title-row-btn {
             display: flex;
             align-items: center;

@@ -23,7 +23,7 @@ import {
 import { OUserRole, Project } from "src/share/models";
 import { CustomAvatar } from "src/components/v2";
 import { useRoleChecker } from "src/share/hooks";
-import { utcToLocal } from "src/share/utils";
+import { shortenLongText, utcToLocal } from "src/share/utils";
 import { Dayjs } from "dayjs";
 
 type CardProject = {
@@ -96,7 +96,7 @@ export const CardProject: React.FC<CardProject> = ({
             <Row className='project-header'>
               {/* title */}
               <Col span={12} className='project-header-info' onClick={onClick}>
-                <h3 className='project-name'>{name}</h3>
+                <h3 className='project-name'>{shortenLongText(30, name)}</h3>
               </Col>
               {/* action (delete, update) */}
               <Col span={12} className='project-header-action'>
@@ -144,7 +144,7 @@ export const CardProject: React.FC<CardProject> = ({
             <div className='project-body' onClick={onClick}>
               {/* info */}
               <div className='project-body-info'>
-                <span>{description}</span>
+                <span>{shortenLongText(40, description)}</span>
                 {/* progress */}
                 <div className='project-progress'>
                   <Progress

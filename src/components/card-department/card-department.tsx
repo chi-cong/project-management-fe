@@ -25,6 +25,7 @@ import { CustomAvatar } from "src/components/v2";
 import { UserOutlined, PlusOutlined } from "@ant-design/icons";
 import { ModalUpdateDepartment } from "src/components/";
 import { Department } from "src/share/models";
+import { shortenLongText } from "src/share/utils";
 type CardDepartmentProps = {
   department: Department;
   manager?: string;
@@ -79,7 +80,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
             {/* title */}
             <Col span={12} className='department-header-info'>
               <h2 className='department-name' onClick={onClick}>
-                {department.name}
+                {shortenLongText(20, department.name)}
               </h2>
             </Col>
             {/* action (delete, update) */}
@@ -110,7 +111,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
           </Row>
           <div className='department-body'>
             <div className='department-manager-info' onClick={onClick}>
-              <span>{department.name}</span>
+              <span>{shortenLongText(40, department?.description)}</span>
             </div>
             {/* info */}
             <Row className='department-body-info'>

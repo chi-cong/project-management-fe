@@ -49,8 +49,7 @@ export const Projects = () => {
               </div>
             </div>
             <Row className='action' gutter={[8, 8]}>
-              <Col xs={12} sm={12} md={6}></Col>
-              <Col xs={12} sm={12} md={6}>
+              <Col xs={12} sm={12} md={12}>
                 <Input.Search
                   placeholder='Search...'
                   style={{ width: "100%" }}

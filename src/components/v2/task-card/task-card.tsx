@@ -16,6 +16,7 @@ import { useUpdateAssignmentMutation } from "src/share/services";
 import { useDispatch } from "react-redux";
 import { selectTaskAssign } from "src/libs/redux/taskAssignSlice";
 import { useRoleChecker } from "src/share/hooks";
+import { shortenLongText } from "src/share/utils";
 
 interface TaskCardProp {
   task: Task;
@@ -85,7 +86,9 @@ export const TaskCard = ({
   return (
     <Card className='task-card'>
       <div className='task-card-title'>
-        <Typography.Title level={5}>{task.name}</Typography.Title>
+        <Typography.Title level={5}>
+          {shortenLongText(25, task.name)}
+        </Typography.Title>
         <div className='title-options'>
           {!checkRole(OUserRole.Staff) && (
             <Button
@@ -106,7 +109,9 @@ export const TaskCard = ({
           </Popover>
         </div>
       </div>
-      <Typography.Text>{task.description}</Typography.Text>
+      <Typography.Text>
+        {shortenLongText(120, task.description)}
+      </Typography.Text>
       <div className='task-card-footer'>
         {assignment.user && (
           <div className='avatar'>

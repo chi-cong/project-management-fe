@@ -14,7 +14,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRoleChecker } from "src/share/hooks";
 import { Dayjs } from "dayjs";
-import { utcToLocal } from "src/share/utils";
+import { shortenLongText, utcToLocal } from "src/share/utils";
 
 interface ProjectCardProp {
   project: Project;
@@ -89,7 +89,9 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
     <>
       <div className='project-card-v2'>
         <div className='project-card-head'>
-          <Typography.Title level={4}>{project.name}</Typography.Title>
+          <Typography.Title level={4}>
+            {shortenLongText(25, project?.name)}
+          </Typography.Title>
           {!checkRole(OUserRole.Staff) && (
             <Popover content={ProjectCardOption}>
               <Button
@@ -107,7 +109,9 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
           onClick={goToDetail}
           style={{ cursor: !checkRole(OUserRole.Staff) ? "pointer" : "none" }}
         >
-          <Typography.Text>{project.description}</Typography.Text>
+          <Typography.Text>
+            {shortenLongText(40, project.description)}
+          </Typography.Text>
           <div className='progress-sec'>
             <Progress
               percent={progress}

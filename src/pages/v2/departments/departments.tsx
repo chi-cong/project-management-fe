@@ -76,7 +76,7 @@ export const Departments = () => {
               </div>
             </div>
             <Row className='header-action' gutter={[8, 8]}>
-              <Col xs={12} sm={12} md={8}>
+              <Col xs={12} sm={12} md={12}>
                 <Input.Search
                   placeholder='Search...'
                   style={{ width: "100%" }}
@@ -86,7 +86,7 @@ export const Departments = () => {
                   }
                 />
               </Col>
-              <Col xs={12} sm={12} md={8}>
+              <Col xs={12} sm={12} md={6}>
                 <Button
                   type='default'
                   className='title-row-btn'
@@ -97,7 +97,7 @@ export const Departments = () => {
                 </Button>
               </Col>
 
-              <Col xs={24} sm={24} md={8}>
+              <Col xs={24} sm={24} md={6}>
                 <Button
                   type='primary'
                   className='title-row-btn'
