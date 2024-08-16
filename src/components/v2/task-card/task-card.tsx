@@ -113,7 +113,7 @@ export const TaskCard = ({
         {shortenLongText(120, task.description)}
       </Typography.Text>
       <div className='task-card-footer'>
-        {assignment.user && (
+        {assignment.user ? (
           <div className='avatar'>
             <CustomAvatar
               size={32}
@@ -124,6 +124,8 @@ export const TaskCard = ({
             />
             <Typography.Text>{assignment.user?.name}</Typography.Text>
           </div>
+        ) : (
+          <Typography.Text>Not Assigned</Typography.Text>
         )}
         <Button
           className='task-card-footer-btn'
