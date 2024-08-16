@@ -1,22 +1,6 @@
 import "./projects.css";
-import {
-  Button,
-  Col,
-  Dropdown,
-  Input,
-  List,
-  MenuProps,
-  message,
-  PaginationProps,
-  Row,
-  Space,
-} from "antd";
-import {
-  DownOutlined,
-  SearchOutlined,
-  DeleteOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { Button, Col, Input, List, PaginationProps, Row } from "antd";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { ManagerCreateProject } from "src/components/";
 import { CardProject } from "src/components/card-project";
@@ -34,30 +18,13 @@ export const ManagerProjects = () => {
   const { data: user } = useGetUserDetailQuery();
 
   //components
-  const items: MenuProps["items"] = [
-    {
-      label: "On Progress",
-      key: "on_progress",
-    },
-    {
-      label: "Done",
-      key: "done",
-    },
-    {
-      label: "Expired",
-      key: "expired",
-    },
-  ];
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [queries, setQueries] = useState<{ page: number }>({ page: 1 });
+  const [queries, setQueries] = useState<{ page: number; search: string }>({
+    page: 1,
+    search: "",
+  });
   const navigate = useNavigate();
-  const handleMenuClick: MenuProps["onClick"] = () => {
-    message.info("Click on menu item.");
-  };
-  const menuProps = {
-    items,
-    onClick: handleMenuClick,
-  };
 
   //fetching data
   const { data: allProject } = useGetAllProjectDepartmentQuery({
@@ -82,27 +49,14 @@ export const ManagerProjects = () => {
               </div>
             </div>
             <Row className='action' gutter={[8, 8]}>
+              <Col xs={12} sm={12} md={6}></Col>
               <Col xs={12} sm={12} md={6}>
-                <Dropdown menu={menuProps}>
-                  <Button style={{ width: "100%" }}>
-                    <Space
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      Progress
-                      <DownOutlined />
-                    </Space>
-                  </Button>
-                </Dropdown>
-              </Col>
-              <Col xs={12} sm={12} md={6}>
-                <Input
+                <Input.Search
                   placeholder='Search...'
-                  prefix={<SearchOutlined />}
                   style={{ width: "100%" }}
+                  onSearch={(value) =>
+                    setQueries({ ...queries, search: value })
+                  }
                 />
               </Col>
               <Col xs={12} sm={12} md={6}>
