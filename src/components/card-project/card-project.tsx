@@ -23,6 +23,8 @@ import {
 import { OUserRole, Project } from "src/share/models";
 import { CustomAvatar } from "src/components/v2";
 import { useRoleChecker } from "src/share/hooks";
+import { utcToLocal } from "src/share/utils";
+import { Dayjs } from "dayjs";
 
 type CardProject = {
   name?: string;
@@ -155,7 +157,10 @@ export const CardProject: React.FC<CardProject> = ({
             </div>
             <div className='project-footer'>
               <div className='project-footer-info'>
-                <span>{(project?.endAt as string).substring(0, 10)}</span>
+                <span>
+                  {project?.endAt &&
+                    (utcToLocal(project.endAt) as Dayjs).fromNow()}
+                </span>
               </div>
               <div className='project-footer-action'>
                 <div

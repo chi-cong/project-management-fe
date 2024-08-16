@@ -210,6 +210,37 @@ const accountServices = hrManagementApi.injectEndpoints({
       providesTags: ["User", "assignment"],
       transformResponse: (response: Response<GetUserResp>) => response.data,
     }),
+    getStaffsNotInPrj: build.query<
+      GetUserResp,
+      {
+        projectId?: string;
+        departmentId?: string;
+        page?: number;
+        itemsPerPage?: number | "ALL";
+        role?: UserRole;
+      }
+    >({
+      query({ departmentId, page, itemsPerPage, projectId, role }) {
+        return {
+          url: `users/get-list-user-do-not-in-project`,
+          method: "POST",
+          headers: {
+            authorization: accessToken(),
+          },
+          body: {
+            project_id: projectId,
+            department_id: departmentId,
+          },
+          params: {
+            page: page || 1,
+            items_per_page: itemsPerPage,
+            ...(role && { role: role }),
+          },
+        };
+      },
+      providesTags: ["User", "assignment"],
+      transformResponse: (response: Response<GetUserResp>) => response.data,
+    }),
     getUserDepartmentStaffs: build.query<
       GetUserResp,
       {
@@ -262,4 +293,5 @@ export const {
   useVerifyOtpMutation,
   useGetUserDepartmentStaffsQuery,
   useRefreshTokenQuery,
+  useGetStaffsNotInPrjQuery,
 } = accountServices;

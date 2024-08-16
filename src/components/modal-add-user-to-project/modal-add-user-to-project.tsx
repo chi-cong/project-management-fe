@@ -3,12 +3,11 @@ import React, { useState } from "react";
 import "./modal-add-user-to-project.css";
 import {
   useCreateAssigmentMutation,
-  useGetDepartmentStaffsQuery,
-  useGetUsersQuery,
+  useGetStaffsNotInPrjQuery,
 } from "src/share/services";
 import { SearchOutlined } from "@ant-design/icons";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
-import { OUserRole, Project, RoleResponse } from "src/share/models";
+import { Project, RoleResponse } from "src/share/models";
 interface ModalAddUserToProjectProps {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,17 +32,14 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
 }) => {
   const [staffPage, setStaffPage] = useState<number>(1);
 
-  const { data: staffs } = useGetDepartmentStaffsQuery(
+  const { data: staffs } = useGetStaffsNotInPrjQuery(
     {
       itemsPerPage: 5,
       departmentId: project?.department_id,
+      projectId: project?.project_id,
     },
     { skip: project?.department_id ? false : true }
   );
-  const { data: allStaffs } = useGetUsersQuery({
-    items_per_page: 5,
-    role: OUserRole.Staff,
-  });
 
   const [createAssignment] = useCreateAssigmentMutation();
 
@@ -106,21 +102,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
   };
 
   const mapTableData = () => {
-    if (staffs?.users.length) {
-      return staffs?.users.map((staff): DataType => {
-        return {
-          avatar: {
-            src: staff.avatar,
-            bgColor: staff.avatar_color,
-          },
-          name: staff.name!,
-          email: staff.email!,
-          role: (staff.role as RoleResponse).name!,
-          key: staff.user_id!,
-        };
-      });
-    }
-    return allStaffs?.users.map((staff): DataType => {
+    return staffs?.users.map((staff): DataType => {
       return {
         avatar: {
           src: staff.avatar,

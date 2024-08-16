@@ -13,7 +13,8 @@ import { ModalUpdateProject } from "src/components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRoleChecker } from "src/share/hooks";
-import dayjs from "dayjs";
+import { Dayjs } from "dayjs";
+import { utcToLocal } from "src/share/utils";
 
 interface ProjectCardProp {
   project: Project;
@@ -126,7 +127,7 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
           style={{ cursor: !checkRole(OUserRole.Staff) ? "pointer" : "none" }}
         >
           <Typography.Text>
-            {dayjs((project?.endAt as string).substring(0, 10)).fromNow()}
+            {project?.endAt && (utcToLocal(project?.endAt) as Dayjs).fromNow()}
           </Typography.Text>
         </div>
       </div>
