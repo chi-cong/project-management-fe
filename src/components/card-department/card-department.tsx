@@ -38,7 +38,6 @@ type CardDepartmentProps = {
 export const CardDepartment: React.FC<CardDepartmentProps> = ({
   department,
   onClick,
-  role,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalAddUserOpen, setIsModalAddUserOpen] = useState(false);
@@ -85,28 +84,26 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
             </Col>
             {/* action (delete, update) */}
             <Col span={12} className='department-header-action'>
-              {role !== "MANAGER" && (
-                <Space size={[8, 24]} wrap={true}>
-                  <div
-                    onClick={showModal}
-                    className='department-header-action-button'
+              <Space size={[8, 24]} wrap={true}>
+                <div
+                  onClick={showModal}
+                  className='department-header-action-button'
+                >
+                  <EditOutlined />
+                </div>
+                <div
+                  className='department-header-action-button icon-delete-Project'
+                  onClick={handleDeleteClick}
+                >
+                  <Popconfirm
+                    title='Are you sure to delete this department?'
+                    icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+                    onConfirm={deleteDepartmentHandler}
                   >
-                    <EditOutlined />
-                  </div>
-                  <div
-                    className='department-header-action-button icon-delete-Project'
-                    onClick={handleDeleteClick}
-                  >
-                    <Popconfirm
-                      title='Are you sure to delete this department?'
-                      icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-                      onConfirm={deleteDepartmentHandler}
-                    >
-                      <DeleteOutlined />
-                    </Popconfirm>
-                  </div>
-                </Space>
-              )}
+                    <DeleteOutlined />
+                  </Popconfirm>
+                </div>
+              </Space>
             </Col>
           </Row>
           <div className='department-body'>
@@ -116,7 +113,11 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
             {/* info */}
             <Row className='department-body-info'>
               <Col sm={24} xs={24} xxl={18}>
-                <Card className='department-body-manager-card'>
+                <Card
+                  className='department-body-manager-card'
+                  onClick={onClick}
+                  style={{ marginBottom: "var(--gap-s)" }}
+                >
                   <div className='department-body-manager-info-wrapper'>
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <CustomAvatar
