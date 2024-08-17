@@ -61,7 +61,6 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
   };
 
   const deleteDepartmentHandler = async () => {
-    handleDeleteClick(_);
     try {
       await deleteDepartment({
         departmentId: department.department_id,
@@ -73,17 +72,12 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
   };
 
   return (
-    <div
-      className='card-department-container'
-      onClick={(e: React.MouseEvent<HTMLElement>) => {
-        onClick!();
-      }}
-    >
+    <div className='card-department-container'>
       <Card hoverable bordered={false}>
         <div className='department-wrapper'>
           <Row className='department-header'>
             {/* title */}
-            <Col span={12} className='department-header-info'>
+            <Col span={12} className='department-header-info' onClick={onClick}>
               <h2 className='department-name'>
                 {shortenLongText(20, department.name)}
               </h2>
@@ -104,7 +98,9 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                   <Popconfirm
                     title='Are you sure to delete this department?'
                     icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-                    onConfirm={deleteDepartmentHandler}
+                    onConfirm={() => {
+                      deleteDepartmentHandler;
+                    }}
                   >
                     <DeleteOutlined />
                   </Popconfirm>
@@ -112,7 +108,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
               </Space>
             </Col>
           </Row>
-          <div className='department-body'>
+          <div className='department-body' onClick={onClick}>
             <div className='department-manager-info'>
               <span>{shortenLongText(40, department?.description)}</span>
             </div>

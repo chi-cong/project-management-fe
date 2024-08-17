@@ -54,7 +54,7 @@ export const StaffSidebar = () => {
   return (
     <>
       <Layout.Sider className='sidebar'>
-        <CustomStaffMenu items={items} defaultSelectedItem={0} />
+        <CustomStaffMenu items={items} />
       </Layout.Sider>
       <div className='sidebar-placeholder' style={{ width: 0 }} />
     </>
