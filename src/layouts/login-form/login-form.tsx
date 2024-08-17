@@ -14,6 +14,7 @@ export type LoginFieldType = {
 };
 export type LoginReqBody = {
   email?: string;
+  username?: string;
   password?: string;
 };
 
@@ -23,8 +24,14 @@ export const LoginForm = () => {
   const [loginService, loginStatus] = useLoginMutation();
 
   const onFinish: FormProps<LoginFieldType>["onFinish"] = async (values) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    let isEmail = false;
+    if (values.username) {
+      isEmail = emailRegex.test(values?.username);
+    }
+
     await loginService({
-      email: values.username,
+      ...(isEmail ? { email: values.username } : { username: values.username }),
       password: values.password,
     } as LoginReqBody)
       .unwrap()
@@ -43,30 +50,33 @@ export const LoginForm = () => {
   return (
     <>
       {contextHolder}
-      <Spin spinning={loginStatus.isLoading} size="large" tip="">
+      <Spin spinning={loginStatus.isLoading} size='large' tip=''>
         <Form
-          name="login"
+          name='login'
           onFinish={onFinish}
-          className="login-form"
-          autoComplete="off"
+          className='login-form'
+          autoComplete='off'
         >
           <Form.Item<LoginFieldType>
-            name="username"
-            rules={[{ required: true, message: "Username is required" }]}
+            name='username'
+            rules={[
+              { required: true, message: "Username or email is required" },
+              { pattern: /^\S+$/, message: "Contains no whitespace" },
+            ]}
           >
-            <Input placeholder="Email" />
+            <Input placeholder='Username or Email' />
           </Form.Item>
           <Form.Item<LoginFieldType>
-            name="password"
+            name='password'
             rules={[{ required: true, message: "Password is required" }]}
           >
-            <Input.Password placeholder="Password" />
+            <Input.Password placeholder='Password' />
           </Form.Item>
           <Form.Item>
             <Link to={"/forgot-password"}>Forgot Password ?</Link>
           </Form.Item>
           <Form.Item>
-            <Button className="login-button" type="primary" htmlType="submit">
+            <Button className='login-button' type='primary' htmlType='submit'>
               Login
             </Button>
           </Form.Item>
