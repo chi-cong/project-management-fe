@@ -72,7 +72,9 @@ const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
   ];
   const [selectedRows, setSelectedRows] = useState<DataType[]>([]);
   const [addDepartmentStaff] = useAddStaffDepartmentMutation();
-  const { data: noDepartStaffs } = useManagerGetStaffNoDepartmentQuery({});
+  const { data: noDepartStaffs } = useManagerGetStaffNoDepartmentQuery({
+    haveDepartment: false,
+  });
   const rowSelection = {
     onChange: (_selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
       setSelectedRows(selectedRows);
