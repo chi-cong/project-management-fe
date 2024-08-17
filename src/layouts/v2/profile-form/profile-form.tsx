@@ -82,61 +82,61 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
   return (
     <>
       <Form
-        name='user-info'
+        name="user-info"
         onFinish={onFinish}
-        layout='vertical'
+        layout="vertical"
         form={form}
         disabled={!isEdit}
       >
         <div>
-          <Form.Item<UserInfor> name='name' label='Name'>
+          <Form.Item<UserInfor> name="name" label="Name">
             <Input
-              placeholder='Name...'
-              size='large'
+              placeholder="Name..."
+              size="large"
               className={isEdit ? "input-enable" : "input-disable"}
             />
           </Form.Item>
         </div>
         <div>
           <Form.Item<UserInfor>
-            name='username'
+            name="username"
             rules={[{ required: true, message: "Username is required" }]}
-            label='Username'
+            label="Username"
           >
             <Input
-              placeholder='Username...'
-              size='large'
+              placeholder="Username..."
+              size="large"
               className={isEdit ? "input-enable" : "input-disable"}
             />
           </Form.Item>
         </div>
         <div>
-          <Form.Item<UserInfor> name='phone' label='Phone'>
+          <Form.Item<UserInfor> name="phone" label="Phone">
             <Input
-              placeholder='Phone...'
-              size='large'
+              placeholder="Phone..."
+              size="large"
               className={isEdit ? "input-enable" : "input-disable"}
             />
           </Form.Item>
         </div>
         <div>
           <Form.Item<UserInfor>
-            name='email'
-            label='Email'
+            name="email"
+            label="Email"
             rules={[{ required: true, message: "Email is required" }]}
           >
             <Input
-              placeholder='Email...'
-              size='large'
+              placeholder="Email..."
+              size="large"
               className={isEdit ? "input-enable" : "input-disable"}
             />
           </Form.Item>
         </div>
         <div>
-          <Form.Item<UserInfor> name='birthday' label='Birthday'>
+          <Form.Item<UserInfor> name="birthday" label="Birthday">
             <DatePicker
-              placeholder='Birthday...'
-              size='large'
+              placeholder="Birthday..."
+              size="large"
               style={{ width: "100%" }}
               className={isEdit ? "input-enable" : "input-disable"}
             />
@@ -144,22 +144,22 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
         </div>
         {isEdit && (
           <Form.Item>
-            <Space className='profile-form-btn'>
+            <Space className="profile-form-btn">
               <Button
-                type='primary'
-                htmlType='submit'
-                size='large'
+                type="primary"
+                htmlType="submit"
+                size="large"
                 onClick={handleSaveClick}
-                className='update-infor-btn'
+                className="update-infor-btn"
                 disabled={false}
               >
                 Save
               </Button>
               <Button
-                type='primary'
-                size='large'
+                type="primary"
+                size="large"
                 onClick={handleCancelClick}
-                className='cancel-infor-btn'
+                className="cancel-infor-btn"
               >
                 Cancel
               </Button>
@@ -167,13 +167,13 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
           </Form.Item>
         )}
       </Form>
-      <Space className='profile-form-btn'>
+      <Space className="profile-form-btn">
         {!isEdit && (
           <Button
-            type='primary'
-            size='large'
+            type="primary"
+            size="large"
             onClick={handleUpdateClick}
-            className='update-infor-btn'
+            className="update-infor-btn"
           >
             Update
           </Button>

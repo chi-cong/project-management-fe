@@ -110,30 +110,32 @@ export const DocumentSection = () => {
                     </a>
                   </Typography.Link>
                 </div>
-                <Popconfirm
-                  title="Delete this file ?"
-                  onConfirm={() => {
-                    // fileLinks and filenames index are the same
-                    deleteFile({
-                      filename: taskAssignment.task?.document[index],
-                      taskId: taskAssignment.task?.task_id,
-                    })
-                      .unwrap()
-                      .then(() => {
-                        message.success(
-                          `${taskAssignment.task?.document[index]} is deleted`
-                        );
-                        getLinks();
+                {!checkRole(OUserRole.Staff) && (
+                  <Popconfirm
+                    title="Delete this file ?"
+                    onConfirm={() => {
+                      // fileLinks and filenames index are the same
+                      deleteFile({
+                        filename: taskAssignment.task?.document[index],
+                        taskId: taskAssignment.task?.task_id,
                       })
-                      .catch(() => {
-                        message.error("Failed to delete file");
-                      });
-                  }}
-                >
-                  <Button shape="round" danger size="small">
-                    Delete
-                  </Button>
-                </Popconfirm>
+                        .unwrap()
+                        .then(() => {
+                          message.success(
+                            `${taskAssignment.task?.document[index]} is deleted`
+                          );
+                          getLinks();
+                        })
+                        .catch(() => {
+                          message.error("Failed to delete file");
+                        });
+                    }}
+                  >
+                    <Button shape="round" danger size="small">
+                      Delete
+                    </Button>
+                  </Popconfirm>
+                )}
               </div>
             );
           })}

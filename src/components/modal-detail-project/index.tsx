@@ -10,7 +10,7 @@ import {
   Space,
 } from "antd";
 import React, { useEffect } from "react";
-import "./modal-update-project.css";
+import "./modal-detail-project.css";
 import { Project } from "src/share/models";
 import dayjs, { Dayjs } from "dayjs";
 import {
@@ -19,20 +19,17 @@ import {
   useGetUsersQuery,
 } from "src/share/services";
 
-type ModalUpdateProjectProp = {
+type ModalDetailProjectProp = {
   isModalOpen: boolean;
   setIsModalOpen: (show: boolean) => void;
   project: Project;
-  isUpdate: boolean;
 };
 
-export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
+export const ModalDetailProject: React.FC<ModalDetailProjectProp> = ({
   isModalOpen,
   setIsModalOpen,
   project,
-  isUpdate,
 }) => {
-  const [updateProject] = useUpdateProjectMutation();
   const { data: departmentData } = useGetDepartmentsQuery({
     itemsPerPage: "ALL",
   });
@@ -42,24 +39,6 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   });
 
   const [form] = Form.useForm();
-
-  const onFinish: FormProps<Project>["onFinish"] = async (values) => {
-    if (values.endAt) {
-      values.endAt = (values.endAt as Dayjs).add(1, "day");
-    }
-    if (values.startAt) {
-      values.startAt = (values.startAt as Dayjs).add(1, "day");
-    }
-    values.department_id = project.department_id;
-
-    await updateProject({ values, projectId: project.project_id })
-      .unwrap()
-      .then(() => {
-        message.success("Success update project");
-      })
-      .catch(() => message.error("There was an error"));
-  };
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -69,18 +48,12 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
       ...project,
       startAt: dayjs(
         typeof project?.startAt === "string"
-          ? dayjs(project.startAt)
-              .utc()
-              .tz("Asia/Ho_Chi_Minh")
-              .format("ddd, MMM D, H:mm z")
+          ? project.startAt.substring(0, 10)
           : new Date()
       ),
       endAt: dayjs(
         typeof project?.endAt === "string"
-          ? dayjs(project.endAt)
-              .utc()
-              .tz("Asia/Ho_Chi_Minh")
-              .format("ddd, MMM D, H:mm z")
+          ? project.endAt.substring(0, 10)
           : new Date()
       ),
       department_id: project?.department_id,
@@ -90,7 +63,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
 
   return (
     <Modal
-      className="update-project-modal"
+      className="detail-project-modal"
       open={isModalOpen}
       centered
       footer={[]}
@@ -104,32 +77,25 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
           textAlign: "center",
         }}
       >
-        Update Project
+        Detail Project
       </h2>
-      <Form
-        className="project-form"
-        layout="vertical"
-        form={form}
-        onFinish={onFinish}
-        // if its detail modal, disable form
-        disabled={!isUpdate}
-      >
+      <Form className="project-form" layout="vertical" form={form}>
         <Form.Item<Project>
           name={"name"}
           label="Project name"
           rules={[{ required: true, message: "Project name is required" }]}
         >
-          <Input size="large" />
+          <Input size="large" disabled />
         </Form.Item>
         <Form.Item<Project>
           name={"projectCode"}
           label="Project Code"
           rules={[{ required: true, message: "Project code is required" }]}
         >
-          <Input size="large" />
+          <Input size="large" disabled />
         </Form.Item>
         <Form.Item<Project> name={"investor"} label="Investor">
-          <Input size="large" />
+          <Input size="large" disabled />
         </Form.Item>
         <Form.Item<Project>
           name={"description"}
@@ -138,7 +104,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
             { required: true, message: "Project description is required" },
           ]}
         >
-          <Input.TextArea size="large" />
+          <Input.TextArea size="large" disabled />
         </Form.Item>
         <Form.Item<Project> name={"department_id"} label="Department">
           <Select
@@ -149,6 +115,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
               };
             })}
             size="large"
+            disabled
           />
         </Form.Item>
         <Form.Item<Project> name={"project_manager_id"} label="Project Manager">
@@ -160,33 +127,15 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
               };
             })}
             size="large"
+            disabled
           />
         </Form.Item>
-
         <Form.Item<Project> name={"startAt"} label="Start">
-          <DatePicker size="large" style={{ width: "100%" }} />
+          <DatePicker size="large" style={{ width: "100%" }} disabled />
         </Form.Item>
         <Form.Item<Project> name={"endAt"} label="End">
-          <DatePicker size="large" style={{ width: "100%" }} />
+          <DatePicker size="large" style={{ width: "100%" }} disabled />
         </Form.Item>
-
-        {isUpdate && (
-          <Form.Item className="create-user-form-btn">
-            <Space>
-              <Button type="primary" htmlType="submit" size="large">
-                Update
-              </Button>
-              <Button
-                type="primary"
-                ghost
-                size="large"
-                onClick={() => setIsModalOpen(false)}
-              >
-                Cancel
-              </Button>
-            </Space>
-          </Form.Item>
-        )}
       </Form>
     </Modal>
   );

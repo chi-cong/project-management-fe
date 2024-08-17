@@ -1,27 +1,19 @@
 import "./projects.css";
 import { Button, Col, Input, List, PaginationProps, Row } from "antd";
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { ModalCreateProject } from "src/components/";
 import { CardProject } from "src/components/card-project";
-import { useNavigate } from "react-router-dom";
 import { useGetAllProjectQuery } from "src/share/services";
-import { selectProject } from "src/libs/redux/selectProjectSlice";
-import { useDispatch } from "react-redux";
 import { useRoleChecker } from "src/share/hooks";
 import { OUserRole } from "src/share/models";
+import { CardProjectTrash } from "src/components/card-project-trash";
 
-export const Projects = () => {
-  const dispatch = useDispatch();
+export const ProjectTrash = () => {
   //components
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [queries, setQueries] = useState<{ page: number; search: string }>({
     page: 1,
     search: "",
   });
-  const navigate = useNavigate();
   const checkRole = useRoleChecker();
-
   //fetching data
   const { data: allProject } = useGetAllProjectQuery(
     {
@@ -30,7 +22,6 @@ export const Projects = () => {
     },
     { skip: !checkRole(OUserRole.Admin) }
   );
-
   //pagination
   const onChangePage: PaginationProps["onChange"] = (page) => {
     setQueries({ ...queries, page });
@@ -43,12 +34,11 @@ export const Projects = () => {
           <section className="first-sec">
             <div className="title-des">
               <div className="title-row">
-                <h2>Project</h2>
+                <h2>Project Trash</h2>
               </div>
             </div>
             <Row className="action" gutter={[8, 8]}>
-              <Col xs={12} sm={12} md={6}></Col>
-              <Col xs={12} sm={12} md={6}>
+              <Col xs={12} sm={12} md={24}>
                 <Input.Search
                   placeholder="Search..."
                   style={{ width: "100%" }}
@@ -57,30 +47,6 @@ export const Projects = () => {
                     setQueries({ ...queries, search: value })
                   }
                 />
-              </Col>
-              <Col xs={12} sm={12} md={6}>
-                <Button
-                  type="default"
-                  className="title-row-btn"
-                  icon={<DeleteOutlined />}
-                  style={{ width: "100%" }}
-                  onClick={() => {
-                    navigate(`/v2/dashboard/admin/project-trash/`);
-                  }}
-                >
-                  Trash
-                </Button>
-              </Col>
-              <Col xs={12} sm={12} md={6}>
-                <Button
-                  type="primary"
-                  className="title-row-btn"
-                  icon={<PlusOutlined />}
-                  onClick={() => setIsModalOpen(true)}
-                  style={{ width: "100%" }}
-                >
-                  Create
-                </Button>
               </Col>
             </Row>
           </section>
@@ -107,15 +73,9 @@ export const Projects = () => {
             dataSource={allProject?.data}
             renderItem={(project) => (
               <List.Item>
-                <CardProject
+                <CardProjectTrash
                   name={project?.name}
                   description={project?.description}
-                  onClick={() => {
-                    dispatch(selectProject(project!.project_id!));
-                    navigate(
-                      `/v2/dashboard/admin/project/${project!.project_id!}`
-                    );
-                  }}
                   project={project}
                 />
               </List.Item>
@@ -123,10 +83,6 @@ export const Projects = () => {
           />
         </main>
       </section>
-      <ModalCreateProject
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      ></ModalCreateProject>
     </div>
   );
 };

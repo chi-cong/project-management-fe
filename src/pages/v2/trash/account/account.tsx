@@ -17,11 +17,11 @@ import { useGetUsersQuery } from "src/share/services";
 import ModalCreateUser from "src/components/modal-create-user";
 import { UserRole, OUserRole } from "src/share/models";
 import { useRoleChecker } from "src/share/hooks";
-import { useNavigate } from "react-router-dom";
+import { CardAccountTrash } from "src/components/card-account-trash";
 
-export const Account = () => {
+export const AccountTrash = () => {
   const checkRole = useRoleChecker();
-  const navigate = useNavigate();
+
   const [queries, setQueries] = useState<{
     role: UserRole;
     page: number | undefined;
@@ -81,7 +81,7 @@ export const Account = () => {
           <section className="first-sec">
             <div className="title-des">
               <div className="title-row">
-                <h2>Account</h2>
+                <h2>Account Trash</h2>
               </div>
             </div>
             <Row className="action" gutter={[8, 8]}>
@@ -102,7 +102,7 @@ export const Account = () => {
                   </Button>
                 </Dropdown>
               </Col>
-              <Col xs={12} sm={12} md={8}>
+              <Col xs={12} sm={12} md={18}>
                 <Input.Search
                   placeholder="Search..."
                   style={{ width: "100%" }}
@@ -111,30 +111,6 @@ export const Account = () => {
                     setQueries({ ...queries, search: value })
                   }
                 />
-              </Col>
-              <Col xs={12} sm={12} md={5}>
-                <Button
-                  type="default"
-                  className="title-row-btn"
-                  icon={<DeleteOutlined />}
-                  style={{ width: "100%" }}
-                  onClick={() => {
-                    navigate(`/v2/dashboard/admin/account-trash/`);
-                  }}
-                >
-                  Trash
-                </Button>
-              </Col>
-              <Col xs={12} sm={12} md={5}>
-                <Button
-                  type="primary"
-                  className="title-row-btn"
-                  icon={<PlusOutlined />}
-                  onClick={() => setIsModalOpen(true)}
-                  style={{ width: "100%" }}
-                >
-                  Create
-                </Button>
               </Col>
             </Row>
           </section>
@@ -160,7 +136,7 @@ export const Account = () => {
             dataSource={data?.users}
             renderItem={(user) => (
               <List.Item>
-                <CardAccount userId={user.user_id} account={user} />
+                <CardAccountTrash userId={user.user_id} account={user} />
               </List.Item>
             )}
           />
