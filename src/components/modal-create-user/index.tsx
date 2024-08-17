@@ -93,10 +93,29 @@ const ModalCreateUser: React.FC<ModalCreateUser> = ({
         <div>
           <Form.Item<ICreateUser>
             name='username'
-            rules={[{ required: true, message: "Username is required" }]}
+            rules={[
+              { required: true, message: "Username is required" },
+              { pattern: /^\S+$/, message: "No whitespace's allowed" },
+            ]}
             label='Username'
           >
             <Input placeholder='Username...' size='large' />
+          </Form.Item>
+        </div>
+        <div>
+          <Form.Item<ICreateUser>
+            name='email'
+            label='Email'
+            rules={[
+              { required: true, message: "Email is required" },
+              { pattern: /^\S+$/, message: "No whitespace's allowed" },
+              {
+                pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Invalid email form",
+              },
+            ]}
+          >
+            <Input placeholder='Email...' size='large' />
           </Form.Item>
         </div>
         <div>
@@ -106,15 +125,6 @@ const ModalCreateUser: React.FC<ModalCreateUser> = ({
             rules={[{ required: true, message: "Phone is required" }]}
           >
             <Input placeholder='Phone...' size='large' />
-          </Form.Item>
-        </div>
-        <div>
-          <Form.Item<ICreateUser>
-            name='email'
-            label='Email'
-            rules={[{ required: true, message: "Email is required" }]}
-          >
-            <Input placeholder='Email...' size='large' />
           </Form.Item>
         </div>
         <div>

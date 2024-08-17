@@ -27,7 +27,7 @@
         }
         .action {
           display: flex;
-          min-width: 70%;
+          min-width: 60%;
           .title-row-btn {
             display: flex;
             align-items: center;

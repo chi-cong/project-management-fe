@@ -71,9 +71,9 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
       name: user.name,
       phone: user.phone,
       role: user.role && (user.role as RoleResponse).name,
-      birthday: user.birthday ? utcToLocal(user?.birthday!) : dayjs(),
+      birthday: user.birthday ? utcToLocal(user?.birthday) : dayjs(),
     });
-  }, []);
+  }, [user, form]);
 
   return (
     <Modal
@@ -95,31 +95,45 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
       </h2>
       <Form name='user-info' onFinish={onFinish} layout='vertical' form={form}>
         <div>
-          <Form.Item<IUpdateUser> name='name' label='Name'>
+          <Form.Item<IUpdateUser>
+            name='name'
+            label='Name'
+            rules={[{ required: true, message: "Name is required" }]}
+          >
             <Input placeholder='Name...' size='large' />
           </Form.Item>
         </div>
         <div>
           <Form.Item<IUpdateUser>
             name='username'
-            rules={[{ required: true, message: "Username is required" }]}
+            rules={[
+              { required: true, message: "Username is required" },
+              { pattern: /^\S+$/, message: "No whitespace's allowed" },
+            ]}
             label='Username'
           >
             <Input placeholder='Username...' size='large' />
           </Form.Item>
         </div>
         <div>
-          <Form.Item<IUpdateUser> name='phone' label='Phone'>
-            <Input placeholder='Phone...' size='large' />
-          </Form.Item>
-        </div>
-        <div>
           <Form.Item<IUpdateUser>
             name='email'
             label='Email'
-            rules={[{ required: true, message: "Email is required" }]}
+            rules={[
+              { required: true, message: "Email is required" },
+              { pattern: /^\S+$/, message: "No whitespace's allowed" },
+              {
+                pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Invalid email",
+              },
+            ]}
           >
             <Input placeholder='Email...' size='large' />
+          </Form.Item>
+        </div>
+        <div>
+          <Form.Item<IUpdateUser> name='phone' label='Phone'>
+            <Input placeholder='Phone...' size='large' />
           </Form.Item>
         </div>
         <div>
