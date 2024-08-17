@@ -12,20 +12,21 @@ export const StaffSidebar = () => {
     page: 1,
     items_per_page: "ALL",
   });
-  const { data: user, refetch } = useGetUserDetailQuery();
+  const { data: user } = useGetUserDetailQuery();
   const getSublistNode = () => {
     return (
-      <div className="sublist-node" style={{ background: randAvaBg() }}></div>
+      <div className='sublist-node' style={{ background: randAvaBg() }}></div>
     );
   };
 
   const projectItems: CustomStaffMenuItem[] = (projectsResp?.data || [])
     .filter((project) => project.name)
     .map((project) => ({
+      id: project.id,
       title: (
-        <div className="sidebar-menu-item">
+        <div className='sidebar-menu-item'>
           {getSublistNode()}
-          <span className="menu-item-title">{project.name}</span>
+          <span className='menu-item-title'>{project.name}</span>
         </div>
       ),
       icon: null,
@@ -52,10 +53,10 @@ export const StaffSidebar = () => {
 
   return (
     <>
-      <Layout.Sider className="sidebar">
+      <Layout.Sider className='sidebar'>
         <CustomStaffMenu items={items} defaultSelectedItem={0} />
       </Layout.Sider>
-      <div className="sidebar-placeholder" style={{ width: 0 }} />
+      <div className='sidebar-placeholder' style={{ width: 0 }} />
     </>
   );
 };

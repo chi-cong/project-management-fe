@@ -1,5 +1,5 @@
 import "./custom-menu.css";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 import { Typography } from "antd";
 import { PlusSquare } from "src/assets/icons";
 
@@ -12,39 +12,17 @@ export interface CustomMenuItem {
 
 interface CustomMenuProp {
   items: CustomMenuItem[];
-  defaultSelectedItem: number;
+  selectedItem: number;
+  setSelectedItem: (item: number) => void;
 }
 
-export const CustomMenu = ({ items }: CustomMenuProp) => {
-  const [selectedItem, setSelectedItem] = useState<number>(0);
-
-  const setDefaultItem = () => {
-    const currPath = window.location.pathname.replace(
-      "v2/dashboard/admin/",
-      ""
-    );
-
-    switch (currPath) {
-      case "accounts":
-        setSelectedItem(0);
-        break;
-      case "departments":
-        setSelectedItem(1);
-        break;
-      case "projects":
-        setSelectedItem(2);
-        break;
-      default:
-        setSelectedItem(10);
-    }
-  };
-
-  useEffect(() => {
-    setDefaultItem();
-  }, []);
-
+export const CustomMenu = ({
+  items,
+  selectedItem,
+  setSelectedItem,
+}: CustomMenuProp) => {
   return (
-    <div className="custom-menu">
+    <div className='custom-menu'>
       {items.map((item, index) => {
         return (
           <div
@@ -55,15 +33,15 @@ export const CustomMenu = ({ items }: CustomMenuProp) => {
               item.onClick();
             }}
           >
-            <div className="menu-option-content">
+            <div className='menu-option-content'>
               {item.icon && item.icon}
-              <Typography.Text className="item-title">
+              <Typography.Text className='item-title'>
                 {item.title}
               </Typography.Text>
             </div>
             {item.addCallBack && (
               <div
-                className="add-icon"
+                className='add-icon'
                 onClick={() => {
                   item.addCallBack!();
                 }}

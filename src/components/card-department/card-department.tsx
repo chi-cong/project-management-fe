@@ -61,6 +61,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
   };
 
   const deleteDepartmentHandler = async () => {
+    handleDeleteClick(_);
     try {
       await deleteDepartment({
         departmentId: department.department_id,
@@ -72,13 +73,18 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
   };
 
   return (
-    <div className='card-department-container'>
+    <div
+      className='card-department-container'
+      onClick={(e: React.MouseEvent<HTMLElement>) => {
+        onClick!();
+      }}
+    >
       <Card hoverable bordered={false}>
         <div className='department-wrapper'>
           <Row className='department-header'>
             {/* title */}
             <Col span={12} className='department-header-info'>
-              <h2 className='department-name' onClick={onClick}>
+              <h2 className='department-name'>
                 {shortenLongText(20, department.name)}
               </h2>
             </Col>
@@ -107,7 +113,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
             </Col>
           </Row>
           <div className='department-body'>
-            <div className='department-manager-info' onClick={onClick}>
+            <div className='department-manager-info'>
               <span>{shortenLongText(40, department?.description)}</span>
             </div>
             {/* info */}
@@ -115,7 +121,6 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
               <Col sm={24} xs={24} xxl={18}>
                 <Card
                   className='department-body-manager-card'
-                  onClick={onClick}
                   style={{ marginBottom: "var(--gap-s)" }}
                 >
                   <div className='department-body-manager-info-wrapper'>
@@ -195,11 +200,12 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                       cursor: "pointer",
                     }}
                   >
-                    {departmentStaffs?.users.map((staff) => (
+                    {departmentStaffs?.users.map((staff, index) => (
                       <CustomAvatar
                         avatarSrc={staff.avatar}
                         size={40}
                         userName={staff.name}
+                        key={index}
                       />
                     ))}
                   </Avatar.Group>

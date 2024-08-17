@@ -40,7 +40,11 @@ export const Headbar = () => {
         <Button
           type='text'
           className='user-headbar-option-btn'
-          onClick={() => navigate(`./${localStorageUtil.get("role")}/profile`)}
+          onClick={() =>
+            navigate(
+              `./${localStorageUtil.get("role")?.toLocaleLowerCase()}/profile`
+            )
+          }
         >
           <Person />
           <Typography.Text>Profile</Typography.Text>
@@ -48,7 +52,11 @@ export const Headbar = () => {
         <Button
           type='text'
           className='user-headbar-option-btn'
-          onClick={() => navigate(`./${localStorageUtil.get("role")}/password`)}
+          onClick={() =>
+            navigate(
+              `./${localStorageUtil.get("role")?.toLocaleLowerCase()}/password`
+            )
+          }
         >
           <Lock />
           <Typography.Text>Password</Typography.Text>
