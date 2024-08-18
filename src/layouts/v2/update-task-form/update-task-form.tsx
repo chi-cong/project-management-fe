@@ -53,12 +53,18 @@ export const UpdateTaskForm: React.FC<TaskForm> = ({
   const taskAssigment = useSelector((state: RootState) => state.taskAssignment);
   const dispatch = useDispatch();
 
-  const { data: assignment } = useGetAssignmentQuery({
-    assignmentId: taskAssigment.assignment?.assignment_id,
-  });
-  const { data: task } = useGetTaskQuery({
-    taskId: taskAssigment.task?.task_id,
-  });
+  const { data: assignment } = useGetAssignmentQuery(
+    {
+      assignmentId: taskAssigment.assignment?.assignment_id,
+    },
+    { skip: taskAssigment.assignment ? false : true }
+  );
+  const { data: task } = useGetTaskQuery(
+    {
+      taskId: taskAssigment.task?.task_id,
+    },
+    { skip: taskAssigment.task ? false : true }
+  );
 
   const [updateTask] = useUpdateTaskMutation();
   const [updateAssignment] = useUpdateAssignmentMutation();
@@ -180,7 +186,7 @@ export const UpdateTaskForm: React.FC<TaskForm> = ({
               type='primary'
               ghost
               size='large'
-              onClick={() => setIsModalOpen(false)}
+              onClick={() => handleCancel()}
             >
               Cancel
             </Button>

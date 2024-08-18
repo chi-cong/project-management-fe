@@ -1,6 +1,6 @@
 import "./activities.css";
 import { Button, Input, List, message, Typography } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CustomAvatar } from "src/components/v2";
 import {
   useCreateActivityMutation,
@@ -23,8 +23,6 @@ export const Activities = () => {
   });
   const { data: user } = useGetUserDetailQuery();
 
-  useEffect(() => {});
-
   return (
     <div className='acti-section'>
       {/* create activities */}
@@ -38,7 +36,12 @@ export const Activities = () => {
         />
         <div className='acti-des-container'>
           <Input.TextArea
-            style={{ resize: "none", height: "100px", width: "100%" }}
+            style={{
+              resize: "none",
+              height: "100px",
+              width: "100%",
+              borderWidth: "opx",
+            }}
             className='task-text-area'
             placeholder='New activity'
             value={actiDesc}
@@ -54,7 +57,11 @@ export const Activities = () => {
                 createActi({
                   task_id: task?.task_id,
                   description: actiDesc,
-                }).catch(() => message.error("Failed to create activity"));
+                })
+                  .then(() => {
+                    setActiDesc("");
+                  })
+                  .catch(() => message.error("Failed to create activity"));
               }
             }}
           >

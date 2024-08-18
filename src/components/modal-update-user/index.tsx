@@ -52,8 +52,8 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
     await updateUser({ userId: user.user_id, values: sentValues })
       .unwrap()
       .then(() => {
-        setIsModalOpen(false);
         message.success("User is Updated");
+        setIsModalOpen(false);
       })
       .catch((e) => {
         message.error(e.data.message);
@@ -163,7 +163,7 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
               type='primary'
               ghost
               size='large'
-              onClick={() => setIsModalOpen(false)}
+              onClick={() => handleCancel()}
             >
               Cancel
             </Button>

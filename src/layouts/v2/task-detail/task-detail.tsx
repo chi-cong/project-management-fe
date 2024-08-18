@@ -49,7 +49,7 @@ export const TaskDetail = ({
     {
       assignmentId: taskAssignment.assignment?.assignment_id,
     },
-    { skip: !taskAssignment.assignment?.assignment_id }
+    { skip: taskAssignment.assignment ? false : true }
   );
 
   const [deleteTask] = useDeleteTaskMutation();
@@ -59,11 +59,14 @@ export const TaskDetail = ({
   const [editModal, setEditModal] = useState<boolean>(false);
   const [modalWidth, setModalWidth] = useState<number>(750);
   const [search, setSearch] = useState<string>("");
-  const { data: projectStaffs } = useGetProjectStaffsQuery({
-    projectId: project?.project_id,
-    items_per_page: "ALL",
-    search,
-  });
+  const { data: projectStaffs } = useGetProjectStaffsQuery(
+    {
+      projectId: project?.project_id,
+      items_per_page: "ALL",
+      search,
+    },
+    { skip: project?.project_id ? false : true }
+  );
 
   const TaskOption = () => {
     return (

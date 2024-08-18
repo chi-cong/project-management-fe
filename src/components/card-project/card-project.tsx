@@ -78,7 +78,8 @@ export const CardProject: React.FC<CardProject> = ({
 
   const progress: number = calculateProgress();
 
-  const showModal = () => {
+  const showModal = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
     setIsModalOpen(true);
   };
 
@@ -88,12 +89,12 @@ export const CardProject: React.FC<CardProject> = ({
 
   return (
     <>
-      <div className='card-project-container'>
+      <div className='card-project-container' onClick={onClick}>
         <Card hoverable bordered={false} className='card-Project'>
           <div className='project-wrapper'>
             <Row className='project-header'>
               {/* title */}
-              <Col span={12} className='project-header-info' onClick={onClick}>
+              <Col span={12} className='project-header-info'>
                 <h3 className='project-name'>{shortenLongText(30, name)}</h3>
               </Col>
               {/* action (delete, update) */}
@@ -138,7 +139,7 @@ export const CardProject: React.FC<CardProject> = ({
                 )}
               </Col>
             </Row>
-            <div className='project-body' onClick={onClick}>
+            <div className='project-body'>
               {/* info */}
               <div className='project-body-info'>
                 <span>{shortenLongText(40, description)}</span>
@@ -195,30 +196,30 @@ export const CardProject: React.FC<CardProject> = ({
                 </div>
               </div>
             </div>
-            {checkRole(OUserRole.Admin) ? (
-              <ModalAddUserToProject
-                isModalOpen={isModalAddUserOpen}
-                setIsModalOpen={setIsModalAddUserOpen}
-                project={project}
-              />
-            ) : (
-              checkRole(OUserRole.Manager) && (
-                <AddProjectUserPanel
-                  isModalOpen={isModalAddUserOpen}
-                  setIsModalOpen={setIsModalAddUserOpen}
-                  project={project}
-                />
-              )
-            )}
-            <ModalUpdateProject
-              isModalOpen={isModalOpen}
-              setIsModalOpen={setIsModalOpen}
-              project={project!}
-              isUpdate={true}
-            ></ModalUpdateProject>
           </div>
         </Card>
       </div>
+      {checkRole(OUserRole.Admin) ? (
+        <ModalAddUserToProject
+          isModalOpen={isModalAddUserOpen}
+          setIsModalOpen={setIsModalAddUserOpen}
+          project={project}
+        />
+      ) : (
+        checkRole(OUserRole.Manager) && (
+          <AddProjectUserPanel
+            isModalOpen={isModalAddUserOpen}
+            setIsModalOpen={setIsModalAddUserOpen}
+            project={project}
+          />
+        )
+      )}
+      <ModalUpdateProject
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        project={project!}
+        isUpdate={true}
+      ></ModalUpdateProject>
     </>
   );
 };

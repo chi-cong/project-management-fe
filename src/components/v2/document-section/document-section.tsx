@@ -57,7 +57,7 @@ export const DocumentSection = () => {
   const getLinks = () => {
     setFileLinks([]);
     const tempFileLinks: string[] = [];
-    return taskAssignment.task?.document.map((file) =>
+    return task?.document.map((file) =>
       getFile({ file })
         .unwrap()
         .then((link) => {
@@ -72,7 +72,7 @@ export const DocumentSection = () => {
   useEffect(() => {
     setFileLinks([]);
     const tempFileLinks: string[] = [];
-    taskAssignment.task?.document.map((file) =>
+    task?.document.map((file) =>
       getFile({ file })
         .unwrap()
         .then((link) => {
@@ -82,47 +82,41 @@ export const DocumentSection = () => {
           setFileLinks(tempFileLinks);
         })
     );
-    dispatch(
-      selectTaskAssign({
-        task: task,
-        assignment: taskAssignment.assignment,
-      })
-    );
-  }, [getFile, task]);
+  }, [getFile, task, taskAssignment]);
 
   return (
-    <div className="doc-sec">
-      <div className="doc-sec-first-part">
-        <div className="doc-sec-head">
+    <div className='doc-sec'>
+      <div className='doc-sec-first-part'>
+        <div className='doc-sec-head'>
           <Typography.Title level={4}>File Attachment</Typography.Title>
         </div>
 
-        <div className="file-list">
+        <div className='file-list'>
           {fileLinks.map((files, index) => {
             const handledFile = handleFile(files);
             return (
-              <div className="file-row" key={index}>
-                <div className="file-name-icon">
+              <div className='file-row' key={index}>
+                <div className='file-name-icon'>
                   {handledFile.fileIcon}
                   <Typography.Link>
-                    <a href={files} target="_blank">
+                    <a href={files} target='_blank'>
                       {handledFile.displayedFileName}
                     </a>
                   </Typography.Link>
                 </div>
                 {!checkRole(OUserRole.Staff) && (
                   <Popconfirm
-                    title="Delete this file ?"
+                    title='Delete this file ?'
                     onConfirm={() => {
                       // fileLinks and filenames index are the same
                       deleteFile({
-                        filename: taskAssignment.task?.document[index],
-                        taskId: taskAssignment.task?.task_id,
+                        filename: task?.document[index],
+                        taskId: task?.task_id,
                       })
                         .unwrap()
                         .then(() => {
                           message.success(
-                            `${taskAssignment.task?.document[index]} is deleted`
+                            `${task?.document[index]} is deleted`
                           );
                           getLinks();
                         })
@@ -131,7 +125,7 @@ export const DocumentSection = () => {
                         });
                     }}
                   >
-                    <Button shape="round" danger size="small">
+                    <Button shape='round' danger size='small'>
                       Delete
                     </Button>
                   </Popconfirm>
@@ -142,7 +136,7 @@ export const DocumentSection = () => {
         </div>
       </div>
       {!checkRole(OUserRole.Staff) && (
-        <Upload.Dragger {...props} listType="text">
+        <Upload.Dragger {...props} listType='text'>
           <strong>Choose a file</strong> or drag it here
         </Upload.Dragger>
       )}

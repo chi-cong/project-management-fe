@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Avatar,
-  Card,
-  Col,
-  message,
-  Popconfirm,
-  Popover,
-  Row,
-  Space,
-} from "antd";
+import { Card, Col, message, Popconfirm, Row, Space } from "antd";
 import {
   DeleteOutlined,
   QuestionCircleOutlined,
@@ -17,7 +8,7 @@ import {
 import "./card-department-trash.css";
 import {
   useRestoreDepartmentMutation,
-  useGetDepartmentStaffsQuery,
+  useDeleteDepartmentPermanentlyMutation,
 } from "src/share/services";
 import { CustomAvatar } from "src/components/v2";
 import { Department } from "src/share/models";
@@ -35,10 +26,7 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
   onClick,
 }) => {
   const [restoreDepartment] = useRestoreDepartmentMutation();
-  const { data: departmentStaffs } = useGetDepartmentStaffsQuery({
-    itemsPerPage: "ALL",
-    departmentId: department.department_id,
-  });
+  const [deletePermanently] = useDeleteDepartmentPermanentlyMutation();
 
   const handleRestoreClick = async (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
@@ -58,7 +46,16 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
       message.error("Failed to restore department");
     }
   };
-  const DeleteDepartmentForever = async () => {};
+  const DeleteDepartmentForever = async () => {
+    try {
+      await deletePermanently({
+        departmentId: department.department_id,
+      }).unwrap();
+      await message.success("Delete department permanently");
+    } catch (error) {
+      message.error("Failed to delete department");
+    }
+  };
 
   return (
     <div className='card-department-container'>
@@ -130,72 +127,6 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
                 </Card>
               </Col>
               {/* avatar group */}
-              <Col>
-                <Popover
-                  placement='bottom'
-                  trigger='hover'
-                  // content={
-                  //   <Space direction="vertical" style={{ display: "flex" }}>
-                  //     <div>
-                  //       <Space direction="vertical">
-                  //         <h2>Project Manager</h2>
-                  //         <Avatar
-                  //           size="large"
-                  //           style={{ backgroundColor: "#87d068" }}
-                  //           icon={<UserOutlined />}
-                  //         />
-                  //       </Space>
-                  //     </div>
-                  //     <Divider />
-                  //     <Space direction="vertical">
-                  //       <h2>Members</h2>
-                  //       <Space>
-                  //         <Avatar
-                  //           size="large"
-                  //           style={{ backgroundColor: "#87d068" }}
-                  //           icon={<UserOutlined />}
-                  //         />
-                  //         <Avatar
-                  //           size="large"
-                  //           style={{ backgroundColor: "#87d068" }}
-                  //           icon={<UserOutlined />}
-                  //         />
-                  //       </Space>
-                  //       <Avatar
-                  //         onClick={() => {
-                  //           showModalAddUser();
-                  //         }}
-                  //         size="large"
-                  //         style={{
-                  //           backgroundColor: "#87d068",
-                  //           cursor: "pointer",
-                  //         }}
-                  //         icon={<PlusOutlined />}
-                  //       />
-                  //     </Space>
-                  //   </Space>
-                  // }
-                >
-                  <Avatar.Group
-                    maxCount={2}
-                    maxPopoverTrigger='click'
-                    size={40}
-                    maxStyle={{
-                      color: "#f56a00",
-                      backgroundColor: "#fde3cf",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {departmentStaffs?.users.map((staff) => (
-                      <CustomAvatar
-                        avatarSrc={staff.avatar}
-                        size={40}
-                        userName={staff.name}
-                      />
-                    ))}
-                  </Avatar.Group>
-                </Popover>
-              </Col>
               {/* progress */}
             </Row>
           </div>

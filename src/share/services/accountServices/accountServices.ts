@@ -173,7 +173,7 @@ const accountServices = hrManagementApi.injectEndpoints({
           body: body.values,
         };
       },
-      invalidatesTags: ["User"],
+      invalidatesTags: ["User", "department"],
     }),
     deleteUser: build.mutation<boolean, Partial<{ userId: string }>>({
       query({ userId }) {
