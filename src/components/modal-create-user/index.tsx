@@ -12,7 +12,7 @@ import {
 import React from "react";
 import "./modal-create-user.css";
 import { UserRole } from "src/share/models";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { userRoleOptions } from "src/share/utils";
 import { useCreateUserMutation } from "src/share/services";
 
@@ -35,8 +35,11 @@ const ModalCreateUser: React.FC<ModalCreateUser> = ({
   isModalOpen,
   setIsModalOpen,
 }) => {
+  const [form] = Form.useForm();
+
   const handleCancel = () => {
     setIsModalOpen(false);
+    form.resetFields();
   };
 
   const [createUser] = useCreateUserMutation();
@@ -80,7 +83,7 @@ const ModalCreateUser: React.FC<ModalCreateUser> = ({
       >
         Create User
       </h2>
-      <Form name='user-info' onFinish={onFinish} layout='vertical'>
+      <Form name='user-info' onFinish={onFinish} layout='vertical' form={form}>
         <div>
           <Form.Item<ICreateUser>
             name='name'
@@ -133,6 +136,7 @@ const ModalCreateUser: React.FC<ModalCreateUser> = ({
               placeholder='Birthday...'
               size='large'
               style={{ width: "100%" }}
+              maxDate={dayjs()}
             />
           </Form.Item>
         </div>
@@ -154,7 +158,7 @@ const ModalCreateUser: React.FC<ModalCreateUser> = ({
               type='primary'
               ghost
               size='large'
-              onClick={() => setIsModalOpen(false)}
+              onClick={() => handleCancel()}
             >
               Cancel
             </Button>

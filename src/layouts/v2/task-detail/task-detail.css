@@ -91,4 +91,8 @@
     gap: var(--gap-s);
     cursor: pointer;
   }
+  /* override */
+  .ant-card-body {
+    width: 100%;
+  }
 }

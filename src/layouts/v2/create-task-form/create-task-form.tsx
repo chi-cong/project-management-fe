@@ -37,13 +37,14 @@ export const CreateTaskForm: React.FC<TaskForm> = ({
   setIsModalOpen,
   project,
 }) => {
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   const [form] = Form.useForm();
   const [createTask] = useCreateTaskMutation();
   const [createAssignment] = useCreateAssigmentMutation();
+
+  const handleCancel = () => {
+    form.resetFields();
+    setIsModalOpen(false);
+  };
 
   const onFinish: FormProps<TaskFormFields>["onFinish"] = async (values) => {
     const newTask = await createTask({
@@ -137,7 +138,7 @@ export const CreateTaskForm: React.FC<TaskForm> = ({
               type='primary'
               ghost
               size='large'
-              onClick={() => setIsModalOpen(false)}
+              onClick={() => handleCancel()}
             >
               Cancel
             </Button>
