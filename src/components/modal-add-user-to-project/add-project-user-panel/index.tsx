@@ -147,6 +147,7 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
                 placeholder='Search...'
                 size='large'
                 onSearch={(value) => setSearch(value)}
+                allowClear
               />
             </Col>
           </Row>

@@ -27,7 +27,7 @@ import { Activities } from "./activities";
 import { UpdateTaskForm } from "../update-task-form";
 import type { RootState } from "src/libs/redux";
 
-import type { Project, User } from "src/share/models";
+import type { Project } from "src/share/models";
 
 interface TaskFormProps {
   project?: Project;
@@ -51,10 +51,6 @@ export const TaskDetail = ({
     },
     { skip: !taskAssignment.assignment?.assignment_id }
   );
-  const { data: departmentStaffs } = useGetProjectStaffsQuery({
-    projectId: project?.project_id,
-    items_per_page: "ALL",
-  });
 
   const [deleteTask] = useDeleteTaskMutation();
   const [deleteAssignment] = useDeleteAssignmentMutation();
@@ -62,9 +58,12 @@ export const TaskDetail = ({
 
   const [editModal, setEditModal] = useState<boolean>(false);
   const [modalWidth, setModalWidth] = useState<number>(750);
-  const [assignableUsers, setAssignableUsers] = useState<User[] | undefined>(
-    departmentStaffs?.users
-  );
+  const [search, setSearch] = useState<string>("");
+  const { data: projectStaffs } = useGetProjectStaffsQuery({
+    projectId: project?.project_id,
+    items_per_page: "ALL",
+    search,
+  });
 
   const TaskOption = () => {
     return (
@@ -110,17 +109,11 @@ export const TaskDetail = ({
         <Input.Search
           placeholder='Search'
           onSearch={(value) => {
-            if (value) {
-              const searchResult = departmentStaffs?.users.filter(
-                (staff) => staff.name === value || staff.username === value
-              );
-              setAssignableUsers(searchResult);
-            } else {
-              setAssignableUsers(departmentStaffs?.users);
-            }
+            setSearch(value);
           }}
+          allowClear
         />
-        {assignableUsers?.map((staff) => {
+        {projectStaffs?.users.map((staff) => {
           return (
             <Card
               hoverable
@@ -175,9 +168,6 @@ export const TaskDetail = ({
           <Popover
             content={AssignUserPopover}
             placement='bottomLeft'
-            onOpenChange={() => {
-              setAssignableUsers(departmentStaffs?.users);
-            }}
             trigger='click'
           >
             <Button className='assign-task-btn' size='small' type='text'>

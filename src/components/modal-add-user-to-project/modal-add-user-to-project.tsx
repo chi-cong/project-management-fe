@@ -130,15 +130,6 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
       label: "Add User To Project",
       children: (
         <>
-          <h2
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-            }}
-          >
-            Add User To Project
-          </h2>
           {/* search */}
           <Row className='modal-add-user-search-input'>
             <Col span={8}>

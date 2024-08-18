@@ -18,7 +18,11 @@ interface DataType {
   email?: string;
 }
 const AddManagerTabs = ({ id }: { id?: string }) => {
-  const { data } = useGetUsersQuery({ role: "MANAGER", items_per_page: "ALL" });
+  const { data } = useGetUsersQuery({
+    role: "MANAGER",
+    items_per_page: "ALL",
+    haveDepartment: false,
+  });
   const [updateManager] = useUpdateManagerDepartmentMutation();
 
   const columns = [
