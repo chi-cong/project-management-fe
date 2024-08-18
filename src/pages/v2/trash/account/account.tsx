@@ -1,4 +1,3 @@
-import { CardAccount } from "src/components/card-account";
 import "./account.css";
 import {
   Button,
@@ -11,9 +10,9 @@ import {
   Row,
   Space,
 } from "antd";
-import { DownOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { DownOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { useGetUsersQuery } from "src/share/services";
+import { useGetDeletedUsersQuery } from "src/share/services";
 import ModalCreateUser from "src/components/modal-create-user";
 import { UserRole, OUserRole } from "src/share/models";
 import { useRoleChecker } from "src/share/hooks";
@@ -28,7 +27,7 @@ export const AccountTrash = () => {
     search: string | undefined;
   }>({ role: OUserRole.All, page: 1, search: "" });
 
-  const { data } = useGetUsersQuery(
+  const { data } = useGetDeletedUsersQuery(
     {
       ...queries,
       items_per_page: 10,
@@ -75,16 +74,16 @@ export const AccountTrash = () => {
   };
 
   return (
-    <div className="v2-account-page">
-      <section className="main">
-        <header className="main-header">
-          <section className="first-sec">
-            <div className="title-des">
-              <div className="title-row">
+    <div className='v2-account-page'>
+      <section className='main'>
+        <header className='main-header'>
+          <section className='first-sec'>
+            <div className='title-des'>
+              <div className='title-row'>
                 <h2>Account Trash</h2>
               </div>
             </div>
-            <Row className="action" gutter={[8, 8]}>
+            <Row className='action' gutter={[8, 8]}>
               <Col xs={12} sm={12} md={6}>
                 <Dropdown menu={menuProps}>
                   <Button style={{ width: "100%" }}>
@@ -104,7 +103,7 @@ export const AccountTrash = () => {
               </Col>
               <Col xs={12} sm={12} md={18}>
                 <Input.Search
-                  placeholder="Search..."
+                  placeholder='Search...'
                   style={{ width: "100%" }}
                   allowClear
                   onSearch={(value) =>

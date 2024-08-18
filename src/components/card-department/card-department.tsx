@@ -67,7 +67,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
       }).unwrap();
       await message.success("Deleted department");
     } catch (error) {
-      message.error("Failed to department");
+      message.error("Failed to delete department");
     }
   };
 
@@ -99,7 +99,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                     title='Are you sure to delete this department?'
                     icon={<QuestionCircleOutlined style={{ color: "red" }} />}
                     onConfirm={() => {
-                      deleteDepartmentHandler;
+                      deleteDepartmentHandler();
                     }}
                   >
                     <DeleteOutlined />
