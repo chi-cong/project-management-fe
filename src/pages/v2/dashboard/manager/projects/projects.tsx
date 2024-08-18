@@ -57,6 +57,7 @@ export const ManagerProjects = () => {
                   onSearch={(value) =>
                     setQueries({ ...queries, search: value })
                   }
+                  allowClear
                 />
               </Col>
               <Col xs={12} sm={12} md={6}>

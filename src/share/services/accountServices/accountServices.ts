@@ -100,7 +100,7 @@ const accountServices = hrManagementApi.injectEndpoints({
             page: page ? page : 1,
             search: search || "",
             items_per_page: items_per_page || 10,
-            ...(haveDepartment && { haveDepartment }),
+            haveDepartment,
           },
         };
       },

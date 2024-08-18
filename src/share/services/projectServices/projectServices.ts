@@ -412,7 +412,7 @@ const projectServices = hrManagementApi.injectEndpoints({
         projectId?: string;
         page?: number;
         items_per_page?: number | "ALL";
-        search: string;
+        search?: string;
       }
     >({
       query({ projectId, page, items_per_page, search }) {

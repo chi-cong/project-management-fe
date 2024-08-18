@@ -107,15 +107,6 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
   };
   return (
     <>
-      <h2
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-        }}
-      >
-        Project Team
-      </h2>
       {/* search */}
       <Row className='modal-add-user-search-input'>
         <Col span={8}>
@@ -123,6 +114,7 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
             placeholder='Search...'
             size='large'
             onSearch={(value) => setSearch(value)}
+            allowClear
           />
         </Col>
       </Row>
