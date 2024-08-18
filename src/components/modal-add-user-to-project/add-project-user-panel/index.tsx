@@ -3,7 +3,7 @@ import { Button, Col, Input, message, Modal, Row, Table } from "antd";
 import React, { useState } from "react";
 import {
   useCreateAssigmentMutation,
-  useManagerGetAllStaffDepartmentQuery,
+  useGetStaffsNotInPrjQuery,
 } from "src/share/services";
 import { SearchOutlined } from "@ant-design/icons";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
@@ -32,10 +32,14 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
 }) => {
   const [staffPage, setStaffPage] = useState<number>(1);
 
-  const { data: staffs } = useManagerGetAllStaffDepartmentQuery({
-    items_per_page: 5,
-  });
-
+  const { data: staffs } = useGetStaffsNotInPrjQuery(
+    {
+      itemsPerPage: 5,
+      departmentId: project?.department_id,
+      projectId: project?.project_id,
+    },
+    { skip: project?.department_id ? false : true }
+  );
   const [createAssignment] = useCreateAssigmentMutation();
 
   const columns = [

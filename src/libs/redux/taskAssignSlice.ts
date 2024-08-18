@@ -10,7 +10,10 @@ const taskAssignSlice = createSlice({
   name: "taskAssign",
   initialState,
   reducers: {
-    selectTaskAssign: (_state, action: PayloadAction<TaskAssignment>) => {
+    selectTaskAssign: (
+      _state,
+      action: PayloadAction<TaskAssignment>
+    ): TaskAssignment => {
       return {
         task: action.payload.task,
         assignment: action.payload.assignment,

@@ -47,6 +47,7 @@ export const ManagerCreateProject: React.FC<ModalUpdateProjectProp> = ({
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    form.resetFields();
   };
 
   return (
@@ -72,6 +73,7 @@ export const ManagerCreateProject: React.FC<ModalUpdateProjectProp> = ({
         layout='vertical'
         onFinish={onFinish}
         disabled={departmentId ? false : true}
+        form={form}
       >
         <Form.Item<Project>
           name={"name"}
@@ -122,7 +124,9 @@ export const ManagerCreateProject: React.FC<ModalUpdateProjectProp> = ({
           <DatePicker
             size='large'
             style={{ width: "100%" }}
-            minDate={dayjs(startDate).add(1, "day")}
+            minDate={
+              startDate ? dayjs(startDate).add(1, "day") : dayjs().add(1, "day")
+            }
           />
         </Form.Item>
 
@@ -135,7 +139,7 @@ export const ManagerCreateProject: React.FC<ModalUpdateProjectProp> = ({
               type='primary'
               ghost
               size='large'
-              onClick={() => setIsModalOpen(false)}
+              onClick={() => handleCancel()}
             >
               Cancel
             </Button>

@@ -1,4 +1,5 @@
 import { Form, Input } from "antd";
+import { useEffect } from "react";
 
 interface CreateDepartment {
   name?: string;
@@ -6,9 +7,17 @@ interface CreateDepartment {
 }
 const InfoTabs = ({
   setFields,
+  fields,
 }: {
   setFields: (field: CreateDepartment) => void;
+  fields: CreateDepartment;
 }) => {
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    form.setFieldsValue(fields);
+  }, [fields, form]);
+
   return (
     <>
       <Form
@@ -17,6 +26,7 @@ const InfoTabs = ({
         onValuesChange={(_changedValue, values) => {
           setFields(values);
         }}
+        form={form}
       >
         <div>
           <Form.Item<CreateDepartment>

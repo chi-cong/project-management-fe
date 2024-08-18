@@ -14,7 +14,7 @@ import { useState } from "react";
 import { UserPlus, MenuDots, Down, Folder, Pen, Trash } from "src/assets/icons";
 import { DocumentSection, CustomAvatar } from "src/components/v2";
 import {
-  useGetDepartmentStaffsQuery,
+  useGetProjectStaffsQuery,
   useUpdateAssignmentMutation,
   useGetAssignmentQuery,
   useDeleteAssignmentMutation,
@@ -51,9 +51,9 @@ export const TaskDetail = ({
     },
     { skip: !taskAssignment.assignment?.assignment_id }
   );
-  const { data: departmentStaffs } = useGetDepartmentStaffsQuery({
-    departmentId: project?.department_id,
-    itemsPerPage: "ALL",
+  const { data: departmentStaffs } = useGetProjectStaffsQuery({
+    projectId: project?.project_id,
+    items_per_page: "ALL",
   });
 
   const [deleteTask] = useDeleteTaskMutation();

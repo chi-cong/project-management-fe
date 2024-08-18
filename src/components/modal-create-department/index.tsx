@@ -25,6 +25,7 @@ const ModalCreateDepartment: React.FC<ModalCreateDepartment> = ({
   const handleCancel = () => {
     setManagerId("");
     setStaffList([]);
+    setDepartInfo({ name: "", description: "" });
     setIsModalOpen(false);
   };
   const createDepart = () => {
@@ -66,7 +67,7 @@ const ModalCreateDepartment: React.FC<ModalCreateDepartment> = ({
       </h2>
       <Tabs defaultActiveKey='1'>
         <Tabs.TabPane tab='Info' key='1'>
-          <InfoTabs setFields={setDepartInfo} />
+          <InfoTabs setFields={setDepartInfo} fields={departInfo!} />
         </Tabs.TabPane>
         <Tabs.TabPane tab='Manager' key='2'>
           <AddManagerTabs setManagerId={setManagerId} managerId={managerId} />
