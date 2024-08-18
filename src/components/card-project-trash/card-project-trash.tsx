@@ -8,6 +8,7 @@ import {
 import "./card-project-trash.css";
 import {
   useRestoreProjectMutation,
+  useDeleteProjectPermanentlyMutation,
   useGetProjectStaffsQuery,
 } from "src/share/services";
 
@@ -30,6 +31,7 @@ export const CardProjectTrash: React.FC<CardProjectTrash> = ({
   project,
 }) => {
   const [restore] = useRestoreProjectMutation();
+  const [deletePermanently] = useDeleteProjectPermanentlyMutation();
 
   const { data: projectStaffs } = useGetProjectStaffsQuery({
     items_per_page: "ALL",
@@ -56,7 +58,18 @@ export const CardProjectTrash: React.FC<CardProjectTrash> = ({
         message.error("Failed to restore project");
       });
   };
-  const DeleteProjectForever = async () => {};
+  const DeleteProjectForever = async () => {
+    await deletePermanently({
+      projectId: project?.project_id,
+    })
+      .unwrap()
+      .then(() => {
+        message.success("Project's deleted permanently");
+      })
+      .catch(() => {
+        message.error("Failed to delete project");
+      });
+  };
   return (
     <>
       <div className='card-project-container'>

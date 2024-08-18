@@ -1,16 +1,12 @@
-import "./project-team.css";
-import { Button, Col, Input, message, Modal, Row, Table } from "antd";
+import { Button, Col, Input, message, Row, Table } from "antd";
 import React, { useState } from "react";
 import {
   useGetProjectStaffsQuery,
   useRmStaffFromPjMutation,
 } from "src/share/services";
-import { SearchOutlined } from "@ant-design/icons";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
 import { Project, RoleResponse } from "src/share/models";
 interface ModalAddUserToProjectProps {
-  isModalOpen: boolean;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   project?: Project;
 }
 
@@ -27,14 +23,14 @@ interface DataType {
 
 export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
   project,
-  isModalOpen,
-  setIsModalOpen,
 }) => {
   const [staffPage, setStaffPage] = useState<number>(1);
+  const [search, setSearch] = useState<string>("");
 
   const { data: staffs } = useGetProjectStaffsQuery({
     items_per_page: 5,
     projectId: project?.project_id,
+    search,
   });
 
   const [removeFromPj] = useRmStaffFromPjMutation();
@@ -93,10 +89,6 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
     },
   ];
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   const mapTableData = () => {
     if (staffs?.users.length) {
       return staffs?.users.map((staff): DataType => {
@@ -113,16 +105,8 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
       });
     }
   };
-
   return (
-    <Modal
-      className='wrapper'
-      open={isModalOpen}
-      onCancel={handleCancel}
-      centered
-      width={1000}
-      footer={null}
-    >
+    <>
       <h2
         style={{
           alignItems: "center",
@@ -135,10 +119,10 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
       {/* search */}
       <Row className='modal-add-user-search-input'>
         <Col span={8}>
-          <Input
+          <Input.Search
             placeholder='Search...'
-            prefix={<SearchOutlined />}
             size='large'
+            onSearch={(value) => setSearch(value)}
           />
         </Col>
       </Row>
@@ -153,6 +137,6 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
           current: staffPage,
         }}
       />
-    </Modal>
+    </>
   );
 };

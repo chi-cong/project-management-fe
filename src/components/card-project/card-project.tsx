@@ -46,7 +46,6 @@ export const CardProject: React.FC<CardProject> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalAddUserOpen, setIsModalAddUserOpen] = useState(false);
   const [deleteProject] = useDeleteProjectMutation();
-  const [messageApi, contextHolder] = message.useMessage();
 
   const { data: projectStaffs } = useGetProjectStaffsQuery({
     items_per_page: "ALL",
@@ -89,7 +88,6 @@ export const CardProject: React.FC<CardProject> = ({
 
   return (
     <>
-      {contextHolder}
       <div className='card-project-container'>
         <Card hoverable bordered={false} className='card-Project'>
           <div className='project-wrapper'>
@@ -123,11 +121,10 @@ export const CardProject: React.FC<CardProject> = ({
                           })
                             .unwrap()
                             .then(() => {
-                              messageApi.success("Project is deleted");
-                              // setOpenProjectTab(false);
+                              message.success("Project is deleted");
                             })
                             .catch(() => {
-                              messageApi.error("Failed to delete project");
+                              message.error("Failed to delete project");
                             });
                         }}
                         cancelText='No'

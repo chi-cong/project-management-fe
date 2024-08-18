@@ -83,6 +83,18 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
       },
       invalidatesTags: ["department"],
     }),
+    deleteDepartmentPermanently: build.mutation<
+      Response<Department>,
+      Partial<{ departmentId: string }>
+    >({
+      query({ departmentId }) {
+        return {
+          url: `departments/admin/force-delete/${departmentId}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["department"],
+    }),
     restoreDepartment: build.mutation<
       Response<Department>,
       Partial<{ departmentId: string }>
@@ -310,4 +322,5 @@ export const {
   useUpdateMngDepartmentMutation,
   useGetDeletedDepartmentsQuery,
   useRestoreDepartmentMutation,
+  useDeleteDepartmentPermanentlyMutation,
 } = DepartmentServices;

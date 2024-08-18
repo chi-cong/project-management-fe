@@ -184,6 +184,17 @@ const accountServices = hrManagementApi.injectEndpoints({
       },
       invalidatesTags: ["User"],
     }),
+    deleteUserPermanently: build.mutation<boolean, Partial<{ userId: string }>>(
+      {
+        query({ userId }) {
+          return {
+            url: `users/admin/force-delete/${userId}`,
+            method: "DELETE",
+          };
+        },
+        invalidatesTags: ["User"],
+      }
+    ),
     restoreUser: build.mutation<boolean, Partial<{ userId: string }>>({
       query({ userId }) {
         return {
@@ -252,9 +263,10 @@ const accountServices = hrManagementApi.injectEndpoints({
         page?: number;
         itemsPerPage?: number | "ALL";
         role?: UserRole;
+        search?: string;
       }
     >({
-      query({ departmentId, page, itemsPerPage, projectId, role }) {
+      query({ departmentId, page, itemsPerPage, projectId, role, search }) {
         return {
           url: `users/get-list-user-do-not-in-project`,
           method: "POST",
@@ -269,6 +281,7 @@ const accountServices = hrManagementApi.injectEndpoints({
             page: page || 1,
             items_per_page: itemsPerPage,
             ...(role && { role: role }),
+            ...(search && { searc: search }),
           },
         };
       },
@@ -330,4 +343,5 @@ export const {
   useGetStaffsNotInPrjQuery,
   useGetDeletedUsersQuery,
   useRestoreUserMutation,
+  useDeleteUserPermanentlyMutation,
 } = accountServices;

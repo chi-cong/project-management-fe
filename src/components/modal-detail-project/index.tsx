@@ -1,23 +1,9 @@
-import {
-  Button,
-  DatePicker,
-  Form,
-  FormProps,
-  Input,
-  message,
-  Modal,
-  Select,
-  Space,
-} from "antd";
+import { DatePicker, Form, Input, Modal, Select } from "antd";
 import React, { useEffect } from "react";
 import "./modal-detail-project.css";
 import { Project } from "src/share/models";
-import dayjs, { Dayjs } from "dayjs";
-import {
-  useUpdateProjectMutation,
-  useGetDepartmentsQuery,
-  useGetUsersQuery,
-} from "src/share/services";
+import dayjs from "dayjs";
+import { useGetDepartmentsQuery, useGetUsersQuery } from "src/share/services";
 
 type ModalDetailProjectProp = {
   isModalOpen: boolean;
@@ -63,7 +49,7 @@ export const ModalDetailProject: React.FC<ModalDetailProjectProp> = ({
 
   return (
     <Modal
-      className="detail-project-modal"
+      className='detail-project-modal'
       open={isModalOpen}
       centered
       footer={[]}
@@ -79,34 +65,34 @@ export const ModalDetailProject: React.FC<ModalDetailProjectProp> = ({
       >
         Detail Project
       </h2>
-      <Form className="project-form" layout="vertical" form={form}>
+      <Form className='project-form' layout='vertical' form={form}>
         <Form.Item<Project>
           name={"name"}
-          label="Project name"
+          label='Project name'
           rules={[{ required: true, message: "Project name is required" }]}
         >
-          <Input size="large" disabled />
+          <Input size='large' disabled />
         </Form.Item>
         <Form.Item<Project>
           name={"projectCode"}
-          label="Project Code"
+          label='Project Code'
           rules={[{ required: true, message: "Project code is required" }]}
         >
-          <Input size="large" disabled />
+          <Input size='large' disabled />
         </Form.Item>
-        <Form.Item<Project> name={"investor"} label="Investor">
-          <Input size="large" disabled />
+        <Form.Item<Project> name={"investor"} label='Investor'>
+          <Input size='large' disabled />
         </Form.Item>
         <Form.Item<Project>
           name={"description"}
-          label="Description"
+          label='Description'
           rules={[
             { required: true, message: "Project description is required" },
           ]}
         >
-          <Input.TextArea size="large" disabled />
+          <Input.TextArea size='large' disabled />
         </Form.Item>
-        <Form.Item<Project> name={"department_id"} label="Department">
+        <Form.Item<Project> name={"department_id"} label='Department'>
           <Select
             options={departmentData?.departments?.map((department) => {
               return {
@@ -114,11 +100,11 @@ export const ModalDetailProject: React.FC<ModalDetailProjectProp> = ({
                 value: department.department_id,
               };
             })}
-            size="large"
+            size='large'
             disabled
           />
         </Form.Item>
-        <Form.Item<Project> name={"project_manager_id"} label="Project Manager">
+        <Form.Item<Project> name={"project_manager_id"} label='Project Manager'>
           <Select
             options={pms?.users?.map((pm) => {
               return {
@@ -126,15 +112,15 @@ export const ModalDetailProject: React.FC<ModalDetailProjectProp> = ({
                 value: pm.user_id,
               };
             })}
-            size="large"
+            size='large'
             disabled
           />
         </Form.Item>
-        <Form.Item<Project> name={"startAt"} label="Start">
-          <DatePicker size="large" style={{ width: "100%" }} disabled />
+        <Form.Item<Project> name={"startAt"} label='Start'>
+          <DatePicker size='large' style={{ width: "100%" }} disabled />
         </Form.Item>
-        <Form.Item<Project> name={"endAt"} label="End">
-          <DatePicker size="large" style={{ width: "100%" }} disabled />
+        <Form.Item<Project> name={"endAt"} label='End'>
+          <DatePicker size='large' style={{ width: "100%" }} disabled />
         </Form.Item>
       </Form>
     </Modal>

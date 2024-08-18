@@ -1,4 +1,4 @@
-import { Button, Col, Input, message, Modal, Row, Table } from "antd";
+import { Button, Col, Input, message, Modal, Row, Table, Tabs } from "antd";
 import React, { useState } from "react";
 import "./modal-add-user-to-project.css";
 import {
@@ -13,6 +13,9 @@ interface ModalAddUserToProjectProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   project?: Project;
 }
+import { ProjectTeam } from "./project-team";
+
+import type { TabsProps } from "antd";
 
 interface DataType {
   avatar: {
@@ -115,6 +118,53 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
       };
     });
   };
+
+  const projectStaffTabs: TabsProps["items"] = [
+    {
+      key: "1",
+      label: "Project Team",
+      children: <ProjectTeam project={project} />,
+    },
+    {
+      key: "2",
+      label: "Add User To Project",
+      children: (
+        <>
+          <h2
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            Add User To Project
+          </h2>
+          {/* search */}
+          <Row className='modal-add-user-search-input'>
+            <Col span={8}>
+              <Input
+                placeholder='Search...'
+                prefix={<SearchOutlined />}
+                size='large'
+              />
+            </Col>
+          </Row>
+          <Table
+            columns={columns}
+            dataSource={mapTableData()}
+            pagination={{
+              pageSize: 5,
+              total: staffs?.total,
+              onChange: (value) => setStaffPage(value),
+              showSizeChanger: false,
+              current: staffPage,
+            }}
+          />
+        </>
+      ),
+    },
+  ];
+
   return (
     <Modal
       className='wrapper'
@@ -124,36 +174,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
       width={1000}
       footer={null}
     >
-      <h2
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-        }}
-      >
-        Add User To Project
-      </h2>
-      {/* search */}
-      <Row className='modal-add-user-search-input'>
-        <Col span={8}>
-          <Input
-            placeholder='Search...'
-            prefix={<SearchOutlined />}
-            size='large'
-          />
-        </Col>
-      </Row>
-      <Table
-        columns={columns}
-        dataSource={mapTableData()}
-        pagination={{
-          pageSize: 5,
-          total: staffs?.total,
-          onChange: (value) => setStaffPage(value),
-          showSizeChanger: false,
-          current: staffPage,
-        }}
-      />
+      <Tabs items={projectStaffTabs} defaultActiveKey='1' />
     </Modal>
   );
 };
