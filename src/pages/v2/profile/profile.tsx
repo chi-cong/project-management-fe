@@ -75,23 +75,23 @@ const SelectNewAvatar: React.FC<{
   return (
     <div className="select-new-avatar-form">
       <h3>Select new avatar</h3>
-      <div className="avatar-upload">
-        <img
-          src="/src/assets/imgs/profile image.png"
-          alt="Placeholder Avatar"
-          className="img"
-          style={{ width: "30%", height: "100%" }}
-        />
-        <div>
-          <CloudUploadOutlined className="upload-icon" />
-        </div>
-        <Upload {...avaFileProps}>
-          <div className="text-content">
+      <Upload {...avaFileProps}>
+        <div className='avatar-upload'>
+          <img
+            src='/src/assets/imgs/profile image.png'
+            alt='Placeholder Avatar'
+            className='img'
+            style={{ width: "30%", height: "100%" }}
+          />
+          <div>
+            <CloudUploadOutlined className='upload-icon' />
+          </div>
+          <div className='text-content'>
             <p style={{ fontWeight: "bolder" }}>Choose new file</p>
             <p>JPG, PNG, WEBP, JEPG,... Max size of 800GB</p>
           </div>
-        </Upload>
-      </div>
+        </div>
+      </Upload>
     </div>
   );
 };

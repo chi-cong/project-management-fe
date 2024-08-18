@@ -51,13 +51,10 @@ export const TaskDetail = ({
     },
     { skip: !taskAssignment.assignment?.assignment_id }
   );
-  const { data: departmentStaffs } = useGetDepartmentStaffsQuery(
-    {
-      departmentId: project?.department_id,
-      itemsPerPage: "ALL",
-    },
-    { skip: project?.department_id ? false : true }
-  );
+  const { data: departmentStaffs } = useGetDepartmentStaffsQuery({
+    departmentId: project?.department_id,
+    itemsPerPage: "ALL",
+  });
 
   const [deleteTask] = useDeleteTaskMutation();
   const [deleteAssignment] = useDeleteAssignmentMutation();

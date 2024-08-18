@@ -25,6 +25,7 @@ import { CustomAvatar } from "src/components/v2";
 import { UserOutlined, PlusOutlined } from "@ant-design/icons";
 import { ModalUpdateDepartment } from "src/components/";
 import { Department } from "src/share/models";
+import { shortenLongText } from "src/share/utils";
 type CardDepartmentProps = {
   department: Department;
   manager?: string;
@@ -37,7 +38,6 @@ type CardDepartmentProps = {
 export const CardDepartment: React.FC<CardDepartmentProps> = ({
   department,
   onClick,
-  role,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalAddUserOpen, setIsModalAddUserOpen] = useState(false);
@@ -77,45 +77,48 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
         <div className='department-wrapper'>
           <Row className='department-header'>
             {/* title */}
-            <Col span={12} className='department-header-info'>
-              <h2 className='department-name' onClick={onClick}>
-                {department.name}
+            <Col span={12} className='department-header-info' onClick={onClick}>
+              <h2 className='department-name'>
+                {shortenLongText(20, department.name)}
               </h2>
             </Col>
             {/* action (delete, update) */}
             <Col span={12} className='department-header-action'>
-              {role !== "MANAGER" && (
-                <Space size={[8, 24]} wrap={true}>
-                  <div
-                    onClick={showModal}
-                    className='department-header-action-button'
+              <Space size={[8, 24]} wrap={true}>
+                <div
+                  onClick={showModal}
+                  className='department-header-action-button'
+                >
+                  <EditOutlined />
+                </div>
+                <div
+                  className='department-header-action-button icon-delete-Project'
+                  onClick={handleDeleteClick}
+                >
+                  <Popconfirm
+                    title='Are you sure to delete this department?'
+                    icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+                    onConfirm={() => {
+                      deleteDepartmentHandler;
+                    }}
                   >
-                    <EditOutlined />
-                  </div>
-                  <div
-                    className='department-header-action-button icon-delete-Project'
-                    onClick={handleDeleteClick}
-                  >
-                    <Popconfirm
-                      title='Are you sure to delete this department?'
-                      icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-                      onConfirm={deleteDepartmentHandler}
-                    >
-                      <DeleteOutlined />
-                    </Popconfirm>
-                  </div>
-                </Space>
-              )}
+                    <DeleteOutlined />
+                  </Popconfirm>
+                </div>
+              </Space>
             </Col>
           </Row>
-          <div className='department-body'>
-            <div className='department-manager-info' onClick={onClick}>
-              <span>{department.name}</span>
+          <div className='department-body' onClick={onClick}>
+            <div className='department-manager-info'>
+              <span>{shortenLongText(40, department?.description)}</span>
             </div>
             {/* info */}
             <Row className='department-body-info'>
               <Col sm={24} xs={24} xxl={18}>
-                <Card className='department-body-manager-card'>
+                <Card
+                  className='department-body-manager-card'
+                  style={{ marginBottom: "var(--gap-s)" }}
+                >
                   <div className='department-body-manager-info-wrapper'>
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <CustomAvatar
@@ -193,11 +196,12 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                       cursor: "pointer",
                     }}
                   >
-                    {departmentStaffs?.users.map((staff) => (
+                    {departmentStaffs?.users.map((staff, index) => (
                       <CustomAvatar
                         avatarSrc={staff.avatar}
                         size={40}
                         userName={staff.name}
+                        key={index}
                       />
                     ))}
                   </Avatar.Group>

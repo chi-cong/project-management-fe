@@ -32,7 +32,7 @@ const InfoTabs: React.FC<DepartmentInfo> = ({ name, description, id }) => {
 
   useEffect(() => {
     form.setFieldsValue({ name, description });
-  }, []);
+  }, [description, name, form]);
 
   return (
     <>

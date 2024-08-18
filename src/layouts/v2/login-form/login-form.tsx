@@ -22,8 +22,13 @@ export const LoginForm = () => {
   const [loginService, loginStatus] = useLoginMutation();
 
   const onFinish: FormProps<LoginFieldType>["onFinish"] = async (values) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    let isEmail = false;
+    if (values.username) {
+      isEmail = emailRegex.test(values?.username);
+    }
     await loginService({
-      email: values.username,
+      ...(isEmail ? { email: values.username } : { username: values.username }),
       password: values.password,
     } as LoginReqBody)
       .unwrap()
@@ -52,9 +57,12 @@ export const LoginForm = () => {
         >
           <Form.Item<LoginFieldType>
             name='username'
-            rules={[{ required: true, message: "Username is required" }]}
+            rules={[
+              { required: true, message: "Username or email is required" },
+              { pattern: /^\S+$/, message: "No whitespace's allowed" },
+            ]}
           >
-            <Input placeholder='Email' size='large' />
+            <Input placeholder='Username or Email' size='large' />
           </Form.Item>
           <Form.Item<LoginFieldType>
             name='password'

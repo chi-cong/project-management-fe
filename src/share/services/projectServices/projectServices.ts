@@ -45,6 +45,31 @@ const projectServices = hrManagementApi.injectEndpoints({
       transformResponse: (response: Response<ProjectResp>) => response.data,
       providesTags: ["project"],
     }),
+    getDeletedProjects: build.query<
+      ProjectResp,
+      {
+        page: number;
+        items_per_page: number | undefined;
+        search?: string;
+      }
+    >({
+      query: ({ page, items_per_page, search }) => {
+        return {
+          url: `projects/admin/trash`,
+          method: "GET",
+          headers: {
+            authorization: accessToken(),
+          },
+          params: {
+            page,
+            items_per_page,
+            search: search || "",
+          },
+        };
+      },
+      transformResponse: (response: Response<ProjectResp>) => response.data,
+      providesTags: ["project"],
+    }),
     getProject: build.query<Project, { projectId: string }>({
       query: ({ projectId }) => {
         return {
@@ -91,6 +116,19 @@ const projectServices = hrManagementApi.injectEndpoints({
         return {
           url: `projects/delete/${body.projectId}`,
           method: "DELETE",
+          headers: {
+            authorization: accessToken(),
+          },
+        };
+      },
+      transformResponse: (response: Response<boolean>) => response.data,
+      invalidatesTags: ["project"],
+    }),
+    restoreProject: build.mutation<boolean, Partial<{ projectId: string }>>({
+      query: (body) => {
+        return {
+          url: `projects/restore/${body.projectId}`,
+          method: "PUT",
           headers: {
             authorization: accessToken(),
           },
@@ -611,4 +649,6 @@ export const {
   useGetAssignmentQuery,
   useDeleteProjectFileMutation,
   useRmStaffFromPjMutation,
+  useGetDeletedProjectsQuery,
+  useRestoreProjectMutation,
 } = projectServices;

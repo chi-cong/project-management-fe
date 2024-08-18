@@ -66,7 +66,7 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
           : new Date()
       ),
     });
-  }, []);
+  }, [user, form]);
 
   const handleUpdateClick = () => {
     setIsEdit(true);
@@ -75,7 +75,6 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
   const handleSaveClick = () => {};
 
   const handleCancelClick = () => {
-    form.resetFields();
     setIsEdit(false);
   };
 
@@ -89,7 +88,11 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
         disabled={!isEdit}
       >
         <div>
-          <Form.Item<UserInfor> name="name" label="Name">
+          <Form.Item<UserInfor>
+            name='name'
+            label='Name'
+            rules={[{ required: true, message: "Username is required" }]}
+          >
             <Input
               placeholder="Name..."
               size="large"
@@ -99,9 +102,12 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
         </div>
         <div>
           <Form.Item<UserInfor>
-            name="username"
-            rules={[{ required: true, message: "Username is required" }]}
-            label="Username"
+            name='username'
+            rules={[
+              { required: true, message: "Username is required" },
+              { pattern: /^\S+$/, message: "Contains no whitespace" },
+            ]}
+            label='Username'
           >
             <Input
               placeholder="Username..."
@@ -111,23 +117,34 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
           </Form.Item>
         </div>
         <div>
-          <Form.Item<UserInfor> name="phone" label="Phone">
+          <Form.Item<UserInfor>
+            name='email'
+            label='Email'
+            rules={[
+              { required: true, message: "Email is required" },
+              { pattern: /^\S+$/, message: "Contains no whitespace" },
+              {
+                pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Invalid email form",
+              },
+            ]}
+          >
             <Input
-              placeholder="Phone..."
-              size="large"
+              placeholder='Email...'
+              size='large'
               className={isEdit ? "input-enable" : "input-disable"}
             />
           </Form.Item>
         </div>
         <div>
           <Form.Item<UserInfor>
-            name="email"
-            label="Email"
+            name='phone'
+            label='Phone'
             rules={[{ required: true, message: "Email is required" }]}
           >
             <Input
-              placeholder="Email..."
-              size="large"
+              placeholder='Phone...'
+              size='large'
               className={isEdit ? "input-enable" : "input-disable"}
             />
           </Form.Item>

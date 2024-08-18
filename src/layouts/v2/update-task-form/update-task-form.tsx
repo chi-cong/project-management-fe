@@ -23,6 +23,7 @@ import { selectTaskAssign } from "src/libs/redux/taskAssignSlice";
 
 import { AssignmentStatus, OAssignmentStatus, Project } from "src/share/models";
 import { RootState } from "src/libs/redux";
+import { utcToLocal } from "src/share/utils";
 
 type TaskForm = {
   isModalOpen: boolean;
@@ -41,6 +42,7 @@ interface TaskFormFields {
 export const UpdateTaskForm: React.FC<TaskForm> = ({
   isModalOpen,
   setIsModalOpen,
+  project,
 }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -89,6 +91,7 @@ export const UpdateTaskForm: React.FC<TaskForm> = ({
       name: task?.name,
       description: task?.description,
       status: assignment?.status,
+      deadline: utcToLocal(assignment?.endAt),
     });
     if (task && assignment) {
       dispatch(selectTaskAssign({ task, assignment }));
@@ -142,6 +145,16 @@ export const UpdateTaskForm: React.FC<TaskForm> = ({
               placeholder='Deadline...'
               size='large'
               style={{ width: "100%" }}
+              minDate={
+                project?.startAt
+                  ? (utcToLocal(project.startAt) as Dayjs)
+                  : undefined
+              }
+              maxDate={
+                project?.endAt
+                  ? (utcToLocal(project.endAt) as Dayjs)
+                  : undefined
+              }
             />
           </Form.Item>
         </div>

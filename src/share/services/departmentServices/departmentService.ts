@@ -35,6 +35,28 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
         response.data,
       providesTags: ["department"],
     }),
+    getDeletedDepartments: build.query<
+      getDepartmentsResp,
+      { itemsPerPage?: number | "ALL"; page?: number; search?: string }
+    >({
+      query: ({ itemsPerPage, page, search }) => {
+        return {
+          url: `departments/admin/trash`,
+          method: "GET",
+          headers: {
+            authorization: accessToken(),
+          },
+          params: {
+            items_per_page: itemsPerPage ? itemsPerPage : 10,
+            page: page ? page : 1,
+            search: search ? search : "",
+          },
+        };
+      },
+      transformResponse: (response: Response<getDepartmentsResp>) =>
+        response.data,
+      providesTags: ["department"],
+    }),
     getDepartment: build.query<Department, { id: string }>({
       query: ({ id }) => {
         return {
@@ -57,6 +79,18 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
         return {
           url: `departments/admin/delete/${departmentId}`,
           method: "DELETE",
+        };
+      },
+      invalidatesTags: ["department"],
+    }),
+    restoreDepartment: build.mutation<
+      Response<Department>,
+      Partial<{ departmentId: string }>
+    >({
+      query({ departmentId }) {
+        return {
+          url: `departments/admin/restore/${departmentId}`,
+          method: "PUT",
           headers: {
             authorization: accessToken(),
           },
@@ -214,7 +248,10 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
     }),
     managerGetAllStaffDepartment: build.query<
       GetUserResp,
-      { items_per_page: number | "ALL"; search?: string }
+      {
+        items_per_page: number | "ALL";
+        search?: string;
+      }
     >({
       query: ({ items_per_page, search }) => {
         return {
@@ -233,8 +270,11 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
       providesTags: ["User"],
     }),
 
-    ManagerGetStaffNoDepartment: build.query<GetUserResp, { search?: string }>({
-      query: ({ search }) => {
+    ManagerGetStaffNoDepartment: build.query<
+      GetUserResp,
+      { search?: string; haveDepartment?: boolean }
+    >({
+      query: ({ search, haveDepartment }) => {
         return {
           url: "/users/get-a-list-of-staff-do-not-have-departments",
           method: "GET",
@@ -243,6 +283,7 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
           },
           params: {
             search: search || "",
+            haveDepartment,
           },
         };
       },
@@ -267,4 +308,6 @@ export const {
   useManagerGetStaffNoDepartmentQuery,
   useUpdateDepartmentMutation,
   useUpdateMngDepartmentMutation,
+  useGetDeletedDepartmentsQuery,
+  useRestoreDepartmentMutation,
 } = DepartmentServices;

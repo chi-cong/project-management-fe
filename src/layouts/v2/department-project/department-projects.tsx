@@ -18,9 +18,9 @@ export const DepartmentProjects = ({
       <Typography.Title level={3}>{title}</Typography.Title>
       <div className='project-list'>
         {projects.length > 0 ? (
-          projects.map((project) => {
+          projects.map((project, index) => {
             return (
-              <div className='wrapper'>
+              <div className='wrapper' key={index}>
                 <ProjectCard project={project} />
               </div>
             );

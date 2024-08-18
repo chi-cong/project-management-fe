@@ -1,4 +1,4 @@
-import { Form, FormProps, Input } from "antd";
+import { Form, Input } from "antd";
 
 interface CreateDepartment {
   name?: string;
@@ -15,7 +15,6 @@ const InfoTabs = ({
         name='update-department'
         layout='vertical'
         onValuesChange={(_changedValue, values) => {
-          console.log(values);
           setFields(values);
         }}
       >

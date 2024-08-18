@@ -9,13 +9,14 @@ import {
   FormProps,
   message,
 } from "antd";
-import React, { useEffect } from "react";
-import dayjs, { Dayjs } from "dayjs";
+import React from "react";
+import { Dayjs } from "dayjs";
 import {
   useCreateTaskMutation,
   useCreateAssigmentMutation,
 } from "src/share/services";
 import { OAssignmentStatus, Project } from "src/share/models";
+import { utcToLocal } from "src/share/utils";
 
 type TaskForm = {
   isModalOpen: boolean;
@@ -66,14 +67,6 @@ export const CreateTaskForm: React.FC<TaskForm> = ({
       .catch(() => message.error("Failed to create task"));
   };
 
-  useEffect(() => {
-    form.setFieldsValue({
-      description: "",
-      name: "",
-      deadline: dayjs(),
-    });
-  });
-
   return (
     <Modal
       className='wrapper'
@@ -122,6 +115,16 @@ export const CreateTaskForm: React.FC<TaskForm> = ({
               placeholder='Deadline...'
               size='large'
               style={{ width: "100%" }}
+              minDate={
+                project?.startAt
+                  ? (utcToLocal(project.startAt) as Dayjs)
+                  : undefined
+              }
+              maxDate={
+                project?.endAt
+                  ? (utcToLocal(project.endAt) as Dayjs)
+                  : undefined
+              }
             />
           </Form.Item>
         </div>

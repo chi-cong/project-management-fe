@@ -85,9 +85,10 @@ const accountServices = hrManagementApi.injectEndpoints({
         page?: number;
         search?: string;
         items_per_page?: number | "ALL";
+        haveDepartment?: boolean;
       }
     >({
-      query: ({ role, page, search, items_per_page }) => {
+      query: ({ role, page, search, items_per_page, haveDepartment }) => {
         return {
           url: `users/admin/get-all`,
           method: "GET",
@@ -99,6 +100,33 @@ const accountServices = hrManagementApi.injectEndpoints({
             page: page ? page : 1,
             search: search || "",
             items_per_page: items_per_page || 10,
+            ...(haveDepartment && { haveDepartment }),
+          },
+        };
+      },
+      transformResponse: (response: Response<GetUserResp>) => response.data,
+      providesTags: ["User"],
+    }),
+    getDeletedUsers: build.query<
+      GetUserResp,
+      {
+        role: UserRole;
+        page?: number;
+        search?: string;
+        items_per_page?: number | "ALL";
+        haveDepartment?: boolean;
+      }
+    >({
+      query: ({ role, page, search, items_per_page, haveDepartment }) => {
+        return {
+          url: `users/admin/trash`,
+          method: "GET",
+          params: {
+            role: role === OUserRole.All ? "" : role,
+            page: page ? page : 1,
+            search: search || "",
+            items_per_page: items_per_page || 10,
+            ...(haveDepartment && { haveDepartment }),
           },
         };
       },
@@ -152,9 +180,15 @@ const accountServices = hrManagementApi.injectEndpoints({
         return {
           url: `users/admin/delete/${userId}`,
           method: "DELETE",
-          headers: {
-            authorization: accessToken(),
-          },
+        };
+      },
+      invalidatesTags: ["User"],
+    }),
+    restoreUser: build.mutation<boolean, Partial<{ userId: string }>>({
+      query({ userId }) {
+        return {
+          url: `users/admin/restore/${userId}`,
+          method: "PUT",
         };
       },
       invalidatesTags: ["User"],
@@ -204,6 +238,37 @@ const accountServices = hrManagementApi.injectEndpoints({
           params: {
             page: page || 1,
             items_per_page: itemsPerPage,
+          },
+        };
+      },
+      providesTags: ["User", "assignment"],
+      transformResponse: (response: Response<GetUserResp>) => response.data,
+    }),
+    getStaffsNotInPrj: build.query<
+      GetUserResp,
+      {
+        projectId?: string;
+        departmentId?: string;
+        page?: number;
+        itemsPerPage?: number | "ALL";
+        role?: UserRole;
+      }
+    >({
+      query({ departmentId, page, itemsPerPage, projectId, role }) {
+        return {
+          url: `users/get-list-user-do-not-in-project`,
+          method: "POST",
+          headers: {
+            authorization: accessToken(),
+          },
+          body: {
+            project_id: projectId,
+            department_id: departmentId,
+          },
+          params: {
+            page: page || 1,
+            items_per_page: itemsPerPage,
+            ...(role && { role: role }),
           },
         };
       },
@@ -262,4 +327,7 @@ export const {
   useVerifyOtpMutation,
   useGetUserDepartmentStaffsQuery,
   useRefreshTokenQuery,
+  useGetStaffsNotInPrjQuery,
+  useGetDeletedUsersQuery,
+  useRestoreUserMutation,
 } = accountServices;

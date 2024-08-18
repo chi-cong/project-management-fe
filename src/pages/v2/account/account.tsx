@@ -84,8 +84,8 @@ export const Account = () => {
                 <h2>Account</h2>
               </div>
             </div>
-            <Row className="action" gutter={[8, 8]}>
-              <Col xs={12} sm={12} md={6}>
+            <Row className='action' gutter={[8, 8]}>
+              <Col xs={12} sm={12} md={7}>
                 <Dropdown menu={menuProps}>
                   <Button style={{ width: "100%" }}>
                     <Space
@@ -102,7 +102,7 @@ export const Account = () => {
                   </Button>
                 </Dropdown>
               </Col>
-              <Col xs={12} sm={12} md={8}>
+              <Col xs={12} sm={12} md={7}>
                 <Input.Search
                   placeholder="Search..."
                   style={{ width: "100%" }}
