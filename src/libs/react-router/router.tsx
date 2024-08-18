@@ -28,6 +28,9 @@ import {
   StaffProject,
   StaffDepartment,
 } from "src/pages/v2/dashboard/staff";
+import { AccountTrash } from "src/pages/v2/trash/account";
+import { ProjectTrash } from "src/pages/v2/trash/project";
+import { DepartmentTrash } from "src/pages/v2/trash/department";
 
 export const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -95,6 +98,9 @@ export const router = createBrowserRouter([
                 path: "password",
                 element: <Password />,
               },
+              { path: "project-trash", element: <ProjectTrash /> },
+              { path: "account-trash", element: <AccountTrash /> },
+              { path: "department-trash", element: <DepartmentTrash /> },
             ],
           },
           {

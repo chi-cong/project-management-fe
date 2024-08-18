@@ -49,7 +49,7 @@ export const Departments = () => {
   if (checkRole(OUserRole.Staff)) {
     if (departmentDetail) {
       return (
-        <div className='v2-departments-page'>
+        <div className="v2-departments-page">
           <UserDepartmentUi
             department={departmentDetail}
             manager={{
@@ -61,24 +61,24 @@ export const Departments = () => {
         </div>
       );
     } else {
-      return <Empty description='No department available' />;
+      return <Empty description="No department available" />;
     }
   }
 
   return (
-    <div className='v2-departments-page'>
-      <section className='main'>
-        <header className='main-header'>
-          <section className='first-sec'>
-            <div className='title-des'>
-              <div className='title-row'>
+    <div className="v2-departments-page">
+      <section className="main">
+        <header className="main-header">
+          <section className="first-sec">
+            <div className="title-des">
+              <div className="title-row">
                 <h2>Departments</h2>
               </div>
             </div>
             <Row className='header-action' gutter={[8, 8]}>
               <Col xs={12} sm={12} md={12}>
                 <Input.Search
-                  placeholder='Search...'
+                  placeholder="Search..."
                   style={{ width: "100%" }}
                   allowClear
                   onSearch={(value) =>
@@ -88,10 +88,13 @@ export const Departments = () => {
               </Col>
               <Col xs={12} sm={12} md={6}>
                 <Button
-                  type='default'
-                  className='title-row-btn'
+                  type="default"
+                  className="title-row-btn"
                   icon={<DeleteOutlined />}
                   style={{ width: "100%" }}
+                  onClick={() => {
+                    navigate(`/v2/dashboard/admin/department-trash/`);
+                  }}
                 >
                   Trash
                 </Button>
@@ -99,8 +102,8 @@ export const Departments = () => {
 
               <Col xs={24} sm={24} md={6}>
                 <Button
-                  type='primary'
-                  className='title-row-btn'
+                  type="primary"
+                  className="title-row-btn"
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
                   style={{ width: "100%" }}
@@ -111,7 +114,7 @@ export const Departments = () => {
             </Row>
           </section>
         </header>
-        <main className='department-main-info'>
+        <main className="department-main-info">
           <List
             grid={{
               gutter: 12,

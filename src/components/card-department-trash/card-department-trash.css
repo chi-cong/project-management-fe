@@ -1,0 +1,78 @@
+@import "../../mixin/mixin.css";
+.card-department-container {
+  .ant-card-body {
+    padding: 10px;
+  }
+  .department-wrapper {
+    .department-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .department-name {
+        text-wrap: nowrap;
+      }
+      .department-header-info {
+        display: flex;
+        align-items: center;
+      }
+      .department-header-action {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        .department-header-action-button {
+          font-size: 20px;
+        }
+      }
+    }
+    .department-body {
+      padding-top: 12px;
+      border-top: 3px solid #d9d9d9;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      .department-body-info {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .department-body-manager-info-wrapper {
+          display: flex;
+          width: 100%;
+          .department-manager-main-info {
+            margin-left: 12px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            @mixin tabletAndMobile {
+              flex-direction: column;
+              align-items: center;
+            }
+
+            .department-body-manager-role {
+              color: #6358dc;
+              padding: 3px 10px;
+              border-radius: 20px;
+              text-wrap: nowrap;
+              background-color: #cdcbf9;
+            }
+          }
+        }
+        .department-body-manager-card {
+          @mixin tabletAndMobile {
+            margin-bottom: 10px;
+          }
+          border-radius: 60px;
+        }
+      }
+    }
+  }
+
+  .card-account-container {
+    margin-left: 10px;
+  }
+}

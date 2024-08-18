@@ -34,6 +34,7 @@ import {
 } from "src/share/services";
 import { ModalUpdateProject, ModalAddUserToProject } from "src/components";
 import { Activities } from "src/layouts/v2/task-detail/activities";
+import { ModalDetailProject } from "src/components/modal-detail-project";
 export const StaffProject = () => {
   const { id: projectId } = useParams();
   const [reportModal, setReportModal] = useState<boolean>(false);
@@ -45,6 +46,7 @@ export const StaffProject = () => {
   const [docSec, setDocSec] = useState<boolean>(false);
   const [taskDocSec, setTaskDocSec] = useState<boolean>(false);
   const [activitySec, setActivitySec] = useState<boolean>(false);
+  const [projectDetailModal, setProjectDetailModal] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const { data: projectData } = useGetProjectQuery({
@@ -55,7 +57,6 @@ export const StaffProject = () => {
     projectId,
     page: 1,
   });
-  const [deleteProject] = useDeleteProjectMutation();
   const { data: projectStaffs } = useGetProjectStaffsQuery({
     items_per_page: "ALL",
     projectId,
@@ -85,21 +86,20 @@ export const StaffProject = () => {
 
   const ProjectOptions = () => {
     return (
-      <div className='project-option'>
+      <div className="project-option">
         <Button
-          type='text'
-          className='project-option-btn'
+          type="text"
+          className="project-option-btn"
           onClick={() => {
-            setIsUpdateProject(false);
-            setProjectUpdateModal(true);
+            setProjectDetailModal(true);
           }}
         >
           <Page />
           <Typography.Text>Detail</Typography.Text>
         </Button>
         <Button
-          type='text'
-          className='project-option-btn'
+          type="text"
+          className="project-option-btn"
           onClick={() => {
             setDocSec(true);
           }}
@@ -107,45 +107,34 @@ export const StaffProject = () => {
           <Folder />
           <Typography.Text>Documents</Typography.Text>
         </Button>
-        <Popconfirm
-          title='Delete this project ?'
-          onConfirm={() => {
-            deleteProject({ projectId: projectData?.project_id })
-              .unwrap()
-              .then(() => {
-                navigate(-1);
-              })
-              .catch(() => message.error("failed to delete this project"));
-          }}
-        ></Popconfirm>
       </div>
     );
   };
 
   return (
     <>
-      <div className='admin-project-page'>
-        <header className='header-row'>
-          <div className='first-part'>
+      <div className="admin-project-page">
+        <header className="header-row">
+          <div className="first-part">
             <Typography.Title level={2}>{projectData?.name}</Typography.Title>
             <Popover content={ProjectOptions}>
-              <Button type='text' size='small'>
+              <Button type="text" size="small">
                 <MenuDots />
               </Button>
             </Popover>
             <Button
-              type='default'
-              className='title-row-btn'
-              shape='round'
+              type="default"
+              className="title-row-btn"
+              shape="round"
               onClick={() => setReportModal(true)}
             >
               <PieChart />
               Reports
             </Button>
           </div>
-          <div className='second-part'>
+          <div className="second-part">
             <div
-              className='avatar-group-wrapper'
+              className="avatar-group-wrapper"
               onClick={() => setAddUserModal(true)}
             >
               {projectStaffs?.users.length ? (
@@ -160,7 +149,7 @@ export const StaffProject = () => {
                   ))}
                 </Avatar.Group>
               ) : (
-                <CustomAvatar size={32} userName='+' />
+                <CustomAvatar size={32} userName="+" />
               )}
             </div>
           </div>
@@ -175,7 +164,7 @@ export const StaffProject = () => {
             xl: 3,
             xxl: 3,
           }}
-          className='task-sec'
+          className="task-sec"
           dataSource={taskListSrc}
           renderItem={(taskList) => {
             return (
@@ -218,11 +207,16 @@ export const StaffProject = () => {
       >
         <Activities />
       </Modal>
+      <ModalDetailProject
+        project={projectData!}
+        isModalOpen={projectDetailModal}
+        setIsModalOpen={setProjectDetailModal}
+      />
       <Modal
         open={reportModal}
         onCancel={() => setReportModal(false)}
         footer={[]}
-        title='Department Report'
+        title="Department Report"
         width={"80%"}
       >
         <ProjectReport projectId={projectId} />

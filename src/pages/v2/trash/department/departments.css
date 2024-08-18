@@ -1,0 +1,53 @@
+@import "../../../../mixin/mixin.css";
+.v2-departments-page {
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-m);
+    width: 100%;
+    .main-header {
+      width: 100%;
+      display: flex;
+      gap: var(--gap-s);
+      .first-sec {
+        width: 100%;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        @mixin tabletAndMobile {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .title-des {
+          width: 80%;
+          .title-row {
+            display: flex;
+            align-items: center;
+            svg {
+              margin: auto;
+              width: 16px;
+            }
+            h2 {
+              font-size: 32px;
+            }
+          }
+        }
+        .header-action {
+          display: flex;
+
+          .title-row-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--gap-xs);
+          }
+        }
+      }
+    }
+    .departments-main-info {
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

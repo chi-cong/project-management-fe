@@ -81,9 +81,9 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
   return (
     <>
       <Form
-        name='user-info'
+        name="user-info"
         onFinish={onFinish}
-        layout='vertical'
+        layout="vertical"
         form={form}
         disabled={!isEdit}
       >
@@ -94,8 +94,8 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
             rules={[{ required: true, message: "Username is required" }]}
           >
             <Input
-              placeholder='Name...'
-              size='large'
+              placeholder="Name..."
+              size="large"
               className={isEdit ? "input-enable" : "input-disable"}
             />
           </Form.Item>
@@ -110,8 +110,8 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
             label='Username'
           >
             <Input
-              placeholder='Username...'
-              size='large'
+              placeholder="Username..."
+              size="large"
               className={isEdit ? "input-enable" : "input-disable"}
             />
           </Form.Item>
@@ -150,10 +150,10 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
           </Form.Item>
         </div>
         <div>
-          <Form.Item<UserInfor> name='birthday' label='Birthday'>
+          <Form.Item<UserInfor> name="birthday" label="Birthday">
             <DatePicker
-              placeholder='Birthday...'
-              size='large'
+              placeholder="Birthday..."
+              size="large"
               style={{ width: "100%" }}
               className={isEdit ? "input-enable" : "input-disable"}
             />
@@ -161,22 +161,22 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
         </div>
         {isEdit && (
           <Form.Item>
-            <Space className='profile-form-btn'>
+            <Space className="profile-form-btn">
               <Button
-                type='primary'
-                htmlType='submit'
-                size='large'
+                type="primary"
+                htmlType="submit"
+                size="large"
                 onClick={handleSaveClick}
-                className='update-infor-btn'
+                className="update-infor-btn"
                 disabled={false}
               >
                 Save
               </Button>
               <Button
-                type='primary'
-                size='large'
+                type="primary"
+                size="large"
                 onClick={handleCancelClick}
-                className='cancel-infor-btn'
+                className="cancel-infor-btn"
               >
                 Cancel
               </Button>
@@ -184,13 +184,13 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
           </Form.Item>
         )}
       </Form>
-      <Space className='profile-form-btn'>
+      <Space className="profile-form-btn">
         {!isEdit && (
           <Button
-            type='primary'
-            size='large'
+            type="primary"
+            size="large"
             onClick={handleUpdateClick}
-            className='update-infor-btn'
+            className="update-infor-btn"
           >
             Update
           </Button>

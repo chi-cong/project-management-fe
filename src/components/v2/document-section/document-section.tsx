@@ -9,6 +9,8 @@ import { useGetTaskQuery, useDeleteFileMutation } from "src/share/services";
 import { selectTaskAssign } from "src/libs/redux/taskAssignSlice";
 
 import type { UploadProps } from "antd";
+import { useRoleChecker } from "src/share/hooks";
+import { OUserRole } from "src/share/models";
 
 const baseApi = import.meta.env.VITE_REQUEST_API_URL;
 
@@ -17,6 +19,7 @@ export const DocumentSection = () => {
     (state: RootState) => state.taskAssignment
   );
   const dispatch = useDispatch();
+  const checkRole = useRoleChecker();
 
   const [getFile] = useGetDocFileMutation();
   const [deleteFile] = useDeleteFileMutation();
@@ -88,61 +91,61 @@ export const DocumentSection = () => {
   }, [getFile, task]);
 
   return (
-    <div className='doc-sec'>
-      <div className='doc-sec-first-part'>
-        <div className='doc-sec-head'>
+    <div className="doc-sec">
+      <div className="doc-sec-first-part">
+        <div className="doc-sec-head">
           <Typography.Title level={4}>File Attachment</Typography.Title>
         </div>
 
-        <div className='file-list'>
+        <div className="file-list">
           {fileLinks.map((files, index) => {
             const handledFile = handleFile(files);
             return (
-              <div className='file-row' key={index}>
-                <div className='file-name-icon'>
+              <div className="file-row" key={index}>
+                <div className="file-name-icon">
                   {handledFile.fileIcon}
                   <Typography.Link>
-                    <a href={files} target='_blank'>
+                    <a href={files} target="_blank">
                       {handledFile.displayedFileName}
                     </a>
                   </Typography.Link>
                 </div>
-                <Popconfirm
-                  title='Delete this file ?'
-                  onConfirm={() => {
-                    // fileLinks and filenames index are the same
-                    deleteFile({
-                      filename: taskAssignment.task?.document[index],
-                      taskId: taskAssignment.task?.task_id,
-                    })
-                      .unwrap()
-                      .then(() => {
-                        message.success(
-                          `${taskAssignment.task?.document[index]} is deleted`
-                        );
-                        getLinks();
+                {!checkRole(OUserRole.Staff) && (
+                  <Popconfirm
+                    title="Delete this file ?"
+                    onConfirm={() => {
+                      // fileLinks and filenames index are the same
+                      deleteFile({
+                        filename: taskAssignment.task?.document[index],
+                        taskId: taskAssignment.task?.task_id,
                       })
-                      .catch(() => {
-                        message.error("Failed to delete file");
-                      });
-                  }}
-                >
-                  <Button shape='round' danger size='small'>
-                    Delete
-                  </Button>
-                </Popconfirm>
+                        .unwrap()
+                        .then(() => {
+                          message.success(
+                            `${taskAssignment.task?.document[index]} is deleted`
+                          );
+                          getLinks();
+                        })
+                        .catch(() => {
+                          message.error("Failed to delete file");
+                        });
+                    }}
+                  >
+                    <Button shape="round" danger size="small">
+                      Delete
+                    </Button>
+                  </Popconfirm>
+                )}
               </div>
             );
           })}
         </div>
       </div>
-      <Upload.Dragger
-        {...props}
-        listType='text'
-        // showUploadList={uploadProgress}
-      >
-        <strong>Choose a file</strong> or drag it here
-      </Upload.Dragger>
+      {!checkRole(OUserRole.Staff) && (
+        <Upload.Dragger {...props} listType="text">
+          <strong>Choose a file</strong> or drag it here
+        </Upload.Dragger>
+      )}
     </div>
   );
 };

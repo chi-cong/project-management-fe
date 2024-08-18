@@ -1,0 +1,50 @@
+.card-account-container {
+  .account-wrapper {
+    .account-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .account-header-info {
+        display: flex;
+        align-items: center;
+        .account-role {
+          margin-left: 10px;
+          background-color: #cdcbf9;
+          color: #6358dc;
+          border-radius: 7px;
+          padding: 2px 8px;
+        }
+      }
+      .account-header-action {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        .account-header-action-button {
+          font-size: 20px;
+        }
+      }
+    }
+    .account-body {
+      margin-top: 10px;
+      display: flex;
+      span {
+        line-height: 10px;
+      }
+      .account-body-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .account-body-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+      }
+    }
+  }
+
+  + .card-account-container {
+    margin-left: 10px;
+  }
+}
