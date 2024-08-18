@@ -124,6 +124,22 @@ const projectServices = hrManagementApi.injectEndpoints({
       transformResponse: (response: Response<boolean>) => response.data,
       invalidatesTags: ["project"],
     }),
+    deleteProjectPermanently: build.mutation<
+      boolean,
+      Partial<{ projectId: string }>
+    >({
+      query: (body) => {
+        return {
+          url: `projects/admin/force-delete/${body.projectId}`,
+          method: "DELETE",
+          headers: {
+            authorization: accessToken(),
+          },
+        };
+      },
+      transformResponse: (response: Response<boolean>) => response.data,
+      invalidatesTags: ["project"],
+    }),
     restoreProject: build.mutation<boolean, Partial<{ projectId: string }>>({
       query: (body) => {
         return {
@@ -396,9 +412,10 @@ const projectServices = hrManagementApi.injectEndpoints({
         projectId?: string;
         page?: number;
         items_per_page?: number | "ALL";
+        search: string;
       }
     >({
-      query({ projectId, page, items_per_page }) {
+      query({ projectId, page, items_per_page, search }) {
         return {
           url: `/users/get-all-staff-in-project/${projectId}`,
           method: "GET",
@@ -408,6 +425,7 @@ const projectServices = hrManagementApi.injectEndpoints({
           params: {
             page: page || "1",
             items_per_page: items_per_page || "10",
+            search,
           },
         };
       },
@@ -651,4 +669,5 @@ export const {
   useRmStaffFromPjMutation,
   useGetDeletedProjectsQuery,
   useRestoreProjectMutation,
+  useDeleteProjectPermanentlyMutation,
 } = projectServices;

@@ -1,11 +1,14 @@
-import { Card, Col, Popconfirm, Row, Space } from "antd";
+import { Card, Col, message, Popconfirm, Row, Space } from "antd";
 import {
   UndoOutlined,
   DeleteOutlined,
   QuestionCircleOutlined,
 } from "@ant-design/icons";
 import "./card-account-trash.css";
-import { useRestoreUserMutation } from "src/share/services";
+import {
+  useRestoreUserMutation,
+  useDeleteUserPermanentlyMutation,
+} from "src/share/services";
 import { CustomAvatar } from "src/components/v2";
 import { OUserRole, RoleResponse, User } from "src/share/models";
 type CardAccountTrash = {
@@ -22,6 +25,7 @@ export const CardAccountTrash: React.FC<CardAccountTrash> = ({
   userId,
 }) => {
   const [restoreUser] = useRestoreUserMutation();
+  const [deletePermanently] = useDeleteUserPermanentlyMutation();
 
   const handleRestoreClick = async (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
@@ -32,9 +36,17 @@ export const CardAccountTrash: React.FC<CardAccountTrash> = ({
     event.stopPropagation();
   };
   const RestoreAccount = async () => {
-    await restoreUser({ userId }).unwrap().then().catch();
+    await restoreUser({ userId })
+      .unwrap()
+      .then(() => message.success("Restored account"))
+      .catch(() => message.error("Failed to restore account"));
   };
-  const DeleteAccountForever = async () => {};
+  const DeleteAccountForever = async () => {
+    await deletePermanently({ userId })
+      .unwrap()
+      .then(() => message.success("Account's permanently deleted"))
+      .catch(() => message.error("Failed to delete account"));
+  };
 
   return (
     <div className='card-account-container'>
@@ -72,7 +84,7 @@ export const CardAccountTrash: React.FC<CardAccountTrash> = ({
                     onClick={handleDeleteForeverClick}
                   >
                     <Popconfirm
-                      title='Are you sure to delete this account forever?'
+                      title='Are you sure to delete this account permanently?'
                       icon={<QuestionCircleOutlined style={{ color: "red" }} />}
                       onConfirm={DeleteAccountForever}
                     >

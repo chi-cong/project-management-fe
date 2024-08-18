@@ -1,11 +1,10 @@
 import "./add-project-user-panel.css";
-import { Button, Col, Input, message, Modal, Row, Table } from "antd";
+import { Button, Col, Input, message, Modal, Row, Table, Tabs } from "antd";
 import React, { useState } from "react";
 import {
   useCreateAssigmentMutation,
   useGetStaffsNotInPrjQuery,
 } from "src/share/services";
-import { SearchOutlined } from "@ant-design/icons";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
 import { Project, RoleResponse } from "src/share/models";
 interface ModalAddUserToProjectProps {
@@ -13,6 +12,8 @@ interface ModalAddUserToProjectProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   project?: Project;
 }
+import type { TabsProps } from "antd";
+import { ProjectTeam } from "../project-team";
 
 interface DataType {
   avatar: {
@@ -31,12 +32,14 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
   setIsModalOpen,
 }) => {
   const [staffPage, setStaffPage] = useState<number>(1);
+  const [search, setSearch] = useState<string>("");
 
   const { data: staffs } = useGetStaffsNotInPrjQuery(
     {
       itemsPerPage: 5,
       departmentId: project?.department_id,
       projectId: project?.project_id,
+      search,
     },
     { skip: project?.department_id ? false : true }
   );
@@ -116,6 +119,53 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
       });
     }
   };
+
+  const projectStaffTabs: TabsProps["items"] = [
+    {
+      key: "1",
+      label: "Project Team",
+      children: <ProjectTeam project={project} />,
+    },
+    {
+      key: "2",
+      label: "Add User To Project",
+      children: (
+        <>
+          <h2
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            Add User To Project
+          </h2>
+          {/* search */}
+          <Row className='modal-add-user-search-input'>
+            <Col span={8}>
+              <Input.Search
+                placeholder='Search...'
+                size='large'
+                onSearch={(value) => setSearch(value)}
+              />
+            </Col>
+          </Row>
+          <Table
+            columns={columns}
+            dataSource={mapTableData()}
+            pagination={{
+              pageSize: 5,
+              total: staffs?.total,
+              onChange: (value) => setStaffPage(value),
+              showSizeChanger: false,
+              current: staffPage,
+            }}
+          />
+        </>
+      ),
+    },
+  ];
+
   return (
     <Modal
       className='wrapper'
@@ -125,36 +175,7 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
       width={1000}
       footer={null}
     >
-      <h2
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-        }}
-      >
-        Add User To Project
-      </h2>
-      {/* search */}
-      <Row className='modal-add-user-search-input'>
-        <Col span={8}>
-          <Input
-            placeholder='Search...'
-            prefix={<SearchOutlined />}
-            size='large'
-          />
-        </Col>
-      </Row>
-      <Table
-        columns={columns}
-        dataSource={mapTableData()}
-        pagination={{
-          pageSize: 5,
-          total: staffs?.total,
-          onChange: (value) => setStaffPage(value),
-          showSizeChanger: false,
-          current: staffPage,
-        }}
-      />
+      <Tabs items={projectStaffTabs} defaultActiveKey='1' />
     </Modal>
   );
 };
