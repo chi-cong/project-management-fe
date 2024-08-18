@@ -132,7 +132,7 @@ export const TaskCard = ({
           type='text'
           size='small'
           onClick={() => {
-            dispatch(selectTaskAssign({ task, assignment }));
+            dispatch(selectTaskAssign({ task }));
             openActivities();
           }}
         >
@@ -144,7 +144,7 @@ export const TaskCard = ({
           type='text'
           size='small'
           onClick={() => {
-            dispatch(selectTaskAssign({ task, assignment }));
+            dispatch(selectTaskAssign({ task }));
             openFile();
           }}
         >

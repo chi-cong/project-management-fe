@@ -33,7 +33,7 @@ const AddManagerTabs = ({
           size={50}
           userName={record.name}
           avatarSrc={record.avatar.src}
-          bgColor={record.avatar.src}
+          bgColor={record.avatar.bgColor}
         />
       ),
     },

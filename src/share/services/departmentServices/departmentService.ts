@@ -93,7 +93,7 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
           method: "DELETE",
         };
       },
-      invalidatesTags: ["department"],
+      invalidatesTags: ["department", "project"],
     }),
     restoreDepartment: build.mutation<
       Response<Department>,

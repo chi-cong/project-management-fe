@@ -44,6 +44,7 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
       .unwrap()
       .then(() => {
         message.success("Success create project");
+        handleCancel();
       })
       .catch(() => message.error("There was an error"));
   };

@@ -52,6 +52,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
       .unwrap()
       .then(() => {
         message.success("Success update project");
+        handleCancel();
       })
       .catch(() => message.error("There was an error"));
   };
@@ -72,7 +73,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
 
   return (
     <Modal
-      className="update-project-modal"
+      className='update-project-modal'
       open={isModalOpen}
       centered
       footer={[]}
@@ -89,8 +90,8 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
         Update Project
       </h2>
       <Form
-        className="project-form"
-        layout="vertical"
+        className='project-form'
+        layout='vertical'
         form={form}
         onFinish={onFinish}
         // if its detail modal, disable form
@@ -98,31 +99,31 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
       >
         <Form.Item<Project>
           name={"name"}
-          label="Project name"
+          label='Project name'
           rules={[{ required: true, message: "Project name is required" }]}
         >
-          <Input size="large" />
+          <Input size='large' />
         </Form.Item>
         <Form.Item<Project>
           name={"projectCode"}
-          label="Project Code"
+          label='Project Code'
           rules={[{ required: true, message: "Project code is required" }]}
         >
-          <Input size="large" />
+          <Input size='large' />
         </Form.Item>
-        <Form.Item<Project> name={"investor"} label="Investor">
-          <Input size="large" />
+        <Form.Item<Project> name={"investor"} label='Investor'>
+          <Input size='large' />
         </Form.Item>
         <Form.Item<Project>
           name={"description"}
-          label="Description"
+          label='Description'
           rules={[
             { required: true, message: "Project description is required" },
           ]}
         >
-          <Input.TextArea size="large" />
+          <Input.TextArea size='large' />
         </Form.Item>
-        <Form.Item<Project> name={"department_id"} label="Department">
+        <Form.Item<Project> name={"department_id"} label='Department'>
           <Select
             options={departmentData?.departments?.map((department) => {
               return {
@@ -130,10 +131,10 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
                 value: department.department_id,
               };
             })}
-            size="large"
+            size='large'
           />
         </Form.Item>
-        <Form.Item<Project> name={"project_manager_id"} label="Project Manager">
+        <Form.Item<Project> name={"project_manager_id"} label='Project Manager'>
           <Select
             options={pms?.users?.map((pm) => {
               return {
@@ -141,12 +142,12 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
                 value: pm.user_id,
               };
             })}
-            size="large"
+            size='large'
           />
         </Form.Item>
 
-        <Form.Item<Project> name={"startAt"} label="Start">
-          <DatePicker size="large" style={{ width: "100%" }} />
+        <Form.Item<Project> name={"startAt"} label='Start'>
+          <DatePicker size='large' style={{ width: "100%" }} />
         </Form.Item>
 
         <Form.Item<Project> name={"endAt"} label='End'>
@@ -158,16 +159,16 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
         </Form.Item>
 
         {isUpdate && (
-          <Form.Item className="create-user-form-btn">
+          <Form.Item className='create-user-form-btn'>
             <Space>
-              <Button type="primary" htmlType="submit" size="large">
+              <Button type='primary' htmlType='submit' size='large'>
                 Update
               </Button>
               <Button
-                type="primary"
+                type='primary'
                 ghost
-                size="large"
-                onClick={() => setIsModalOpen(false)}
+                size='large'
+                onClick={() => handleCancel()}
               >
                 Cancel
               </Button>

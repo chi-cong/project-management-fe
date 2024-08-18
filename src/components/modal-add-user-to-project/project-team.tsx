@@ -27,11 +27,14 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
   const [staffPage, setStaffPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
 
-  const { data: staffs } = useGetProjectStaffsQuery({
-    items_per_page: 5,
-    projectId: project?.project_id,
-    search,
-  });
+  const { data: staffs } = useGetProjectStaffsQuery(
+    {
+      items_per_page: 5,
+      projectId: project?.project_id,
+      search,
+    },
+    { skip: project?.project_id ? false : true }
+  );
 
   const [removeFromPj] = useRmStaffFromPjMutation();
 
