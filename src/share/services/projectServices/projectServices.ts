@@ -127,7 +127,7 @@ const projectServices = hrManagementApi.injectEndpoints({
     restoreProject: build.mutation<boolean, Partial<{ projectId: string }>>({
       query: (body) => {
         return {
-          url: `projects/restore/${body.projectId}`,
+          url: `projects/admin/restore/${body.projectId}`,
           method: "PUT",
           headers: {
             authorization: accessToken(),

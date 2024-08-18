@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Avatar,
   Card,
   Col,
-  Divider,
   message,
   Popconfirm,
   Popover,
@@ -11,20 +10,16 @@ import {
   Space,
 } from "antd";
 import {
-  EditOutlined,
   DeleteOutlined,
   QuestionCircleOutlined,
   UndoOutlined,
 } from "@ant-design/icons";
 import "./card-department-trash.css";
 import {
-  useDeleteDepartmentsMutation,
+  useRestoreDepartmentMutation,
   useGetDepartmentStaffsQuery,
 } from "src/share/services";
-import { ModalAddUserToProject } from "src/components/";
 import { CustomAvatar } from "src/components/v2";
-import { UserOutlined, PlusOutlined } from "@ant-design/icons";
-import { ModalUpdateDepartment } from "src/components/";
 import { Department } from "src/share/models";
 type CardDepartmentTrashProps = {
   department: Department;
@@ -38,20 +33,8 @@ type CardDepartmentTrashProps = {
 export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
   department,
   onClick,
-  role,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalAddUserOpen, setIsModalAddUserOpen] = useState(false);
-  const showModalAddUser = () => {
-    setIsModalAddUserOpen(true);
-  };
-
-  const showModal = (e: React.MouseEvent<HTMLElement>) => {
-    e.stopPropagation();
-    setIsModalOpen(true);
-  };
-
-  const [deleteDepartment] = useDeleteDepartmentsMutation();
+  const [restoreDepartment] = useRestoreDepartmentMutation();
   const { data: departmentStaffs } = useGetDepartmentStaffsQuery({
     itemsPerPage: "ALL",
     departmentId: department.department_id,
@@ -65,29 +48,38 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
   ) => {
     event.stopPropagation();
   };
-  const RestoreDepartment = async () => {};
+  const RestoreDepartment = async () => {
+    try {
+      await restoreDepartment({
+        departmentId: department.department_id,
+      }).unwrap();
+      await message.success("Restored department");
+    } catch (error) {
+      message.error("Failed to restore department");
+    }
+  };
   const DeleteDepartmentForever = async () => {};
 
   return (
-    <div className="card-department-container">
+    <div className='card-department-container'>
       <Card hoverable bordered={false}>
-        <div className="department-wrapper">
-          <Row className="department-header">
+        <div className='department-wrapper'>
+          <Row className='department-header'>
             {/* title */}
-            <Col span={12} className="department-header-info">
-              <h2 className="department-name" onClick={onClick}>
+            <Col span={12} className='department-header-info'>
+              <h2 className='department-name' onClick={onClick}>
                 {department.name}
               </h2>
             </Col>
             {/* action (delete, update) */}
-            <Col span={12} className="department-header-action">
+            <Col span={12} className='department-header-action'>
               <Space>
                 <div
-                  className="department-header-action-button icon-delete-department"
+                  className='department-header-action-button icon-delete-department'
                   onClick={handleRestoreClick}
                 >
                   <Popconfirm
-                    title="Are you sure to restore this Department?"
+                    title='Are you sure to restore this Department?'
                     icon={<QuestionCircleOutlined style={{ color: "red" }} />}
                     onConfirm={RestoreDepartment}
                   >
@@ -95,11 +87,11 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
                   </Popconfirm>
                 </div>
                 <div
-                  className="department-header-action-button icon-delete-department"
+                  className='department-header-action-button icon-delete-department'
                   onClick={handleDeleteForeverClick}
                 >
                   <Popconfirm
-                    title="Are you sure to delete this Department forever?"
+                    title='Are you sure to delete this Department forever?'
                     icon={<QuestionCircleOutlined style={{ color: "red" }} />}
                     onConfirm={DeleteDepartmentForever}
                   >
@@ -109,15 +101,15 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
               </Space>
             </Col>
           </Row>
-          <div className="department-body">
-            <div className="department-manager-info" onClick={onClick}>
+          <div className='department-body'>
+            <div className='department-manager-info' onClick={onClick}>
               <span>{department.name}</span>
             </div>
             {/* info */}
-            <Row className="department-body-info">
+            <Row className='department-body-info'>
               <Col sm={24} xs={24} xxl={18}>
-                <Card className="department-body-manager-card">
-                  <div className="department-body-manager-info-wrapper">
+                <Card className='department-body-manager-card'>
+                  <div className='department-body-manager-info-wrapper'>
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <CustomAvatar
                         size={40}
@@ -126,11 +118,11 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
                         bgColor={department.information?.manager?.avatar_color}
                       />
                     </div>
-                    <div className="department-manager-main-info">
+                    <div className='department-manager-main-info'>
                       <h3 style={{ textWrap: "nowrap" }}>
                         {department.information?.manager?.name}
                       </h3>
-                      <span className="department-body-manager-role">
+                      <span className='department-body-manager-role'>
                         Manger
                       </span>
                     </div>
@@ -140,8 +132,8 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
               {/* avatar group */}
               <Col>
                 <Popover
-                  placement="bottom"
-                  trigger="hover"
+                  placement='bottom'
+                  trigger='hover'
                   // content={
                   //   <Space direction="vertical" style={{ display: "flex" }}>
                   //     <div>
@@ -186,7 +178,7 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
                 >
                   <Avatar.Group
                     maxCount={2}
-                    maxPopoverTrigger="click"
+                    maxPopoverTrigger='click'
                     size={40}
                     maxStyle={{
                       color: "#f56a00",

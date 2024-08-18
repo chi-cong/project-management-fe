@@ -1,15 +1,9 @@
 import "./departments.css";
 import { Col, Input, List, PaginationProps, Row } from "antd";
 import { useState } from "react";
-import { CardDepartment } from "src/components/card-department";
 import { useRoleChecker } from "src/share/hooks";
-import {
-  useGetDepartmentsQuery,
-  useGetDetailDepartmentQuery,
-  useGetUserDetailQuery,
-} from "src/share/services";
+import { useGetDeletedDepartmentsQuery } from "src/share/services";
 import { OUserRole } from "src/share/models";
-import { useDispatch } from "react-redux";
 import { CardDepartmentTrash } from "src/components/card-department-trash";
 
 export const DepartmentTrash = () => {
@@ -20,7 +14,7 @@ export const DepartmentTrash = () => {
   }>({ page: 1, itemsPerPage: 9, search: "" });
 
   const checkRole = useRoleChecker();
-  const { data } = useGetDepartmentsQuery(queries, {
+  const { data } = useGetDeletedDepartmentsQuery(queries, {
     skip: checkRole(OUserRole.Staff) || checkRole(OUserRole.Manager),
   });
 
@@ -28,19 +22,19 @@ export const DepartmentTrash = () => {
     setQueries({ ...queries, page });
   };
   return (
-    <div className="v2-departments-page">
-      <section className="main">
-        <header className="main-header">
-          <section className="first-sec">
-            <div className="title-des">
-              <div className="title-row">
+    <div className='v2-departments-page'>
+      <section className='main'>
+        <header className='main-header'>
+          <section className='first-sec'>
+            <div className='title-des'>
+              <div className='title-row'>
                 <h2>Departments Trash</h2>
               </div>
             </div>
-            <Row className="header-action" gutter={[8, 8]}>
+            <Row className='header-action' gutter={[8, 8]}>
               <Col xs={12} sm={12} md={24}>
                 <Input.Search
-                  placeholder="Search..."
+                  placeholder='Search...'
                   style={{ width: "100%" }}
                   allowClear
                   onSearch={(value) =>
@@ -51,7 +45,7 @@ export const DepartmentTrash = () => {
             </Row>
           </section>
         </header>
-        <main className="department-main-info">
+        <main className='department-main-info'>
           <List
             grid={{
               gutter: 12,
