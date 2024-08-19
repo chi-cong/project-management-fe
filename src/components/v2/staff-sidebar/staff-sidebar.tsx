@@ -22,7 +22,7 @@ export const StaffSidebar = () => {
   const projectItems: CustomStaffMenuItem[] = (projectsResp?.data || [])
     .filter((project) => project.name)
     .map((project) => ({
-      id: project.id,
+      id: project.project_id,
       title: (
         <div className='sidebar-menu-item'>
           {getSublistNode()}
@@ -31,7 +31,7 @@ export const StaffSidebar = () => {
       ),
       icon: null,
       onClick() {
-        navigate(`/v2/dashboard/STAFF/project/${project!.project_id!}`);
+        navigate(`/v2/dashboard/staff/project/${project!.project_id!}`);
       },
     }));
 
@@ -39,7 +39,7 @@ export const StaffSidebar = () => {
     {
       title: "Department",
       onClick() {
-        navigate(`/v2/dashboard/STAFF/department/${user?.department_id}`);
+        navigate(`/v2/dashboard/staff/department/${user?.department_id}`);
       },
       icon: <ClusterOutlined />,
     },

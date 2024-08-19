@@ -1,5 +1,5 @@
 import "./department.css";
-import { Typography, Card, Modal, Button, List } from "antd";
+import { Typography, Card, Modal, Button, List, Empty } from "antd";
 import { ResponsivePie } from "@nivo/pie";
 import { CustomAvatar } from "src/components/v2";
 import { DepartmentProjects } from "src/layouts/v2";
@@ -66,7 +66,7 @@ export const StaffDepartment = () => {
     setupProjectFilter();
   }, [departmentProjects]);
 
-  return (
+  return departmentId ? (
     <>
       <div className='department-page'>
         <section className='main'>
@@ -88,7 +88,7 @@ export const StaffDepartment = () => {
             <section className='second-sec'>
               <div className='des-manager-sec'>
                 <Typography.Text>{data?.description}</Typography.Text>
-                {data?.information && (
+                {data?.information?.manager ? (
                   <Card className='manager-card'>
                     <Card.Meta
                       title={data.information.manager?.name}
@@ -112,6 +112,8 @@ export const StaffDepartment = () => {
                       }
                     />
                   </Card>
+                ) : (
+                  <Empty description='No Manager' />
                 )}
               </div>
 
@@ -225,5 +227,7 @@ export const StaffDepartment = () => {
         <DepartmentReport departmentId={departmentId} />
       </Modal>
     </>
+  ) : (
+    <Empty description='You have no department' />
   );
 };
