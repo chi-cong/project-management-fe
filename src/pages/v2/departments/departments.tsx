@@ -90,7 +90,7 @@ export const Departments = () => {
                   style={{ width: "100%" }}
                   onClick={() => {
                     navigate(
-                      `/v2/dashboard/${localStorageUtil.get("role")?.toLocaleUpperCase()}/department-trash/`
+                      `/v2/dashboard/${localStorageUtil.get("role")?.toLocaleLowerCase()}/department-trash/`
                     );
                   }}
                 >
