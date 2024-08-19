@@ -20,6 +20,9 @@
           align-items: flex-start;
         }
         .title-des {
+          display: flex;
+          align-items: center;
+          gap: var(--gap-s);
           .title-row {
             display: flex;
             align-items: center;
