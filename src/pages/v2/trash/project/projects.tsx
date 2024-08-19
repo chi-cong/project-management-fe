@@ -1,10 +1,12 @@
 import "./projects.css";
-import { Col, Input, List, PaginationProps, Row } from "antd";
+import { Button, Col, Input, List, PaginationProps, Row } from "antd";
 import { useState } from "react";
 import { useGetDeletedProjectsQuery } from "src/share/services";
 import { useRoleChecker } from "src/share/hooks";
 import { OUserRole } from "src/share/models";
 import { CardProjectTrash } from "src/components/card-project-trash";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 export const ProjectTrash = () => {
   //components
@@ -25,21 +27,30 @@ export const ProjectTrash = () => {
   const onChangePage: PaginationProps["onChange"] = (page) => {
     setQueries({ ...queries, page });
   };
+  const navigate = useNavigate();
 
   return (
-    <div className='v2-projects-page'>
-      <section className='main'>
-        <header className='main-header'>
-          <section className='first-sec'>
-            <div className='title-des'>
-              <div className='title-row'>
+    <div className="v2-projects-page">
+      <section className="main">
+        <header className="main-header">
+          <section className="first-sec">
+            <div className="title-des">
+              <div className="title-row">
                 <h2>Project Trash</h2>
               </div>
+              <Button
+                shape="round"
+                style={{ display: "" }}
+                onClick={() => navigate(-1)}
+              >
+                <ArrowLeftOutlined />
+                Back to Project
+              </Button>
             </div>
-            <Row className='action' gutter={[8, 8]}>
+            <Row className="action" gutter={[8, 8]}>
               <Col xs={12} sm={12} md={24}>
                 <Input.Search
-                  placeholder='Search...'
+                  placeholder="Search..."
                   style={{ width: "100%" }}
                   allowClear
                   onSearch={(value) =>
@@ -50,7 +61,7 @@ export const ProjectTrash = () => {
             </Row>
           </section>
         </header>
-        <main className=''>
+        <main className="">
           <List
             grid={{
               gutter: 12,

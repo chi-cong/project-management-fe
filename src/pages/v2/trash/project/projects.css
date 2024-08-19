@@ -21,11 +21,13 @@
           gap: var(--gap-s);
         }
         .title-des {
+          display: flex;
+          align-items: center;
+          gap: var(--gap-s);
           .title-row {
             display: flex;
             align-items: center;
             gap: var(--gap-xs);
-
             svg {
               margin: auto;
               width: 16px;
