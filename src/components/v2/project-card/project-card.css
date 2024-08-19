@@ -6,6 +6,7 @@
   padding: var(--padding-m);
   border: solid 1px var(--gray-color);
   border-radius: var(--rounded-border-l);
+  cursor: pointer;
   .project-card-head {
     display: flex;
     justify-content: space-between;
@@ -28,7 +29,6 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    cursor: pointer;
   }
   svg {
     width: 20px;
