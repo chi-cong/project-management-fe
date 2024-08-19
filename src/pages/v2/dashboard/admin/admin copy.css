@@ -7,8 +7,5 @@
     padding: var(--padding-m);
     padding-right: 0;
     box-sizing: border-box;
-    @media screen and (max-width: 1000px) {
-      width: 100%;
-    }
   }
 }

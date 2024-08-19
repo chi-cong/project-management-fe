@@ -71,7 +71,7 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
   };
 
   const mapTableData = () => {
-    if (staffs?.users.length) {
+    if (staffs?.users?.length) {
       return staffs?.users.map((staff): DataType => {
         return {
           avatar: {

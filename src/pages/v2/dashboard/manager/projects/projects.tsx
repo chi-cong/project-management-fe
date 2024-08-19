@@ -49,8 +49,7 @@ export const ManagerProjects = () => {
               </div>
             </div>
             <Row className='action' gutter={[8, 8]}>
-              <Col xs={12} sm={12} md={6}></Col>
-              <Col xs={12} sm={12} md={6}>
+              <Col xs={12} sm={12} md={8}>
                 <Input.Search
                   placeholder='Search...'
                   style={{ width: "100%" }}
@@ -60,7 +59,7 @@ export const ManagerProjects = () => {
                   allowClear
                 />
               </Col>
-              <Col xs={12} sm={12} md={6}>
+              <Col xs={12} sm={12} md={8}>
                 <Button
                   type='default'
                   className='title-row-btn'
@@ -70,7 +69,7 @@ export const ManagerProjects = () => {
                   Trash
                 </Button>
               </Col>
-              <Col xs={12} sm={12} md={6}>
+              <Col xs={12} sm={12} md={8}>
                 <Button
                   type='primary'
                   className='title-row-btn'
