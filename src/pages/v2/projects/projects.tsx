@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetAllProjectQuery } from "src/share/services";
 import { selectProject } from "src/libs/redux/selectProjectSlice";
 import { useDispatch } from "react-redux";
+import { localStorageUtil } from "src/share/utils";
 
 export const Projects = () => {
   const dispatch = useDispatch();
@@ -58,7 +59,9 @@ export const Projects = () => {
                   icon={<DeleteOutlined />}
                   style={{ width: "100%" }}
                   onClick={() => {
-                    navigate(`/v2/dashboard/admin/project-trash/`);
+                    navigate(
+                      `/v2/dashboard/${localStorageUtil.get("role")?.toLocaleLowerCase()}/project-trash/`
+                    );
                   }}
                 >
                   Trash
@@ -106,7 +109,7 @@ export const Projects = () => {
                   onClick={() => {
                     dispatch(selectProject(project!.project_id!));
                     navigate(
-                      `/v2/dashboard/admin/project/${project!.project_id!}`
+                      `/v2/dashboard/${localStorageUtil.get("role")?.toLocaleLowerCase()}/project/${project!.project_id!}`
                     );
                   }}
                   project={project}

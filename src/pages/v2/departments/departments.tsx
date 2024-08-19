@@ -15,6 +15,7 @@ import { OUserRole } from "src/share/models";
 import { UserDepartmentUi } from "src/layouts";
 import { useDispatch } from "react-redux";
 import { selectDepartment } from "src/libs/redux/selectDepartmentSlice";
+import { localStorageUtil } from "src/share/utils";
 
 export const Departments = () => {
   const dispatch = useDispatch();
@@ -88,7 +89,9 @@ export const Departments = () => {
                   icon={<DeleteOutlined />}
                   style={{ width: "100%" }}
                   onClick={() => {
-                    navigate(`/v2/dashboard/admin/department-trash/`);
+                    navigate(
+                      `/v2/dashboard/${localStorageUtil.get("role")?.toLocaleUpperCase}/department-trash/`
+                    );
                   }}
                 >
                   Trash
@@ -139,7 +142,7 @@ export const Departments = () => {
                             selectDepartment(department!.department_id!)
                           );
                           navigate(
-                            `/v2/dashboard/admin/department/${department!.department_id!}`
+                            `/v2/dashboard/${localStorageUtil.get("role")?.toLocaleLowerCase()}/department/${department!.department_id!}`
                           );
                         }}
                       />

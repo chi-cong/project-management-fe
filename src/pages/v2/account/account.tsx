@@ -17,6 +17,7 @@ import { useGetUsersQuery } from "src/share/services";
 import ModalCreateUser from "src/components/modal-create-user";
 import { UserRole, OUserRole } from "src/share/models";
 import { useNavigate } from "react-router-dom";
+import { localStorageUtil } from "src/share/utils";
 
 export const Account = () => {
   const navigate = useNavigate();
@@ -114,7 +115,9 @@ export const Account = () => {
                   icon={<DeleteOutlined />}
                   style={{ width: "100%" }}
                   onClick={() => {
-                    navigate(`/v2/dashboard/admin/account-trash/`);
+                    navigate(
+                      `/v2/dashboard/${localStorageUtil.get("role")?.toLocaleLowerCase()}/account-trash/`
+                    );
                   }}
                 >
                   Trash

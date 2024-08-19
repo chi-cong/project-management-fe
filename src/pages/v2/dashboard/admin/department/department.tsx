@@ -170,7 +170,7 @@ export const AdminDepartment = () => {
               <Button
                 shape='round'
                 style={{ display: "" }}
-                onClick={() => navigate("/v2/dashboard/admin/departments")}
+                onClick={() => navigate(-1)}
               >
                 <ArrowLeftOutlined />
                 Back to department
