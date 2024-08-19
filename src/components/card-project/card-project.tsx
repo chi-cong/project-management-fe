@@ -163,7 +163,10 @@ export const CardProject: React.FC<CardProject> = ({
               <div className='project-footer-action'>
                 <div
                   className='avatat-group-wrapper'
-                  onClick={() => setIsModalAddUserOpen(true)}
+                  onClick={(event: React.MouseEvent<HTMLElement>) => {
+                    event.stopPropagation();
+                    setIsModalAddUserOpen(true);
+                  }}
                 >
                   {projectStaffs?.users.length ? (
                     <Avatar.Group

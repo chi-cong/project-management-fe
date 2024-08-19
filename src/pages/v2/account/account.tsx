@@ -16,11 +16,9 @@ import { useState } from "react";
 import { useGetUsersQuery } from "src/share/services";
 import ModalCreateUser from "src/components/modal-create-user";
 import { UserRole, OUserRole } from "src/share/models";
-import { useRoleChecker } from "src/share/hooks";
 import { useNavigate } from "react-router-dom";
 
 export const Account = () => {
-  const checkRole = useRoleChecker();
   const navigate = useNavigate();
   const [queries, setQueries] = useState<{
     role: UserRole;
@@ -28,13 +26,10 @@ export const Account = () => {
     search: string | undefined;
   }>({ role: OUserRole.All, page: 1, search: "" });
 
-  const { data } = useGetUsersQuery(
-    {
-      ...queries,
-      items_per_page: 10,
-    },
-    { skip: !checkRole(OUserRole.Admin) }
-  );
+  const { data } = useGetUsersQuery({
+    ...queries,
+    items_per_page: 10,
+  });
 
   const items: MenuProps["items"] = [
     {
@@ -75,12 +70,12 @@ export const Account = () => {
   };
 
   return (
-    <div className="v2-account-page">
-      <section className="main">
-        <header className="main-header">
-          <section className="first-sec">
-            <div className="title-des">
-              <div className="title-row">
+    <div className='v2-account-page'>
+      <section className='main'>
+        <header className='main-header'>
+          <section className='first-sec'>
+            <div className='title-des'>
+              <div className='title-row'>
                 <h2>Account</h2>
               </div>
             </div>
@@ -104,7 +99,7 @@ export const Account = () => {
               </Col>
               <Col xs={12} sm={12} md={7}>
                 <Input.Search
-                  placeholder="Search..."
+                  placeholder='Search...'
                   style={{ width: "100%" }}
                   allowClear
                   onSearch={(value) =>
@@ -114,8 +109,8 @@ export const Account = () => {
               </Col>
               <Col xs={12} sm={12} md={5}>
                 <Button
-                  type="default"
-                  className="title-row-btn"
+                  type='default'
+                  className='title-row-btn'
                   icon={<DeleteOutlined />}
                   style={{ width: "100%" }}
                   onClick={() => {
@@ -127,8 +122,8 @@ export const Account = () => {
               </Col>
               <Col xs={12} sm={12} md={5}>
                 <Button
-                  type="primary"
-                  className="title-row-btn"
+                  type='primary'
+                  className='title-row-btn'
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
                   style={{ width: "100%" }}

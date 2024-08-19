@@ -18,11 +18,14 @@ type CardAccount = {
   staffCount?: number;
 };
 
+import { useRoleChecker } from "src/share/hooks";
+
 export const CardAccount: React.FC<CardAccount> = ({
   account,
   onClick,
   userId,
 }) => {
+  const checkRole = useRoleChecker();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -55,7 +58,8 @@ export const CardAccount: React.FC<CardAccount> = ({
               </div>
             </Col>
             <Col span={12} className='account-header-action'>
-              {(account.role as RoleResponse).name !== OUserRole.Admin ? (
+              {(account.role as RoleResponse).name !== OUserRole.Admin ||
+              checkRole(OUserRole.SuperAdmin) ? (
                 <Space>
                   <div
                     onClick={showModal}

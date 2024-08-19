@@ -79,6 +79,33 @@ export const router = createBrowserRouter([
         element: <DashboardV2 />,
         children: [
           {
+            path: "super_admin",
+            async lazy() {
+              const { SuperAdmin } = await import(
+                "src/pages/v2/dashboard/super-admin"
+              );
+              return { Component: SuperAdmin };
+            },
+            children: [
+              { path: "department/:id", element: <AdminDepartment /> },
+              { path: "projects", element: <Projects /> },
+              { path: "project/:id", element: <AdminProject /> },
+              { path: "account", element: <Account /> },
+              { path: "departments", element: <Departments /> },
+              {
+                path: "profile",
+                element: <Profile />,
+              },
+              {
+                path: "password",
+                element: <Password />,
+              },
+              { path: "project-trash", element: <ProjectTrash /> },
+              { path: "account-trash", element: <AccountTrash /> },
+              { path: "department-trash", element: <DepartmentTrash /> },
+            ],
+          },
+          {
             path: "admin",
             async lazy() {
               const { Admin } = await import("src/pages/v2/dashboard/admin");
@@ -153,44 +180,6 @@ export const router = createBrowserRouter([
           },
         ],
       },
-      // {
-      //   path: "dashboard",
-      //   element: <DashboardV2 />,
-      //   children: [
-      //     {
-      //       path: "staff",
-      //       element: <Staff />,
-      //       children: [
-      //         { path: "department/:id", element: <AdminDepartment /> },
-      //         { path: "projects", element: <Projects /> },
-      //         { path: "project/:id", element: <AdminProject /> },
-      //         { path: "account", element: <Account /> },
-      //         {
-      //           path: "profile",
-      //           element: <Profile />,
-      //         },
-      //         {
-      //           path: "password",
-      //           element: <Password />,
-      //         },
-      //       ],
-      //     },
-      //     {
-      //       path: "manager",
-      //       element: <Manager />,
-      //       children: [
-      //         {
-      //           path: "department/:id",
-      //           element: <ManagerDepartment />,
-      //         },
-      //       ],
-      //     },
-      //   ],
-      // },
-      // {
-      //   path: "profile",
-      //   element: <Profile />,
-      // },
       {
         path: "test-route",
         element: <TestRoute />,

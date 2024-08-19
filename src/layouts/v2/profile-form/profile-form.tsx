@@ -12,6 +12,7 @@ import {
 import dayjs, { Dayjs } from "dayjs";
 import { RoleResponse, User, UserRole } from "src/share/models";
 import { useUpdateUserDetailMutation } from "src/share/services";
+import { utcToLocal } from "src/share/utils";
 interface UserInfor {
   user_id?: string;
   username?: string;
@@ -57,14 +58,7 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
       name: user?.name,
       phone: user?.phone,
       role: user?.role && (user?.role as RoleResponse).name,
-      birthday: dayjs(
-        user?.birthday
-          ? dayjs(user.birthday)
-              .utc()
-              .tz("Asia/Ho_Chi_Minh")
-              .format("ddd, MMM D, H:mm z")
-          : new Date()
-      ),
+      birthday: utcToLocal(user?.birthday),
     });
   }, [user, form]);
 
@@ -81,9 +75,9 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
   return (
     <>
       <Form
-        name="user-info"
+        name='user-info'
         onFinish={onFinish}
-        layout="vertical"
+        layout='vertical'
         form={form}
         disabled={!isEdit}
       >
@@ -94,8 +88,8 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
             rules={[{ required: true, message: "Username is required" }]}
           >
             <Input
-              placeholder="Name..."
-              size="large"
+              placeholder='Name...'
+              size='large'
               className={isEdit ? "input-enable" : "input-disable"}
             />
           </Form.Item>
@@ -110,8 +104,8 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
             label='Username'
           >
             <Input
-              placeholder="Username..."
-              size="large"
+              placeholder='Username...'
+              size='large'
               className={isEdit ? "input-enable" : "input-disable"}
             />
           </Form.Item>
@@ -150,33 +144,34 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
           </Form.Item>
         </div>
         <div>
-          <Form.Item<UserInfor> name="birthday" label="Birthday">
+          <Form.Item<UserInfor> name='birthday' label='Birthday'>
             <DatePicker
-              placeholder="Birthday..."
-              size="large"
+              placeholder='Birthday...'
+              size='large'
               style={{ width: "100%" }}
               className={isEdit ? "input-enable" : "input-disable"}
+              maxDate={dayjs()}
             />
           </Form.Item>
         </div>
         {isEdit && (
           <Form.Item>
-            <Space className="profile-form-btn">
+            <Space className='profile-form-btn'>
               <Button
-                type="primary"
-                htmlType="submit"
-                size="large"
+                type='primary'
+                htmlType='submit'
+                size='large'
                 onClick={handleSaveClick}
-                className="update-infor-btn"
+                className='update-infor-btn'
                 disabled={false}
               >
                 Save
               </Button>
               <Button
-                type="primary"
-                size="large"
+                type='primary'
+                size='large'
                 onClick={handleCancelClick}
-                className="cancel-infor-btn"
+                className='cancel-infor-btn'
               >
                 Cancel
               </Button>
@@ -184,13 +179,13 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
           </Form.Item>
         )}
       </Form>
-      <Space className="profile-form-btn">
+      <Space className='profile-form-btn'>
         {!isEdit && (
           <Button
-            type="primary"
-            size="large"
+            type='primary'
+            size='large'
             onClick={handleUpdateClick}
-            className="update-infor-btn"
+            className='update-infor-btn'
           >
             Update
           </Button>

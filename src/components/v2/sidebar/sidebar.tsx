@@ -25,7 +25,9 @@ export const Sidebar = () => {
     {
       title: "Account",
       onClick() {
-        navigate("/v2/dashboard/admin/account");
+        navigate(
+          `/v2/dashboard/${(localStorageUtil.get("role") as string).toLocaleLowerCase()}/account`
+        );
       },
       icon: <TeamOutlined />,
       addCallBack() {
@@ -35,7 +37,9 @@ export const Sidebar = () => {
     {
       title: "Department",
       onClick() {
-        navigate("/v2/dashboard/admin/departments");
+        navigate(
+          `/v2/dashboard/${(localStorageUtil.get("role") as string).toLocaleLowerCase()}/departments`
+        );
       },
       icon: <ClusterOutlined />,
       addCallBack() {
@@ -45,7 +49,9 @@ export const Sidebar = () => {
     {
       title: "Project",
       onClick() {
-        navigate("/v2/dashboard/admin/projects");
+        navigate(
+          `/v2/dashboard/${(localStorageUtil.get("role") as string).toLocaleLowerCase()}/projects`
+        );
       },
       icon: <RocketOutlined />,
       addCallBack() {
