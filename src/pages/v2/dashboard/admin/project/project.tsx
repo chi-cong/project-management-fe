@@ -144,7 +144,7 @@ export const AdminProject = () => {
       <div className='admin-project-page'>
         <header className='header-row'>
           <div className='first-part'>
-            <Typography.Title level={2}>{projectData?.name}</Typography.Title>
+            <h2>{projectData?.name}</h2>
             <Popover content={ProjectOptions}>
               <Button type='text' size='small'>
                 <MenuDots />

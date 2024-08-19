@@ -1,1 +1,1 @@
-export * from "./departments";
+export { DepartmentTrash } from "./departments";
