@@ -22,7 +22,7 @@ export const handleFile = (fileString: string): HandledFile => {
 
   // handle file length
   if (fileString.length > 20) {
-    result.displayedFileName = `${fileString.substring(0, 15)}...`;
+    result.displayedFileName = `${fileString.substring(0, 30)}...`;
   } else {
     result.displayedFileName = fileString;
   }

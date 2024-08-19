@@ -617,9 +617,10 @@ const projectServices = hrManagementApi.injectEndpoints({
       {
         page: number;
         items_per_page: number | "ALL";
+        search?: string;
       }
     >({
-      query({ page, items_per_page }) {
+      query({ search, page, items_per_page }) {
         return {
           url: `projects/get-all-user-project`,
           method: "GET",
@@ -629,6 +630,7 @@ const projectServices = hrManagementApi.injectEndpoints({
           params: {
             page,
             items_per_page,
+            search,
           },
         };
       },

@@ -9,7 +9,6 @@ import {
   Popover,
   Row,
   Space,
-  Typography,
 } from "antd";
 import {
   EditOutlined,
@@ -148,7 +147,15 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                           </div>
                         </>
                       ) : (
-                        <Typography.Text>No Manager</Typography.Text>
+                        <div
+                          style={{
+                            height: "40px",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <h4>No Manager</h4>
+                        </div>
                       )}
                     </div>
                   </Card>
