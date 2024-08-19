@@ -8,6 +8,7 @@ import {
   Popover,
   List,
   message,
+  Empty,
 } from "antd";
 import { ResponsivePie } from "@nivo/pie";
 import { ArrowLeftOutlined } from "@ant-design/icons";
@@ -179,7 +180,7 @@ export const AdminDepartment = () => {
             <section className='second-sec'>
               <div className='des-manager-sec'>
                 <Typography.Text>{data?.description}</Typography.Text>
-                {data?.information && (
+                {data?.information?.manager ? (
                   <Card className='manager-card'>
                     <Card.Meta
                       title={data.information.manager?.name}
@@ -203,6 +204,8 @@ export const AdminDepartment = () => {
                       }
                     />
                   </Card>
+                ) : (
+                  <Empty description='No Manager' />
                 )}
               </div>
 

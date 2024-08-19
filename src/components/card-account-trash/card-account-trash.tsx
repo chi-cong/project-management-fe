@@ -11,6 +11,8 @@ import {
 } from "src/share/services";
 import { CustomAvatar } from "src/components/v2";
 import { OUserRole, RoleResponse, User } from "src/share/models";
+import { useRoleChecker } from "src/share/hooks";
+
 type CardAccountTrash = {
   account: User;
   manager?: string;
@@ -24,6 +26,7 @@ export const CardAccountTrash: React.FC<CardAccountTrash> = ({
   onClick,
   userId,
 }) => {
+  const checkRole = useRoleChecker();
   const [restoreUser] = useRestoreUserMutation();
   const [deletePermanently] = useDeleteUserPermanentlyMutation();
 
@@ -65,7 +68,8 @@ export const CardAccountTrash: React.FC<CardAccountTrash> = ({
               </div>
             </Col>
             <Col span={12} className='account-header-action'>
-              {(account.role as RoleResponse).name !== OUserRole.Admin ? (
+              {(account.role as RoleResponse).name !== OUserRole.Admin ||
+              checkRole("SUPER_ADMIN") ? (
                 <Space>
                   <div
                     className='account-header-action-button icon-delete-account'

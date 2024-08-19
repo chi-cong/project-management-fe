@@ -142,6 +142,7 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
               placeholder='Birthday...'
               size='large'
               style={{ width: "100%" }}
+              maxDate={dayjs()}
             />
           </Form.Item>
         </div>

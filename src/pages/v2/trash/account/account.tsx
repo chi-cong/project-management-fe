@@ -15,26 +15,20 @@ import { useState } from "react";
 import { useGetDeletedUsersQuery } from "src/share/services";
 import ModalCreateUser from "src/components/modal-create-user";
 import { UserRole, OUserRole } from "src/share/models";
-import { useRoleChecker } from "src/share/hooks";
 import { CardAccountTrash } from "src/components/card-account-trash";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 export const AccountTrash = () => {
-  const checkRole = useRoleChecker();
-
   const [queries, setQueries] = useState<{
     role: UserRole;
     page: number | undefined;
     search: string | undefined;
   }>({ role: OUserRole.All, page: 1, search: "" });
 
-  const { data } = useGetDeletedUsersQuery(
-    {
-      ...queries,
-      items_per_page: 10,
-    },
-    { skip: !checkRole(OUserRole.Admin) }
-  );
+  const { data } = useGetDeletedUsersQuery({
+    ...queries,
+    items_per_page: 10,
+  });
 
   const items: MenuProps["items"] = [
     {

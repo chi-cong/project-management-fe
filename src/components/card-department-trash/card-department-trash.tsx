@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, message, Popconfirm, Row, Space } from "antd";
+import { Card, Col, message, Popconfirm, Row, Space, Typography } from "antd";
 import {
   DeleteOutlined,
   QuestionCircleOutlined,
@@ -88,7 +88,7 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
                   onClick={handleDeleteForeverClick}
                 >
                   <Popconfirm
-                    title='Are you sure to delete this Department forever?'
+                    title='Are you sure to delete this department permanently?'
                     icon={<QuestionCircleOutlined style={{ color: "red" }} />}
                     onConfirm={DeleteDepartmentForever}
                   >
@@ -107,22 +107,30 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
               <Col sm={24} xs={24} xxl={18}>
                 <Card className='department-body-manager-card'>
                   <div className='department-body-manager-info-wrapper'>
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <CustomAvatar
-                        size={40}
-                        userName={department.information?.manager?.name}
-                        avatarSrc={department.information?.manager?.avatar}
-                        bgColor={department.information?.manager?.avatar_color}
-                      />
-                    </div>
-                    <div className='department-manager-main-info'>
-                      <h3 style={{ textWrap: "nowrap" }}>
-                        {department.information?.manager?.name}
-                      </h3>
-                      <span className='department-body-manager-role'>
-                        Manger
-                      </span>
-                    </div>
+                    {department.information?.manager?.user_id ? (
+                      <>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <CustomAvatar
+                            size={40}
+                            userName={department.information?.manager?.name}
+                            avatarSrc={department.information?.manager?.avatar}
+                            bgColor={
+                              department.information?.manager?.avatar_color
+                            }
+                          />
+                        </div>
+                        <div className='department-manager-main-info'>
+                          <h3 style={{ textWrap: "nowrap" }}>
+                            {department.information?.manager?.name}
+                          </h3>
+                          <span className='department-body-manager-role'>
+                            Manger
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <Typography.Text>No Manager</Typography.Text>
+                    )}
                   </div>
                 </Card>
               </Col>
