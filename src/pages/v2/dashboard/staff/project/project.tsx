@@ -1,53 +1,33 @@
 import "./project.css";
-import { MenuDots, Pen, Trash, Page, Folder, PieChart } from "src/assets/icons";
-import {
-  Typography,
-  Button,
-  Avatar,
-  Popconfirm,
-  Popover,
-  List,
-  Modal,
-  message,
-} from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { MenuDots, Page, Folder, PieChart } from "src/assets/icons";
+import { Typography, Button, Avatar, Popover, List, Modal } from "antd";
 import {
   CustomAvatar,
   ProjectDocument,
   DocumentSection as TaskDocument,
 } from "src/components/v2";
-import {
-  TaskList,
-  TaskDetail,
-  CreateTaskForm,
-  ProjectReport,
-} from "src/layouts/v2";
+import { TaskList, TaskDetail, ProjectReport } from "src/layouts/v2";
 import { useState } from "react";
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { AssignmentStatus, OAssignmentStatus } from "src/share/models";
 import {
   useGetProjectQuery,
   useGetProjectTasksQuery,
-  useDeleteProjectMutation,
   useGetProjectStaffsQuery,
 } from "src/share/services";
-import { ModalUpdateProject, ModalAddUserToProject } from "src/components";
 import { Activities } from "src/layouts/v2/task-detail/activities";
 import { ModalDetailProject } from "src/components/modal-detail-project";
+import { ProjectTeam } from "src/components/v2/project-team/project-team";
+
 export const StaffProject = () => {
   const { id: projectId } = useParams();
   const [reportModal, setReportModal] = useState<boolean>(false);
   const [taskDetailModal, setTaskDetailModal] = useState<boolean>(false);
-  const [createTaskModal, setCreateTaskModal] = useState<boolean>(false);
-  const [projectUpdateModal, setProjectUpdateModal] = useState<boolean>(false);
-  const [isUpdateProject, setIsUpdateProject] = useState<boolean>(false);
-  const [addUserModal, setAddUserModal] = useState<boolean>(false);
+  const [projectTeam, setProjectTeam] = useState<boolean>(false);
   const [docSec, setDocSec] = useState<boolean>(false);
   const [taskDocSec, setTaskDocSec] = useState<boolean>(false);
   const [activitySec, setActivitySec] = useState<boolean>(false);
   const [projectDetailModal, setProjectDetailModal] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   const { data: projectData } = useGetProjectQuery({
     projectId: projectId!,
@@ -86,10 +66,10 @@ export const StaffProject = () => {
 
   const ProjectOptions = () => {
     return (
-      <div className="project-option">
+      <div className='project-option'>
         <Button
-          type="text"
-          className="project-option-btn"
+          type='text'
+          className='project-option-btn'
           onClick={() => {
             setProjectDetailModal(true);
           }}
@@ -98,8 +78,8 @@ export const StaffProject = () => {
           <Typography.Text>Detail</Typography.Text>
         </Button>
         <Button
-          type="text"
-          className="project-option-btn"
+          type='text'
+          className='project-option-btn'
           onClick={() => {
             setDocSec(true);
           }}
@@ -113,29 +93,29 @@ export const StaffProject = () => {
 
   return (
     <>
-      <div className="admin-project-page">
-        <header className="header-row">
-          <div className="first-part">
+      <div className='admin-project-page'>
+        <header className='header-row'>
+          <div className='first-part'>
             <Typography.Title level={2}>{projectData?.name}</Typography.Title>
             <Popover content={ProjectOptions}>
-              <Button type="text" size="small">
+              <Button type='text' size='small'>
                 <MenuDots />
               </Button>
             </Popover>
             <Button
-              type="default"
-              className="title-row-btn"
-              shape="round"
+              type='default'
+              className='title-row-btn'
+              shape='round'
               onClick={() => setReportModal(true)}
             >
               <PieChart />
               Reports
             </Button>
           </div>
-          <div className="second-part">
+          <div className='second-part'>
             <div
-              className="avatar-group-wrapper"
-              onClick={() => setAddUserModal(true)}
+              className='avatar-group-wrapper'
+              onClick={() => setProjectTeam(true)}
             >
               {projectStaffs?.users.length ? (
                 <Avatar.Group maxCount={3}>
@@ -149,7 +129,7 @@ export const StaffProject = () => {
                   ))}
                 </Avatar.Group>
               ) : (
-                <CustomAvatar size={32} userName="+" />
+                <CustomAvatar size={32} userName='+' />
               )}
             </div>
           </div>
@@ -164,7 +144,7 @@ export const StaffProject = () => {
             xl: 3,
             xxl: 3,
           }}
-          className="task-sec"
+          className='task-sec'
           dataSource={taskListSrc}
           renderItem={(taskList) => {
             return (
@@ -216,11 +196,16 @@ export const StaffProject = () => {
         open={reportModal}
         onCancel={() => setReportModal(false)}
         footer={[]}
-        title="Department Report"
+        title='Department Report'
         width={"80%"}
       >
         <ProjectReport projectId={projectId} />
       </Modal>
+      <ProjectTeam
+        project={projectData}
+        isModalOpen={projectTeam}
+        setIsModalOpen={setProjectTeam}
+      />
     </>
   );
 };

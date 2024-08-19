@@ -1,10 +1,7 @@
 import "./project-team.css";
-import { Button, Col, Input, message, Modal, Row, Table } from "antd";
+import { Col, Input, Modal, Row, Table } from "antd";
 import React, { useState } from "react";
-import {
-  useGetProjectStaffsQuery,
-  useRmStaffFromPjMutation,
-} from "src/share/services";
+import { useGetProjectStaffsQuery } from "src/share/services";
 import { SearchOutlined } from "@ant-design/icons";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
 import { Project, RoleResponse } from "src/share/models";
@@ -31,13 +28,13 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
   setIsModalOpen,
 }) => {
   const [staffPage, setStaffPage] = useState<number>(1);
+  const [search, setSearch] = useState<string>("");
 
   const { data: staffs } = useGetProjectStaffsQuery({
     items_per_page: 5,
     projectId: project?.project_id,
+    search,
   });
-
-  const [removeFromPj] = useRmStaffFromPjMutation();
 
   const columns = [
     {
@@ -67,29 +64,6 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
       title: "Email",
       dataIndex: "email",
       key: "email",
-    },
-
-    {
-      title: "Action",
-      key: "action",
-      render: (_text: string, record: DataType) => (
-        <Button
-          type='primary'
-          onClick={() => {
-            removeFromPj({
-              projectId: project?.project_id,
-              ids: [record.key],
-            })
-              .unwrap()
-              .then(() => {
-                message.success("Staff is removed");
-              })
-              .catch(() => message.error("Failed to remove staff"));
-          }}
-        >
-          Remove
-        </Button>
-      ),
     },
   ];
 
@@ -135,10 +109,11 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
       {/* search */}
       <Row className='modal-add-user-search-input'>
         <Col span={8}>
-          <Input
+          <Input.Search
             placeholder='Search...'
-            prefix={<SearchOutlined />}
             size='large'
+            onSearch={(value) => setSearch(value)}
+            allowClear
           />
         </Col>
       </Row>
