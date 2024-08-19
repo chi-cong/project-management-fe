@@ -97,7 +97,6 @@ export const Departments = () => {
                   Trash
                 </Button>
               </Col>
-
               <Col xs={24} sm={24} md={7}>
                 <Button
                   type='primary'

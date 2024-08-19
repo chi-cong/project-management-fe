@@ -205,7 +205,7 @@ export const AdminProject = () => {
         </header>
         <List
           grid={{
-            gutter: 16,
+            gutter: [16, 16],
             xs: 1,
             sm: 1,
             md: 1,

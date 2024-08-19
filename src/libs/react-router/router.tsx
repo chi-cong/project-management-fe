@@ -18,16 +18,13 @@ import {
   ManagerDepartment,
   ManagerProjects,
   ManagerProject,
+  MyProjects,
 } from "src/pages/v2/dashboard/manager";
 import App from "src/App";
 import { Projects } from "src/pages/v2/projects";
 import { Departments } from "src/pages/v2/departments";
 import { Password } from "src/pages/v2/password";
-import {
-  Staff,
-  StaffProject,
-  StaffDepartment,
-} from "src/pages/v2/dashboard/staff";
+import { StaffProject, StaffDepartment } from "src/pages/v2/dashboard/staff";
 import { AccountTrash } from "src/pages/v2/trash/account";
 import { ProjectTrash } from "src/pages/v2/trash/project";
 import { DepartmentTrash } from "src/pages/v2/trash/department";
@@ -148,6 +145,10 @@ export const router = createBrowserRouter([
                 element: <ManagerProjects />,
               },
               {
+                path: "my-projects",
+                element: <MyProjects />,
+              },
+              {
                 path: "project/:id",
                 element: <ManagerProject />,
               },
@@ -163,7 +164,10 @@ export const router = createBrowserRouter([
           },
           {
             path: "staff",
-            element: <Staff />,
+            async lazy() {
+              const { Staff } = await import("src/pages/v2/dashboard/staff");
+              return { Component: Staff };
+            },
             children: [
               { path: "department/:id", element: <StaffDepartment /> },
               { path: "projects", element: <Projects /> },
