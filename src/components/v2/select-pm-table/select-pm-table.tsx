@@ -1,13 +1,11 @@
-import { Button, Col, Input, message, Row, Table } from "antd";
+import { Button, Col, Input, Row, Table } from "antd";
 import React, { useState } from "react";
-import {
-  useGetProjectStaffsQuery,
-  useRmStaffFromPjMutation,
-} from "src/share/services";
+import { useGetUsersQuery } from "src/share/services";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
-import { Project, RoleResponse } from "src/share/models";
+import { OUserRole, RoleResponse, User } from "src/share/models";
 interface ModalAddUserToProjectProps {
-  project?: Project;
+  setSelectedPM: (pm?: User) => void;
+  selectedPm?: User;
 }
 
 interface DataType {
@@ -21,23 +19,19 @@ interface DataType {
   email: string;
 }
 
-export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
-  project,
+export const SelectPmTable: React.FC<ModalAddUserToProjectProps> = ({
+  setSelectedPM,
+  selectedPm,
 }) => {
-  const [staffPage, setStaffPage] = useState<number>(1);
+  const [userPage, setUserPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
 
-  const { data: staffs } = useGetProjectStaffsQuery(
-    {
-      items_per_page: 5,
-      projectId: project?.project_id,
-      page: staffPage,
-      search,
-    },
-    { skip: project?.project_id ? false : true }
-  );
-
-  const [removeFromPj] = useRmStaffFromPjMutation();
+  const { data: users } = useGetUsersQuery({
+    items_per_page: 5,
+    page: userPage,
+    search,
+    role: OUserRole.All,
+  });
 
   const columns = [
     {
@@ -72,39 +66,37 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
     {
       title: "Action",
       key: "action",
-      render: (_text: string, record: DataType) => (
-        <Button
-          type='primary'
-          onClick={() => {
-            removeFromPj({
-              projectId: project?.project_id,
-              ids: [record.key],
-            })
-              .unwrap()
-              .then(() => {
-                message.success("Staff is removed");
-              })
-              .catch(() => message.error("Failed to remove staff"));
-          }}
-        >
-          Remove
-        </Button>
-      ),
+      render: (_text: string, record: DataType) => {
+        return (
+          selectedPm?.user_id !== record.key && (
+            <Button
+              type='primary'
+              onClick={() => {
+                setSelectedPM(
+                  users?.users.find((user) => record.key === user.user_id)
+                );
+              }}
+            >
+              Select
+            </Button>
+          )
+        );
+      },
     },
   ];
 
   const mapTableData = () => {
-    if (staffs?.users.length) {
-      return staffs?.users.map((staff): DataType => {
+    if (users?.users.length) {
+      return users?.users.map((user): DataType => {
         return {
           avatar: {
-            src: staff.avatar,
-            bgColor: staff.avatar_color,
+            src: user.avatar,
+            bgColor: user.avatar_color,
           },
-          name: staff.name!,
-          email: staff.email!,
-          role: (staff.role as RoleResponse).name!,
-          key: staff.user_id!,
+          name: user.name!,
+          email: user.email!,
+          role: (user.role as RoleResponse).name!,
+          key: user.user_id!,
         };
       });
     }
@@ -127,10 +119,10 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
         dataSource={mapTableData()}
         pagination={{
           pageSize: 5,
-          total: staffs?.total,
-          onChange: (value) => setStaffPage(value),
+          total: users?.total,
+          onChange: (value) => setUserPage(value),
           showSizeChanger: false,
-          current: staffPage,
+          current: userPage,
         }}
       />
     </>

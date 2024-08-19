@@ -32,6 +32,7 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
   const { data: staffs } = useGetProjectStaffsQuery({
     items_per_page: 5,
     projectId: project?.project_id,
+    page: staffPage,
     search,
   });
 

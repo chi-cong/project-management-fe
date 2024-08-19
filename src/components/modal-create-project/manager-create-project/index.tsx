@@ -8,6 +8,7 @@ import {
   Modal,
   Select,
   Space,
+  Typography,
 } from "antd";
 import React from "react";
 import "./manager-create-project.css";
@@ -17,6 +18,7 @@ import {
   useManagerGetAllStaffDepartmentQuery,
 } from "src/share/services";
 import dayjs from "dayjs";
+import { CustomAvatar } from "src/components/v2";
 
 type ModalUpdateProjectProp = {
   isModalOpen: boolean;
@@ -106,7 +108,17 @@ export const ManagerCreateProject: React.FC<ModalUpdateProjectProp> = ({
           <Select
             options={staffs?.users?.map((staff) => {
               return {
-                label: staff.username,
+                label: (
+                  <Space>
+                    <CustomAvatar
+                      bgColor={staff.avatar_color}
+                      avatarSrc={staff.avatar}
+                      size={32}
+                      userName={staff.name}
+                    />
+                    <Typography>{staff.name}</Typography>
+                  </Space>
+                ),
                 value: staff.user_id,
               };
             })}

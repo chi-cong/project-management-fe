@@ -8,17 +8,17 @@ import {
   Modal,
   Select,
   Space,
+  Typography,
 } from "antd";
 import React, { useEffect } from "react";
-import "./modal-update-project.css";
 import { Project } from "src/share/models";
 import {
   useUpdateProjectMutation,
-  useGetDepartmentsQuery,
-  useGetUsersQuery,
+  useManagerGetAllStaffDepartmentQuery,
 } from "src/share/services";
 import { utcToLocal } from "src/share/utils";
 import dayjs from "dayjs";
+import { CustomAvatar } from "src/components/v2";
 
 type ModalUpdateProjectProp = {
   isModalOpen: boolean;
@@ -27,19 +27,15 @@ type ModalUpdateProjectProp = {
   isUpdate: boolean;
 };
 
-export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
+export const MngUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   isModalOpen,
   setIsModalOpen,
   project,
   isUpdate,
 }) => {
   const [updateProject] = useUpdateProjectMutation();
-  const { data: departmentData } = useGetDepartmentsQuery({
-    itemsPerPage: "ALL",
-  });
-  const { data: pms } = useGetUsersQuery({
+  const { data: pms } = useManagerGetAllStaffDepartmentQuery({
     items_per_page: "ALL",
-    role: "PROJECT_MANAGER",
   });
 
   const [form] = Form.useForm();
@@ -123,22 +119,21 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
         >
           <Input.TextArea size='large' />
         </Form.Item>
-        <Form.Item<Project> name={"department_id"} label='Department'>
-          <Select
-            options={departmentData?.departments?.map((department) => {
-              return {
-                label: department.name,
-                value: department.department_id,
-              };
-            })}
-            size='large'
-          />
-        </Form.Item>
         <Form.Item<Project> name={"project_manager_id"} label='Project Manager'>
           <Select
             options={pms?.users?.map((pm) => {
               return {
-                label: pm.username,
+                label: (
+                  <Space>
+                    <CustomAvatar
+                      bgColor={pm.avatar_color}
+                      avatarSrc={pm.avatar}
+                      size={32}
+                      userName={pm.name}
+                    />
+                    <Typography>{pm.name}</Typography>
+                  </Space>
+                ),
                 value: pm.user_id,
               };
             })}

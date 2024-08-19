@@ -17,7 +17,7 @@ import {
 } from "src/share/services";
 import {
   ModalAddUserToProject,
-  ModalUpdateProject,
+  MngUpdateProject,
   AddProjectUserPanel,
 } from "src/components/";
 import { OUserRole, Project } from "src/share/models";
@@ -217,12 +217,12 @@ export const CardProject: React.FC<CardProject> = ({
           />
         )
       )}
-      <ModalUpdateProject
+      <MngUpdateProject
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         project={project!}
         isUpdate={true}
-      ></ModalUpdateProject>
+      ></MngUpdateProject>
     </>
   );
 };

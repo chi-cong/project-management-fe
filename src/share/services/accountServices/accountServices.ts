@@ -107,6 +107,21 @@ const accountServices = hrManagementApi.injectEndpoints({
       transformResponse: (response: Response<GetUserResp>) => response.data,
       providesTags: ["User"],
     }),
+    getUser: build.query<
+      User,
+      {
+        userId?: string;
+      }
+    >({
+      query: ({ userId }) => {
+        return {
+          url: `users/admin/detail/${userId}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: Response<User>) => response.data,
+      providesTags: ["User"],
+    }),
     getDeletedUsers: build.query<
       GetUserResp,
       {
@@ -326,6 +341,7 @@ const accountServices = hrManagementApi.injectEndpoints({
 
 export const {
   useGetUsersQuery,
+  useGetUserQuery,
   useCreateUserMutation,
   useUpdateUserMutation,
   useLoginMutation,

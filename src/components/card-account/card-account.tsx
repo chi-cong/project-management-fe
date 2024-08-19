@@ -54,12 +54,16 @@ export const CardAccount: React.FC<CardAccount> = ({
             <Col span={12} className='account-header-info'>
               <h3>{account.username}</h3>
               <div className='account-role'>
-                {(account?.role as RoleResponse).name}
+                {(account?.role as RoleResponse).name === OUserRole.SuperAdmin
+                  ? "ADMIN"
+                  : (account?.role as RoleResponse).name}
               </div>
             </Col>
             <Col span={12} className='account-header-action'>
-              {(account.role as RoleResponse).name !== OUserRole.Admin ||
-              checkRole(OUserRole.SuperAdmin) ? (
+              {checkRole(OUserRole.SuperAdmin) ||
+              ((account.role as RoleResponse).name !== OUserRole.Admin &&
+                (account.role as RoleResponse).name !==
+                  OUserRole.SuperAdmin) ? (
                 <Space>
                   <div
                     onClick={showModal}

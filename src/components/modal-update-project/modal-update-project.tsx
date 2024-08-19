@@ -9,48 +9,52 @@ import {
   Select,
   Space,
 } from "antd";
-import React, { useState } from "react";
-import "./modal-create-project.css";
+import React, { useEffect, useState } from "react";
+import "./modal-update-project.css";
 import { Project, User } from "src/share/models";
 import {
-  useCreateProjectMutation,
+  useUpdateProjectMutation,
   useGetDepartmentsQuery,
-  // useGetUsersQuery,
 } from "src/share/services";
+import { utcToLocal } from "src/share/utils";
 import dayjs from "dayjs";
 import { CustomAvatar, SelectPmTable } from "src/components/v2";
 
 type ModalUpdateProjectProp = {
   isModalOpen: boolean;
   setIsModalOpen: (show: boolean) => void;
+  project: Project;
+  isUpdate: boolean;
 };
 
-export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
+export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   isModalOpen,
   setIsModalOpen,
+  project,
+  isUpdate,
 }) => {
-  const [form] = Form.useForm();
-  const startDate = Form.useWatch("startAt", { form, preserve: true });
-  const [createProject] = useCreateProjectMutation();
-  const [selectedPm, setSeletedPm] = useState<User | undefined>(undefined);
-  const [openSelectePm, setOpenSeletePm] = useState<boolean>(false);
-
+  const [updateProject] = useUpdateProjectMutation();
   const { data: departmentData } = useGetDepartmentsQuery({
     itemsPerPage: "ALL",
   });
-  // const { data: pms } = useGetUsersQuery({
-  //   items_per_page: "ALL",
-  //   role: "PROJECT_MANAGER",
-  // });
+  const [form] = Form.useForm();
+  const startDate = Form.useWatch("startAt", { form, preserve: true });
+  const [selectedPm, setSeletedPm] = useState<User | undefined>(undefined);
+  const [openSelectePm, setOpenSeletePm] = useState<boolean>(false);
 
   const onFinish: FormProps<Project>["onFinish"] = async (values) => {
-    await createProject({
-      ...values,
-      ...(selectedPm && { project_manager_id: selectedPm.user_id }),
+    values.department_id = project.department_id;
+
+    await updateProject({
+      values: {
+        ...values,
+        ...(selectedPm && { project_manager_id: selectedPm.user_id }),
+      },
+      projectId: project.project_id,
     })
       .unwrap()
       .then(() => {
-        message.success("Success create project");
+        message.success("Success update project");
         handleCancel();
       })
       .catch(() => message.error("There was an error"));
@@ -58,14 +62,26 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
 
   const handleCancel = () => {
     setIsModalOpen(false);
-    form.resetFields();
-    setSeletedPm(undefined);
+    setSeletedPm(project.project_manager);
   };
+
+  useEffect(() => {
+    form.setFieldsValue({
+      ...project,
+      startAt: utcToLocal(project?.startAt),
+      endAt: utcToLocal(project?.endAt),
+      department_id: project?.department_id,
+      pms: project?.project_manager_id,
+    });
+    if (project.project_manager) {
+      setSeletedPm(project.project_manager);
+    }
+  }, [form, project]);
 
   return (
     <>
       <Modal
-        className='wrapper'
+        className='update-project-modal'
         open={isModalOpen}
         centered
         footer={[]}
@@ -79,13 +95,15 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
             textAlign: "center",
           }}
         >
-          Create Project
+          Update Project
         </h2>
         <Form
           className='project-form'
           layout='vertical'
-          onFinish={onFinish}
           form={form}
+          onFinish={onFinish}
+          // if its detail modal, disable form
+          disabled={!isUpdate}
         >
           <Form.Item<Project>
             name={"name"}
@@ -167,39 +185,34 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
           </Form.Item>
 
           <Form.Item<Project> name={"startAt"} label='Start'>
-            <DatePicker
-              size='large'
-              style={{ width: "100%" }}
-              minDate={dayjs().add(1, "day")}
-            />
+            <DatePicker size='large' style={{ width: "100%" }} />
           </Form.Item>
+
           <Form.Item<Project> name={"endAt"} label='End'>
             <DatePicker
               size='large'
               style={{ width: "100%" }}
-              minDate={
-                startDate
-                  ? dayjs(startDate).add(1, "day")
-                  : dayjs().add(1, "day")
-              }
+              minDate={dayjs(startDate).add(1, "day")}
             />
           </Form.Item>
 
-          <Form.Item className='create-user-form-btn'>
-            <Space>
-              <Button type='primary' htmlType='submit' size='large'>
-                Create
-              </Button>
-              <Button
-                type='primary'
-                ghost
-                size='large'
-                onClick={() => handleCancel()}
-              >
-                Cancel
-              </Button>
-            </Space>
-          </Form.Item>
+          {isUpdate && (
+            <Form.Item className='create-user-form-btn'>
+              <Space>
+                <Button type='primary' htmlType='submit' size='large'>
+                  Update
+                </Button>
+                <Button
+                  type='primary'
+                  ghost
+                  size='large'
+                  onClick={() => handleCancel()}
+                >
+                  Cancel
+                </Button>
+              </Space>
+            </Form.Item>
+          )}
         </Form>
       </Modal>
       <Modal
