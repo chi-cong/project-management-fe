@@ -37,13 +37,19 @@ export const AdminDepartment = () => {
   const [addStaffModal, setAddStaffModal] = useState<boolean>(false);
   const [rmStaffModal, setRmStaffModal] = useState<boolean>(false);
   const { data } = useGetDepartmentQuery({ id: departmentId! });
-  const { data: departmentProjects } = useGetAllProjectDepartmentQuery({
-    departmentId,
-  });
-  const { data: departmentStaffs } = useGetDepartmentStaffsQuery({
-    itemsPerPage: "ALL",
-    departmentId,
-  });
+  const { data: departmentProjects } = useGetAllProjectDepartmentQuery(
+    {
+      departmentId,
+    },
+    { skip: departmentId ? false : true }
+  );
+  const { data: departmentStaffs } = useGetDepartmentStaffsQuery(
+    {
+      itemsPerPage: "ALL",
+      departmentId,
+    },
+    { skip: departmentId ? false : true }
+  );
   const [deleteDepartment] = useDeleteDepartmentsMutation();
   const navigate = useNavigate();
   const [projectFilter, setProjectFilter] = useState<{
@@ -106,7 +112,6 @@ export const AdminDepartment = () => {
               .catch(() => message.error("failed to delete department"));
             navigate(-1);
           }}
-          
         >
           <Button className='department-option-btn' type='text'>
             <Trash />

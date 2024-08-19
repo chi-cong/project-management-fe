@@ -8,8 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { useGetAllProjectQuery } from "src/share/services";
 import { selectProject } from "src/libs/redux/selectProjectSlice";
 import { useDispatch } from "react-redux";
-import { useRoleChecker } from "src/share/hooks";
-import { OUserRole } from "src/share/models";
 
 export const Projects = () => {
   const dispatch = useDispatch();
@@ -20,16 +18,12 @@ export const Projects = () => {
     search: "",
   });
   const navigate = useNavigate();
-  const checkRole = useRoleChecker();
 
   //fetching data
-  const { data: allProject } = useGetAllProjectQuery(
-    {
-      ...queries,
-      items_per_page: 9,
-    },
-    { skip: !checkRole(OUserRole.Admin) }
-  );
+  const { data: allProject } = useGetAllProjectQuery({
+    ...queries,
+    items_per_page: 9,
+  });
 
   //pagination
   const onChangePage: PaginationProps["onChange"] = (page) => {
@@ -37,19 +31,19 @@ export const Projects = () => {
   };
 
   return (
-    <div className="v2-projects-page">
-      <section className="main">
-        <header className="main-header">
-          <section className="first-sec">
-            <div className="title-des">
-              <div className="title-row">
+    <div className='v2-projects-page'>
+      <section className='main'>
+        <header className='main-header'>
+          <section className='first-sec'>
+            <div className='title-des'>
+              <div className='title-row'>
                 <h2>Project</h2>
               </div>
             </div>
             <Row className='action' gutter={[8, 8]}>
               <Col xs={12} sm={12} md={12}>
                 <Input.Search
-                  placeholder="Search..."
+                  placeholder='Search...'
                   style={{ width: "100%" }}
                   allowClear
                   onSearch={(value) =>
@@ -59,8 +53,8 @@ export const Projects = () => {
               </Col>
               <Col xs={12} sm={12} md={6}>
                 <Button
-                  type="default"
-                  className="title-row-btn"
+                  type='default'
+                  className='title-row-btn'
                   icon={<DeleteOutlined />}
                   style={{ width: "100%" }}
                   onClick={() => {
@@ -72,8 +66,8 @@ export const Projects = () => {
               </Col>
               <Col xs={12} sm={12} md={6}>
                 <Button
-                  type="primary"
-                  className="title-row-btn"
+                  type='primary'
+                  className='title-row-btn'
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
                   style={{ width: "100%" }}
@@ -84,7 +78,7 @@ export const Projects = () => {
             </Row>
           </section>
         </header>
-        <main className="">
+        <main className=''>
           <List
             grid={{
               gutter: 12,

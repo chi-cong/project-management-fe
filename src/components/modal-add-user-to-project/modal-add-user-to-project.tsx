@@ -5,7 +5,6 @@ import {
   useCreateAssigmentMutation,
   useGetStaffsNotInPrjQuery,
 } from "src/share/services";
-import { SearchOutlined } from "@ant-design/icons";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
 import { Project, RoleResponse } from "src/share/models";
 interface ModalAddUserToProjectProps {
@@ -34,12 +33,14 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
   setIsModalOpen,
 }) => {
   const [staffPage, setStaffPage] = useState<number>(1);
+  const [search, setSearch] = useState<string>("");
 
   const { data: staffs } = useGetStaffsNotInPrjQuery(
     {
       itemsPerPage: 5,
       departmentId: project?.department_id,
       projectId: project?.project_id,
+      search,
     },
     { skip: project?.department_id ? false : true }
   );
@@ -133,10 +134,11 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
           {/* search */}
           <Row className='modal-add-user-search-input'>
             <Col span={8}>
-              <Input
+              <Input.Search
                 placeholder='Search...'
-                prefix={<SearchOutlined />}
                 size='large'
+                onSearch={(value) => setSearch(value)}
+                allowClear
               />
             </Col>
           </Row>

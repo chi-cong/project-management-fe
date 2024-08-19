@@ -40,8 +40,8 @@ export const Activities = () => {
               resize: "none",
               height: "100px",
               width: "100%",
-              borderWidth: "opx",
             }}
+            variant='borderless'
             className='task-text-area'
             placeholder='New activity'
             value={actiDesc}

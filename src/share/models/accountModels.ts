@@ -2,6 +2,7 @@ import { Dayjs } from "dayjs";
 
 export const OUserRole = {
   All: "ALL",
+  SuperAdmin: "SUPER_ADMIN",
   Admin: "ADMIN",
   Manager: "MANAGER",
   Staff: "STAFF",
