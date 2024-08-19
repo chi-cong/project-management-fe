@@ -2,7 +2,6 @@ import "./project-team.css";
 import { Col, Input, Modal, Row, Table } from "antd";
 import React, { useState } from "react";
 import { useGetProjectStaffsQuery } from "src/share/services";
-import { SearchOutlined } from "@ant-design/icons";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
 import { Project, RoleResponse } from "src/share/models";
 interface ModalAddUserToProjectProps {

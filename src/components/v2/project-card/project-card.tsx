@@ -6,6 +6,7 @@ import {
   Divider,
   Popconfirm,
   Popover,
+  message,
 } from "antd";
 import { MenuDots, Pen, Trash } from "src/assets/icons";
 import { OUserRole, type Project } from "src/share/models";
@@ -15,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useRoleChecker } from "src/share/hooks";
 import { Dayjs } from "dayjs";
 import { shortenLongText, utcToLocal } from "src/share/utils";
+import { useDeleteProjectMutation } from "src/share/services";
 
 interface ProjectCardProp {
   project: Project;
@@ -25,6 +27,8 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
   const checkRole = useRoleChecker();
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const [popover, setPopover] = useState<boolean>(false);
+
+  const [deleteProject] = useDeleteProjectMutation();
 
   const goToDetail = () => {
     if (!checkRole(OUserRole.Staff)) {
@@ -67,7 +71,8 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
         <Button
           type='text'
           className='project-option-btn'
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setUpdateModal(true);
             setPopover(false);
           }}
@@ -75,8 +80,22 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
           <Pen />
           <Typography.Text>Edit</Typography.Text>
         </Button>
-        <Popconfirm title='Delete project ?'>
-          <Button className='project-option-btn' type='text'>
+        <Popconfirm
+          title='Delete project ?'
+          onConfirm={async (e) => {
+            e?.stopPropagation();
+            deleteProject({ projectId: project.project_id })
+              .unwrap()
+              .then(() => message.success("Project is deleted"))
+              .catch(() => message.error("Failed to delete project"));
+          }}
+          onCancel={(e) => e?.stopPropagation()}
+        >
+          <Button
+            className='project-option-btn'
+            type='text'
+            onClick={(e) => e.stopPropagation()}
+          >
             <Trash />
             <Typography.Text>Delete</Typography.Text>
           </Button>
@@ -87,7 +106,7 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
 
   return (
     <>
-      <div className='project-card-v2'>
+      <div className='project-card-v2' onClick={goToDetail}>
         <div className='project-card-head'>
           <Typography.Title level={4}>
             {shortenLongText(25, project?.name)}
@@ -97,7 +116,10 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
               <Button
                 type='text'
                 size='small'
-                onClick={() => setPopover(!popover)}
+                onClick={(event: React.MouseEvent<HTMLElement>) => {
+                  event.stopPropagation();
+                  setPopover(!popover);
+                }}
               >
                 <MenuDots />
               </Button>
@@ -106,7 +128,6 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
         </div>
         <div
           className='project-card-body'
-          onClick={goToDetail}
           style={{ cursor: !checkRole(OUserRole.Staff) ? "pointer" : "none" }}
         >
           <Typography.Text>
@@ -127,7 +148,6 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
         <Divider />
         <div
           className='project-card-footer'
-          onClick={goToDetail}
           style={{ cursor: !checkRole(OUserRole.Staff) ? "pointer" : "none" }}
         >
           <Typography.Text>
