@@ -143,7 +143,7 @@ export const Account = () => {
               gutter: 12,
               xs: 1,
               sm: 1,
-              md: 2,
+              md: 1,
               lg: 2,
               xl: 2,
               xxl: 2,

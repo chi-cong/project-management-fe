@@ -7,6 +7,8 @@ import { localStorageUtil, sessionStorageUtil } from "src/share/utils";
 import { useDispatch } from "react-redux";
 import { hrManagementApi } from "src/share/services/";
 import { useGetUserDetailQuery } from "src/share/services/";
+import { MenuOutlined } from "@ant-design/icons";
+import { openDrawer } from "src/libs/redux/drawerSlice";
 
 export const Headbar = () => {
   const navigate = useNavigate();
@@ -76,7 +78,18 @@ export const Headbar = () => {
   return (
     <>
       <header className='headbar'>
-        <Typography.Title level={5}>Project Management</Typography.Title>
+        <div
+          style={{ display: "flex", alignItems: "center", gap: "var(--gap-s)" }}
+        >
+          <Button
+            className='show-drawer-button'
+            type='text'
+            onClick={() => dispatch(openDrawer(true))}
+          >
+            <MenuOutlined />
+          </Button>
+          <h5 style={{ fontSize: "18px" }}>Project Management</h5>
+        </div>
         <Popover content={<UserHeadbarOption />} trigger='click'>
           <div className='headbar-avatar-wraper'>
             <CustomAvatar

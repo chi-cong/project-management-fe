@@ -3,6 +3,7 @@ import { hrManagementApi } from "src/share/services";
 import taskAssignReducer from "./taskAssignSlice";
 import selectProjectReducer from "./selectProjectSlice";
 import selectDepartmentReducer from "./selectDepartmentSlice";
+import drawerReducer from "./drawerSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     taskAssignment: taskAssignReducer,
     selectedProject: selectProjectReducer,
     selectedDepartment: selectDepartmentReducer,
+    openDrawer: drawerReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

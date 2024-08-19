@@ -79,13 +79,13 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
           <div className='department-wrapper'>
             <Row className='department-header'>
               {/* title */}
-              <Col span={12} className='department-header-info'>
+              <Col sm={12} md={20} className='department-header-info'>
                 <h2 className='department-name'>
-                  {shortenLongText(20, department.name)}
+                  {shortenLongText(30, department.name)}
                 </h2>
               </Col>
               {/* action (delete, update) */}
-              <Col span={12} className='department-header-action'>
+              <Col sm={12} md={4} className='department-header-action'>
                 <Space size={[8, 24]} wrap={true}>
                   <div
                     onClick={showModal}
