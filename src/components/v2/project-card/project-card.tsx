@@ -82,14 +82,20 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
         </Button>
         <Popconfirm
           title='Delete project ?'
-          onConfirm={async () => {
+          onConfirm={async (e) => {
+            e?.stopPropagation();
             deleteProject({ projectId: project.project_id })
               .unwrap()
               .then(() => message.success("Project is deleted"))
               .catch(() => message.error("Failed to delete project"));
           }}
+          onCancel={(e) => e?.stopPropagation()}
         >
-          <Button className='project-option-btn' type='text'>
+          <Button
+            className='project-option-btn'
+            type='text'
+            onClick={(e) => e.stopPropagation()}
+          >
             <Trash />
             <Typography.Text>Delete</Typography.Text>
           </Button>
