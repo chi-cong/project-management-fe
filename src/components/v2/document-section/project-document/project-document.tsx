@@ -80,6 +80,7 @@ export const ProjectDocument = ({ project }: { project?: Project }) => {
 
         <div className="file-list">
           {fileLinks.map((files, index) => {
+            const fileName = files.split("/").pop();
             const handledFile = handleFile(files);
             return (
               <div className="file-row" key={index}>
@@ -87,7 +88,7 @@ export const ProjectDocument = ({ project }: { project?: Project }) => {
                   {handledFile.fileIcon}
                   <Typography.Link>
                     <a href={files} target="_blank">
-                      {handledFile.displayedFileName}
+                      {fileName}
                     </a>
                   </Typography.Link>
                 </div>
