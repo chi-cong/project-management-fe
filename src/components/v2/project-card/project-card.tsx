@@ -15,7 +15,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRoleChecker } from "src/share/hooks";
 import { Dayjs } from "dayjs";
-import { shortenLongText, utcToLocal } from "src/share/utils";
+import { localStorageUtil, shortenLongText, utcToLocal } from "src/share/utils";
 import { useDeleteProjectMutation } from "src/share/services";
 
 interface ProjectCardProp {
@@ -32,7 +32,9 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
 
   const goToDetail = () => {
     if (!checkRole(OUserRole.Staff)) {
-      navigate(`/v2/dashboard/admin/project/${project!.project_id!}`);
+      navigate(
+        `/v2/dashboard/${localStorageUtil.get("role")?.toLocaleLowerCase()}/project/${project!.project_id!}`
+      );
     }
   };
 

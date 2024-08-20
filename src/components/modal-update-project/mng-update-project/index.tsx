@@ -42,7 +42,7 @@ export const MngUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   const startDate = Form.useWatch("startAt", { form, preserve: true });
 
   const onFinish: FormProps<Project>["onFinish"] = async (values) => {
-    values.department_id = project.department_id;
+    values.department_id = project?.department_id;
 
     await updateProject({ values, projectId: project.project_id })
       .unwrap()

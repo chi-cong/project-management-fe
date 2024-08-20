@@ -32,7 +32,7 @@ import {
   useDeleteProjectMutation,
   useGetProjectStaffsQuery,
 } from "src/share/services";
-import { ModalUpdateProject } from "src/components";
+import { MngUpdateProject } from "src/components";
 import { Activities } from "src/layouts/v2/task-detail/activities";
 import { AddProjectUserPanel } from "src/components/modal-add-user-to-project";
 
@@ -257,7 +257,7 @@ export const ManagerProject = () => {
       >
         <Activities />
       </Modal>
-      <ModalUpdateProject
+      <MngUpdateProject
         project={projectData!}
         isModalOpen={projectUpdateModal}
         setIsModalOpen={setProjectUpdateModal}

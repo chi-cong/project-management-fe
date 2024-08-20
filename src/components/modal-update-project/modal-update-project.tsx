@@ -43,7 +43,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   const [openSelectePm, setOpenSeletePm] = useState<boolean>(false);
 
   const onFinish: FormProps<Project>["onFinish"] = async (values) => {
-    values.department_id = project.department_id;
+    values.department_id = project?.department_id;
 
     await updateProject({
       values: {
@@ -62,7 +62,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
 
   const handleCancel = () => {
     setIsModalOpen(false);
-    setSeletedPm(project.project_manager);
+    setSeletedPm(project?.project_manager);
   };
 
   useEffect(() => {
@@ -73,8 +73,8 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
       department_id: project?.department_id,
       pms: project?.project_manager_id,
     });
-    if (project.project_manager) {
-      setSeletedPm(project.project_manager);
+    if (project?.project_manager) {
+      setSeletedPm(project?.project_manager);
     }
   }, [form, project]);
 
