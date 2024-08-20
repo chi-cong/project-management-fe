@@ -106,7 +106,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
   };
 
   const mapTableData = () => {
-    return staffs?.users.map((staff): DataType => {
+    return staffs?.users?.map((staff): DataType => {
       return {
         avatar: {
           src: staff.avatar,

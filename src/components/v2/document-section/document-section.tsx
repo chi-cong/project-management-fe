@@ -77,6 +77,7 @@ export const DocumentSection = () => {
   useEffect(() => {
     setFileLinks([]);
     const tempFileLinks: string[] = [];
+
     task?.document.map((file) =>
       getFile({ file })
         .unwrap()
@@ -144,7 +145,7 @@ export const DocumentSection = () => {
       {!checkRole(OUserRole.Staff) ||
       (checkRole(OUserRole.Staff) &&
         taskAssignment?.assignment?.user_id === user?.user_id) ? (
-        <Upload.Dragger {...props} listType="text">
+        <Upload.Dragger {...props} listType='text'>
           <strong>Choose a file</strong> or drag it here
         </Upload.Dragger>
       ) : null}
