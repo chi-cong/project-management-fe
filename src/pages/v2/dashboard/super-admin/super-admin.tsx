@@ -3,6 +3,7 @@ import { Sidebar } from "src/components/v2/sidebar";
 import { Navigate, Outlet } from "react-router-dom";
 import { useRoleChecker } from "src/share/hooks";
 import { OUserRole } from "src/share/models";
+import { AdminDrawer } from "src/components/v2/drawer";
 
 export const SuperAdmin = () => {
   const checkRole = useRoleChecker();
@@ -12,16 +13,19 @@ export const SuperAdmin = () => {
   ).length;
 
   return (
-    <div className='super-admin-page'>
-      {checkRole(OUserRole.SuperAdmin) && (
-        <>
-          <Sidebar />
-          <div className='route-content'>
-            {route <= 1 && <Navigate to={"account"} />}
-            <Outlet />
-          </div>
-        </>
-      )}
-    </div>
+    <>
+      <AdminDrawer />
+      <div className='super-admin-page'>
+        {checkRole(OUserRole.SuperAdmin) && (
+          <>
+            <Sidebar />
+            <div className='route-content'>
+              {route <= 1 && <Navigate to={"account"} />}
+              <Outlet />
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };

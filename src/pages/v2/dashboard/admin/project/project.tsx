@@ -185,7 +185,7 @@ export const AdminProject = () => {
               className='avatar-group-wrapper'
               onClick={() => setAddUserModal(true)}
             >
-              {projectStaffs?.users.length ? (
+              {projectStaffs?.users?.length ? (
                 <Avatar.Group maxCount={3}>
                   {projectStaffs?.users.map((staff, index) => (
                     <CustomAvatar
