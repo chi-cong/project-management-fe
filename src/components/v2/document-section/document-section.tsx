@@ -61,6 +61,7 @@ export const DocumentSection = () => {
   const getLinks = () => {
     setFileLinks([]);
     const tempFileLinks: string[] = [];
+
     return task?.document.map((file) =>
       getFile({ file })
         .unwrap()
@@ -89,29 +90,29 @@ export const DocumentSection = () => {
   }, [getFile, task, taskAssignment]);
 
   return (
-    <div className="doc-sec">
-      <div className="doc-sec-first-part">
-        <div className="doc-sec-head">
+    <div className='doc-sec'>
+      <div className='doc-sec-first-part'>
+        <div className='doc-sec-head'>
           <Typography.Title level={4}>File Attachment</Typography.Title>
         </div>
 
-        <div className="file-list">
+        <div className='file-list'>
           {fileLinks.map((files, index) => {
             const fileName = ` ${files.split("/").pop()?.substring(0, 30)}...`;
             const handledFile = handleFile(files);
             return (
-              <div className="file-row" key={index}>
-                <div className="file-name-icon">
+              <div className='file-row' key={index}>
+                <div className='file-name-icon'>
                   {handledFile.fileIcon}
                   <Typography.Link>
-                    <a href={files} target="_blank">
+                    <a href={files} target='_blank'>
                       {fileName}
                     </a>
                   </Typography.Link>
                 </div>
                 {!checkRole(OUserRole.Staff) && (
                   <Popconfirm
-                    title="Delete this file ?"
+                    title='Delete this file ?'
                     onConfirm={() => {
                       // fileLinks and filenames index are the same
                       deleteFile({
@@ -130,7 +131,7 @@ export const DocumentSection = () => {
                         });
                     }}
                   >
-                    <Button shape="round" danger size="small">
+                    <Button shape='round' danger size='small'>
                       Delete
                     </Button>
                   </Popconfirm>
