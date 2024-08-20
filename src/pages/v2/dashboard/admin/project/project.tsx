@@ -34,6 +34,7 @@ import {
 } from "src/share/services";
 import { ModalUpdateProject, ModalAddUserToProject } from "src/components";
 import { Activities } from "src/layouts/v2/task-detail/activities";
+import { localStorageUtil } from "src/share/utils";
 export const AdminProject = () => {
   const { id: projectId } = useParams();
 
@@ -86,10 +87,10 @@ export const AdminProject = () => {
 
   const ProjectOptions = () => {
     return (
-      <div className='project-option'>
+      <div className="project-option">
         <Button
-          type='text'
-          className='project-option-btn'
+          type="text"
+          className="project-option-btn"
           onClick={() => {
             setIsUpdateProject(false);
             setProjectUpdateModal(true);
@@ -99,8 +100,8 @@ export const AdminProject = () => {
           <Typography.Text>Detail</Typography.Text>
         </Button>
         <Button
-          type='text'
-          className='project-option-btn'
+          type="text"
+          className="project-option-btn"
           onClick={() => {
             setDocSec(true);
           }}
@@ -109,8 +110,8 @@ export const AdminProject = () => {
           <Typography.Text>Documents</Typography.Text>
         </Button>
         <Button
-          type='text'
-          className='project-option-btn'
+          type="text"
+          className="project-option-btn"
           onClick={() => {
             setIsUpdateProject(true);
             setProjectUpdateModal(true);
@@ -120,7 +121,7 @@ export const AdminProject = () => {
           <Typography.Text>Edit</Typography.Text>
         </Button>
         <Popconfirm
-          title='Delete this project ?'
+          title="Delete this project ?"
           onConfirm={() => {
             deleteProject({ projectId: projectData?.project_id })
               .unwrap()
@@ -130,7 +131,7 @@ export const AdminProject = () => {
               .catch(() => message.error("failed to delete this project"));
           }}
         >
-          <Button className='project-option-btn' type='text'>
+          <Button className="project-option-btn" type="text">
             <Trash />
             <Typography.Text>Delete</Typography.Text>
           </Button>
@@ -141,37 +142,41 @@ export const AdminProject = () => {
 
   return (
     <>
-      <div className='admin-project-page'>
-        <header className='header-row'>
-          <div className='first-part'>
+      <div className="admin-project-page">
+        <header className="header-row">
+          <div className="first-part">
             <h2>{projectData?.name}</h2>
             <Popover content={ProjectOptions}>
-              <Button type='text' size='small'>
+              <Button type="text" size="small">
                 <MenuDots />
               </Button>
             </Popover>
             <Button
-              type='default'
-              className='title-row-btn'
-              shape='round'
+              type="default"
+              className="title-row-btn"
+              shape="round"
               onClick={() => setReportModal(true)}
             >
               <PieChart />
               Reports
             </Button>
             <Button
-              shape='round'
+              shape="round"
               style={{ display: "" }}
-              onClick={() => navigate(-1)}
+              onClick={() =>
+                navigate(
+                  `/v2/dashboard/${localStorageUtil.get("role")?.toLocaleLowerCase()}/projects`
+                )
+              }
             >
               <ArrowLeftOutlined />
               Back to Projects
             </Button>
           </div>
-          <div className='second-part'>
+          <div className="second-part">
             <Button
-              type='primary'
-              className='create-task-btn'
+              type="primary"
+              className="create-task-btn"
               onClick={() => {
                 setCreateTaskModal(true);
               }}
@@ -182,10 +187,10 @@ export const AdminProject = () => {
               </Typography.Text>
             </Button>
             <div
-              className='avatar-group-wrapper'
+              className="avatar-group-wrapper"
               onClick={() => setAddUserModal(true)}
             >
-              {projectStaffs?.users.length ? (
+              {projectStaffs?.users?.length ? (
                 <Avatar.Group maxCount={3}>
                   {projectStaffs?.users.map((staff, index) => (
                     <CustomAvatar
@@ -198,7 +203,7 @@ export const AdminProject = () => {
                   ))}
                 </Avatar.Group>
               ) : (
-                <CustomAvatar size={32} userName='+' />
+                <CustomAvatar size={32} userName="+" />
               )}
             </div>
           </div>
@@ -213,7 +218,7 @@ export const AdminProject = () => {
             xl: 3,
             xxl: 3,
           }}
-          className='task-sec'
+          className="task-sec"
           dataSource={taskListSrc}
           renderItem={(taskList) => {
             return (
@@ -271,7 +276,7 @@ export const AdminProject = () => {
         open={reportModal}
         onCancel={() => setReportModal(false)}
         footer={[]}
-        title='Project Report'
+        title="Project Report"
         width={"80%"}
       >
         <ProjectReport projectId={projectId} />
