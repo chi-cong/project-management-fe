@@ -142,7 +142,8 @@ export const StaffDepartment = () => {
                   margin={{ top: 5, right: 0, bottom: 5, left: 0 }}
                   padAngle={0.7}
                   cornerRadius={3}
-                  activeOuterRadiusOffset={8}
+                  colors={{ scheme: "pastel2" }}
+                  activeOuterRadiusOffset={0}
                   borderWidth={1}
                   borderColor={{
                     from: "color",

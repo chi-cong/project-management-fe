@@ -1,12 +1,14 @@
 @import url("src/index.css");
 
 .doc-sec {
+  margin-top: 30px;
   min-width: 300px;
   display: flex;
   flex-direction: column;
   height: 500px;
   justify-content: space-between;
   gap: var(--gap-m);
+  overflow-y: auto;
   .doc-sec-head {
     display: flex;
     justify-content: center;
