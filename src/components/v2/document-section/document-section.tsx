@@ -61,6 +61,7 @@ export const DocumentSection = () => {
   const getLinks = () => {
     setFileLinks([]);
     const tempFileLinks: string[] = [];
+
     return task?.document.map((file) =>
       getFile({ file })
         .unwrap()
@@ -76,6 +77,7 @@ export const DocumentSection = () => {
   useEffect(() => {
     setFileLinks([]);
     const tempFileLinks: string[] = [];
+    console.log(task);
     task?.document.map((file) =>
       getFile({ file })
         .unwrap()

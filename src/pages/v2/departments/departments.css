@@ -39,6 +39,7 @@
           .title-row-btn {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: var(--gap-xs);
           }
         }
