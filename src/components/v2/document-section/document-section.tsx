@@ -97,7 +97,7 @@ export const DocumentSection = () => {
 
         <div className="file-list">
           {fileLinks.map((files, index) => {
-            const fileName = files.split("/").pop();
+            const fileName = ` ${files.split("/").pop()?.substring(0, 30)}...`;
             const handledFile = handleFile(files);
             return (
               <div className="file-row" key={index}>
