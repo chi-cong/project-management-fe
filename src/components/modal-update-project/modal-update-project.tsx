@@ -95,7 +95,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
             textAlign: "center",
           }}
         >
-          Update Project
+          {isUpdate ? " Update Project" : "Project Detail"}
         </h2>
         <Form
           className='project-form'
@@ -119,16 +119,14 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
           >
             <Input size='large' />
           </Form.Item>
-          <Form.Item<Project> name={"investor"} label='Investor'>
+          <Form.Item<Project>
+            name={"investor"}
+            label='Investor'
+            rules={[{ required: true, message: "Investor is required" }]}
+          >
             <Input size='large' />
           </Form.Item>
-          <Form.Item<Project>
-            name={"description"}
-            label='Description'
-            rules={[
-              { required: true, message: "Project description is required" },
-            ]}
-          >
+          <Form.Item<Project> name={"description"} label='Description'>
             <Input.TextArea size='large' />
           </Form.Item>
           <Form.Item<Project> name={"department_id"} label='Department'>
@@ -147,15 +145,6 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
             name={"project_manager_id"}
             label='Project Manager'
           >
-            {/* <Select
-            options={pms?.users?.map((pm) => {
-              return {
-                label: pm.username,
-                value: pm.user_id,
-                };
-                })}
-                size='large'
-                /> */}
             <div
               style={{
                 display: "flex",

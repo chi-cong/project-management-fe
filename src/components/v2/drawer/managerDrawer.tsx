@@ -2,7 +2,7 @@ import { Drawer } from "antd";
 import { useEffect, useState } from "react";
 import { ClusterOutlined, RocketOutlined } from "@ant-design/icons";
 import { CustomMenu, CustomMenuItem } from "src/components/v2/custom-menu";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ManagerCreateProject } from "src/components";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "src/libs/redux";
@@ -11,6 +11,8 @@ import { useGetUserDetailQuery } from "src/share/services";
 
 export const ManagerDrawer = () => {
   const { id } = useParams();
+
+  const location = useLocation();
   const { data } = useGetUserDetailQuery();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,7 +41,7 @@ export const ManagerDrawer = () => {
 
   useEffect(() => {
     setDefaultItem();
-  }, []);
+  }, [location]);
 
   const items: CustomMenuItem[] = [
     {

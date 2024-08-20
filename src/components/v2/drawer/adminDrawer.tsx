@@ -6,7 +6,7 @@ import {
   RocketOutlined,
 } from "@ant-design/icons";
 import { CustomMenu, CustomMenuItem } from "src/components/v2/custom-menu";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ModalCreateUser from "src/components/modal-create-user";
 import { ModalCreateProject } from "src/components";
 import ModalCreateDepartment from "src/components/modal-create-department";
@@ -17,6 +17,8 @@ import { openDrawer } from "src/libs/redux/drawerSlice";
 
 export const AdminDrawer = () => {
   const navigate = useNavigate();
+
+  const location = useLocation();
   const dispatch = useDispatch();
   const isOpen = useSelector((root: RootState) => root.openDrawer);
 
@@ -48,7 +50,7 @@ export const AdminDrawer = () => {
 
   useEffect(() => {
     setDefaultItem();
-  }, []);
+  }, [location]);
 
   const items: CustomMenuItem[] = [
     {

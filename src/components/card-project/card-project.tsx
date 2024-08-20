@@ -202,7 +202,7 @@ export const CardProject: React.FC<CardProject> = ({
           </div>
         </Card>
       </div>
-      {checkRole(OUserRole.Admin) ? (
+      {checkRole(OUserRole.Admin) || checkRole(OUserRole.SuperAdmin) ? (
         <ModalAddUserToProject
           isModalOpen={isModalAddUserOpen}
           setIsModalOpen={setIsModalAddUserOpen}
