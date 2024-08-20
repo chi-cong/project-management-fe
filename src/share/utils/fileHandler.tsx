@@ -23,9 +23,9 @@ export const handleFile = (fileString: string): HandledFile => {
   } else if (extension === ".csv") {
     result.fileIcon = <CsvIcon style={{ fill: "orange", width: "30px" }} />;
   } else if (extension === ".jpg" || extension === ".png") {
-    result.fileIcon = <CsvIcon style={{ fill: "orange", width: "30px" }} />;
+    result.fileIcon = <ImageIcon style={{ fill: "orange", width: "30px" }} />;
   } else {
-    result.fileIcon = <ImageIcon style={{ fill: "aqua", width: "30px" }} />;
+    result.fileIcon = <PdfIcon style={{ fill: "crimson", width: "30px" }} />;
   }
 
   // handle file length
