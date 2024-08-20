@@ -142,12 +142,12 @@ export const DocumentSection = () => {
         </div>
       </div>
       {!checkRole(OUserRole.Staff) ||
-        (checkRole(OUserRole.Staff) &&
-          taskAssignment?.assignment?.user_id === user?.user_id && (
-            <Upload.Dragger {...props} listType='text'>
-              <strong>Choose a file</strong> or drag it here
-            </Upload.Dragger>
-          ))}
+      (checkRole(OUserRole.Staff) &&
+        taskAssignment?.assignment?.user_id === user?.user_id) ? (
+        <Upload.Dragger {...props} listType="text">
+          <strong>Choose a file</strong> or drag it here
+        </Upload.Dragger>
+      ) : null}
     </div>
   );
 };
