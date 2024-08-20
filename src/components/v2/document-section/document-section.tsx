@@ -77,6 +77,7 @@ export const DocumentSection = () => {
   useEffect(() => {
     setFileLinks([]);
     const tempFileLinks: string[] = [];
+    console.log(task);
 
     task?.document.map((file) =>
       getFile({ file })
