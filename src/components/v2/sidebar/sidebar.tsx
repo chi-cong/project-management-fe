@@ -7,7 +7,7 @@ import {
   RocketOutlined,
 } from "@ant-design/icons";
 import { CustomMenu, CustomMenuItem } from "src/components/v2/custom-menu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ModalCreateUser from "src/components/modal-create-user";
 import { ModalCreateProject } from "src/components";
 import ModalCreateDepartment from "src/components/modal-create-department";
@@ -15,6 +15,7 @@ import { localStorageUtil } from "src/share/utils";
 
 export const Sidebar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [createUser, setCreateUser] = useState<boolean>(false);
   const [createDepartment, setCreateDepartment] = useState<boolean>(false);
@@ -83,7 +84,7 @@ export const Sidebar = () => {
 
   useEffect(() => {
     setDefaultItem();
-  }, []);
+  }, [location]);
 
   return (
     <>

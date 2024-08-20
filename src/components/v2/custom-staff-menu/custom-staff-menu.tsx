@@ -2,7 +2,7 @@ import "./custom-staff-menu.css";
 import { ReactNode, useEffect, useState } from "react";
 import { Typography } from "antd";
 import { PlusSquare } from "src/assets/icons";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 export interface CustomStaffMenuItem {
   title: string | JSX.Element;
@@ -18,7 +18,9 @@ interface CustomStaffMenuProp {
 
 export const CustomStaffMenu = ({ items }: CustomStaffMenuProp) => {
   const { id } = useParams();
-  const [selectedItem, setSelectedItem] = useState<number>(100);
+
+  const location = useLocation();
+  const [selectedItem, setSelectedItem] = useState<number>(-1);
 
   useEffect(() => {
     const setDefaultItem = () => {
@@ -37,7 +39,7 @@ export const CustomStaffMenu = ({ items }: CustomStaffMenuProp) => {
       }
     };
     setDefaultItem();
-  }, [id, items]);
+  }, [id, items, location]);
 
   return (
     <div className='custom-menu'>

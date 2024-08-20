@@ -2,12 +2,13 @@ import "./manager-sidebar.css";
 import { Layout } from "antd";
 import { ClusterOutlined, RocketOutlined } from "@ant-design/icons";
 import { CustomMenu, CustomMenuItem } from "src/components/v2/custom-menu";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useGetUserDetailQuery } from "src/share/services";
 import { ManagerCreateProject } from "src/components";
 import { useEffect, useState } from "react";
 
 export const ManagerSidebar = () => {
+  const location = useLocation();
   const { id } = useParams();
   const navigate = useNavigate();
   const { data } = useGetUserDetailQuery();
@@ -54,7 +55,7 @@ export const ManagerSidebar = () => {
 
   useEffect(() => {
     setDefaultItem();
-  }, []);
+  }, [location]);
 
   return (
     <>
