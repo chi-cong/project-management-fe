@@ -66,10 +66,10 @@ export const StaffProject = () => {
 
   const ProjectOptions = () => {
     return (
-      <div className='project-option'>
+      <div className="project-option">
         <Button
-          type='text'
-          className='project-option-btn'
+          type="text"
+          className="project-option-btn"
           onClick={() => {
             setProjectDetailModal(true);
           }}
@@ -78,8 +78,8 @@ export const StaffProject = () => {
           <Typography.Text>Detail</Typography.Text>
         </Button>
         <Button
-          type='text'
-          className='project-option-btn'
+          type="text"
+          className="project-option-btn"
           onClick={() => {
             setDocSec(true);
           }}
@@ -93,28 +93,28 @@ export const StaffProject = () => {
 
   return (
     <>
-      <div className='admin-project-page'>
-        <header className='header-row'>
-          <div className='first-part'>
+      <div className="admin-project-page">
+        <header className="header-row">
+          <div className="first-part">
             <Typography.Title level={2}>{projectData?.name}</Typography.Title>
             <Popover content={ProjectOptions}>
-              <Button type='text' size='small'>
+              <Button type="text" size="small">
                 <MenuDots />
               </Button>
             </Popover>
             <Button
-              type='default'
-              className='title-row-btn'
-              shape='round'
+              type="default"
+              className="title-row-btn"
+              shape="round"
               onClick={() => setReportModal(true)}
             >
               <PieChart />
               Reports
             </Button>
           </div>
-          <div className='second-part'>
+          <div className="second-part">
             <div
-              className='avatar-group-wrapper'
+              className="avatar-group-wrapper"
               onClick={() => setProjectTeam(true)}
             >
               {projectStaffs?.users.length ? (
@@ -129,7 +129,7 @@ export const StaffProject = () => {
                   ))}
                 </Avatar.Group>
               ) : (
-                <CustomAvatar size={32} userName='+' />
+                <CustomAvatar size={32} userName="+" />
               )}
             </div>
           </div>
@@ -144,7 +144,7 @@ export const StaffProject = () => {
             xl: 3,
             xxl: 3,
           }}
-          className='task-sec'
+          className="task-sec"
           dataSource={taskListSrc}
           renderItem={(taskList) => {
             return (
@@ -196,7 +196,7 @@ export const StaffProject = () => {
         open={reportModal}
         onCancel={() => setReportModal(false)}
         footer={[]}
-        title='Department Report'
+        title="Department Report"
         width={"80%"}
       >
         <ProjectReport projectId={projectId} />

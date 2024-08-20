@@ -24,34 +24,34 @@ export const Activities = () => {
   const { data: user } = useGetUserDetailQuery();
 
   return (
-    <div className='acti-section'>
+    <div className="acti-section">
       {/* create activities */}
       <Typography.Title level={4}>Activity</Typography.Title>
-      <div className='acti-des-row'>
+      <div className="acti-des-row">
         <CustomAvatar
           size={40}
           avatarSrc={user?.avatar}
           userName={user?.name}
           bgColor={user?.avatar_color}
         />
-        <div className='acti-des-container'>
+        <div className="acti-des-container">
           <Input.TextArea
             style={{
               resize: "none",
               height: "100px",
               width: "100%",
             }}
-            variant='borderless'
-            className='task-text-area'
-            placeholder='New activity'
+            variant="borderless"
+            className="task-text-area"
+            placeholder="New activity"
             value={actiDesc}
             onChange={(e) => {
               setActiDesc(e.target.value);
             }}
           />
           <Button
-            type='primary'
-            className='add-acti-btn'
+            type="primary"
+            className="add-acti-btn"
             onClick={() => {
               if (actiDesc) {
                 createActi({
@@ -88,12 +88,14 @@ export const Activities = () => {
                 }
                 title={activity.user?.name}
                 description={
-                  <Typography.Paragraph>
+                  <Typography.Paragraph style={{ opacity: "0.67" }}>
                     {activity.description}
                   </Typography.Paragraph>
                 }
               />
-              <Typography.Text>
+              <Typography.Text
+                style={{ fontWeight: "bolder", color: "var(--primary-color)" }}
+              >
                 {(utcToLocal(activity.createdAt) as Dayjs).fromNow()}
               </Typography.Text>
             </List.Item>
