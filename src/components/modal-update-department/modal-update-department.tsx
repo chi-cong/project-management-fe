@@ -31,6 +31,7 @@ export const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
       onOk={handleOk}
       onCancel={handleCancel}
       width={1000}
+      style={{minWidth: '800px'}}
       footer={[]}
     >
       <h2

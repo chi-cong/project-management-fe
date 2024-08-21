@@ -44,6 +44,7 @@ export const ProjectDocument = ({ project }: { project?: Project }) => {
   const getLinks = () => {
     setFileLinks([]);
     const tempFileLinks: string[] = [];
+
     return project?.document!.map((file) =>
       getFile({ file })
         .unwrap()
@@ -58,42 +59,39 @@ export const ProjectDocument = ({ project }: { project?: Project }) => {
 
   useEffect(() => {
     setFileLinks([]);
-    const tempFileLinks: string[] = [];
+
     project?.document!.map((file) =>
       getFile({ file })
         .unwrap()
         .then((link) => {
-          tempFileLinks.push(link);
-        })
-        .then(() => {
-          setFileLinks(tempFileLinks);
+          setFileLinks((oldState) => [...oldState, link]);
         })
     );
-  }, [getFile, project]);
+  }, [project, getFile]);
 
   return (
-    <div className="doc-sec">
-      <div className="doc-sec-first-part">
-        <div className="doc-sec-head">
+    <div className='doc-sec'>
+      <div className='doc-sec-first-part'>
+        <div className='doc-sec-head'>
           <Typography.Title level={4}>File Attachment</Typography.Title>
         </div>
 
-        <div className="file-list">
+        <div className='file-list'>
           {fileLinks.map((files, index) => {
             const fileName = ` ${files.split("/").pop()?.substring(0, 30)}...`;
             const handledFile = handleFile(files);
             return (
-              <div className="file-row" key={index}>
-                <div className="file-name-icon">
+              <div className='file-row' key={index}>
+                <div className='file-name-icon'>
                   {handledFile.fileIcon}
                   <Typography.Link>
-                    <a href={files} target="_blank">
+                    <a href={files} target='_blank'>
                       {fileName}
                     </a>
                   </Typography.Link>
                 </div>
                 <Popconfirm
-                  title="Delete this file ?"
+                  title='Delete this file ?'
                   onConfirm={() => {
                     // fileLinks and filenames index are the same
                     deleteFile({
@@ -112,7 +110,7 @@ export const ProjectDocument = ({ project }: { project?: Project }) => {
                       });
                   }}
                 >
-                  <Button shape="round" danger size="small">
+                  <Button shape='round' danger size='small'>
                     Delete
                   </Button>
                 </Popconfirm>
@@ -122,7 +120,7 @@ export const ProjectDocument = ({ project }: { project?: Project }) => {
         </div>
       </div>
       {!checkRole(OUserRole.Staff) && (
-        <Upload.Dragger {...props} listType="text">
+        <Upload.Dragger {...props} listType='text'>
           <strong>Choose a file</strong> or drag it here
         </Upload.Dragger>
       )}

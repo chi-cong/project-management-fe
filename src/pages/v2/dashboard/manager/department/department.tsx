@@ -14,12 +14,14 @@ import {
 import { Project, RoleResponse } from "src/share/models";
 import { MngUpdateDepart } from "src/components";
 import AddStaffTabs from "src/components/modal-update-department/add-staff-tabs";
+import { TeamOutlined } from "@ant-design/icons";
 
 import { useParams } from "react-router-dom";
 
 export const ManagerDepartment = () => {
   const { id: departmentId } = useParams();
 
+  const [isTeamOpened, setIsTeamOpened] = useState<boolean>(false);
   const [reportModal, setReportModal] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const [addStaffModal, setAddStaffModal] = useState<boolean>(false);
@@ -119,6 +121,15 @@ export const ManagerDepartment = () => {
                   <PieChart />
                   Reports
                 </Button>
+                <Button
+                  shape='round'
+                  style={{ display: "" }}
+                  onClick={() => setIsTeamOpened(true)}
+                  className='open-team-member-modal-btn'
+                >
+                  <TeamOutlined />
+                  Team members
+                </Button>
               </div>
             </div>
             <section className='second-sec'>
@@ -176,7 +187,8 @@ export const ManagerDepartment = () => {
                   margin={{ top: 5, right: 0, bottom: 5, left: 0 }}
                   padAngle={0.7}
                   cornerRadius={3}
-                  activeOuterRadiusOffset={8}
+                  colors={{ scheme: "pastel2" }}
+                  activeOuterRadiusOffset={0}
                   borderWidth={1}
                   borderColor={{
                     from: "color",
@@ -262,6 +274,7 @@ export const ManagerDepartment = () => {
         footer={[]}
         title='Department Report'
         width={"80%"}
+        style={{ minWidth: "95vw" }}
       >
         <DepartmentReport departmentId={departmentId} />
       </Modal>
@@ -275,6 +288,7 @@ export const ManagerDepartment = () => {
         onCancel={() => setAddStaffModal(false)}
         width={"80vw"}
         footer={[]}
+        style={{ minWidth: "800px" }}
       >
         <AddStaffTabs id={departmentId} />
       </Modal>
@@ -282,12 +296,54 @@ export const ManagerDepartment = () => {
         open={rmStaffModal}
         onCancel={() => setRmStaffModal(false)}
         width={"80vw"}
+        style={{ minWidth: "800px" }}
         footer={[]}
       >
         <MngRmDepartStaff departmentId={departmentId} />
       </Modal>
+      <Modal
+        title={
+          <div className='title'>
+            <h4>Team Members</h4>
+            <Popover content={<TeamMemberOptions />}>
+              <Button type='text' size='small'>
+                <MenuDots style={{ width: "16px" }} />
+              </Button>
+            </Popover>
+          </div>
+        }
+        className='department-team-member-modal'
+        open={isTeamOpened}
+        onCancel={() => setIsTeamOpened(false)}
+        footer={[]}
+      >
+        <div className='member-list-container'>
+          <List
+            className='memeber-list'
+            dataSource={departmentStaffs?.users}
+            renderItem={(user) => {
+              return (
+                <List.Item>
+                  <List.Item.Meta
+                    title={user?.name || user.username}
+                    description={(user?.role as RoleResponse).name}
+                    avatar={
+                      <CustomAvatar
+                        size={60}
+                        userName={user.username}
+                        avatarSrc={user.avatar}
+                        bgColor={user.avatar_color}
+                      />
+                    }
+                  />
+                </List.Item>
+              );
+            }}
+          />
+        </div>
+      </Modal>
     </>
   ) : (
-    <Empty />
+    <Empty description={"You have no department"} />
   );
 };

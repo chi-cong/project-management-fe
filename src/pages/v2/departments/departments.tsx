@@ -128,6 +128,7 @@ export const Departments = () => {
               pageSize: 9,
               total: data?.total,
               onChange: onChangePage,
+              showSizeChanger: false
             }}
             dataSource={data?.departments}
             renderItem={

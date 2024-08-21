@@ -27,9 +27,12 @@ export const DocumentSection = () => {
   const { data: user } = useGetUserDetailQuery();
   const [getFile] = useGetDocFileMutation();
   const [deleteFile] = useDeleteFileMutation();
-  const { data: task, refetch: refetchTask } = useGetTaskQuery({
-    taskId: taskAssignment.task?.task_id,
-  });
+  const { data: task, refetch: refetchTask } = useGetTaskQuery(
+    {
+      taskId: taskAssignment.task?.task_id,
+    },
+    { skip: taskAssignment.task ? false : true }
+  );
 
   const [fileLinks, setFileLinks] = useState<string[]>([]);
 
@@ -76,19 +79,15 @@ export const DocumentSection = () => {
 
   useEffect(() => {
     setFileLinks([]);
-    const tempFileLinks: string[] = [];
 
     task?.document.map((file) =>
       getFile({ file })
         .unwrap()
         .then((link) => {
-          tempFileLinks.push(link);
-        })
-        .then(() => {
-          setFileLinks(tempFileLinks);
+          setFileLinks((oldState) => [...oldState, link]);
         })
     );
-  }, [getFile, task, taskAssignment]);
+  }, [task, getFile]);
 
   return (
     <div className="doc-sec">
@@ -98,54 +97,56 @@ export const DocumentSection = () => {
         </div>
 
         <div className="file-list">
-          {fileLinks.map((files, index) => {
-            const fileName = ` ${files.split("/").pop()?.substring(0, 30)}...`;
-            const handledFile = handleFile(files);
-            return (
-              <div className="file-row" key={index}>
-                <div className="file-name-icon">
-                  {handledFile.fileIcon}
-                  <Typography.Link>
-                    <a href={files} target="_blank">
-                      {fileName}
-                    </a>
-                  </Typography.Link>
-                </div>
-                {!checkRole(OUserRole.Staff) && (
-                  <Popconfirm
-                    title="Delete this file ?"
-                    onConfirm={() => {
-                      // fileLinks and filenames index are the same
-                      deleteFile({
-                        filename: task?.document[index],
-                        taskId: task?.task_id,
-                      })
-                        .unwrap()
-                        .then(() => {
-                          message.success(
-                            `${task?.document[index]} is deleted`
-                          );
-                          getLinks();
+          {fileLinks?.map((files, index) => {
+            if (typeof files === "string") {
+              const fileName = ` ${files.split("/").pop()?.substring(0, 30)}...`;
+              const handledFile = handleFile(files);
+              return (
+                <div className="file-row" key={index}>
+                  <div className="file-name-icon">
+                    {handledFile.fileIcon}
+                    <Typography.Link>
+                      <a href={files} target="_blank">
+                        {fileName}
+                      </a>
+                    </Typography.Link>
+                  </div>
+                  {!checkRole(OUserRole.Staff) && (
+                    <Popconfirm
+                      title="Delete this file ?"
+                      onConfirm={() => {
+                        // fileLinks and filenames index are the same
+                        deleteFile({
+                          filename: task?.document[index],
+                          taskId: task?.task_id,
                         })
-                        .catch(() => {
-                          message.error("Failed to delete file");
-                        });
-                    }}
-                  >
-                    <Button shape="round" danger size="small">
-                      Delete
-                    </Button>
-                  </Popconfirm>
-                )}
-              </div>
-            );
+                          .unwrap()
+                          .then(() => {
+                            message.success(
+                              `${task?.document[index]} is deleted`
+                            );
+                            getLinks();
+                          })
+                          .catch(() => {
+                            message.error("Failed to delete file");
+                          });
+                      }}
+                    >
+                      <Button shape="round" danger size="small">
+                        Delete
+                      </Button>
+                    </Popconfirm>
+                  )}
+                </div>
+              );
+            }
           })}
         </div>
       </div>
       {!checkRole(OUserRole.Staff) ||
       (checkRole(OUserRole.Staff) &&
         taskAssignment?.assignment?.user_id === user?.user_id) ? (
-        <Upload.Dragger {...props} listType='text'>
+        <Upload.Dragger {...props} listType="text">
           <strong>Choose a file</strong> or drag it here
         </Upload.Dragger>
       ) : null}

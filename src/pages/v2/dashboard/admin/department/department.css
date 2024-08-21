@@ -9,8 +9,8 @@
     flex-direction: column;
     gap: var(--gap-m);
     width: 80%;
-    @mixin tablet {
-      overflow-x: auto;
+    @mixin tabletAndMobile {
+      width: 100%;
     }
     .main-header {
       width: 100%;
@@ -30,6 +30,12 @@
           display: flex;
           align-items: center;
           gap: var(--gap-xs);
+        }
+        .open-team-member-modal-btn {
+          display: none;
+          @mixin tabletAndMobile {
+            display: inline-block;
+          }
         }
         svg {
           margin: auto;
@@ -87,6 +93,9 @@
   .team-member-sec {
     width: 19%;
     padding-left: var(--padding-xs);
+    @mixin tabletAndMobile {
+      display: none;
+    }
     .member-list-container {
       position: fixed;
       height: 85dvh;
@@ -122,5 +131,12 @@
     svg {
       width: 16px;
     }
+  }
+}
+
+.department-team-member-modal {
+  .title {
+    display: flex;
+    align-items: center;
   }
 }

@@ -277,7 +277,7 @@ export const AdminProject = () => {
         onCancel={() => setReportModal(false)}
         footer={[]}
         title="Project Report"
-        width={"80%"}
+        width={"90vw"}
       >
         <ProjectReport projectId={projectId} />
       </Modal>

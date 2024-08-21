@@ -181,7 +181,7 @@ export const CardProject: React.FC<CardProject> = ({
                         cursor: "pointer",
                       }}
                     >
-                      {projectStaffs?.users.map((staff, index) => {
+                      {projectStaffs?.users?.map((staff, index) => {
                         return (
                           <CustomAvatar
                             avatarSrc={staff.avatar}

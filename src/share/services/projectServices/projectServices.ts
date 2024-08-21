@@ -337,7 +337,7 @@ const projectServices = hrManagementApi.injectEndpoints({
         value: {
           status?: AssignmentStatus;
           endAt?: string | Dayjs;
-          user_id?: string;
+          user_id?: string | null;
         };
         assignmentId: string;
       }
