@@ -10,7 +10,7 @@ import {
 } from "antd";
 import { MenuDots, Pen, Trash } from "src/assets/icons";
 import { OUserRole, type Project } from "src/share/models";
-import { ModalUpdateProject } from "src/components";
+import { ModalUpdateProject, OutsideClickHandler } from "src/components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRoleChecker } from "src/share/hooks";
@@ -25,6 +25,7 @@ interface ProjectCardProp {
 export const ProjectCard = ({ project }: ProjectCardProp) => {
   const navigate = useNavigate();
   const checkRole = useRoleChecker();
+  const [openOptions, setOpenOptions] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const [popover, setPopover] = useState<boolean>(false);
 
@@ -69,40 +70,46 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
 
   const ProjectCardOption = () => {
     return (
-      <div className='project-option'>
-        <Button
-          type='text'
-          className='project-option-btn'
-          onClick={(e) => {
-            e.stopPropagation();
-            setUpdateModal(true);
-            setPopover(false);
-          }}
-        >
-          <Pen />
-          <Typography.Text>Edit</Typography.Text>
-        </Button>
-        <Popconfirm
-          title='Delete project ?'
-          onConfirm={async (e) => {
-            e?.stopPropagation();
-            deleteProject({ projectId: project.project_id })
-              .unwrap()
-              .then(() => message.success("Project is deleted"))
-              .catch(() => message.error("Failed to delete project"));
-          }}
-          onCancel={(e) => e?.stopPropagation()}
-        >
+      <OutsideClickHandler onClickOutside={() => setOpenOptions(false)}>
+        <div className='project-option'>
           <Button
-            className='project-option-btn'
             type='text'
-            onClick={(e) => e.stopPropagation()}
+            className='project-option-btn'
+            onClick={(e) => {
+              e.stopPropagation();
+              setUpdateModal(true);
+              setPopover(false);
+              setOpenOptions(false);
+            }}
           >
-            <Trash />
-            <Typography.Text>Delete</Typography.Text>
+            <Pen />
+            <Typography.Text>Edit</Typography.Text>
           </Button>
-        </Popconfirm>
-      </div>
+          <Popconfirm
+            title='Delete project ?'
+            onConfirm={async (e) => {
+              e?.stopPropagation();
+              deleteProject({ projectId: project.project_id })
+                .unwrap()
+                .then(() => message.success("Project is deleted"))
+                .catch(() => message.error("Failed to delete project"));
+              setOpenOptions(false);
+            }}
+            onCancel={(e) => e?.stopPropagation()}
+          >
+            <Button
+              className='project-option-btn'
+              type='text'
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <Trash />
+              <Typography.Text>Delete</Typography.Text>
+            </Button>
+          </Popconfirm>
+        </div>
+      </OutsideClickHandler>
     );
   };
 
@@ -114,7 +121,11 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
             {shortenLongText(25, project?.name)}
           </Typography.Title>
           {!checkRole(OUserRole.Staff) && (
-            <Popover content={ProjectCardOption}>
+            <Popover
+              content={ProjectCardOption}
+              open={openOptions}
+              onOpenChange={() => setOpenOptions(true)}
+            >
               <Button
                 type='text'
                 size='small'

@@ -32,7 +32,11 @@ import {
   useDeleteProjectMutation,
   useGetProjectStaffsQuery,
 } from "src/share/services";
-import { ModalUpdateProject, ModalAddUserToProject } from "src/components";
+import {
+  ModalUpdateProject,
+  ModalAddUserToProject,
+  OutsideClickHandler,
+} from "src/components";
 import { Activities } from "src/layouts/v2/task-detail/activities";
 import { localStorageUtil } from "src/share/utils";
 export const AdminProject = () => {
@@ -62,6 +66,7 @@ export const AdminProject = () => {
     items_per_page: "ALL",
     projectId,
   });
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const taskListSrc: {
     color: string;
@@ -87,83 +92,97 @@ export const AdminProject = () => {
 
   const ProjectOptions = () => {
     return (
-      <div className="project-option">
-        <Button
-          type="text"
-          className="project-option-btn"
-          onClick={() => {
-            setIsUpdateProject(false);
-            setProjectUpdateModal(true);
-          }}
-        >
-          <Page />
-          <Typography.Text>Detail</Typography.Text>
-        </Button>
-        <Button
-          type="text"
-          className="project-option-btn"
-          onClick={() => {
-            setDocSec(true);
-          }}
-        >
-          <Folder />
-          <Typography.Text>Documents</Typography.Text>
-        </Button>
-        <Button
-          type="text"
-          className="project-option-btn"
-          onClick={() => {
-            setIsUpdateProject(true);
-            setProjectUpdateModal(true);
-          }}
-        >
-          <Pen />
-          <Typography.Text>Edit</Typography.Text>
-        </Button>
-        <Popconfirm
-          title="Delete this project ?"
-          onConfirm={() => {
-            deleteProject({ projectId: projectData?.project_id })
-              .unwrap()
-              .then(() => {
-                navigate(-1);
-              })
-              .catch(() => message.error("failed to delete this project"));
-          }}
-        >
-          <Button className="project-option-btn" type="text">
-            <Trash />
-            <Typography.Text>Delete</Typography.Text>
+      <OutsideClickHandler
+        onClickOutside={() => {
+          setOpenMenu(false);
+        }}
+      >
+        <div className='project-option'>
+          <Button
+            type='text'
+            className='project-option-btn'
+            onClick={() => {
+              setIsUpdateProject(false);
+              setProjectUpdateModal(true);
+              setOpenMenu(false);
+            }}
+          >
+            <Page />
+            <Typography.Text>Detail</Typography.Text>
           </Button>
-        </Popconfirm>
-      </div>
+          <Button
+            type='text'
+            className='project-option-btn'
+            onClick={() => {
+              setDocSec(true);
+              setOpenMenu(false);
+            }}
+          >
+            <Folder />
+            <Typography.Text>Documents</Typography.Text>
+          </Button>
+          <Button
+            type='text'
+            className='project-option-btn'
+            onClick={() => {
+              setIsUpdateProject(true);
+              setProjectUpdateModal(true);
+              setOpenMenu(false);
+            }}
+          >
+            <Pen />
+            <Typography.Text>Edit</Typography.Text>
+          </Button>
+          <Popconfirm
+            title='Delete this project ?'
+            onConfirm={() => {
+              deleteProject({ projectId: projectData?.project_id })
+                .unwrap()
+                .then(() => {
+                  navigate(-1);
+                })
+                .catch(() => message.error("failed to delete this project"));
+            }}
+          >
+            <Button className='project-option-btn' type='text'>
+              <Trash />
+              <Typography.Text>Delete</Typography.Text>
+            </Button>
+          </Popconfirm>
+        </div>
+      </OutsideClickHandler>
     );
   };
 
   return (
     <>
-      <div className="admin-project-page">
-        <header className="header-row">
-          <div className="first-part">
-            <div className="title-and-menu">
+      <div className='admin-project-page'>
+        <header className='header-row'>
+          <div className='first-part'>
+            <div className='title-and-menu'>
               <h2>{projectData?.name}</h2>
-              <Popover content={ProjectOptions} trigger={"hover"}>
-                <Button type="text" size="small">
+              <Popover
+                content={ProjectOptions}
+                trigger={"click"}
+                open={openMenu}
+                onOpenChange={() => setOpenMenu(true)}
+              >
+                <Button type='text' size='small'>
                   <MenuDots />
                 </Button>
               </Popover>
             </div>
             <Button
-              type="default"
-              className="title-row-btn"
-              shape="round"
+              type='default'
+              className='title-row-btn'
+              shape='round'
               onClick={() => setReportModal(true)}
             >
               <PieChart />
               Reports
             </Button>
             <Button
-              shape="round"
+              shape='round'
               style={{ display: "" }}
               onClick={() =>
                 navigate(
@@ -175,10 +194,10 @@ export const AdminProject = () => {
               Back to Projects
             </Button>
           </div>
-          <div className="second-part">
+          <div className='second-part'>
             <Button
-              type="primary"
-              className="create-task-btn"
+              type='primary'
+              className='create-task-btn'
               onClick={() => {
                 setCreateTaskModal(true);
               }}
@@ -189,7 +208,7 @@ export const AdminProject = () => {
               </Typography.Text>
             </Button>
             <div
-              className="avatar-group-wrapper"
+              className='avatar-group-wrapper'
               onClick={() => setAddUserModal(true)}
             >
               {projectStaffs?.users?.length ? (
@@ -205,7 +224,7 @@ export const AdminProject = () => {
                   ))}
                 </Avatar.Group>
               ) : (
-                <CustomAvatar size={32} userName="+" />
+                <CustomAvatar size={32} userName='+' />
               )}
             </div>
           </div>
@@ -220,7 +239,7 @@ export const AdminProject = () => {
             xl: 3,
             xxl: 3,
           }}
-          className="task-sec"
+          className='task-sec'
           dataSource={taskListSrc}
           renderItem={(taskList) => {
             return (
@@ -278,7 +297,7 @@ export const AdminProject = () => {
         open={reportModal}
         onCancel={() => setReportModal(false)}
         footer={[]}
-        title="Project Report"
+        title='Project Report'
         width={"90vw"}
       >
         <ProjectReport projectId={projectId} />
