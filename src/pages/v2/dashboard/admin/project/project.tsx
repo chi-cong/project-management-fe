@@ -144,12 +144,14 @@ export const AdminProject = () => {
       <div className='admin-project-page'>
         <header className='header-row'>
           <div className='first-part'>
-            <h2>{projectData?.name}</h2>
-            <Popover content={ProjectOptions}>
-              <Button type='text' size='small'>
-                <MenuDots />
-              </Button>
-            </Popover>
+            <div className='title-and-menu'>
+              <h2>{projectData?.name}</h2>
+              <Popover content={ProjectOptions} trigger={"hover"}>
+                <Button type='text' size='small'>
+                  <MenuDots />
+                </Button>
+              </Popover>
+            </div>
             <Button
               type='default'
               className='title-row-btn'

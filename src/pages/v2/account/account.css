@@ -31,6 +31,9 @@
         .action {
           display: flex;
           min-width: 60%;
+          @mixin tabletAndMobile {
+            width: 100%;
+          }
           .title-row-btn {
             display: flex;
             align-items: center;

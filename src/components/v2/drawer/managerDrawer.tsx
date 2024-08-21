@@ -48,6 +48,7 @@ export const ManagerDrawer = () => {
       title: "Department",
       onClick() {
         navigate(`/v2/dashboard/manager/department/${data?.department_id}`);
+        dispatch(openDrawer(false));
       },
       icon: <ClusterOutlined />,
     },
@@ -55,6 +56,7 @@ export const ManagerDrawer = () => {
       title: "Project",
       onClick() {
         navigate("/v2/dashboard/manager/projects");
+        dispatch(openDrawer(false));
       },
       icon: <RocketOutlined />,
       addCallBack() {
