@@ -127,7 +127,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                             style={{ display: "flex", alignItems: "center" }}
                           >
                             <CustomAvatar
-                              size={40}
+                              size={45}
                               userName={department.information?.manager?.name}
                               avatarSrc={
                                 department.information?.manager?.avatar

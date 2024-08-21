@@ -57,11 +57,6 @@ export const SelectPmTable: React.FC<ModalAddUserToProjectProps> = ({
       dataIndex: "role",
       key: "role",
     },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
 
     {
       title: "Action",

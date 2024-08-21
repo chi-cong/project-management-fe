@@ -46,11 +46,6 @@ const AddStaffTabs = ({
       dataIndex: "role",
       key: "role",
     },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
   ];
   const { data: noDepartStaffs } = useManagerGetStaffNoDepartmentQuery({});
   const rowSelection = {

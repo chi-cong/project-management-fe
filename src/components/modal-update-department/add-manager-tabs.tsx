@@ -49,11 +49,6 @@ const AddManagerTabs = ({ id }: { id?: string }) => {
       dataIndex: "role",
       key: "role",
     },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
 
     {
       title: "Action",

@@ -60,11 +60,6 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
       dataIndex: "role",
       key: "role",
     },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
   ];
 
   const handleCancel = () => {

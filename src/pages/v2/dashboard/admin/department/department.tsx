@@ -382,7 +382,7 @@ export const AdminDepartment = () => {
         open={rmStaffModal}
         onCancel={() => setRmStaffModal(false)}
         width={"80vw"}
-        style={{ minWidth: "800px" }}
+        style={{ minWidth: "500px" }}
         footer={[]}
       >
         <RmDepartmentStaff departmentId={departmentId} />

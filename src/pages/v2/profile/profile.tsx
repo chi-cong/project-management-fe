@@ -14,20 +14,39 @@ import { useEffect, useState } from "react";
 import type { UploadProps } from "antd";
 const baseApi = import.meta.env.VITE_REQUEST_API_URL;
 
-const UserInfo: React.FC<{ user?: User }> = ({ user }) => {
+const UserInfo: React.FC<{ user?: User; refetch: () => void }> = ({
+  user,
+  refetch,
+}) => {
+  const avaFileProps: UploadProps = {
+    name: "file",
+    action: `${baseApi}upload/upload-avatar-from-local`,
+    headers: {
+      authorization: sessionStorageUtil.get("accessToken")! as string,
+    },
+    onChange(info) {
+      if (info.file.status === "done") {
+        message.success(`Avatar upload successfully`);
+        refetch();
+      } else if (info.file.status === "error") {
+        message.error(`Avatar upload failed.`);
+      }
+    },
+  };
+
   return (
-    <div className="user-profile-form">
-      <div className="user-profile">
+    <div className='user-profile-form'>
+      <div className='user-profile'>
         <CustomAvatar
           userName={user?.username}
           avatarSrc={user?.avatar}
           bgColor={user?.avatar_color}
-          className="user-profile-avatar"
+          className='user-profile-avatar'
         />
-        <div className="user-details">
+        <div className='user-details'>
           <h3>{user?.name}</h3>
-          <span className="role-label">
-            <div className="account-role">
+          <span className='role-label'>
+            <div className='account-role'>
               {(user?.role as RoleResponse)?.name === OUserRole.SuperAdmin
                 ? "ADMIN"
                 : (user?.role as RoleResponse)?.name}
@@ -35,6 +54,11 @@ const UserInfo: React.FC<{ user?: User }> = ({ user }) => {
           </span>
           <p>{user?.email}</p>
         </div>
+        <Upload {...avaFileProps} className='avatar-upload-btn'>
+          <Button className='upload-btn' style={{ width: "fit-contents" }}>
+            <UploadOutlined /> Upload Avatar
+          </Button>
+        </Upload>
       </div>
     </div>
   );
@@ -75,28 +99,25 @@ const SelectNewAvatar: React.FC<{
   }, [user]);
 
   return (
-    <div className="select-new-avatar-form">
+    <div className='select-new-avatar-form'>
       <h3>Select new avatar</h3>
       <Upload {...avaFileProps}>
-        <div className="avatar-upload">
-          <div className="avatar-upload-content">
+        <div className='avatar-upload'>
+          <div className='avatar-upload-content'>
             <img
-              src="/src/assets/imgs/profile image.png"
-              alt="Placeholder Avatar"
-              className="img"
+              src='/src/assets/imgs/profile image.png'
+              alt='Placeholder Avatar'
+              className='img'
               style={{ width: "30%", height: "100%" }}
             />
             <div>
-              <CloudUploadOutlined className="upload-icon" />
+              <CloudUploadOutlined className='upload-icon' />
             </div>
-            <div className="text-content">
+            <div className='text-content'>
               <p style={{ fontWeight: "bolder" }}>Choose new file</p>
               <p>JPG, PNG, WEBP, JEPG,... Max size of 800GB</p>
             </div>
           </div>
-          <Button className="upload-btn">
-            <UploadOutlined /> Upload Avatar
-          </Button>
         </div>
       </Upload>
     </div>
@@ -108,25 +129,25 @@ export const Profile = () => {
   const [avatar, setAvatar] = useState<string>("");
 
   return (
-    <div className="v2-profile-page">
+    <div className='v2-profile-page'>
       <header>
         <h1>Profile</h1>
       </header>
-      <div className="profile-container">
+      <div className='profile-container'>
         <Row
-          className="profile-content"
+          className='profile-content'
           gutter={[16, 8]}
           style={{ alignItems: "stretch" }}
         >
-          <Col sm={24} md={24} lg={7} className="user-profile-container">
+          <Col sm={24} md={24} lg={7} className='user-profile-container'>
             <Space
-              direction="vertical"
+              direction='vertical'
               style={{ width: "100%", height: "100%" }}
             >
-              <Card className="card-box-user" style={{ height: "100%" }}>
-                <UserInfo user={user} />
+              <Card className='card-box-user' style={{ height: "100%" }}>
+                <UserInfo user={user} refetch={refetch} />
               </Card>
-              <Card className="card-box-avatar" style={{ height: "100%" }}>
+              <Card className='card-box-avatar' style={{ height: "100%" }}>
                 <SelectNewAvatar
                   refetch={refetch}
                   setAvatar={setAvatar}
@@ -136,7 +157,7 @@ export const Profile = () => {
             </Space>
           </Col>
           <Col xs={24} sm={24} md={24} lg={17}>
-            <Card className="personal-information" style={{ height: "100%" }}>
+            <Card className='personal-information' style={{ height: "100%" }}>
               <h2>Personal Information</h2>
               <ProfileForm user={user} />
             </Card>
