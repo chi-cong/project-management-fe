@@ -27,11 +27,10 @@ export const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
     <Modal
       className='wrapper'
       open={isModalOpen}
-      centered
       onOk={handleOk}
       onCancel={handleCancel}
       width={1000}
-      style={{minWidth: '800px'}}
+      style={{ minWidth: "500px" }}
       footer={[]}
     >
       <h2

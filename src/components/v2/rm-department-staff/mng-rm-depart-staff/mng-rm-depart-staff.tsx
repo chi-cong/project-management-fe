@@ -48,11 +48,7 @@ export const MngRmDepartStaff = ({
       dataIndex: "role",
       key: "role",
     },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
+
     {
       title: "Action",
       key: "action",

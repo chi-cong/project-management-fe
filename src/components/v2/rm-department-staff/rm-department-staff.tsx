@@ -7,6 +7,7 @@ import {
   useDeleteStaffDepartmentMutation,
 } from "src/share/services";
 import { RoleResponse } from "src/share/models";
+import { DeleteOutlined } from "@ant-design/icons";
 
 interface DataType {
   avatar: {
@@ -49,16 +50,12 @@ export const RmDepartmentStaff = ({
       key: "role",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
-    {
       title: "Action",
       key: "action",
       render: (_: string, record: DataType) => (
         <Button
           type='primary'
+          ghost
           onClick={() => [
             rmDepartmentStaff({
               departmentId,
@@ -69,7 +66,7 @@ export const RmDepartmentStaff = ({
               .catch(() => message.error("Failed to remove member")),
           ]}
         >
-          Remove
+          <DeleteOutlined />
         </Button>
       ),
     },
@@ -127,7 +124,7 @@ export const RmDepartmentStaff = ({
                 .catch(() => message.error("Failed to remove members"));
             }}
           >
-            Assign
+            Remove
           </Button>
         </div>
       )}

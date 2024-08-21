@@ -105,11 +105,7 @@ export const ModalListStaffDepartment = ({
       dataIndex: "username",
       key: "username",
     },
-    {
-      title: "email",
-      dataIndex: "email",
-      key: "email",
-    },
+
     {
       title: "Delete",
       key: "delete",

@@ -44,11 +44,7 @@ const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
       dataIndex: "role",
       key: "role",
     },
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
+
     {
       title: "Action",
       key: "action",

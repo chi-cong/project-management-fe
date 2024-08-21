@@ -100,6 +100,7 @@ export const AdminDrawer = () => {
         onClose={() => dispatch(openDrawer(false))}
         open={isOpen}
         placement='left'
+        width={"75vw"}
       >
         <CustomMenu
           items={items}
