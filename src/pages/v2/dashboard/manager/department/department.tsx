@@ -21,6 +21,7 @@ import { useParams } from "react-router-dom";
 export const ManagerDepartment = () => {
   const { id: departmentId } = useParams();
 
+  const [teamOptions, setTeamOpions] = useState<boolean>(false);
   const [isTeamOpened, setIsTeamOpened] = useState<boolean>(false);
   const [reportModal, setReportModal] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
@@ -79,7 +80,10 @@ export const ManagerDepartment = () => {
         <Button
           type='text'
           className='department-option-btn'
-          onClick={() => setAddStaffModal(true)}
+          onClick={() => {
+            setAddStaffModal(true);
+            setTeamOpions(false);
+          }}
         >
           <UserPlus />
           <Typography.Text>Add Member </Typography.Text>
@@ -87,7 +91,10 @@ export const ManagerDepartment = () => {
         <Button
           className='department-option-btn'
           type='text'
-          onClick={() => setRmStaffModal(true)}
+          onClick={() => {
+            setRmStaffModal(true);
+            setTeamOpions(false);
+          }}
         >
           <Trash />
           <Typography.Text>Remove Member</Typography.Text>
@@ -237,7 +244,12 @@ export const ManagerDepartment = () => {
           <div className='member-list-container'>
             <div className='title'>
               <Typography.Title level={5}>Team Members</Typography.Title>
-              <Popover content={<TeamMemberOptions />}>
+              <Popover
+                content={<TeamMemberOptions />}
+                open={teamOptions}
+                trigger={"click"}
+                onOpenChange={() => setTeamOpions(true)}
+              >
                 <Button type='text' size='small'>
                   <MenuDots />
                 </Button>
@@ -305,7 +317,12 @@ export const ManagerDepartment = () => {
         title={
           <div className='title'>
             <h4>Team Members</h4>
-            <Popover content={<TeamMemberOptions />}>
+            <Popover
+              content={<TeamMemberOptions />}
+              open={teamOptions}
+              trigger={"click"}
+              onOpenChange={() => setTeamOpions(true)}
+            >
               <Button type='text' size='small'>
                 <MenuDots style={{ width: "16px" }} />
               </Button>

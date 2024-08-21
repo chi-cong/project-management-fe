@@ -32,7 +32,7 @@ import {
   useDeleteProjectMutation,
   useGetProjectStaffsQuery,
 } from "src/share/services";
-import { MngUpdateProject } from "src/components";
+import { MngUpdateProject, OutsideClickHandler } from "src/components";
 import { Activities } from "src/layouts/v2/task-detail/activities";
 import { AddProjectUserPanel } from "src/components/modal-add-user-to-project";
 
@@ -40,6 +40,7 @@ export const ManagerProject = () => {
   const { id: projectId } = useParams();
   const navigate = useNavigate();
 
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [reportModal, setReportModal] = useState<boolean>(false);
   const [taskDetailModal, setTaskDetailModal] = useState<boolean>(false);
   const [createTaskModal, setCreateTaskModal] = useState<boolean>(false);
@@ -88,56 +89,61 @@ export const ManagerProject = () => {
 
   const ProjectOptions = () => {
     return (
-      <div className='project-option'>
-        <Button
-          type='text'
-          className='project-option-btn'
-          onClick={() => {
-            setIsUpdateProject(false);
-            setProjectUpdateModal(true);
-          }}
-        >
-          <Page />
-          <Typography.Text>Detail</Typography.Text>
-        </Button>
-        <Button
-          type='text'
-          className='project-option-btn'
-          onClick={() => {
-            setDocSec(true);
-          }}
-        >
-          <Folder />
-          <Typography.Text>Documents</Typography.Text>
-        </Button>
-        <Button
-          type='text'
-          className='project-option-btn'
-          onClick={() => {
-            setIsUpdateProject(true);
-            setProjectUpdateModal(true);
-          }}
-        >
-          <Pen />
-          <Typography.Text>Edit</Typography.Text>
-        </Button>
-        <Popconfirm
-          title='Delete this project ?'
-          onConfirm={() => {
-            deleteProject({ projectId: projectData?.project_id })
-              .unwrap()
-              .then(() => {
-                navigate(-1);
-              })
-              .catch(() => message.error("failed to delete this project"));
-          }}
-        >
-          <Button className='project-option-btn' type='text'>
-            <Trash />
-            <Typography.Text>Delete</Typography.Text>
+      <OutsideClickHandler onClickOutside={() => setOpenMenu(false)}>
+        <div className='project-option'>
+          <Button
+            type='text'
+            className='project-option-btn'
+            onClick={() => {
+              setIsUpdateProject(false);
+              setProjectUpdateModal(true);
+              setOpenMenu(false);
+            }}
+          >
+            <Page />
+            <Typography.Text>Detail</Typography.Text>
           </Button>
-        </Popconfirm>
-      </div>
+          <Button
+            type='text'
+            className='project-option-btn'
+            onClick={() => {
+              setDocSec(true);
+              setOpenMenu(false);
+            }}
+          >
+            <Folder />
+            <Typography.Text>Documents</Typography.Text>
+          </Button>
+          <Button
+            type='text'
+            className='project-option-btn'
+            onClick={() => {
+              setIsUpdateProject(true);
+              setProjectUpdateModal(true);
+              setOpenMenu(false);
+            }}
+          >
+            <Pen />
+            <Typography.Text>Edit</Typography.Text>
+          </Button>
+          <Popconfirm
+            title='Delete this project ?'
+            onConfirm={() => {
+              deleteProject({ projectId: projectData?.project_id })
+                .unwrap()
+                .then(() => {
+                  navigate(-1);
+                })
+                .catch(() => message.error("failed to delete this project"));
+            }}
+          >
+            <Button className='project-option-btn' type='text'>
+              <Trash />
+              <Typography.Text>Delete</Typography.Text>
+            </Button>
+          </Popconfirm>
+        </div>
+      </OutsideClickHandler>
     );
   };
 
@@ -147,7 +153,12 @@ export const ManagerProject = () => {
         <header className='header-row'>
           <div className='first-part'>
             <Typography.Title level={2}>{projectData?.name}</Typography.Title>
-            <Popover content={ProjectOptions}>
+            <Popover
+              content={ProjectOptions}
+              open={openMenu}
+              trigger={"click"}
+              onOpenChange={() => setOpenMenu(true)}
+            >
               <Button type='text' size='small'>
                 <MenuDots />
               </Button>

@@ -11,11 +11,7 @@
         gap: var(--gap-s);
         max-width: 80%;
         flex-wrap: wrap;
-        /* @media screen and (max-width: 700px) {
-          flex-direction: row;
-          justify-content: start;
-          align-items: flex-start !important;
-        } */
+        word-break: break-all;
         .account-role {
           background-color: #cdcbf9;
           color: #6358dc;

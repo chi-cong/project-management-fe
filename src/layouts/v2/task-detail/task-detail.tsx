@@ -81,23 +81,22 @@ export const TaskDetail = ({
           <Pen />
           <Typography.Text>Edit</Typography.Text>
         </Button>
-        <Popconfirm title='Delete this task ?'>
-          <Button
-            className='task-option-btn'
-            type='text'
-            onClick={async () => {
-              await deleteTask({ taskId: taskAssignment.task?.task_id });
-              await deleteAssignment({
-                assigmentId: taskAssignment.assignment!.assignment_id,
+        <Popconfirm
+          title='Delete this task ?'
+          onConfirm={async () => {
+            await deleteTask({ taskId: taskAssignment.task?.task_id });
+            await deleteAssignment({
+              assigmentId: taskAssignment.assignment!.assignment_id,
+            })
+              .unwrap()
+              .then(() => {
+                setShowTaskDetail(false);
+                message.success("Task is deleted");
               })
-                .unwrap()
-                .then(() => {
-                  setShowTaskDetail(false);
-                  message.success("Task is deleted");
-                })
-                .catch(() => message.error("failed to delete this task"));
-            }}
-          >
+              .catch(() => message.error("failed to delete this task"));
+          }}
+        >
+          <Button className='task-option-btn' type='text'>
             <Trash />
             <Typography.Text>Delete</Typography.Text>
           </Button>

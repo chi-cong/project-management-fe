@@ -18,9 +18,11 @@ import {
 import { Activities } from "src/layouts/v2/task-detail/activities";
 import { ModalDetailProject } from "src/components/modal-detail-project";
 import { ProjectTeam } from "src/components/v2/project-team/project-team";
+import { OutsideClickHandler } from "src/components";
 
 export const StaffProject = () => {
   const { id: projectId } = useParams();
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [reportModal, setReportModal] = useState<boolean>(false);
   const [taskDetailModal, setTaskDetailModal] = useState<boolean>(false);
   const [projectTeam, setProjectTeam] = useState<boolean>(false);
@@ -66,28 +68,32 @@ export const StaffProject = () => {
 
   const ProjectOptions = () => {
     return (
-      <div className='project-option'>
-        <Button
-          type='text'
-          className='project-option-btn'
-          onClick={() => {
-            setProjectDetailModal(true);
-          }}
-        >
-          <Page />
-          <Typography.Text>Detail</Typography.Text>
-        </Button>
-        <Button
-          type='text'
-          className='project-option-btn'
-          onClick={() => {
-            setDocSec(true);
-          }}
-        >
-          <Folder />
-          <Typography.Text>Documents</Typography.Text>
-        </Button>
-      </div>
+      <OutsideClickHandler onClickOutside={() => setOpenMenu(false)}>
+        <div className='project-option'>
+          <Button
+            type='text'
+            className='project-option-btn'
+            onClick={() => {
+              setProjectDetailModal(true);
+              setOpenMenu(false);
+            }}
+          >
+            <Page />
+            <Typography.Text>Detail</Typography.Text>
+          </Button>
+          <Button
+            type='text'
+            className='project-option-btn'
+            onClick={() => {
+              setDocSec(true);
+              setOpenMenu(false);
+            }}
+          >
+            <Folder />
+            <Typography.Text>Documents</Typography.Text>
+          </Button>
+        </div>
+      </OutsideClickHandler>
     );
   };
 
@@ -97,7 +103,12 @@ export const StaffProject = () => {
         <header className='header-row'>
           <div className='first-part'>
             <Typography.Title level={2}>{projectData?.name}</Typography.Title>
-            <Popover content={ProjectOptions}>
+            <Popover
+              content={ProjectOptions}
+              open={openMenu}
+              trigger={"click"}
+              onOpenChange={() => setOpenMenu(true)}
+            >
               <Button type='text' size='small'>
                 <MenuDots />
               </Button>

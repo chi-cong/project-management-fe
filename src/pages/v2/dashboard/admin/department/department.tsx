@@ -25,7 +25,7 @@ import {
   useDeleteDepartmentsMutation,
 } from "src/share/services";
 import { Project, RoleResponse } from "src/share/models";
-import { ModalUpdateDepartment } from "src/components";
+import { ModalUpdateDepartment, OutsideClickHandler } from "src/components";
 import AddStaffTabs from "src/components/modal-update-department/add-staff-tabs";
 
 import { useParams } from "react-router-dom";
@@ -33,6 +33,8 @@ import { useParams } from "react-router-dom";
 export const AdminDepartment = () => {
   const { id: departmentId } = useParams();
 
+  const [departmentOptions, setDepartmentOpions] = useState<boolean>(false);
+  const [teamOptions, setTeamOpions] = useState<boolean>(false);
   const [isTeamOpened, setIsTeamOpened] = useState<boolean>(false);
   const [reportModal, setReportModal] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
@@ -96,53 +98,70 @@ export const AdminDepartment = () => {
 
   const DepartmentOptions = () => {
     return (
-      <div className='department-option'>
-        <Button
-          type='text'
-          className='department-option-btn'
-          onClick={() => setUpdateModal(true)}
-        >
-          <Pen />
-          <Typography.Text>Edit</Typography.Text>
-        </Button>
-        <Popconfirm
-          title='Delete this department ?'
-          onConfirm={() => {
-            deleteDepartment({ departmentId })
-              .unwrap()
-              .then(() => message.success("Deleted department"))
-              .catch(() => message.error("failed to delete department"));
-            navigate(-1);
-          }}
-        >
-          <Button className='department-option-btn' type='text'>
-            <Trash />
-            <Typography.Text>Delete</Typography.Text>
+      <OutsideClickHandler onClickOutside={() => setDepartmentOpions(false)}>
+        <div className='department-option'>
+          <Button
+            type='text'
+            className='department-option-btn'
+            onClick={() => {
+              setUpdateModal(true);
+              setDepartmentOpions(false);
+            }}
+          >
+            <Pen />
+            <Typography.Text>Edit</Typography.Text>
           </Button>
-        </Popconfirm>
-      </div>
+          <Popconfirm
+            title='Delete this department ?'
+            onConfirm={() => {
+              deleteDepartment({ departmentId })
+                .unwrap()
+                .then(() => message.success("Deleted department"))
+                .catch(() => message.error("failed to delete department"));
+              navigate(-1);
+            }}
+          >
+            <Button className='department-option-btn' type='text'>
+              <Trash />
+              <Typography.Text>Delete</Typography.Text>
+            </Button>
+          </Popconfirm>
+        </div>
+      </OutsideClickHandler>
     );
   };
   const TeamMemberOptions = () => {
     return (
-      <div className='department-option'>
-        <Button
-          type='text'
-          className='department-option-btn'
-          onClick={() => setAddStaffModal(true)}
-        >
-          <UserPlus />
-          <Typography.Text>Add Member </Typography.Text>
-        </Button>
-        <Button
-          className='department-option-btn'
-          type='text'
-          onClick={() => setRmStaffModal(true)}
-        >
-          <Trash />
-          <Typography.Text>Remove Member</Typography.Text>
-        </Button>
-      </div>
+      <OutsideClickHandler
+        onClickOutside={() => {
+          setTeamOpions(false);
+        }}
+      >
+        <div className='department-option'>
+          <Button
+            type='text'
+            className='department-option-btn'
+            onClick={() => {
+              setAddStaffModal(true);
+              setTeamOpions(false);
+            }}
+          >
+            <UserPlus />
+            <Typography.Text>Add Member </Typography.Text>
+          </Button>
+          <Button
+            className='department-option-btn'
+            type='text'
+            onClick={() => {
+              setRmStaffModal(true);
+              setTeamOpions(false);
+            }}
+          >
+            <Trash />
+            <Typography.Text>Remove Member</Typography.Text>
+          </Button>
+        </div>
+      </OutsideClickHandler>
     );
   };
 
@@ -154,7 +173,12 @@ export const AdminDepartment = () => {
             <div className='title-row'>
               <h2>{data?.name}</h2>
               <div style={{ display: "flex" }}>
-                <Popover content={<DepartmentOptions />}>
+                <Popover
+                  content={<DepartmentOptions />}
+                  open={departmentOptions}
+                  trigger={"click"}
+                  onOpenChange={() => setDepartmentOpions(true)}
+                >
                   <Button type='text' className='title-row-btn' size='small'>
                     <MenuDots />
                   </Button>
@@ -294,7 +318,12 @@ export const AdminDepartment = () => {
           <div className='member-list-container'>
             <div className='title'>
               <Typography.Title level={5}>Team Members</Typography.Title>
-              <Popover content={<TeamMemberOptions />}>
+              <Popover
+                content={<TeamMemberOptions />}
+                trigger={"click"}
+                open={teamOptions}
+                onOpenChange={() => setTeamOpions(true)}
+              >
                 <Button type='text' size='small'>
                   <MenuDots />
                 </Button>
@@ -359,10 +388,16 @@ export const AdminDepartment = () => {
         <RmDepartmentStaff departmentId={departmentId} />
       </Modal>
       <Modal
+        zIndex={100}
         title={
           <div className='title'>
             <h4>Team Members</h4>
-            <Popover content={<TeamMemberOptions />}>
+            <Popover
+              content={<TeamMemberOptions />}
+              open={teamOptions}
+              trigger={"click"}
+              onOpenChange={() => setTeamOpions(true)}
+            >
               <Button type='text' size='small'>
                 <MenuDots style={{ width: "16px" }} />
               </Button>
