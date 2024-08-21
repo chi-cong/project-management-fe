@@ -11,7 +11,7 @@
       .user-profile-container {
         display: flex;
         flex-direction: column;
-        .card-box-shadow {
+        .card-box-user {
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
           height: 100%;
           .user-profile-form {
@@ -58,6 +58,10 @@
             }
           }
         }
+        .card-box-avatar {
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          height: 100%;
+        }
         .select-new-avatar-form {
           h3 {
             margin-bottom: 15px;
@@ -88,6 +92,18 @@
               z-index: 1;
               p:first-of-type {
                 margin-bottom: 10px;
+              }
+            }
+            .upload-btn {
+              display: block;
+              width: 410px;
+              @media screen and (min-width: 1400px) {
+                display: none;
+              }
+            }
+            .avatar-upload-content {
+              @media screen and (max-width: 1400px) {
+                display: none;
               }
             }
           }

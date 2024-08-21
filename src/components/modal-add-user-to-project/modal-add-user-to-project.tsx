@@ -82,7 +82,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
       key: "action",
       render: (_text: string, record: DataType) => (
         <Button
-          type='primary'
+          type="primary"
           onClick={() => {
             createAssignment({
               project_id: project?.project_id,
@@ -132,11 +132,11 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
       children: (
         <>
           {/* search */}
-          <Row className='modal-add-user-search-input'>
+          <Row className="modal-add-user-search-input">
             <Col span={8}>
               <Input.Search
-                placeholder='Search...'
-                size='large'
+                placeholder="Search..."
+                size="large"
                 onSearch={(value) => setSearch(value)}
                 allowClear
               />
@@ -160,7 +160,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
 
   return (
     <Modal
-      className='wrapper'
+      className="wrapper"
       open={isModalOpen}
       onCancel={handleCancel}
       centered
@@ -168,7 +168,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
       style={{ minWidth: "800px" }}
       footer={[]}
     >
-      <Tabs items={projectStaffTabs} defaultActiveKey='1' />
+      <Tabs items={projectStaffTabs} defaultActiveKey="1" />
     </Modal>
   );
 };
