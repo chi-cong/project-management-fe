@@ -210,15 +210,38 @@ export const TaskDetail = ({
           className={`main-task-detail-section ${modalWidth === 750 && "main-task-detail-section-full"}`}
         >
           {taskAssignment.assignment?.user && (
-            <Card loading={false} className='assigned-user-card'>
-              <Card.Meta
-                {...(taskAssignment && {
-                  avatar: <CustomAvatar size={40} userName='ABC' />,
-                })}
-                title={taskAssignment.assignment.user?.name}
-                description={taskAssignment.assignment.user?.email}
-              />
-            </Card>
+            <>
+              <Card loading={false} className='assigned-user-card'>
+                <Card.Meta
+                  {...(taskAssignment && {
+                    avatar: (
+                      <CustomAvatar
+                        size={40}
+                        userName={taskAssignment.assignment?.user?.name}
+                        avatarSrc={taskAssignment?.assignment?.user?.avatar}
+                        bgColor={taskAssignment.assignment?.user?.avatar_color}
+                      />
+                    ),
+                  })}
+                  title={taskAssignment.assignment.user?.name}
+                  description={taskAssignment.assignment.user?.email}
+                />
+              </Card>
+              <Button
+                style={{ width: "fit-content" }}
+                onClick={() => {
+                  updateAssignment({
+                    assignmentId: assignment?.assignment_id!,
+                    value: { user_id: null },
+                  })
+                    .unwrap()
+                    .then(() => message.success("Unassigned user"))
+                    .catch(() => message.error("Failed to unassign user"));
+                }}
+              >
+                Unassign
+              </Button>
+            </>
           )}
           <div className='task-description'>
             <Typography.Title level={3}>

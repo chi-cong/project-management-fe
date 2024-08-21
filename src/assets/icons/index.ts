@@ -21,4 +21,4 @@ export * from "./plus";
 export * from "./page";
 export * from "./chat";
 export * from "./loading";
-export * from './'
+export * from "./image";

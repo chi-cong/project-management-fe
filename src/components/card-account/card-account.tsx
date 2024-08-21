@@ -91,15 +91,15 @@ export const CardAccount: React.FC<CardAccount> = ({
           </Row>
           <Row className='account-body'>
             <Col span={12} className='account-body-info'>
-              <div className=''>
+              <div className='account-card-info'>
                 <span>{account.name}</span>
               </div>
-              <div>
+              <div className='account-card-info'>
                 <span>
                   <strong>Email:</strong> {account.email}
                 </span>
               </div>
-              <div>
+              <div className='account-card-info'>
                 <span>
                   <strong>Contact:</strong> {account.phone}
                 </span>

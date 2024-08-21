@@ -83,7 +83,7 @@ export interface Assignment {
   task_id?: string;
   startAt?: string | Dayjs;
   endAt?: string | Dayjs;
-  status?: boolean;
+  status?: AssignmentStatus;
   createdBy?: string;
   createdAt?: string | Dayjs;
   task?: Task;

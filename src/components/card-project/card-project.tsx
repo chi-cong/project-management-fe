@@ -168,7 +168,7 @@ export const CardProject: React.FC<CardProject> = ({
                     setIsModalAddUserOpen(true);
                   }}
                 >
-                  {projectStaffs?.users.length ? (
+                  {projectStaffs?.users?.length ? (
                     <Avatar.Group
                       maxCount={2}
                       maxPopoverTrigger='hover'
@@ -181,7 +181,7 @@ export const CardProject: React.FC<CardProject> = ({
                         cursor: "pointer",
                       }}
                     >
-                      {projectStaffs?.users.map((staff, index) => {
+                      {projectStaffs?.users?.map((staff, index) => {
                         return (
                           <CustomAvatar
                             avatarSrc={staff.avatar}

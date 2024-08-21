@@ -39,46 +39,52 @@ export const TaskCard = ({
 
   const TaskCardOptions = () => {
     return (
-      <div className="task-card-options">
-        <Button
-          type="text"
-          className="task-card-option-btn"
-          onClick={() =>
-            updateAssignment({
-              assignmentId: assignment.assignment_id!,
-              value: { status: OAssignmentStatus.Todo },
-            })
-          }
-        >
-          <CheckCircle />
-          <Typography.Text>Todo</Typography.Text>
-        </Button>
-        <Button
-          type="text"
-          className="task-card-option-btn"
-          onClick={() =>
-            updateAssignment({
-              assignmentId: assignment.assignment_id!,
-              value: { status: OAssignmentStatus.OnProgress },
-            })
-          }
-        >
-          <Loading />
-          <Typography.Text>On progress</Typography.Text>
-        </Button>
-        <Button
-          className="task-card-option-btn"
-          type="text"
-          onClick={() =>
-            updateAssignment({
-              assignmentId: assignment.assignment_id!,
-              value: { status: OAssignmentStatus.Done },
-            })
-          }
-        >
-          <DoubleCheck />
-          <Typography.Text>Done</Typography.Text>
-        </Button>
+      <div className='task-card-options'>
+        {assignment?.status !== OAssignmentStatus.Todo && (
+          <Button
+            type='text'
+            className='task-card-option-btn'
+            onClick={() =>
+              updateAssignment({
+                assignmentId: assignment.assignment_id!,
+                value: { status: OAssignmentStatus.Todo },
+              })
+            }
+          >
+            <CheckCircle />
+            <Typography.Text>Todo</Typography.Text>
+          </Button>
+        )}
+        {assignment?.status !== OAssignmentStatus.OnProgress && (
+          <Button
+            type='text'
+            className='task-card-option-btn'
+            onClick={() =>
+              updateAssignment({
+                assignmentId: assignment.assignment_id!,
+                value: { status: OAssignmentStatus.OnProgress },
+              })
+            }
+          >
+            <Loading />
+            <Typography.Text>On progress</Typography.Text>
+          </Button>
+        )}
+        {assignment?.status !== OAssignmentStatus.Done && (
+          <Button
+            className='task-card-option-btn'
+            type='text'
+            onClick={() =>
+              updateAssignment({
+                assignmentId: assignment.assignment_id!,
+                value: { status: OAssignmentStatus.Done },
+              })
+            }
+          >
+            <DoubleCheck />
+            <Typography.Text>Done</Typography.Text>
+          </Button>
+        )}
       </div>
     );
   };

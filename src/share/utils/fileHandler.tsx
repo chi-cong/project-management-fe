@@ -1,5 +1,11 @@
 import { ReactNode } from "react";
-import { PdfIcon, DocxIcon, XlxsIcon, CsvIcon } from "src/assets/icons";
+import {
+  PdfIcon,
+  DocxIcon,
+  XlxsIcon,
+  CsvIcon,
+  ImageIcon,
+} from "src/assets/icons";
 
 interface HandledFile {
   fileIcon?: ReactNode;
@@ -16,6 +22,8 @@ export const handleFile = (fileString: string): HandledFile => {
     result.fileIcon = <XlxsIcon style={{ fill: "green", width: "30px" }} />;
   } else if (extension === ".csv") {
     result.fileIcon = <CsvIcon style={{ fill: "orange", width: "30px" }} />;
+  } else if (extension === ".jpg" || extension === ".png") {
+    result.fileIcon = <ImageIcon style={{ fill: "orange", width: "30px" }} />;
   } else {
     result.fileIcon = <PdfIcon style={{ fill: "crimson", width: "30px" }} />;
   }

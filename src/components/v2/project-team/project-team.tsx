@@ -95,6 +95,7 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
       onCancel={handleCancel}
       centered
       width={1000}
+      style={{ minWidth: "800px" }}
       footer={null}
     >
       <h2
