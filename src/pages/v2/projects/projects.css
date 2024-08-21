@@ -21,6 +21,10 @@
           gap: var(--gap-s);
         }
         .title-des {
+          width: 30%;
+          @mixin tabletAndMobile {
+            width: 100%;
+          }
           .title-row {
             display: flex;
             align-items: center;
@@ -38,7 +42,10 @@
         }
         .action {
           display: flex;
-          min-width: 40%;
+          width: 70%;
+          @mixin tabletAndMobile {
+            width: 100%;
+          }
           .title-row-btn {
             display: flex;
             align-items: center;

@@ -7,7 +7,7 @@
     display: flex;
     gap: var(--gap-s);
     .acti-des-container {
-      width: 100%;
+      width: calc(100% - 50px);
       height: 100px;
       border:
         solid 1px,

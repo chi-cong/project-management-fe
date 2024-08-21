@@ -56,6 +56,7 @@ export const AdminDrawer = () => {
     {
       title: "Account",
       onClick() {
+        dispatch(openDrawer(false));
         navigate(
           `/v2/dashboard/${(localStorageUtil.get("role") as string).toLocaleLowerCase()}/account`
         );
@@ -68,6 +69,7 @@ export const AdminDrawer = () => {
     {
       title: "Department",
       onClick() {
+        dispatch(openDrawer(false));
         navigate(
           `/v2/dashboard/${(localStorageUtil.get("role") as string).toLocaleLowerCase()}/departments`
         );
@@ -80,6 +82,7 @@ export const AdminDrawer = () => {
     {
       title: "Project",
       onClick() {
+        dispatch(openDrawer(false));
         navigate(
           `/v2/dashboard/${(localStorageUtil.get("role") as string).toLocaleLowerCase()}/projects`
         );

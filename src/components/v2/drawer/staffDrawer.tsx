@@ -48,6 +48,7 @@ export const StaffDrawer = () => {
       icon: null,
       onClick() {
         navigate(`/v2/dashboard/staff/project/${project!.project_id!}`);
+        dispatch(openDrawer(false));
       },
     }));
   const items: CustomStaffMenuItem[] = [
@@ -55,6 +56,7 @@ export const StaffDrawer = () => {
       title: "Department",
       onClick() {
         navigate(`/v2/dashboard/staff/department/${user?.department_id}`);
+        dispatch(openDrawer(false));
       },
       icon: <ClusterOutlined />,
     },
