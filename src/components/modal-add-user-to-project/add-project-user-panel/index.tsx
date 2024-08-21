@@ -174,7 +174,8 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
       onCancel={handleCancel}
       centered
       width={1000}
-      footer={null}
+      style={{ minWidth: "800px" }}
+      footer={[]}
     >
       <Tabs items={projectStaffTabs} defaultActiveKey='1' />
     </Modal>

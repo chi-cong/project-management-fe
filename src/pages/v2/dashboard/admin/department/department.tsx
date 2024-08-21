@@ -11,7 +11,7 @@ import {
   Empty,
 } from "antd";
 import { ResponsivePie } from "@nivo/pie";
-import { ArrowLeftOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, TeamOutlined } from "@ant-design/icons";
 import { CustomAvatar, RmDepartmentStaff } from "src/components/v2";
 import { DepartmentProjects } from "src/layouts/v2";
 import { useEffect, useState } from "react";
@@ -33,6 +33,7 @@ import { useParams } from "react-router-dom";
 export const AdminDepartment = () => {
   const { id: departmentId } = useParams();
 
+  const [isTeamOpened, setIsTeamOpened] = useState<boolean>(false);
   const [reportModal, setReportModal] = useState<boolean>(false);
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const [addStaffModal, setAddStaffModal] = useState<boolean>(false);
@@ -168,6 +169,15 @@ export const AdminDepartment = () => {
                   Reports
                 </Button>
               </div>
+              <Button
+                shape='round'
+                style={{ display: "" }}
+                onClick={() => setIsTeamOpened(true)}
+                className='open-team-member-modal-btn'
+              >
+                <TeamOutlined />
+                Team members
+              </Button>
               <Button
                 shape='round'
                 style={{ display: "" }}
@@ -321,6 +331,7 @@ export const AdminDepartment = () => {
         footer={[]}
         title='Department Report'
         width={"80%"}
+        style={{ minWidth: "95vw" }}
       >
         <DepartmentReport departmentId={departmentId} />
       </Modal>
@@ -333,6 +344,7 @@ export const AdminDepartment = () => {
         open={addStaffModal}
         onCancel={() => setAddStaffModal(false)}
         width={"80vw"}
+        style={{ minWidth: "800px" }}
         footer={[]}
       >
         <AddStaffTabs id={departmentId} />
@@ -341,9 +353,51 @@ export const AdminDepartment = () => {
         open={rmStaffModal}
         onCancel={() => setRmStaffModal(false)}
         width={"80vw"}
+        style={{ minWidth: "800px" }}
         footer={[]}
       >
         <RmDepartmentStaff departmentId={departmentId} />
+      </Modal>
+      <Modal
+        title={
+          <div className='title'>
+            <h4>Team Members</h4>
+            <Popover content={<TeamMemberOptions />}>
+              <Button type='text' size='small'>
+                <MenuDots style={{ width: "16px" }} />
+              </Button>
+            </Popover>
+          </div>
+        }
+        className='department-team-member-modal'
+        open={isTeamOpened}
+        onCancel={() => setIsTeamOpened(false)}
+        footer={[]}
+      >
+        <div className='member-list-container'>
+          <List
+            className='memeber-list'
+            dataSource={departmentStaffs?.users}
+            renderItem={(user) => {
+              return (
+                <List.Item>
+                  <List.Item.Meta
+                    title={user?.name || user.username}
+                    description={(user?.role as RoleResponse).name}
+                    avatar={
+                      <CustomAvatar
+                        size={60}
+                        userName={user.username}
+                        avatarSrc={user.avatar}
+                        bgColor={user.avatar_color}
+                      />
+                    }
+                  />
+                </List.Item>
+              );
+            }}
+          />
+        </div>
       </Modal>
     </>
   );

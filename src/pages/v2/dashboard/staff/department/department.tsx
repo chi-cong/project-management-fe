@@ -19,6 +19,7 @@ export const StaffDepartment = () => {
   const { id: departmentId } = useParams();
 
   const [reportModal, setReportModal] = useState<boolean>(false);
+  const [isTeamOpened, setIsTeamOpened] = useState<boolean>(false);
   const { data } = useGetDepartmentQuery({ id: departmentId! });
   const { data: departmentProjects } = useGetAllProjectDepartmentQuery({
     departmentId,
@@ -224,8 +225,41 @@ export const StaffDepartment = () => {
         footer={[]}
         title='Department Report'
         width={"80%"}
+        style={{ minWidth: "95vw" }}
       >
         <DepartmentReport departmentId={departmentId} />
+      </Modal>
+      <Modal
+        title={"Team Members"}
+        className='department-team-member-modal'
+        open={isTeamOpened}
+        onCancel={() => setIsTeamOpened(false)}
+        footer={[]}
+      >
+        <div className='member-list-container'>
+          <List
+            className='memeber-list'
+            dataSource={departmentStaffs?.users}
+            renderItem={(user) => {
+              return (
+                <List.Item>
+                  <List.Item.Meta
+                    title={user?.name || user.username}
+                    description={(user?.role as RoleResponse).name}
+                    avatar={
+                      <CustomAvatar
+                        size={60}
+                        userName={user.username}
+                        avatarSrc={user.avatar}
+                        bgColor={user.avatar_color}
+                      />
+                    }
+                  />
+                </List.Item>
+              );
+            }}
+          />
+        </div>
       </Modal>
     </>
   ) : (
