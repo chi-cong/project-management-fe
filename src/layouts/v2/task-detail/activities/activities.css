@@ -28,4 +28,16 @@
       }
     }
   }
+  .activity-item {
+    display: flex;
+    flex-wrap: wrap;
+    .activity-item-meta {
+      flex: 1;
+    }
+    @media screen and (max-width: 1000px) {
+      .activity-item-time {
+        flex-basis: 100%;
+      }
+    }
+  }
 }

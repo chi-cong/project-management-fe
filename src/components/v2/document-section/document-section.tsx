@@ -95,7 +95,6 @@ export const DocumentSection = () => {
         <div className="doc-sec-head">
           <Typography.Title level={4}>File Attachment</Typography.Title>
         </div>
-
         <div className="file-list">
           {fileLinks?.map((files, index) => {
             if (typeof files === "string") {

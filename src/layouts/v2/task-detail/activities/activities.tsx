@@ -76,8 +76,9 @@ export const Activities = () => {
           style={{ width: "100%" }}
           dataSource={acties}
           renderItem={(activity) => (
-            <List.Item>
+            <List.Item className="activity-item">
               <List.Item.Meta
+                className="activity-item-meta"
                 avatar={
                   <CustomAvatar
                     userName={activity.user?.username}
@@ -94,7 +95,8 @@ export const Activities = () => {
                 }
               />
               <Typography.Text
-                style={{ fontWeight: "bolder", color: "var(--primary-color)" }}
+                className="activity-item-time"
+                style={{ fontStyle: "italic", color: "var(--primary-color)" }}
               >
                 {(utcToLocal(activity.createdAt) as Dayjs).fromNow()}
               </Typography.Text>
