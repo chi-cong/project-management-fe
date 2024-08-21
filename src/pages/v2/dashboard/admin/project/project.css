@@ -1,5 +1,6 @@
 .admin-project-page {
   height: 100%;
+  width: 100%;
   .header-row {
     display: flex;
     justify-content: space-between;

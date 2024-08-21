@@ -81,7 +81,7 @@ export const Account = () => {
               </div>
             </div>
             <Row className='action' gutter={[8, 8]}>
-              <Col xs={12} sm={12} md={7}>
+              <Col xs={24} sm={24} md={12} lg={8}>
                 <Dropdown menu={menuProps}>
                   <Button style={{ width: "100%" }}>
                     <Space
@@ -98,7 +98,7 @@ export const Account = () => {
                   </Button>
                 </Dropdown>
               </Col>
-              <Col xs={12} sm={12} md={7}>
+              <Col xs={24} sm={24} md={12} lg={8}>
                 <Input.Search
                   placeholder='Search...'
                   style={{ width: "100%" }}
@@ -108,7 +108,7 @@ export const Account = () => {
                   }
                 />
               </Col>
-              <Col xs={12} sm={12} md={5}>
+              <Col xs={12} sm={12} md={12} lg={4}>
                 <Button
                   type='default'
                   className='title-row-btn'
@@ -123,7 +123,7 @@ export const Account = () => {
                   Trash
                 </Button>
               </Col>
-              <Col xs={12} sm={12} md={5}>
+              <Col xs={12} sm={12} md={12} lg={4}>
                 <Button
                   type='primary'
                   className='title-row-btn'
