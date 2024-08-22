@@ -373,7 +373,7 @@ export const AdminDepartment = () => {
         open={addStaffModal}
         onCancel={() => setAddStaffModal(false)}
         width={"80vw"}
-        style={{ minWidth: "800px" }}
+        style={{ minWidth: "600px" }}
         footer={[]}
       >
         <AddStaffTabs id={departmentId} />

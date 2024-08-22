@@ -1,12 +1,15 @@
+@import url(../../../../../mixin/mixin.css);
+
 .admin-project-page {
   height: 100%;
   width: 100%;
+
   .header-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--gap-m);
-    @media screen and (max-width: 1280px) {
+    @mixin tabletAndMobile {
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
@@ -15,7 +18,11 @@
     .first-part {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: var(--gap-xs);
+      @mixin tabletAndMobile {
+        margin-bottom: var(--gap-s);
+      }
       .title-row-btn {
         display: flex;
         justify-content: center;

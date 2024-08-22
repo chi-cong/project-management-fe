@@ -46,6 +46,12 @@ export const UpdateTaskForm: React.FC<TaskForm> = ({
 }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
+    form.setFieldsValue({
+      name: task?.name,
+      description: task?.description,
+      status: assignment?.status,
+      deadline: utcToLocal(assignment?.endAt),
+    });
   };
 
   const [form] = Form.useForm();
@@ -111,6 +117,7 @@ export const UpdateTaskForm: React.FC<TaskForm> = ({
       centered
       onCancel={handleCancel}
       width={1000}
+      style={{ minWidth: "95vw" }}
       footer={[]}
     >
       <h2

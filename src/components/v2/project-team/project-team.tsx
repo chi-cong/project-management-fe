@@ -88,7 +88,6 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
       className='wrapper'
       open={isModalOpen}
       onCancel={handleCancel}
-      centered
       width={1000}
       style={{ minWidth: "800px" }}
       footer={null}

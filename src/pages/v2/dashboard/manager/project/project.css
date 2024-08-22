@@ -1,10 +1,12 @@
-.admin-project-page {
+@import url(../../../../../mixin/mixin.css);
+
+.manager-project-page {
   height: 100%;
   .header-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    @media screen and (max-width: 1280px) {
+    @mixin tabletAndMobile {
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
@@ -14,6 +16,10 @@
       display: flex;
       align-items: center;
       gap: var(--gap-xs);
+      flex-wrap: wrap;
+      @mixin tabletAndMobile {
+        margin-bottom: var(--gap-m);
+      }
       .title-row-btn {
         display: flex;
         justify-content: center;

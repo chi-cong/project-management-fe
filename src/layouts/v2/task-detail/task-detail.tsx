@@ -179,7 +179,7 @@ export const TaskDetail = ({
             </Button>
           </Popover>
           <div className='task-detail-head-right-size'>
-            <Tooltip title='files'>
+            <Tooltip title='files' className='open-files-btn'>
               <Button
                 type='text'
                 size='small'

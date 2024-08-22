@@ -5,6 +5,9 @@
   gap: var(--gap-l);
   background-image: url(../../../assets/imgs/loginbg.jpg);
   background-size: cover;
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+  }
   .content-container {
     display: flex;
     justify-content: space-between;

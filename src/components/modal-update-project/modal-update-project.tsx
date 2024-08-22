@@ -61,6 +61,13 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   const handleCancel = () => {
     setIsModalOpen(false);
     setSeletedPm(project?.project_manager);
+    form.setFieldsValue({
+      ...project,
+      startAt: utcToLocal(project?.startAt),
+      endAt: utcToLocal(project?.endAt),
+      department_ids: project?.department_ids,
+      pms: project?.project_manager_id,
+    });
   };
 
   useEffect(() => {

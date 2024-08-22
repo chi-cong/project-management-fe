@@ -62,6 +62,14 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    form.setFieldsValue({
+      ...user,
+      email: user.email,
+      name: user.name,
+      phone: user.phone,
+      role: user.role && (user.role as RoleResponse).name,
+      birthday: user.birthday ? utcToLocal(user?.birthday) : dayjs(),
+    });
   };
 
   useEffect(() => {

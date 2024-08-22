@@ -30,6 +30,11 @@
     .task-detail-head-right-size {
       display: flex;
       gap: var(--gap-m);
+      .open-files-btn {
+        @media screen and (max-width: 680px) {
+          display: none;
+        }
+      }
       svg {
         width: 20px;
         height: 20px;
