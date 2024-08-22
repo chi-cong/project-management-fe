@@ -53,6 +53,7 @@
         justify-content: end;
         .account-card-avatar {
           @media screen and (max-width: 1000px) {
+            display: flex;
             width: 80px !important;
             height: 80px !important;
           }
@@ -69,4 +70,10 @@
       height: 200px;
     }
   }
+  /* .account-card-info-department {
+    @media (max-width: 1400px) {
+      display: flex;
+      flex-direction: column;
+    }
+  } */
 }

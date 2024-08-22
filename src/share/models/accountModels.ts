@@ -23,12 +23,18 @@ export interface User {
   createBy?: string;
   role?: RoleResponse | UserRole;
   department_id?: string;
+  department_info?: DepartmentInfo;
   avatar_color?: string;
 }
 
 export interface RoleResponse {
   name?: UserRole;
   role_id: string;
+}
+
+export interface DepartmentInfo {
+  name?: string;
+  description?: string;
 }
 
 export interface GetUserResp {
