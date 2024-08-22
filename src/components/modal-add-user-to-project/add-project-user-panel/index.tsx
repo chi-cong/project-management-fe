@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import {
   useCreateAssigmentMutation,
   useGetStaffsNotInPrjQuery,
+  useGetUserDetailQuery,
 } from "src/share/services";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
 import { Project, RoleResponse } from "src/share/models";
@@ -34,14 +35,16 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
   const [staffPage, setStaffPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
 
+  const { data: user } = useGetUserDetailQuery();
+
   const { data: staffs } = useGetStaffsNotInPrjQuery(
     {
       itemsPerPage: 5,
-      departmentId: project?.department_id,
+      departmentId: user?.department_id,
       projectId: project?.project_id,
       search,
     },
-    { skip: project?.department_id ? false : true }
+    { skip: user?.department_id ? false : true }
   );
   const [createAssignment] = useCreateAssigmentMutation();
 
@@ -99,7 +102,7 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
   };
 
   const mapTableData = () => {
-    if (staffs?.users.length) {
+    if (staffs?.users?.length) {
       return staffs?.users.map((staff): DataType => {
         return {
           avatar: {
@@ -169,7 +172,7 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
       onCancel={handleCancel}
       centered
       width={1000}
-      style={{ minWidth: "800px" }}
+      style={{ minWidth: "500px" }}
       footer={[]}
     >
       <Tabs items={projectStaffTabs} defaultActiveKey='1' />

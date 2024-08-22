@@ -26,7 +26,7 @@ export interface Project {
   createdAt?: string | Dayjs;
   project_manager_id?: string;
   project_manager?: User;
-  department_id?: string;
+  department_ids?: string[];
   total_staff?: string;
   total_task?: {
     total_task_is_done: string;

@@ -42,7 +42,7 @@ export const ModalDetailProject: React.FC<ModalDetailProjectProp> = ({
           ? project.endAt.substring(0, 10)
           : new Date()
       ),
-      department_id: project?.department_id,
+      department_ids: project?.department_ids,
       pms: project?.project_manager_id,
     });
   }, [form, project]);
@@ -92,7 +92,7 @@ export const ModalDetailProject: React.FC<ModalDetailProjectProp> = ({
         >
           <Input.TextArea size='large' disabled />
         </Form.Item>
-        <Form.Item<Project> name={"department_id"} label='Department'>
+        <Form.Item<Project> name={"department_ids"} label='Department'>
           <Select
             options={departmentData?.departments?.map((department) => {
               return {

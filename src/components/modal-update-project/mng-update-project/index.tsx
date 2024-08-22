@@ -42,7 +42,7 @@ export const MngUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   const startDate = Form.useWatch("startAt", { form, preserve: true });
 
   const onFinish: FormProps<Project>["onFinish"] = async (values) => {
-    values.department_id = project?.department_id;
+    values.department_ids = project?.department_ids;
 
     await updateProject({ values, projectId: project.project_id })
       .unwrap()
@@ -62,7 +62,7 @@ export const MngUpdateProject: React.FC<ModalUpdateProjectProp> = ({
       ...project,
       startAt: utcToLocal(project?.startAt),
       endAt: utcToLocal(project?.endAt),
-      department_id: project?.department_id,
+      department_ids: project?.department_ids,
       pms: project?.project_manager_id,
     });
   }, [form, project]);

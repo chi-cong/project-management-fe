@@ -113,9 +113,10 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
           >
             <Input.TextArea size='large' />
           </Form.Item>
-          <Form.Item<Project> name={"department_id"} label='Department'>
+          <Form.Item<Project> name={"department_ids"} label='Department'>
             <Select
               allowClear
+              mode='multiple'
               options={departmentData?.departments?.map((department) => {
                 return {
                   label: department.name,
@@ -129,15 +130,6 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
             name={"project_manager_id"}
             label='Project Manager'
           >
-            {/* <Select
-            options={pms?.users?.map((pm) => {
-              return {
-                label: pm.username,
-                value: pm.user_id,
-                };
-                })}
-                size='large'
-                /> */}
             <div
               style={{
                 display: "flex",

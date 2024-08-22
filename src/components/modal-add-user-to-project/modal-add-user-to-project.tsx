@@ -3,16 +3,17 @@ import React, { useState } from "react";
 import "./modal-add-user-to-project.css";
 import {
   useCreateAssigmentMutation,
-  useGetStaffsNotInPrjQuery,
+  useGetUsersQuery,
 } from "src/share/services";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
-import { Project, RoleResponse } from "src/share/models";
+import { OUserRole, Project, RoleResponse } from "src/share/models";
 interface ModalAddUserToProjectProps {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   project?: Project;
 }
 import { ProjectTeam } from "./project-team";
+import { useRoleChecker } from "src/share/hooks";
 
 import type { TabsProps } from "antd";
 
@@ -32,17 +33,13 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
   isModalOpen,
   setIsModalOpen,
 }) => {
+  const checkRole = useRoleChecker();
   const [staffPage, setStaffPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
 
-  const { data: staffs } = useGetStaffsNotInPrjQuery(
-    {
-      itemsPerPage: 5,
-      departmentId: project?.department_id,
-      projectId: project?.project_id,
-      search,
-    },
-    { skip: project?.department_id ? false : true }
+  const { data: allUsers } = useGetUsersQuery(
+    { role: "ALL", page: staffPage, search, items_per_page: 5 },
+    { skip: !checkRole(OUserRole.Admin) }
   );
 
   const [createAssignment] = useCreateAssigmentMutation();
@@ -101,7 +98,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
   };
 
   const mapTableData = () => {
-    return staffs?.users?.map((staff): DataType => {
+    return allUsers?.users?.map((staff): DataType => {
       return {
         avatar: {
           src: staff.avatar,
@@ -142,7 +139,7 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
             dataSource={mapTableData()}
             pagination={{
               pageSize: 5,
-              total: staffs?.total,
+              total: allUsers?.total,
               onChange: (value) => setStaffPage(value),
               showSizeChanger: false,
               current: staffPage,

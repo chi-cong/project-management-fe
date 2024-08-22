@@ -39,7 +39,10 @@ export const ManagerCreateProject: React.FC<ModalUpdateProjectProp> = ({
   });
 
   const onFinish: FormProps<Project>["onFinish"] = async (values) => {
-    await createProject({ ...values, department_id: departmentId })
+    await createProject({
+      ...values,
+      department_ids: departmentId ? [departmentId] : [],
+    })
       .unwrap()
       .then(() => {
         message.success("Success create project");
