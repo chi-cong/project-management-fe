@@ -60,7 +60,7 @@ export const AdminDrawer = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  });
+  }, []);
 
   const items: CustomMenuItem[] = [
     {
