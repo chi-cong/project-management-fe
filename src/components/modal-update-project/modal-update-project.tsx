@@ -43,8 +43,6 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   const [openSelectePm, setOpenSeletePm] = useState<boolean>(false);
 
   const onFinish: FormProps<Project>["onFinish"] = async (values) => {
-    values.department_id = project?.department_id;
-
     await updateProject({
       values: {
         ...values,
@@ -70,7 +68,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
       ...project,
       startAt: utcToLocal(project?.startAt),
       endAt: utcToLocal(project?.endAt),
-      department_id: project?.department_id,
+      department_ids: project?.department_ids,
       pms: project?.project_manager_id,
     });
     if (project?.project_manager) {
@@ -129,7 +127,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
           <Form.Item<Project> name={"description"} label='Description'>
             <Input.TextArea size='large' />
           </Form.Item>
-          <Form.Item<Project> name={"department_id"} label='Department'>
+          <Form.Item<Project> name={"department_ids"} label='Department'>
             <Select
               allowClear
               options={departmentData?.departments?.map((department) => {
@@ -138,6 +136,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
                   value: department.department_id,
                 };
               })}
+              mode='multiple'
               size='large'
             />
           </Form.Item>
