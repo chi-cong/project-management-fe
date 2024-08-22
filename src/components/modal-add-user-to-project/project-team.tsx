@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import {
   useGetProjectStaffsQuery,
   useRmStaffFromPjMutation,
+  useGetUserDetailQuery,
 } from "src/share/services";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
-import { Project, RoleResponse } from "src/share/models";
+import { OUserRole, Project, RoleResponse } from "src/share/models";
 interface ModalAddUserToProjectProps {
   project?: Project;
 }
+import { useRoleChecker } from "src/share/hooks";
 
 interface DataType {
   avatar: {
@@ -19,11 +21,13 @@ interface DataType {
   name: string;
   role: string;
   email: string;
+  departmentId?: string;
 }
 
 export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
   project,
 }) => {
+  const checkRole = useRoleChecker();
   const [staffPage, setStaffPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
 
@@ -36,6 +40,7 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
     },
     { skip: project?.project_id ? false : true }
   );
+  const { data: user } = useGetUserDetailQuery();
 
   const [removeFromPj] = useRmStaffFromPjMutation();
 
@@ -67,24 +72,32 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
     {
       title: "Action",
       key: "action",
-      render: (_text: string, record: DataType) => (
-        <Button
-          type='primary'
-          onClick={() => {
-            removeFromPj({
-              projectId: project?.project_id,
-              ids: [record.key],
-            })
-              .unwrap()
-              .then(() => {
-                message.success("Staff is removed");
-              })
-              .catch(() => message.error("Failed to remove staff"));
-          }}
-        >
-          Remove
-        </Button>
-      ),
+      render: (_text: string, record: DataType) => {
+        if (
+          checkRole(OUserRole.Admin) ||
+          (checkRole(OUserRole.Manager) &&
+            record.departmentId === user?.department_id)
+        ) {
+          return (
+            <Button
+              type='primary'
+              onClick={() => {
+                removeFromPj({
+                  projectId: project?.project_id,
+                  ids: [record.key],
+                })
+                  .unwrap()
+                  .then(() => {
+                    message.success("Staff is removed");
+                  })
+                  .catch(() => message.error("Failed to remove staff"));
+              }}
+            >
+              Remove
+            </Button>
+          );
+        }
+      },
     },
   ];
 
@@ -100,6 +113,7 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
           email: staff.email!,
           role: (staff.role as RoleResponse).name!,
           key: staff.user_id!,
+          departmentId: staff.department_id,
         };
       });
     }

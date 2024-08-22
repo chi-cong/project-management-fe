@@ -103,10 +103,8 @@
                 margin-bottom: 10px;
               }
             }
-            .avatar-upload-content {
-              @media screen and (max-width: 1024px) {
-                display: none;
-              }
+            @media screen and (max-width: 1024px) {
+              display: none;
             }
           }
         }
