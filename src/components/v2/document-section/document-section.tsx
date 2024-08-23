@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import {
   useGetDocFileMutation,
   useGetUserDetailQuery,
+  useGetProjectTasksQuery,
 } from "src/share/services";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "src/libs/redux";
@@ -33,6 +34,11 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
     },
     { skip: taskAssignment.task ? false : true }
   );
+  const { refetch: tasksRefetch } = useGetProjectTasksQuery({
+    projectId: project?.project_id,
+    items_per_page: "ALL",
+    page: 1,
+  });
 
   const [fileLinks, setFileLinks] = useState<string[]>([]);
 
@@ -48,6 +54,7 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
       if (status === "done") {
         message.success(`${info.file.name} file uploaded successfully.`);
         refetchTask();
+        tasksRefetch();
         dispatch(
           selectTaskAssign({
             task: task,
@@ -110,32 +117,33 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
                       </a>
                     </Typography.Link>
                   </div>
-                  {!checkRole(OUserRole.Staff) && (
-                    <Popconfirm
-                      title='Delete this file ?'
-                      onConfirm={() => {
-                        // fileLinks and filenames index are the same
-                        deleteFile({
-                          filename: task?.document[index],
-                          taskId: task?.task_id,
-                        })
-                          .unwrap()
-                          .then(() => {
-                            message.success(
-                              `${task?.document[index]} is deleted`
-                            );
-                            getLinks();
+                  {!checkRole(OUserRole.Staff) ||
+                    (user?.user_id === project?.project_manager_id && (
+                      <Popconfirm
+                        title='Delete this file ?'
+                        onConfirm={() => {
+                          // fileLinks and filenames index are the same
+                          deleteFile({
+                            filename: task?.document[index],
+                            taskId: task?.task_id,
                           })
-                          .catch(() => {
-                            message.error("Failed to delete file");
-                          });
-                      }}
-                    >
-                      <Button shape='round' danger size='small'>
-                        Delete
-                      </Button>
-                    </Popconfirm>
-                  )}
+                            .unwrap()
+                            .then(() => {
+                              message.success(
+                                `${task?.document[index]} is deleted`
+                              );
+                              getLinks();
+                            })
+                            .catch(() => {
+                              message.error("Failed to delete file");
+                            });
+                        }}
+                      >
+                        <Button shape='round' danger size='small'>
+                          Delete
+                        </Button>
+                      </Popconfirm>
+                    ))}
                 </div>
               );
             }

@@ -280,7 +280,7 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
         };
       },
       transformResponse: (response: Response<GetUserResp>) => response.data,
-      providesTags: ["User"],
+      providesTags: ["User", "department"],
     }),
     getAllStaffInDepartments: build.query<
       GetUserResp,
@@ -293,7 +293,7 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
       query: ({ items_per_page, search, department_ids }) => {
         return {
           url: `users/get-all-staff-in-departments`,
-          method: "GET",
+          method: "POST",
           headers: {
             authorization: accessToken(),
           },
@@ -307,7 +307,7 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
         };
       },
       transformResponse: (response: Response<GetUserResp>) => response.data,
-      providesTags: ["User"],
+      providesTags: ["User", "department"],
     }),
 
     ManagerGetStaffNoDepartment: build.query<

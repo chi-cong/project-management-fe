@@ -25,6 +25,7 @@ type ModalUpdateProjectProp = {
   setIsModalOpen: (show: boolean) => void;
   project: Project;
   isUpdate: boolean;
+  isPm: boolean;
 };
 
 export const MngUpdateProject: React.FC<ModalUpdateProjectProp> = ({
@@ -32,6 +33,7 @@ export const MngUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   setIsModalOpen,
   project,
   isUpdate,
+  isPm,
 }) => {
   const [updateProject] = useUpdateProjectMutation();
   const { data: pms } = useManagerGetAllStaffDepartmentQuery({
@@ -114,38 +116,54 @@ export const MngUpdateProject: React.FC<ModalUpdateProjectProp> = ({
         >
           <Input size='large' />
         </Form.Item>
-        <Form.Item<Project> name={"investor"} label='Investor'>
+        <Form.Item<Project>
+          name={"investor"}
+          label='Investor'
+          rules={[{ required: true, message: "Investor is required" }]}
+        >
           <Input size='large' />
         </Form.Item>
-        <Form.Item<Project>
-          name={"description"}
-          label='Description'
-          rules={[
-            { required: true, message: "Project description is required" },
-          ]}
-        >
+        <Form.Item<Project> name={"description"} label='Description'>
           <Input.TextArea size='large' />
         </Form.Item>
         <Form.Item<Project> name={"project_manager_id"} label='Project Manager'>
-          <Select
-            options={pms?.users?.map((pm) => {
-              return {
-                label: (
-                  <Space>
-                    <CustomAvatar
-                      bgColor={pm.avatar_color}
-                      avatarSrc={pm.avatar}
-                      size={32}
-                      userName={pm.name}
-                    />
-                    <Typography>{pm.name}</Typography>
-                  </Space>
-                ),
-                value: pm.user_id,
-              };
-            })}
-            size='large'
-          />
+          {isPm ? (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "var(--gap-s)",
+              }}
+            >
+              <CustomAvatar
+                bgColor={project?.project_manager?.avatar_color}
+                avatarSrc={project?.project_manager?.avatar}
+                size={40}
+                userName={project?.project_manager?.name}
+              />
+              <Typography>{project?.project_manager?.name}</Typography>
+            </div>
+          ) : (
+            <Select
+              options={pms?.users?.map((pm) => {
+                return {
+                  label: (
+                    <Space>
+                      <CustomAvatar
+                        bgColor={pm.avatar_color}
+                        avatarSrc={pm.avatar}
+                        size={32}
+                        userName={pm.name}
+                      />
+                      <Typography>{pm.name}</Typography>
+                    </Space>
+                  ),
+                  value: pm.user_id,
+                };
+              })}
+              size='large'
+            />
+          )}
         </Form.Item>
 
         <Form.Item<Project> name={"startAt"} label='Start'>

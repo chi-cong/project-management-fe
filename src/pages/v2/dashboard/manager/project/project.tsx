@@ -31,6 +31,7 @@ import {
   useGetProjectTasksQuery,
   useDeleteProjectMutation,
   useGetProjectStaffsQuery,
+  useGetUserDetailQuery,
 } from "src/share/services";
 import { MngUpdateProject, OutsideClickHandler } from "src/components";
 import { Activities } from "src/layouts/v2/task-detail/activities";
@@ -64,6 +65,7 @@ export const ManagerProject = () => {
     items_per_page: "ALL",
     projectId,
   });
+  const { data: user } = useGetUserDetailQuery();
 
   const taskListSrc: {
     color: string;
@@ -259,7 +261,7 @@ export const ManagerProject = () => {
         onCancel={() => setTaskDocSec(false)}
         footer={[]}
       >
-        <TaskDocument />
+        <TaskDocument project={projectData} />
       </Modal>
       <Modal
         open={activitySec}
@@ -273,6 +275,7 @@ export const ManagerProject = () => {
         isModalOpen={projectUpdateModal}
         setIsModalOpen={setProjectUpdateModal}
         isUpdate={isUpdateProject}
+        isPm={user?.user_id === projectData?.project_manager_id}
       />
       <CreateTaskForm
         isModalOpen={createTaskModal}
