@@ -109,7 +109,7 @@ export const Account = () => {
                         textTransform: "capitalize",
                       }}
                     >
-                      {queries.role.toLowerCase()}
+                      {queries.role === OUserRole.All ? "Role" : queries.role}
                       <DownOutlined />
                     </Space>
                   </Button>
@@ -130,7 +130,7 @@ export const Account = () => {
                         ? departments?.departments?.find(
                             (d) => d.department_id === queries.departmentId
                           )?.name
-                        : "All"}
+                        : "Department"}
                       <DownOutlined />
                     </Space>
                   </Button>
