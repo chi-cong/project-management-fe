@@ -5,6 +5,7 @@ import {
   useCreateAssigmentMutation,
   useGetStaffsNotInPrjQuery,
   useGetUserDetailQuery,
+  useGetAllStaffInDepartmentsQuery,
 } from "src/share/services";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
 import { Project, RoleResponse } from "src/share/models";
@@ -46,6 +47,12 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
     },
     { skip: user?.department_id ? false : true }
   );
+  const { data: staffsInDepartments } = useGetAllStaffInDepartmentsQuery({
+    items_per_page: 5,
+    department_ids: project?.department_ids,
+    search,
+  },{ skip: user?.user_id === project?.project_manager_id ? false : true });
+
   const [createAssignment] = useCreateAssigmentMutation();
 
   const columns = [
@@ -102,6 +109,20 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
   };
 
   const mapTableData = () => {
+    if (user?.user_id === project?.project_manager_id || staffs?.users) {
+      return staffsInDepartments?.users.map((staff): DataType => {
+        return {
+          avatar: {
+            src: staff.avatar,
+            bgColor: staff.avatar_color,
+          },
+          name: staff.name!,
+          email: staff.email!,
+          role: (staff.role as RoleResponse).name!,
+          key: staff.user_id!,
+        };
+      });
+    }
     if (staffs?.users?.length) {
       return staffs?.users.map((staff): DataType => {
         return {

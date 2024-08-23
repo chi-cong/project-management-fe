@@ -5,6 +5,7 @@ import type {
   getDepartmentsResp,
   Department,
   ProjectReportResp,
+  UserRole,
 } from "src/share/models";
 import { AddDepartmentForm } from "src/share/models/departmentModels";
 import { ProjectResp } from "src/share/models/projectModels";
@@ -279,6 +280,60 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
         };
       },
       transformResponse: (response: Response<GetUserResp>) => response.data,
+      providesTags: ["User", "department"],
+    }),
+    getAllStaffInDepartments: build.query<
+      GetUserResp,
+      {
+        items_per_page: number | "ALL";
+        search?: string;
+        department_ids?: string[];
+      }
+    >({
+      query: ({ items_per_page, search, department_ids }) => {
+        return {
+          url: `users/get-all-staff-in-departments`,
+          method: "POST",
+          headers: {
+            authorization: accessToken(),
+          },
+          params: {
+            items_per_page,
+            search,
+          },
+          body: {
+            department_ids,
+          },
+        };
+      },
+      transformResponse: (response: Response<GetUserResp>) => response.data,
+      providesTags: ["User", "department"],
+    }),
+    getAllStaffInDepartments: build.query<
+      GetUserResp,
+      {
+        items_per_page: number | "ALL";
+        search?: string;
+        department_ids?: string[];
+      }
+    >({
+      query: ({ items_per_page, search, department_ids }) => {
+        return {
+          url: `users/get-all-staff-in-departments`,
+          method: "GET",
+          headers: {
+            authorization: accessToken(),
+          },
+          params: {
+            items_per_page,
+            search,
+          },
+          body: {
+            department_ids,
+          },
+        };
+      },
+      transformResponse: (response: Response<GetUserResp>) => response.data,
       providesTags: ["User"],
     }),
 
@@ -323,4 +378,5 @@ export const {
   useGetDeletedDepartmentsQuery,
   useRestoreDepartmentMutation,
   useDeleteDepartmentPermanentlyMutation,
+  useGetAllStaffInDepartmentsQuery,
 } = DepartmentServices;

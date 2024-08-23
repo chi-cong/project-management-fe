@@ -86,6 +86,7 @@ export const TaskList = ({
                   assignment={matchedAssignment}
                   openActivities={() => showActies(true)}
                   task={task}
+                  project={project}
                 />
               );
             }
@@ -113,7 +114,7 @@ export const TaskList = ({
         </div>
       </div>
       <Modal>
-        <DocumentSection />
+        <DocumentSection project={project} />
       </Modal>
     </>
   );

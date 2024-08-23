@@ -1,8 +1,18 @@
-import { Button, Col, Input, Row, Table } from "antd";
+import {
+  Button,
+  Col,
+  Dropdown,
+  Input,
+  MenuProps,
+  Row,
+  Space,
+  Table,
+} from "antd";
+import { DownOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { useGetUsersQuery } from "src/share/services";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
-import { OUserRole, RoleResponse, User } from "src/share/models";
+import { OUserRole, RoleResponse, User, UserRole } from "src/share/models";
 interface ModalAddUserToProjectProps {
   setSelectedPM: (pm?: User) => void;
   selectedPm?: User;
@@ -23,14 +33,15 @@ export const SelectPmTable: React.FC<ModalAddUserToProjectProps> = ({
   setSelectedPM,
   selectedPm,
 }) => {
-  const [userPage, setUserPage] = useState<number>(1);
-  const [search, setSearch] = useState<string>("");
+  const [queries, setQueries] = useState<{
+    role: UserRole;
+    page: number | undefined;
+    search: string | undefined;
+  }>({ role: OUserRole.Manager, page: 1, search: "" });
 
   const { data: users } = useGetUsersQuery({
     items_per_page: 5,
-    page: userPage,
-    search,
-    role: OUserRole.Staff,
+    ...queries,
   });
 
   const columns = [
@@ -52,11 +63,6 @@ export const SelectPmTable: React.FC<ModalAddUserToProjectProps> = ({
       dataIndex: "name",
       key: "name",
     },
-    {
-      title: "Role",
-      dataIndex: "role",
-      key: "role",
-    },
 
     {
       title: "Action",
@@ -65,7 +71,7 @@ export const SelectPmTable: React.FC<ModalAddUserToProjectProps> = ({
         return (
           selectedPm?.user_id !== record.key && (
             <Button
-              type="primary"
+              type='primary'
               onClick={() => {
                 setSelectedPM(
                   users?.users.find((user) => record.key === user.user_id)
@@ -77,6 +83,19 @@ export const SelectPmTable: React.FC<ModalAddUserToProjectProps> = ({
           )
         );
       },
+    },
+  ];
+
+  const items: MenuProps["items"] = [
+    {
+      label: "Staff",
+      key: OUserRole.Staff,
+      onClick: () => setQueries({ ...queries, role: OUserRole.Staff }),
+    },
+    {
+      label: "Manager",
+      key: OUserRole.Manager,
+      onClick: () => setQueries({ ...queries, role: OUserRole.Manager }),
     },
   ];
 
@@ -99,13 +118,28 @@ export const SelectPmTable: React.FC<ModalAddUserToProjectProps> = ({
   return (
     <>
       {/* search */}
-      <h2>Select Project Manager</h2>
-      <Row className="modal-add-user-search-input">
-        <Col span={8}>
+      <Row className='modal-add-user-search-input'>
+        <Col xs={8} sm={8} md={6} lg={4}>
+          <Dropdown menu={{ items }}>
+            <Button style={{ width: "100%" }}>
+              <Space
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  textTransform: "capitalize",
+                }}
+              >
+                {queries.role.toLowerCase()}
+                <DownOutlined />
+              </Space>
+            </Button>
+          </Dropdown>
+        </Col>
+        <Col offset={1} xs={14} sm={10} md={8} lg={8}>
           <Input.Search
-            placeholder="Search..."
-            size="large"
-            onSearch={(value) => setSearch(value)}
+            placeholder='Search...'
+            onSearch={(value) => setQueries({ ...queries, search: value })}
             allowClear
           />
         </Col>
@@ -116,9 +150,9 @@ export const SelectPmTable: React.FC<ModalAddUserToProjectProps> = ({
         pagination={{
           pageSize: 5,
           total: users?.total,
-          onChange: (value) => setUserPage(value),
+          onChange: (page) => setQueries({ ...queries, page: page }),
           showSizeChanger: false,
-          current: userPage,
+          current: queries.page,
         }}
       />
     </>

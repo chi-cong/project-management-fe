@@ -11,8 +11,11 @@ import {
   DoubleCheck,
 } from "src/assets/icons";
 import { CustomAvatar } from "../custom-avatar";
-import { OAssignmentStatus } from "src/share/models/projectModels";
-import { useUpdateAssignmentMutation } from "src/share/services";
+import { OAssignmentStatus, Project } from "src/share/models/projectModels";
+import {
+  useUpdateAssignmentMutation,
+  useGetUserDetailQuery,
+} from "src/share/services";
 import { useDispatch } from "react-redux";
 import { selectTaskAssign } from "src/libs/redux/taskAssignSlice";
 import { useRoleChecker } from "src/share/hooks";
@@ -21,6 +24,7 @@ import { shortenLongText } from "src/share/utils";
 interface TaskCardProp {
   task: Task;
   assignment: Assignment;
+  project?: Project;
   openDetail: () => void;
   openFile: () => void;
   openActivities: () => void;
@@ -32,10 +36,12 @@ export const TaskCard = ({
   openActivities,
   openFile,
   assignment,
+  project,
 }: TaskCardProp) => {
   const [updateAssignment] = useUpdateAssignmentMutation();
 
   const dispatch = useDispatch();
+  const { data: user } = useGetUserDetailQuery();
 
   const TaskCardOptions = () => {
     return (
@@ -96,18 +102,19 @@ export const TaskCard = ({
           {shortenLongText(25, task.name)}
         </Typography.Title>
         <div className='title-options'>
-          {!checkRole(OUserRole.Staff) && (
-            <Button
-              type='text'
-              size='small'
-              onClick={() => {
-                dispatch(selectTaskAssign({ task, assignment }));
-                openDetail();
-              }}
-            >
-              <Eye />
-            </Button>
-          )}
+          {!checkRole(OUserRole.Staff) ||
+            (user?.user_id === project?.project_manager_id && (
+              <Button
+                type='text'
+                size='small'
+                onClick={() => {
+                  dispatch(selectTaskAssign({ task, assignment }));
+                  openDetail();
+                }}
+              >
+                <Eye />
+              </Button>
+            ))}
           <Popover content={<TaskCardOptions />} trigger='click'>
             <Button type='text' size='small'>
               <MenuDots />

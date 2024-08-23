@@ -98,18 +98,24 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
   };
 
   const mapTableData = () => {
-    return allUsers?.users?.map((staff): DataType => {
-      return {
-        avatar: {
-          src: staff.avatar,
-          bgColor: staff.avatar_color,
-        },
-        name: staff.name!,
-        email: staff.email!,
-        role: (staff.role as RoleResponse).name!,
-        key: staff.user_id!,
-      };
-    });
+    return allUsers?.users
+      ?.filter(
+        (staff) =>
+          (staff.role as RoleResponse).name !== OUserRole.Admin &&
+          (staff.role as RoleResponse).name !== OUserRole.SuperAdmin
+      )
+      .map((staff): DataType => {
+        return {
+          avatar: {
+            src: staff.avatar,
+            bgColor: staff.avatar_color,
+          },
+          name: staff.name!,
+          email: staff.email!,
+          role: (staff.role as RoleResponse).name!,
+          key: staff.user_id!,
+        };
+      });
   };
 
   const projectStaffTabs: TabsProps["items"] = [

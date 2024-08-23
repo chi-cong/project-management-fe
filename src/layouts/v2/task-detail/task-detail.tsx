@@ -252,7 +252,7 @@ export const TaskDetail = ({
           </div>
           <Activities />
         </div>
-        {modalWidth === 1000 && <DocumentSection />}
+        {modalWidth === 1000 && <DocumentSection project={project} />}
       </div>
       <UpdateTaskForm
         isModalOpen={editModal}
