@@ -225,6 +225,7 @@ export const TaskDetail = ({
                 style={{ width: "fit-content" }}
                 onClick={() => {
                   updateAssignment({
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
                     assignmentId: assignment?.assignment_id!,
                     value: { user_id: null },
                   })

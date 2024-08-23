@@ -46,31 +46,13 @@ export const ProjectDocument = ({
   };
 
   const getLinks = () => {
-    setFileLinks([]);
-    const tempFileLinks: string[] = [];
-
-    return project?.document!.map((file) =>
-      getFile({ file })
-        .unwrap()
-        .then((link) => {
-          tempFileLinks.push(link);
-        })
-        .then(() => {
-          setFileLinks(tempFileLinks);
-        })
-    );
+    return project?.document!.map(async (file) => {
+      return await getFile({ file }).unwrap();
+    });
   };
 
   useEffect(() => {
-    setFileLinks([]);
-
-    project?.document!.map((file) =>
-      getFile({ file })
-        .unwrap()
-        .then((link) => {
-          setFileLinks((oldState) => [...oldState, link]);
-        })
-    );
+    Promise.all(getLinks()).then((values) => setFileLinks(values));
   }, [project, getFile]);
 
   return (
@@ -81,45 +63,49 @@ export const ProjectDocument = ({
         </div>
 
         <div className='file-list'>
-          {fileLinks.map((files, index) => {
-            const fileName = ` ${files.split("/").pop()?.substring(0, 30)}...`;
-            const handledFile = handleFile(files);
-            return (
-              <div className='file-row' key={index}>
-                <div className='file-name-icon'>
-                  {handledFile.fileIcon}
-                  <Typography.Link>
-                    <a href={files} target='_blank'>
-                      {fileName}
-                    </a>
-                  </Typography.Link>
+          {fileLinks?.map((files, index) => {
+            if (typeof files === "string") {
+              const fileName = ` ${files.split("/").pop()?.substring(0, 30)}...`;
+              const handledFile = handleFile(files);
+              return (
+                <div className='file-row' key={index}>
+                  <div className='file-name-icon'>
+                    {handledFile.fileIcon}
+                    <Typography.Link>
+                      <a href={files} target='_blank'>
+                        {fileName}
+                      </a>
+                    </Typography.Link>
+                  </div>
+                  {!checkRole(OUserRole.Staff) ||
+                    (user?.user_id === project?.project_manager_id && (
+                      <Popconfirm
+                        title='Delete this file ?'
+                        onConfirm={() => {
+                          // fileLinks and filenames index are the same
+                          deleteFile({
+                            filename: project?.document![index],
+                            projectId: project?.project_id,
+                          })
+                            .unwrap()
+                            .then(() => {
+                              message.success(
+                                `${project?.document![index]} is deleted`
+                              );
+                            })
+                            .catch(() => {
+                              message.error("Failed to delete file");
+                            });
+                        }}
+                      >
+                        <Button shape='round' danger size='small'>
+                          Delete
+                        </Button>
+                      </Popconfirm>
+                    ))}
                 </div>
-                <Popconfirm
-                  title='Delete this file ?'
-                  onConfirm={() => {
-                    // fileLinks and filenames index are the same
-                    deleteFile({
-                      filename: project?.document![index],
-                      projectId: project?.project_id,
-                    })
-                      .unwrap()
-                      .then(() => {
-                        message.success(
-                          `${project!.document![index]} is deleted`
-                        );
-                        getLinks();
-                      })
-                      .catch(() => {
-                        message.error("Failed to delete file");
-                      });
-                  }}
-                >
-                  <Button shape='round' danger size='small'>
-                    Delete
-                  </Button>
-                </Popconfirm>
-              </div>
-            );
+              );
+            }
           })}
         </div>
       </div>

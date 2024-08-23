@@ -102,19 +102,19 @@ export const TaskCard = ({
           {shortenLongText(25, task.name)}
         </Typography.Title>
         <div className='title-options'>
-          {!checkRole(OUserRole.Staff) ||
-            (user?.user_id === project?.project_manager_id && (
-              <Button
-                type='text'
-                size='small'
-                onClick={() => {
-                  dispatch(selectTaskAssign({ task, assignment }));
-                  openDetail();
-                }}
-              >
-                <Eye />
-              </Button>
-            ))}
+          {(!checkRole(OUserRole.Staff) ||
+            user?.user_id === project?.project_manager_id) && (
+            <Button
+              type='text'
+              size='small'
+              onClick={() => {
+                dispatch(selectTaskAssign({ task, assignment }));
+                openDetail();
+              }}
+            >
+              <Eye />
+            </Button>
+          )}
           <Popover content={<TaskCardOptions />} trigger='click'>
             <Button type='text' size='small'>
               <MenuDots />

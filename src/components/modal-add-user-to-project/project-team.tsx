@@ -77,7 +77,8 @@ export const ProjectTeam: React.FC<ModalAddUserToProjectProps> = ({
           checkRole(OUserRole.Admin) ||
           (checkRole(OUserRole.Manager) &&
             record.departmentId === user?.department_id) ||
-          user?.user_id === project?.project_manager_id
+          (user?.user_id === project?.project_manager_id &&
+            user?.user_id !== record.key)
         ) {
           return (
             <Button

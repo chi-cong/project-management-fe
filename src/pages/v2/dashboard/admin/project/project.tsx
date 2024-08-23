@@ -53,7 +53,7 @@ export const AdminProject = () => {
   const [activitySec, setActivitySec] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const { data: projectData } = useGetProjectQuery({
+  const { data: projectData, refetch } = useGetProjectQuery({
     projectId: projectId!,
   });
   const { data: tasks } = useGetProjectTasksQuery({
@@ -266,7 +266,7 @@ export const AdminProject = () => {
         project={projectData}
       />
       <Modal open={docSec} onCancel={() => setDocSec(false)} footer={[]}>
-        <ProjectDocument project={projectData} />
+        <ProjectDocument project={projectData} refetch={refetch} />
       </Modal>
       <Modal
         open={taskDocSec}
