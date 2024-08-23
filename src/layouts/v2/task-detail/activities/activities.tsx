@@ -13,7 +13,7 @@ import { Dayjs } from "dayjs";
 import { utcToLocal } from "src/share/utils";
 
 export const Activities = () => {
-  const task = useSelector((state: RootState) => state.taskAssignment.task);
+  const task = useSelector((state: RootState) => state?.taskAssignment.task);
 
   const [actiDesc, setActiDesc] = useState<string>("");
   const [createActi] = useCreateActivityMutation();
