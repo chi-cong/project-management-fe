@@ -51,7 +51,8 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
     items_per_page: 5,
     department_ids: project?.department_ids,
     search,
-  });
+  },{ skip: user?.user_id === project?.project_manager_id ? false : true });
+
   const [createAssignment] = useCreateAssigmentMutation();
 
   const columns = [

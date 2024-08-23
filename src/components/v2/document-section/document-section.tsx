@@ -144,6 +144,7 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
                         </Button>
                       </Popconfirm>
                     ))}
+
                 </div>
               );
             }
