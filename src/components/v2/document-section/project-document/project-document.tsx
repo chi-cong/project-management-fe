@@ -3,7 +3,6 @@ import { Typography, Button, Popconfirm, Upload, message } from "antd";
 import { useEffect, useState } from "react";
 import {
   useGetDocFileMutation,
-  useGetProjectQuery,
   useDeleteProjectFileMutation,
   useGetUserDetailQuery,
 } from "src/share/services";
@@ -14,12 +13,15 @@ import { useRoleChecker } from "src/share/hooks";
 
 const baseApi = import.meta.env.VITE_REQUEST_API_URL;
 
-export const ProjectDocument = ({ project }: { project?: Project }) => {
+export const ProjectDocument = ({
+  project,
+  refetch,
+}: {
+  project?: Project;
+  refetch: () => void;
+}) => {
   const [getFile] = useGetDocFileMutation();
   const [deleteFile] = useDeleteProjectFileMutation();
-  const { refetch: refetchProject } = useGetProjectQuery({
-    projectId: project?.project_id || "",
-  });
   const checkRole = useRoleChecker();
   const { data: user } = useGetUserDetailQuery();
   const [fileLinks, setFileLinks] = useState<string[]>([]);
@@ -35,7 +37,7 @@ export const ProjectDocument = ({ project }: { project?: Project }) => {
       const { status } = info.file;
       if (status === "done") {
         message.success(`${info.file.name} file uploaded successfully.`);
-        refetchProject();
+        refetch();
       } else if (status === "error") {
         message.error(`${info.file.name} file upload failed.`);
       }

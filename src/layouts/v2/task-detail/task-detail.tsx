@@ -17,7 +17,6 @@ import {
   useGetProjectStaffsQuery,
   useUpdateAssignmentMutation,
   useGetAssignmentQuery,
-  useDeleteAssignmentMutation,
   useDeleteTaskMutation,
 } from "src/share/services";
 import { useSelector, useDispatch } from "react-redux";
@@ -53,7 +52,6 @@ export const TaskDetail = ({
   );
 
   const [deleteTask] = useDeleteTaskMutation();
-  const [deleteAssignment] = useDeleteAssignmentMutation();
   const [updateAssignment] = useUpdateAssignmentMutation();
 
   const [editModal, setEditModal] = useState<boolean>(false);
@@ -84,10 +82,7 @@ export const TaskDetail = ({
         <Popconfirm
           title='Delete this task ?'
           onConfirm={async () => {
-            await deleteTask({ taskId: taskAssignment.task?.task_id });
-            await deleteAssignment({
-              assigmentId: taskAssignment.assignment!.assignment_id,
-            })
+            await deleteTask({ taskId: taskAssignment.task?.task_id })
               .unwrap()
               .then(() => {
                 setShowTaskDetail(false);
