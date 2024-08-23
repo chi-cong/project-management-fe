@@ -109,9 +109,8 @@ export const CardAccount: React.FC<CardAccount> = ({
                       marginRight: "5px",
                     }}
                   >
-                    Department
+                    {account.department_info?.name ?? "Chưa có phòng ban"}{" "}
                   </div>
-                  {account.department_info?.name ?? "Chưa có phòng ban"}
                 </div>
               </div>
             </Col>
