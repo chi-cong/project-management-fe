@@ -100,6 +100,19 @@ export const CardAccount: React.FC<CardAccount> = ({
               <div className="account-card-info">
                 <span>{account.phone}</span>
               </div>
+              <div className="account-card-info-department">
+                <div style={{ display: "flex" }}>
+                  <div
+                    style={{
+                      fontWeight: "bolder",
+                      color: "var(--primary-color)",
+                      marginRight: "5px",
+                    }}
+                  >
+                    {account.department_info?.name ?? "No Department"}{" "}
+                  </div>
+                </div>
+              </div>
             </Col>
             <Col span={12} className="account-body-avatar">
               <CustomAvatar

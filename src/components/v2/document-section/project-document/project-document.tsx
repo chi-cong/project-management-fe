@@ -121,12 +121,12 @@ export const ProjectDocument = ({ project }: { project?: Project }) => {
           })}
         </div>
       </div>
-      {!checkRole(OUserRole.Staff) ||
-        (user?.user_id === project?.project_manager_id && (
-          <Upload.Dragger {...props} listType='text'>
-            <strong>Choose a file</strong> or drag it here
-          </Upload.Dragger>
-        ))}
+      {(!checkRole(OUserRole.Staff) ||
+        user?.user_id === project?.project_manager_id) && (
+        <Upload.Dragger {...props} listType='text'>
+          <strong>Choose a file</strong> or drag it here
+        </Upload.Dragger>
+      )}
     </div>
   );
 };
