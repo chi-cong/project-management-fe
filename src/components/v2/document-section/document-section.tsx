@@ -69,31 +69,13 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
   };
 
   const getLinks = () => {
-    setFileLinks([]);
-    const tempFileLinks: string[] = [];
-
-    return task?.document.map((file) =>
-      getFile({ file })
-        .unwrap()
-        .then((link) => {
-          tempFileLinks.push(link);
-        })
-        .then(() => {
-          setFileLinks(tempFileLinks);
-        })
-    );
+    return task?.document!.map(async (file) => {
+      return await getFile({ file }).unwrap();
+    });
   };
 
   useEffect(() => {
-    setFileLinks([]);
-
-    task?.document.map((file) =>
-      getFile({ file })
-        .unwrap()
-        .then((link) => {
-          setFileLinks((oldState) => [...oldState, link]);
-        })
-    );
+    Promise.all(getLinks()).then((values) => setFileLinks(values));
   }, [task, getFile]);
 
   return (
@@ -132,7 +114,6 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
                               message.success(
                                 `${task?.document[index]} is deleted`
                               );
-                              getLinks();
                             })
                             .catch(() => {
                               message.error("Failed to delete file");
@@ -144,7 +125,6 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
                         </Button>
                       </Popconfirm>
                     ))}
-
                 </div>
               );
             }

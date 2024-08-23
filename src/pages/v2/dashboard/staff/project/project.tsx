@@ -33,7 +33,7 @@ export const StaffProject = () => {
   const [activitySec, setActivitySec] = useState<boolean>(false);
   const [projectDetailModal, setProjectDetailModal] = useState<boolean>(false);
 
-  const { data: projectData } = useGetProjectQuery({
+  const { data: projectData, refetch: projectRefetch } = useGetProjectQuery({
     projectId: projectId!,
   });
   const { data: tasks } = useGetProjectTasksQuery({
@@ -133,7 +133,7 @@ export const StaffProject = () => {
               className='avatar-group-wrapper'
               onClick={() => setProjectTeam(true)}
             >
-              {projectStaffs?.users.length ? (
+              {projectStaffs?.users?.length ? (
                 <Avatar.Group maxCount={3}>
                   {projectStaffs?.users.map((staff) => (
                     <CustomAvatar
@@ -187,7 +187,11 @@ export const StaffProject = () => {
         project={projectData}
       />
       <Modal open={docSec} onCancel={() => setDocSec(false)} footer={[]}>
-        <ProjectDocument project={projectData} />
+        <ProjectDocument
+          project={projectData}
+          refetch={projectRefetch}
+          open={docSec}
+        />
       </Modal>
       <Modal
         open={taskDocSec}

@@ -46,6 +46,7 @@ export const Account = () => {
     departments?.departments!.forEach((department) => {
       result.push({
         label: department.name,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
         key: department?.department_id!,
         onClick: () =>
           setQueries({ ...queries, departmentId: department.department_id }),
