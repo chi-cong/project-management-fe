@@ -48,6 +48,7 @@ export const ModalUpdateDepartment: React.FC<ModalUpdateDepartment> = ({
             name={department?.name}
             description={department?.description}
             id={department?.department_id}
+            isOpen={isModalOpen}
           />
         </Tabs.TabPane>
         <Tabs.TabPane tab='Manager' key='2'>

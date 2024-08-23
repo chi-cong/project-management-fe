@@ -99,7 +99,7 @@ export const StaffProject = () => {
 
   return (
     <>
-      <div className='admin-project-page'>
+      <div className='staff-project-page'>
         <header className='header-row'>
           <div className='first-part'>
             <Typography.Title level={2}>{projectData?.name}</Typography.Title>

@@ -74,7 +74,8 @@ export const CreateTaskForm: React.FC<TaskForm> = ({
       open={isModalOpen}
       centered
       onCancel={handleCancel}
-      width={1000}
+      width={"95vw"}
+      style={{ maxWidth: "1000px" }}
       footer={[]}
     >
       <h2

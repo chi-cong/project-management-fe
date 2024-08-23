@@ -6,9 +6,15 @@ interface DepartmentInfo {
   name?: string;
   description?: string;
   id?: string;
+  isOpen: boolean;
 }
 
-const InfoTabs: React.FC<DepartmentInfo> = ({ name, description, id }) => {
+const InfoTabs: React.FC<DepartmentInfo> = ({
+  name,
+  description,
+  id,
+  isOpen,
+}) => {
   const [form] = Form.useForm();
   const [updateDepartment] = useUpdateDepartmentMutation();
 
@@ -31,8 +37,12 @@ const InfoTabs: React.FC<DepartmentInfo> = ({ name, description, id }) => {
   };
 
   useEffect(() => {
-    form.setFieldsValue({ name, description });
-  }, [description, name, form]);
+    return () => {
+      if (isOpen) {
+        form.setFieldsValue({ name, description });
+      }
+    };
+  }, [name, description, form, isOpen]);
 
   return (
     <>

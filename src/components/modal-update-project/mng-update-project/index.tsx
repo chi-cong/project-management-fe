@@ -55,6 +55,13 @@ export const MngUpdateProject: React.FC<ModalUpdateProjectProp> = ({
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    form.setFieldsValue({
+      ...project,
+      startAt: utcToLocal(project?.startAt),
+      endAt: utcToLocal(project?.endAt),
+      department_ids: project?.department_ids,
+      pms: project?.project_manager_id,
+    });
   };
 
   useEffect(() => {

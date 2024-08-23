@@ -57,7 +57,7 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
         response.data,
       providesTags: ["department"],
     }),
-    getDepartment: build.query<Department, { id: string }>({
+    getDepartment: build.query<Department, { id?: string }>({
       query: ({ id }) => {
         return {
           url: `departments/detail/${id}`,
@@ -81,7 +81,7 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
           method: "DELETE",
         };
       },
-      invalidatesTags: ["department"],
+      invalidatesTags: ["department", "project", "User"],
     }),
     deleteDepartmentPermanently: build.mutation<
       Response<Department>,

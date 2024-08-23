@@ -149,7 +149,7 @@ export const ManagerProject = () => {
 
   return (
     <>
-      <div className='admin-project-page'>
+      <div className='manager-project-page'>
         <header className='header-row'>
           <div className='first-part'>
             <Typography.Title level={2}>{projectData?.name}</Typography.Title>
