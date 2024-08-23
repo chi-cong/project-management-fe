@@ -49,11 +49,6 @@ export const Account = () => {
       onClick: () => setQueries({ ...queries, role: OUserRole.Staff }),
     },
     {
-      label: "Project Manager",
-      key: OUserRole.ProjectManager,
-      onClick: () => setQueries({ ...queries, role: OUserRole.ProjectManager }),
-    },
-    {
       label: "Manager",
       key: OUserRole.Manager,
       onClick: () => setQueries({ ...queries, role: OUserRole.Manager }),

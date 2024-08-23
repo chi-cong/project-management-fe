@@ -67,7 +67,7 @@ export const StaffDepartment = () => {
     setupProjectFilter();
   }, [departmentProjects]);
 
-  return departmentId ? (
+  return departmentId !== "null" ? (
     <>
       <div className='department-page'>
         <section className='main'>
