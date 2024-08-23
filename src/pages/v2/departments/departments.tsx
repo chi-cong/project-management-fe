@@ -45,7 +45,7 @@ export const Departments = () => {
   if (checkRole(OUserRole.Staff)) {
     if (departmentDetail) {
       return (
-        <div className='v2-departments-page'>
+        <div className="v2-departments-page">
           <UserDepartmentUi
             department={departmentDetail}
             manager={{
@@ -57,35 +57,25 @@ export const Departments = () => {
         </div>
       );
     } else {
-      return <Empty description='No department available' />;
+      return <Empty description="No department available" />;
     }
   }
 
   return (
-    <div className='v2-departments-page'>
-      <section className='main'>
-        <header className='main-header'>
-          <section className='first-sec'>
-            <div className='title-des'>
-              <div className='title-row'>
+    <div className="v2-departments-page">
+      <section className="main">
+        <header className="main-header">
+          <section className="first-sec">
+            <div className="title-des">
+              <div className="title-row">
                 <h2>Departments</h2>
               </div>
             </div>
-            <Row className='header-action' gutter={[8, 8]}>
-              <Col xs={12} sm={12} md={10}>
-                <Input.Search
-                  placeholder='Search...'
-                  style={{ width: "100%" }}
-                  allowClear
-                  onSearch={(value) =>
-                    setQueries({ ...queries, search: value })
-                  }
-                />
-              </Col>
-              <Col xs={12} sm={12} md={7}>
+            <Row className="header-action" gutter={[8, 8]}>
+              <Col xs={12} sm={12} md={7} lg={5}>
                 <Button
-                  type='default'
-                  className='title-row-btn'
+                  type="default"
+                  className="title-row-btn"
                   icon={<DeleteOutlined />}
                   style={{ width: "100%" }}
                   onClick={() => {
@@ -97,10 +87,10 @@ export const Departments = () => {
                   Trash
                 </Button>
               </Col>
-              <Col xs={24} sm={24} md={7}>
+              <Col xs={12} sm={12} md={7} lg={5}>
                 <Button
-                  type='primary'
-                  className='title-row-btn'
+                  type="primary"
+                  className="title-row-btn"
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
                   style={{ width: "100%" }}
@@ -108,10 +98,20 @@ export const Departments = () => {
                   Create
                 </Button>
               </Col>
+              <Col xs={24} sm={24} md={10} lg={10}>
+                <Input.Search
+                  placeholder="Search..."
+                  style={{ width: "100%" }}
+                  allowClear
+                  onSearch={(value) =>
+                    setQueries({ ...queries, search: value })
+                  }
+                />
+              </Col>
             </Row>
           </section>
         </header>
-        <main className='department-main-info'>
+        <main className="department-main-info">
           <List
             grid={{
               gutter: 12,
@@ -128,7 +128,7 @@ export const Departments = () => {
               pageSize: 9,
               total: data?.total,
               onChange: onChangePage,
-              showSizeChanger: false
+              showSizeChanger: false,
             }}
             dataSource={data?.departments}
             renderItem={

@@ -86,9 +86,17 @@ const accountServices = hrManagementApi.injectEndpoints({
         search?: string;
         items_per_page?: number | "ALL";
         haveDepartment?: boolean;
+        departmentId?: string;
       }
     >({
-      query: ({ role, page, search, items_per_page, haveDepartment }) => {
+      query: ({
+        role,
+        page,
+        search,
+        items_per_page,
+        haveDepartment,
+        departmentId,
+      }) => {
         return {
           url: `users/admin/get-all`,
           method: "GET",
@@ -101,6 +109,7 @@ const accountServices = hrManagementApi.injectEndpoints({
             search: search || "",
             items_per_page: items_per_page || 10,
             haveDepartment,
+            department_id: departmentId || "",
           },
         };
       },
