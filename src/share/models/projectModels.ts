@@ -46,6 +46,10 @@ export interface Project {
     deletedAt: string | Dayjs;
     deletedMark: boolean;
   };
+  department_info?: {
+    name?: string;
+    description?: string;
+  }[];
 }
 
 export interface ProjectProperty {

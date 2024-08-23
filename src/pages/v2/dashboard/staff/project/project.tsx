@@ -14,11 +14,13 @@ import {
   useGetProjectQuery,
   useGetProjectTasksQuery,
   useGetProjectStaffsQuery,
+  useGetUserDetailQuery,
 } from "src/share/services";
 import { Activities } from "src/layouts/v2/task-detail/activities";
 import { ModalDetailProject } from "src/components/modal-detail-project";
 import { ProjectTeam } from "src/components/v2/project-team/project-team";
 import { OutsideClickHandler } from "src/components";
+import { ManagerProject as PmProject } from "src/pages/v2/dashboard/manager/project";
 
 export const StaffProject = () => {
   const { id: projectId } = useParams();
@@ -43,6 +45,7 @@ export const StaffProject = () => {
     items_per_page: "ALL",
     projectId,
   });
+  const { data: user } = useGetUserDetailQuery();
 
   const taskListSrc: {
     color: string;
@@ -97,7 +100,9 @@ export const StaffProject = () => {
     );
   };
 
-  return (
+  return projectData?.project_manager_id === user?.user_id ? (
+    <PmProject />
+  ) : (
     <>
       <div className='staff-project-page'>
         <header className='header-row'>

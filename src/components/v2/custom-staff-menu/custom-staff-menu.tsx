@@ -29,13 +29,15 @@ export const CustomStaffMenu = ({ items }: CustomStaffMenuProp) => {
         ""
       );
 
-      if (currPath === `/department/${id}`) {
+      if (currPath === `/department/${id}` && id) {
         setSelectedItem(0);
       } else {
         const selectedProject = items.findIndex((item) => {
           return item.id === id;
         });
-        setSelectedItem(selectedProject);
+        if (selectedProject) {
+          setSelectedItem(selectedProject);
+        }
       }
     };
     setDefaultItem();

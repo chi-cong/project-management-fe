@@ -1,4 +1,4 @@
-import { DatePicker, Form, Input, Modal, Typography } from "antd";
+import { DatePicker, Form, Input, Modal, Typography, Tag } from "antd";
 import React, { useEffect } from "react";
 import "./modal-detail-project.css";
 import { Project } from "src/share/models";
@@ -69,6 +69,15 @@ export const ModalDetailProject: React.FC<ModalDetailProjectProp> = ({
         </Form.Item>
         <Form.Item<Project> name={"description"} label='Description'>
           <Input.TextArea size='large' disabled />
+        </Form.Item>
+        <Form.Item<Project> label='Departments'>
+          {project?.department_info?.map((department) => {
+            return (
+              <Tag>
+                <h3>{department.name}</h3>
+              </Tag>
+            );
+          })}
         </Form.Item>
         <Form.Item<Project> name={"project_manager_id"} label='Project Manager'>
           {project?.project_manager ? (
