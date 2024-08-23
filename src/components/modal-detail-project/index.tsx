@@ -1,9 +1,9 @@
-import { DatePicker, Form, Input, Modal, Select } from "antd";
+import { DatePicker, Form, Input, Modal, Typography } from "antd";
 import React, { useEffect } from "react";
 import "./modal-detail-project.css";
 import { Project } from "src/share/models";
 import dayjs from "dayjs";
-import { useGetDepartmentsQuery, useGetUsersQuery } from "src/share/services";
+import { CustomAvatar } from "src/components/v2";
 
 type ModalDetailProjectProp = {
   isModalOpen: boolean;
@@ -16,14 +16,6 @@ export const ModalDetailProject: React.FC<ModalDetailProjectProp> = ({
   setIsModalOpen,
   project,
 }) => {
-  const { data: departmentData } = useGetDepartmentsQuery({
-    itemsPerPage: "ALL",
-  });
-  const { data: pms } = useGetUsersQuery({
-    items_per_page: "ALL",
-    role: "PROJECT_MANAGER",
-  });
-
   const [form] = Form.useForm();
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -66,55 +58,38 @@ export const ModalDetailProject: React.FC<ModalDetailProjectProp> = ({
         Detail Project
       </h2>
       <Form className='project-form' layout='vertical' form={form}>
-        <Form.Item<Project>
-          name={"name"}
-          label='Project name'
-          rules={[{ required: true, message: "Project name is required" }]}
-        >
+        <Form.Item<Project> name={"name"} label='Project name'>
           <Input size='large' disabled />
         </Form.Item>
-        <Form.Item<Project>
-          name={"projectCode"}
-          label='Project Code'
-          rules={[{ required: true, message: "Project code is required" }]}
-        >
+        <Form.Item<Project> name={"projectCode"} label='Project Code'>
           <Input size='large' disabled />
         </Form.Item>
         <Form.Item<Project> name={"investor"} label='Investor'>
           <Input size='large' disabled />
         </Form.Item>
-        <Form.Item<Project>
-          name={"description"}
-          label='Description'
-          rules={[
-            { required: true, message: "Project description is required" },
-          ]}
-        >
+        <Form.Item<Project> name={"description"} label='Description'>
           <Input.TextArea size='large' disabled />
         </Form.Item>
-        <Form.Item<Project> name={"department_ids"} label='Department'>
-          <Select
-            options={departmentData?.departments?.map((department) => {
-              return {
-                label: department.name,
-                value: department.department_id,
-              };
-            })}
-            size='large'
-            disabled
-          />
-        </Form.Item>
         <Form.Item<Project> name={"project_manager_id"} label='Project Manager'>
-          <Select
-            options={pms?.users?.map((pm) => {
-              return {
-                label: pm.username,
-                value: pm.user_id,
-              };
-            })}
-            size='large'
-            disabled
-          />
+          {project?.project_manager ? (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "var(--gap-s)",
+              }}
+            >
+              <CustomAvatar
+                avatarSrc={project?.project_manager.avatar}
+                bgColor={project?.project_manager.avatar_color}
+                userName={project?.project_manager.name}
+                size={40}
+              />
+              <h4>{project?.project_manager.name}</h4>
+            </div>
+          ) : (
+            <Typography.Text>No Manager</Typography.Text>
+          )}
         </Form.Item>
         <Form.Item<Project> name={"startAt"} label='Start'>
           <DatePicker size='large' style={{ width: "100%" }} disabled />

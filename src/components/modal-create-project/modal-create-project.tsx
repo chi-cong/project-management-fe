@@ -38,10 +38,6 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
   const { data: departmentData } = useGetDepartmentsQuery({
     itemsPerPage: "ALL",
   });
-  // const { data: pms } = useGetUsersQuery({
-  //   items_per_page: "ALL",
-  //   role: "PROJECT_MANAGER",
-  // });
 
   const onFinish: FormProps<Project>["onFinish"] = async (values) => {
     await createProject({
