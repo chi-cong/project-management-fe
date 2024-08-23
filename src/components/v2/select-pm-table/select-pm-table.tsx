@@ -30,7 +30,7 @@ export const SelectPmTable: React.FC<ModalAddUserToProjectProps> = ({
     items_per_page: 5,
     page: userPage,
     search,
-    role: OUserRole.All,
+    role: OUserRole.Staff,
   });
 
   const columns = [
@@ -65,7 +65,7 @@ export const SelectPmTable: React.FC<ModalAddUserToProjectProps> = ({
         return (
           selectedPm?.user_id !== record.key && (
             <Button
-              type='primary'
+              type="primary"
               onClick={() => {
                 setSelectedPM(
                   users?.users.find((user) => record.key === user.user_id)
@@ -99,11 +99,12 @@ export const SelectPmTable: React.FC<ModalAddUserToProjectProps> = ({
   return (
     <>
       {/* search */}
-      <Row className='modal-add-user-search-input'>
+      <h2>Select Project Manager</h2>
+      <Row className="modal-add-user-search-input">
         <Col span={8}>
           <Input.Search
-            placeholder='Search...'
-            size='large'
+            placeholder="Search..."
+            size="large"
             onSearch={(value) => setSearch(value)}
             allowClear
           />

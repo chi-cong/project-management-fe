@@ -159,6 +159,7 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
                   currentRole === OUserRole.ProjectManager,
               }))}
               size="large"
+              onChange={(value) => setCurrentRole(value as UserRole)}
             />
           </Form.Item>
         </div>
