@@ -5,6 +5,7 @@ import {
   useGetDocFileMutation,
   useGetProjectQuery,
   useDeleteProjectFileMutation,
+  useGetUserDetailQuery,
 } from "src/share/services";
 
 import type { UploadProps } from "antd";
@@ -20,6 +21,7 @@ export const ProjectDocument = ({ project }: { project?: Project }) => {
     projectId: project?.project_id || "",
   });
   const checkRole = useRoleChecker();
+  const { data: user } = useGetUserDetailQuery();
   const [fileLinks, setFileLinks] = useState<string[]>([]);
 
   const props: UploadProps = {
@@ -119,11 +121,12 @@ export const ProjectDocument = ({ project }: { project?: Project }) => {
           })}
         </div>
       </div>
-      {!checkRole(OUserRole.Staff) && (
-        <Upload.Dragger {...props} listType='text'>
-          <strong>Choose a file</strong> or drag it here
-        </Upload.Dragger>
-      )}
+      {!checkRole(OUserRole.Staff) ||
+        (user?.user_id === project?.project_manager_id && (
+          <Upload.Dragger {...props} listType='text'>
+            <strong>Choose a file</strong> or drag it here
+          </Upload.Dragger>
+        ))}
     </div>
   );
 };
