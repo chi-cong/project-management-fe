@@ -523,7 +523,7 @@ const projectServices = hrManagementApi.injectEndpoints({
     >({
       query({ taskId }) {
         return {
-          url: `tasks/admin/delete/${taskId}`,
+          url: `tasks/delete/${taskId}`,
           method: "DELETE",
           headers: {
             authorization: accessToken(),

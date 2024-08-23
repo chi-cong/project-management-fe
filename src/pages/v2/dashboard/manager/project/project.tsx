@@ -52,7 +52,7 @@ export const ManagerProject = () => {
   const [taskDocSec, setTaskDocSec] = useState<boolean>(false);
   const [activitySec, setActivitySec] = useState<boolean>(false);
 
-  const { data: projectData } = useGetProjectQuery({
+  const { data: projectData, refetch: refetchProject } = useGetProjectQuery({
     projectId: projectId!,
   });
   const { data: tasks } = useGetProjectTasksQuery({
@@ -254,7 +254,7 @@ export const ManagerProject = () => {
         project={projectData}
       />
       <Modal open={docSec} onCancel={() => setDocSec(false)} footer={[]}>
-        <ProjectDocument project={projectData} />
+        <ProjectDocument project={projectData} refetch={refetchProject} />
       </Modal>
       <Modal
         open={taskDocSec}

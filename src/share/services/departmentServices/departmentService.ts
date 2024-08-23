@@ -5,7 +5,6 @@ import type {
   getDepartmentsResp,
   Department,
   ProjectReportResp,
-  UserRole,
 } from "src/share/models";
 import { AddDepartmentForm } from "src/share/models/departmentModels";
 import { ProjectResp } from "src/share/models/projectModels";
