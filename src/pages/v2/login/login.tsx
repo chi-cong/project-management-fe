@@ -9,7 +9,9 @@ import { useEffect } from "react";
 export const Login = () => {
   const navigate = useNavigate();
   const getAccessToken = () => sessionStorageUtil.get("accessToken");
-  const { data: newAccessToken, isSuccess } = useRefreshTokenQuery();
+  const { data: newAccessToken, isSuccess } = useRefreshTokenQuery(undefined, {
+    skip: getAccessToken() ? true : false,
+  });
 
   useEffect(() => {
     const checkToken = () => {
