@@ -34,7 +34,7 @@ export interface Project {
   };
   client_ownership?: {
     client_id: string;
-    fullname: string;
+  fullname: string;
     email: string;
     avatar: string;
     address: string;

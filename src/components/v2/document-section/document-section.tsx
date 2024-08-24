@@ -51,6 +51,13 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
     headers: {
       authorization: sessionStorageUtil.get("accessToken")! as string,
     },
+    beforeUpload(file) {
+      const isPdf = file.name.slice(file.name.lastIndexOf(".")) === ".pdf";
+      if (isPdf) {
+        message.error("Sorry, PDF is not supported");
+      }
+      return !isPdf;
+    },
     onChange(info) {
       const { status } = info.file;
       if (status === "done") {
