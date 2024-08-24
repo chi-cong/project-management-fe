@@ -77,32 +77,32 @@ export const ProjectDocument = ({
                       </a>
                     </Typography.Link>
                   </div>
-                  {!checkRole(OUserRole.Staff) ||
-                    (user?.user_id === project?.project_manager_id && (
-                      <Popconfirm
-                        title='Delete this file ?'
-                        onConfirm={() => {
-                          // fileLinks and filenames index are the same
-                          deleteFile({
-                            filename: project?.document![index],
-                            projectId: project?.project_id,
+                  {(!checkRole(OUserRole.Staff) ||
+                    user?.user_id === project?.project_manager_id) && (
+                    <Popconfirm
+                      title='Delete this file ?'
+                      onConfirm={() => {
+                        // fileLinks and filenames index are the same
+                        deleteFile({
+                          filename: project?.document![index],
+                          projectId: project?.project_id,
+                        })
+                          .unwrap()
+                          .then(() => {
+                            message.success(
+                              `${project?.document![index]} is deleted`
+                            );
                           })
-                            .unwrap()
-                            .then(() => {
-                              message.success(
-                                `${project?.document![index]} is deleted`
-                              );
-                            })
-                            .catch(() => {
-                              message.error("Failed to delete file");
-                            });
-                        }}
-                      >
-                        <Button shape='round' danger size='small'>
-                          Delete
-                        </Button>
-                      </Popconfirm>
-                    ))}
+                          .catch(() => {
+                            message.error("Failed to delete file");
+                          });
+                      }}
+                    >
+                      <Button shape='round' danger size='small'>
+                        Delete
+                      </Button>
+                    </Popconfirm>
+                  )}
                 </div>
               );
             }

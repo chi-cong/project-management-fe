@@ -26,7 +26,6 @@
             align-items: center;
             justify-content: center;
             gap: var(--gap-xs);
-
             svg {
               margin: auto;
               width: 16px;

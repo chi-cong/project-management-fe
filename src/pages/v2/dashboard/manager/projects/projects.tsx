@@ -45,7 +45,7 @@ export const ManagerProjects = () => {
           <section className='first-sec'>
             <div className='title-des'>
               <div className='title-row'>
-                <h2>Department Projects</h2>
+                <h2>Projects</h2>
               </div>
               <Button
                 onClick={() => navigate("/v2/dashboard/manager/my-projects")}
