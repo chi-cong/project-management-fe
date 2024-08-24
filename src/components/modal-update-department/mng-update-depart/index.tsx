@@ -1,5 +1,5 @@
-import { Modal, Space, Tabs } from "antd";
-import React from "react";
+import { Form, Modal, Space, Tabs } from "antd";
+import React, { useEffect } from "react";
 import "./modal-update-department.css";
 import InfoTabs from "./info-tabs";
 import AddStaffTabs from "./add-staff-tabs";
@@ -14,13 +14,26 @@ export const MngUpdateDepart: React.FC<ModalUpdateDepartment> = ({
   setIsModalOpen,
   department,
 }) => {
+  const [form] = Form.useForm();
+
   const handleOk = () => {
     setIsModalOpen(true);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    form.setFieldsValue({
+      name: department?.name,
+      description: department?.description,
+    });
   };
+
+  useEffect(() => {
+    form.setFieldsValue({
+      name: department?.name,
+      description: department?.description,
+    });
+  }, [department, form]);
 
   return (
     <Modal
@@ -47,6 +60,7 @@ export const MngUpdateDepart: React.FC<ModalUpdateDepartment> = ({
             name={department?.name}
             description={department?.description}
             id={department?.department_id}
+            form={form}
           />
         </Tabs.TabPane>
         <Tabs.TabPane tab='Staff' key='2'>

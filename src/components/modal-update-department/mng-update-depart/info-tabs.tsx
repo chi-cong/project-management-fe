@@ -1,15 +1,23 @@
-import { Button, Form, FormProps, Input, message, Space } from "antd";
+import {
+  Button,
+  Form,
+  FormInstance,
+  FormProps,
+  Input,
+  message,
+  Space,
+} from "antd";
 import { useUpdateMngDepartmentMutation } from "src/share/services";
-import React, { useEffect } from "react";
+import React from "react";
 
 interface DepartmentInfo {
   name?: string;
   description?: string;
   id?: string;
+  form: FormInstance;
 }
 
-const InfoTabs: React.FC<DepartmentInfo> = ({ name, description, id }) => {
-  const [form] = Form.useForm();
+const InfoTabs: React.FC<DepartmentInfo> = ({ form, id }) => {
   const [updateDepartment] = useUpdateMngDepartmentMutation();
 
   const onFinish: FormProps<DepartmentInfo>["onFinish"] = async (values) => {
@@ -29,10 +37,6 @@ const InfoTabs: React.FC<DepartmentInfo> = ({ name, description, id }) => {
         message.error(e.data.message);
       });
   };
-
-  useEffect(() => {
-    form.setFieldsValue({ name, description });
-  });
 
   return (
     <>
