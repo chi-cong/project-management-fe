@@ -365,7 +365,7 @@ const projectServices = hrManagementApi.injectEndpoints({
           body: { ...value },
         };
       },
-      invalidatesTags: ["assignment", "project"],
+      invalidatesTags: ["assignment", "project", "activity"],
     }),
     getProjectReports: build.query<
       ProjectReportResp,

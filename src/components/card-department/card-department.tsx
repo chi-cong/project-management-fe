@@ -211,6 +211,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                       maxCount={2}
                       maxPopoverTrigger='click'
                       size={40}
+                      style={{ minHeight: "40px", minWidth: "40px" }}
                       maxStyle={{
                         color: "#f56a00",
                         backgroundColor: "#fde3cf",

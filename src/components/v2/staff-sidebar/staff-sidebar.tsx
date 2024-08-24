@@ -26,7 +26,9 @@ export const StaffSidebar = () => {
       title: (
         <div className='sidebar-menu-item'>
           {getSublistNode()}
-          <span className='menu-item-title'>{project.name}</span>
+          <span className='menu-item-title'>
+            {`${project.name?.substring(0, 16)}...`}
+          </span>
         </div>
       ),
       icon: null,

@@ -97,16 +97,14 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
           >
             <Input size='large' />
           </Form.Item>
-          <Form.Item<Project> name={"investor"} label='Investor'>
+          <Form.Item<Project>
+            name={"investor"}
+            label='Investor'
+            rules={[{ required: true, message: "Investor  is required" }]}
+          >
             <Input size='large' />
           </Form.Item>
-          <Form.Item<Project>
-            name={"description"}
-            label='Description'
-            rules={[
-              { required: true, message: "Project description is required" },
-            ]}
-          >
+          <Form.Item<Project> name={"description"} label='Description'>
             <Input.TextArea size='large' />
           </Form.Item>
           <Form.Item<Project> name={"department_ids"} label='Department'>
