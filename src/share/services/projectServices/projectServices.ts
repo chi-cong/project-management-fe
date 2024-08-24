@@ -318,7 +318,7 @@ const projectServices = hrManagementApi.injectEndpoints({
             authorization: accessToken(),
           },
           body: {
-            filename,
+            file: filename,
           },
         };
       },

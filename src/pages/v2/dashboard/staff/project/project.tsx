@@ -187,11 +187,7 @@ export const StaffProject = () => {
         project={projectData}
       />
       <Modal open={docSec} onCancel={() => setDocSec(false)} footer={[]}>
-        <ProjectDocument
-          project={projectData}
-          refetch={projectRefetch}
-          open={docSec}
-        />
+        <ProjectDocument project={projectData} refetch={projectRefetch} />
       </Modal>
       <Modal
         open={taskDocSec}

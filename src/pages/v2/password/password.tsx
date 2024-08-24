@@ -1,20 +1,9 @@
 import "./password.css";
-import { LoginFieldType } from "src/layouts";
 import {
   useChangePasswordMutation,
   useGetUserDetailQuery,
 } from "src/share/services";
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  FormProps,
-  Input,
-  message,
-  Row,
-  Space,
-} from "antd";
+import { Button, Card, Col, Form, FormProps, Input, message, Row } from "antd";
 
 export type ChangePasswordFormType = {
   currentPassword: string;
