@@ -10,6 +10,7 @@ import {
   useGetUserProjectQuery,
 } from "src/share/services";
 import { randAvaBg } from "src/share/utils";
+import { useEffect, useState } from "react";
 
 export const StaffDrawer = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ export const StaffDrawer = () => {
   const { data: user } = useGetUserDetailQuery();
   const dispatch = useDispatch();
   const isOpen = useSelector((root: RootState) => root.openDrawer);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const getSublistNode = () => {
     return (
@@ -42,7 +44,7 @@ export const StaffDrawer = () => {
       title: (
         <div className='sidebar-menu-item'>
           {getSublistNode()}
-          <span className='menu-item-title'>{project.name}</span>
+          <span className='menu-item-title'>{`${project.name?.substring(0, 15)}...`}</span>
         </div>
       ),
       icon: null,
@@ -68,12 +70,33 @@ export const StaffDrawer = () => {
     ...projectItems,
   ];
 
+  const setDrawerWidth = (width: number) => {
+    if (width < 500) {
+      return "75vw";
+    }
+    if (width < 768) {
+      return "50vw";
+    }
+    return "55vw";
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <>
       <Drawer
         onClose={() => dispatch(openDrawer(false))}
         open={isOpen}
         placement='left'
+        width={setDrawerWidth(windowWidth)}
       >
         <CustomStaffMenu items={items} />
       </Drawer>

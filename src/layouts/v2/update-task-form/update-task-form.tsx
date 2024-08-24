@@ -94,6 +94,7 @@ export const UpdateTaskForm: React.FC<TaskForm> = ({
       .unwrap()
       .then(() => {
         message.success("successful update task");
+        setIsModalOpen(false);
       })
       .catch(() => message.error("Failed to update task"));
   };

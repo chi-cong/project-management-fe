@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Col, Popconfirm, Row, Space } from "antd";
+import { Card, Col, message, Popconfirm, Row, Space } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -38,28 +38,31 @@ export const CardAccount: React.FC<CardAccount> = ({
     event.stopPropagation();
   };
   const deleteAccount = async () => {
-    await deleteUser({ userId }).unwrap().then().catch();
+    await deleteUser({ userId })
+      .unwrap()
+      .then(() => message.success("Deleted account"))
+      .catch(() => message.error("Failed to delete account"));
   };
 
   return (
-    <div className="card-account-container">
+    <div className='card-account-container'>
       <Card
         hoverable
         bordered={false}
-        className="card-account"
+        className='card-account'
         onClick={onClick}
       >
-        <div className="account-wrapper">
-          <Row className="account-header">
-            <Col className="account-header-info">
+        <div className='account-wrapper'>
+          <Row className='account-header'>
+            <Col className='account-header-info'>
               <h3> {account.username}</h3>
-              <div className="account-role">
+              <div className='account-role'>
                 {(account?.role as RoleResponse).name === OUserRole.SuperAdmin
                   ? "ADMIN"
                   : (account?.role as RoleResponse).name}
               </div>
             </Col>
-            <Col className="account-header-action">
+            <Col className='account-header-action'>
               {checkRole(OUserRole.SuperAdmin) ||
               ((account.role as RoleResponse).name !== OUserRole.Admin &&
                 (account.role as RoleResponse).name !==
@@ -67,16 +70,16 @@ export const CardAccount: React.FC<CardAccount> = ({
                 <Space>
                   <div
                     onClick={showModal}
-                    className="account-header-action-button"
+                    className='account-header-action-button'
                   >
                     <EditOutlined />
                   </div>
                   <div
-                    className="account-header-action-button icon-delete-account"
+                    className='account-header-action-button icon-delete-account'
                     onClick={handleDeleteClick}
                   >
                     <Popconfirm
-                      title="Are you sure to delete this account?"
+                      title='Are you sure to delete this account?'
                       icon={<QuestionCircleOutlined style={{ color: "red" }} />}
                       onConfirm={deleteAccount}
                     >
@@ -89,18 +92,18 @@ export const CardAccount: React.FC<CardAccount> = ({
               )}
             </Col>
           </Row>
-          <Row className="account-body">
-            <Col span={12} className="account-body-info">
-              <div className="account-card-info">
+          <Row className='account-body'>
+            <Col span={12} className='account-body-info'>
+              <div className='account-card-info'>
                 <span>{account.name}</span>
               </div>
-              <div className="account-card-info">
+              <div className='account-card-info'>
                 <span>{account.email}</span>
               </div>
-              <div className="account-card-info">
+              <div className='account-card-info'>
                 <span>{account.phone}</span>
               </div>
-              <div className="account-card-info-department">
+              <div className='account-card-info-department'>
                 <div style={{ display: "flex" }}>
                   <div
                     style={{
@@ -114,13 +117,13 @@ export const CardAccount: React.FC<CardAccount> = ({
                 </div>
               </div>
             </Col>
-            <Col span={12} className="account-body-avatar">
+            <Col span={12} className='account-body-avatar'>
               <CustomAvatar
                 size={100}
                 userName={account.name}
                 avatarSrc={account.avatar}
                 bgColor={account.avatar_color}
-                className="account-card-avatar"
+                className='account-card-avatar'
               />
             </Col>
           </Row>

@@ -27,6 +27,7 @@ import { UpdateTaskForm } from "../update-task-form";
 import type { RootState } from "src/libs/redux";
 
 import type { Project } from "src/share/models";
+import { OutsideClickHandler } from "src/components";
 
 interface TaskFormProps {
   project?: Project;
@@ -53,6 +54,7 @@ export const TaskDetail = ({
 
   const [deleteTask] = useDeleteTaskMutation();
   const [updateAssignment] = useUpdateAssignmentMutation();
+  const [isOpenAssignUser, setIsOpenAssignUser] = useState<boolean>(false);
 
   const [editModal, setEditModal] = useState<boolean>(false);
   const [modalWidth, setModalWidth] = useState<number>(750);
@@ -102,54 +104,57 @@ export const TaskDetail = ({
 
   const AssignUserPopover = () => {
     return (
-      <div className='assign-user-popover'>
-        <Input.Search
-          placeholder='Search'
-          onSearch={(value) => {
-            setSearch(value);
-          }}
-          allowClear
-        />
-        {projectStaffs?.users.map((staff) => {
-          return (
-            <Card
-              hoverable
-              className='assignable-user-card'
-              style={{ marginTop: "10px" }}
-              onClick={() => {
-                updateAssignment({
-                  assignmentId: taskAssignment.assignment!.assignment_id!,
-                  value: { user_id: staff.user_id },
-                })
-                  .unwrap()
-                  .then(() => {
-                    dispatch(
-                      selectTaskAssign({
-                        task: taskAssignment.task,
-                        assignment: assignment,
-                      })
-                    );
-                    message.success("Staff is assigned to this task");
+      <OutsideClickHandler onClickOutside={() => setIsOpenAssignUser(false)}>
+        <div className='assign-user-popover'>
+          <Input.Search
+            placeholder='Search'
+            onSearch={(value) => {
+              setSearch(value);
+            }}
+            allowClear
+          />
+          {projectStaffs?.users.map((staff) => {
+            return (
+              <Card
+                hoverable
+                className='assignable-user-card'
+                style={{ marginTop: "10px" }}
+                onClick={() => {
+                  updateAssignment({
+                    assignmentId: taskAssignment.assignment!.assignment_id!,
+                    value: { user_id: staff.user_id },
                   })
-                  .catch(() => message.error("Failed to assign staff"));
-              }}
-            >
-              <Card.Meta
-                avatar={
-                  <CustomAvatar
-                    size={32}
-                    userName={staff.name}
-                    avatarSrc={staff.avatar}
-                    bgColor={staff.avatar_color}
-                  />
-                }
-                title={staff.name}
-                description={staff.email}
-              />
-            </Card>
-          );
-        })}
-      </div>
+                    .unwrap()
+                    .then(() => {
+                      dispatch(
+                        selectTaskAssign({
+                          task: taskAssignment.task,
+                          assignment: assignment,
+                        })
+                      );
+                      message.success("Staff is assigned to this task");
+                      setIsOpenAssignUser(false);
+                    })
+                    .catch(() => message.error("Failed to assign staff"));
+                }}
+              >
+                <Card.Meta
+                  avatar={
+                    <CustomAvatar
+                      size={32}
+                      userName={staff.name}
+                      avatarSrc={staff.avatar}
+                      bgColor={staff.avatar_color}
+                    />
+                  }
+                  title={staff.name}
+                  description={staff.email}
+                />
+              </Card>
+            );
+          })}
+        </div>
+      </OutsideClickHandler>
     );
   };
 
@@ -166,6 +171,8 @@ export const TaskDetail = ({
             content={AssignUserPopover}
             placement='bottomLeft'
             trigger='click'
+            open={isOpenAssignUser}
+            onOpenChange={() => setIsOpenAssignUser(true)}
           >
             <Button className='assign-task-btn' size='small' type='text'>
               <UserPlus className='assign-task-icon' />

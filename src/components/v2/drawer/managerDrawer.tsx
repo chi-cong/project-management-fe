@@ -20,6 +20,7 @@ export const ManagerDrawer = () => {
 
   const [createProject, setCreateProject] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<number>(0);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const setDefaultItem = () => {
     const currPath = window.location.pathname.replace(
@@ -42,6 +43,26 @@ export const ManagerDrawer = () => {
   useEffect(() => {
     setDefaultItem();
   }, [location]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const setDrawerWidth = (width: number) => {
+    if (width < 500) {
+      return "75vw";
+    }
+    if (width < 768) {
+      return "50vw";
+    }
+    return "55vw";
+  };
 
   const items: CustomMenuItem[] = [
     {
@@ -71,6 +92,7 @@ export const ManagerDrawer = () => {
         onClose={() => dispatch(openDrawer(false))}
         open={isOpen}
         placement='left'
+        width={setDrawerWidth(windowWidth)}
       >
         <CustomMenu
           items={items}

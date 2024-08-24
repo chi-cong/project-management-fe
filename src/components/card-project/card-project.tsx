@@ -143,7 +143,9 @@ export const CardProject: React.FC<CardProject> = ({
             <div className='project-body'>
               {/* info */}
               <div className='project-body-info'>
-                <span>{shortenLongText(40, description)}</span>
+                <span style={{ minHeight: "22px" }}>
+                  {shortenLongText(40, description)}
+                </span>
                 {/* progress */}
                 <div className='project-progress'>
                   <Progress
