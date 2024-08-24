@@ -16,6 +16,7 @@ import { Project } from "src/share/models";
 import {
   useCreateProjectMutation,
   useManagerGetAllStaffDepartmentQuery,
+  useGetUserDetailQuery,
 } from "src/share/services";
 import dayjs from "dayjs";
 import { CustomAvatar } from "src/components/v2";
@@ -33,10 +34,14 @@ export const ManagerCreateProject: React.FC<ModalUpdateProjectProp> = ({
 }) => {
   const [form] = Form.useForm();
   const startDate = Form.useWatch("startAt", { form, preserve: true });
+  const { data: user } = useGetUserDetailQuery();
   const [createProject] = useCreateProjectMutation();
-  const { data: staffs } = useManagerGetAllStaffDepartmentQuery({
-    items_per_page: "ALL",
-  });
+  const { data: staffs } = useManagerGetAllStaffDepartmentQuery(
+    {
+      items_per_page: "ALL",
+    },
+    { skip: user?.department_id ? false : true }
+  );
 
   const onFinish: FormProps<Project>["onFinish"] = async (values) => {
     await createProject({
@@ -95,16 +100,14 @@ export const ManagerCreateProject: React.FC<ModalUpdateProjectProp> = ({
         >
           <Input size='large' />
         </Form.Item>
-        <Form.Item<Project> name={"investor"} label='Investor'>
+        <Form.Item<Project>
+          name={"investor"}
+          label='Investor'
+          rules={[{ required: true, message: "Investor is required" }]}
+        >
           <Input size='large' />
         </Form.Item>
-        <Form.Item<Project>
-          name={"description"}
-          label='Description'
-          rules={[
-            { required: true, message: "Project description is required" },
-          ]}
-        >
+        <Form.Item<Project> name={"description"} label='Description'>
           <Input.TextArea size='large' />
         </Form.Item>
         <Form.Item<Project> name={"project_manager_id"} label='Project Manager'>

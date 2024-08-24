@@ -47,11 +47,14 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
     },
     { skip: user?.department_id ? false : true }
   );
-  const { data: staffsInDepartments } = useGetAllStaffInDepartmentsQuery({
-    items_per_page: 5,
-    department_ids: project?.department_ids,
-    search,
-  },{ skip: user?.user_id === project?.project_manager_id ? false : true });
+  const { data: staffsInDepartments } = useGetAllStaffInDepartmentsQuery(
+    {
+      items_per_page: 5,
+      department_ids: project?.department_ids,
+      search,
+    },
+    { skip: user?.user_id === project?.project_manager_id ? false : true }
+  );
 
   const [createAssignment] = useCreateAssigmentMutation();
 
@@ -95,7 +98,9 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
               .then(() => {
                 message.success("User added");
               })
-              .catch(() => message.error("Failed to add user"));
+              .catch((e) => {
+                message.error(`${e.message}`);
+              });
           }}
         >
           Add

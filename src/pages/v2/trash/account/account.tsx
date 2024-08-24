@@ -47,11 +47,6 @@ export const AccountTrash = () => {
       onClick: () => setQueries({ ...queries, role: OUserRole.Staff }),
     },
     {
-      label: "Project Manager",
-      key: OUserRole.ProjectManager,
-      onClick: () => setQueries({ ...queries, role: OUserRole.ProjectManager }),
-    },
-    {
       label: "Manager",
       key: OUserRole.Manager,
       onClick: () => setQueries({ ...queries, role: OUserRole.Manager }),
@@ -70,16 +65,16 @@ export const AccountTrash = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="v2-account-page">
-      <section className="main">
-        <header className="main-header">
-          <section className="first-sec">
-            <div className="title-des">
-              <div className="title-row">
+    <div className='v2-account-page'>
+      <section className='main'>
+        <header className='main-header'>
+          <section className='first-sec'>
+            <div className='title-des'>
+              <div className='title-row'>
                 <h2>Account Trash</h2>
               </div>
               <Button
-                shape="round"
+                shape='round'
                 style={{ display: "" }}
                 onClick={() => navigate(-1)}
               >
@@ -87,7 +82,7 @@ export const AccountTrash = () => {
                 Back to Account
               </Button>
             </div>
-            <Row className="action" gutter={[8, 8]}>
+            <Row className='action' gutter={[8, 8]}>
               <Col xs={12} sm={12} md={6}>
                 <Dropdown menu={menuProps}>
                   <Button style={{ width: "100%" }}>
@@ -107,7 +102,7 @@ export const AccountTrash = () => {
               </Col>
               <Col xs={12} sm={12} md={18}>
                 <Input.Search
-                  placeholder="Search..."
+                  placeholder='Search...'
                   style={{ width: "100%" }}
                   allowClear
                   onSearch={(value) =>

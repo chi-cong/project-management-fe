@@ -55,7 +55,7 @@ export const ModalDetailProject: React.FC<ModalDetailProjectProp> = ({
           textAlign: "center",
         }}
       >
-        Detail Project
+        Project Details
       </h2>
       <Form className='project-form' layout='vertical' form={form}>
         <Form.Item<Project> name={"name"} label='Project name'>
@@ -71,9 +71,9 @@ export const ModalDetailProject: React.FC<ModalDetailProjectProp> = ({
           <Input.TextArea size='large' disabled />
         </Form.Item>
         <Form.Item<Project> label='Departments'>
-          {project?.department_info?.map((department) => {
+          {project?.department_info?.map((department, index) => {
             return (
-              <Tag>
+              <Tag key={index}>
                 <h3>{department.name}</h3>
               </Tag>
             );

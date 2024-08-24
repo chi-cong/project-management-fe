@@ -1,18 +1,13 @@
 import "./departments.css";
-import { Button, Col, Empty, Input, List, PaginationProps, Row } from "antd";
+import { Button, Col, Input, List, PaginationProps, Row } from "antd";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { CardDepartment } from "src/components/card-department";
 import ModalCreateDepartment from "src/components/modal-create-department";
 import { useNavigate } from "react-router-dom";
 import { useRoleChecker } from "src/share/hooks";
-import {
-  useGetDepartmentsQuery,
-  useGetDetailDepartmentQuery,
-  useGetUserDetailQuery,
-} from "src/share/services";
+import { useGetDepartmentsQuery } from "src/share/services";
 import { OUserRole } from "src/share/models";
-import { UserDepartmentUi } from "src/layouts";
 import { useDispatch } from "react-redux";
 import { selectDepartment } from "src/libs/redux/selectDepartmentSlice";
 import { localStorageUtil } from "src/share/utils";
@@ -28,54 +23,31 @@ export const Departments = () => {
   }>({ page: 1, itemsPerPage: 9, search: "" });
 
   const checkRole = useRoleChecker();
-  const { data: userDetail } = useGetUserDetailQuery();
   const { data } = useGetDepartmentsQuery(queries, {
     skip: checkRole(OUserRole.Staff) || checkRole(OUserRole.Manager),
   });
 
-  const { data: departmentDetail } = useGetDetailDepartmentQuery({
-    departmentId: userDetail?.department_id,
-  });
   const navigate = useNavigate();
 
   const onChangePage: PaginationProps["onChange"] = (page) => {
     setQueries({ ...queries, page });
   };
 
-  if (checkRole(OUserRole.Staff)) {
-    if (departmentDetail) {
-      return (
-        <div className="v2-departments-page">
-          <UserDepartmentUi
-            department={departmentDetail}
-            manager={{
-              username: "manager",
-              avatar: "",
-              email: "manager@gmail.com",
-            }}
-          />
-        </div>
-      );
-    } else {
-      return <Empty description="No department available" />;
-    }
-  }
-
   return (
-    <div className="v2-departments-page">
-      <section className="main">
-        <header className="main-header">
-          <section className="first-sec">
-            <div className="title-des">
-              <div className="title-row">
+    <div className='v2-departments-page'>
+      <section className='main'>
+        <header className='main-header'>
+          <section className='first-sec'>
+            <div className='title-des'>
+              <div className='title-row'>
                 <h2>Departments</h2>
               </div>
             </div>
-            <Row className="header-action" gutter={[8, 8]}>
+            <Row className='header-action' gutter={[8, 8]}>
               <Col xs={12} sm={12} md={7} lg={5}>
                 <Button
-                  type="default"
-                  className="title-row-btn"
+                  type='default'
+                  className='title-row-btn'
                   icon={<DeleteOutlined />}
                   style={{ width: "100%" }}
                   onClick={() => {
@@ -89,8 +61,8 @@ export const Departments = () => {
               </Col>
               <Col xs={12} sm={12} md={7} lg={5}>
                 <Button
-                  type="primary"
-                  className="title-row-btn"
+                  type='primary'
+                  className='title-row-btn'
                   icon={<PlusOutlined />}
                   onClick={() => setIsModalOpen(true)}
                   style={{ width: "100%" }}
@@ -100,7 +72,7 @@ export const Departments = () => {
               </Col>
               <Col xs={24} sm={24} md={10} lg={10}>
                 <Input.Search
-                  placeholder="Search..."
+                  placeholder='Search...'
                   style={{ width: "100%" }}
                   allowClear
                   onSearch={(value) =>
@@ -111,7 +83,7 @@ export const Departments = () => {
             </Row>
           </section>
         </header>
-        <main className="department-main-info">
+        <main className='department-main-info'>
           <List
             grid={{
               gutter: 12,

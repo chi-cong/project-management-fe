@@ -12,6 +12,7 @@ import {
   useManagerGetAllStaffDepartmentQuery,
 } from "src/share/services";
 import { Project, RoleResponse } from "src/share/models";
+import { TeamOutlined } from "@ant-design/icons";
 
 import { useParams } from "react-router-dom";
 
@@ -20,13 +21,22 @@ export const StaffDepartment = () => {
 
   const [reportModal, setReportModal] = useState<boolean>(false);
   const [isTeamOpened, setIsTeamOpened] = useState<boolean>(false);
-  const { data } = useGetDepartmentQuery({ id: departmentId! });
-  const { data: departmentProjects } = useGetAllProjectDepartmentQuery({
-    departmentId,
-  });
-  const { data: departmentStaffs } = useManagerGetAllStaffDepartmentQuery({
-    items_per_page: "ALL",
-  });
+  const { data } = useGetDepartmentQuery(
+    { id: departmentId! },
+    { skip: departmentId === "null" }
+  );
+  const { data: departmentProjects } = useGetAllProjectDepartmentQuery(
+    {
+      departmentId,
+    },
+    { skip: departmentId === "null" }
+  );
+  const { data: departmentStaffs } = useManagerGetAllStaffDepartmentQuery(
+    {
+      items_per_page: "ALL",
+    },
+    { skip: departmentId === "null" }
+  );
   const [projectFilter, setProjectFilter] = useState<{
     onProgress: Project[];
     todo: Project[];
@@ -73,8 +83,17 @@ export const StaffDepartment = () => {
         <section className='main'>
           <header className='main-header'>
             <div className='title-row'>
-              <Typography.Title level={2}>{data?.name}</Typography.Title>
+              <h2>{data?.name}</h2>
               <div style={{ display: "flex" }}>
+                <Button
+                  shape='round'
+                  style={{ display: "" }}
+                  onClick={() => setIsTeamOpened(true)}
+                  className='open-team-member-modal-btn'
+                >
+                  <TeamOutlined />
+                  Team members
+                </Button>
                 <Button
                   type='default'
                   className='title-row-btn'

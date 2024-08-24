@@ -125,6 +125,7 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
               content={ProjectCardOption}
               open={openOptions}
               onOpenChange={() => setOpenOptions(true)}
+              trigger={"click"}
             >
               <Button
                 type='text'
@@ -143,8 +144,10 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
           className='project-card-body'
           style={{ cursor: !checkRole(OUserRole.Staff) ? "pointer" : "none" }}
         >
-          <Typography.Text>
-            {shortenLongText(40, project.description)}
+          <Typography.Text className='description'>
+            {project.description
+              ? shortenLongText(40, project.description)
+              : " "}
           </Typography.Text>
           <div className='progress-sec'>
             <Progress

@@ -14,6 +14,7 @@ import "./card-project.css";
 import {
   useDeleteProjectMutation,
   useGetProjectStaffsQuery,
+  useGetUserDetailQuery,
 } from "src/share/services";
 import {
   ModalAddUserToProject,
@@ -52,6 +53,8 @@ export const CardProject: React.FC<CardProject> = ({
     items_per_page: "ALL",
     projectId: project?.project_id,
   });
+
+  const { data: user } = useGetUserDetailQuery();
 
   const calculateProgress = (): number => {
     if (project) {
@@ -233,6 +236,7 @@ export const CardProject: React.FC<CardProject> = ({
           setIsModalOpen={setIsModalOpen}
           project={project!}
           isUpdate={true}
+          isPm={user?.user_id === project?.project_manager_id}
         ></MngUpdateProject>
       )}
     </>

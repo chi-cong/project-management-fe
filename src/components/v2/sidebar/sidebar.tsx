@@ -31,7 +31,8 @@ export const Sidebar = () => {
         );
       },
       icon: <TeamOutlined />,
-      addCallBack() {
+      addCallBack(e: React.MouseEvent) {
+        e.stopPropagation();
         setCreateUser(true);
       },
     },
@@ -43,7 +44,8 @@ export const Sidebar = () => {
         );
       },
       icon: <ClusterOutlined />,
-      addCallBack() {
+      addCallBack(e: React.MouseEvent) {
+        e.stopPropagation();
         setCreateDepartment(true);
       },
     },
@@ -55,7 +57,8 @@ export const Sidebar = () => {
         );
       },
       icon: <RocketOutlined />,
-      addCallBack() {
+      addCallBack(e: React.MouseEvent) {
+        e.stopPropagation();
         setCreateProject(true);
       },
     },

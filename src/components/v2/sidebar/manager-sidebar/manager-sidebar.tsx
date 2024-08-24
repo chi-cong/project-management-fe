@@ -29,33 +29,33 @@ export const ManagerSidebar = () => {
         navigate("/v2/dashboard/manager/projects");
       },
       icon: <RocketOutlined />,
-      addCallBack() {
+      addCallBack(e: React.MouseEvent) {
+        e.stopPropagation();
         setCreateProject(true);
       },
     },
   ];
 
-  const setDefaultItem = () => {
-    const currPath = window.location.pathname.replace(
-      `v2/dashboard/manager/`,
-      ""
-    );
-
-    switch (currPath) {
-      case `/department/${id}`:
-        setSelectedItem(0);
-        break;
-      case "/projects":
-        setSelectedItem(1);
-        break;
-      default:
-        setSelectedItem(10);
-    }
-  };
-
   useEffect(() => {
+    const setDefaultItem = () => {
+      const currPath = window.location.pathname.replace(
+        `v2/dashboard/manager/`,
+        ""
+      );
+
+      switch (currPath) {
+        case `/department/${id}`:
+          setSelectedItem(0);
+          break;
+        case "/projects":
+          setSelectedItem(1);
+          break;
+        default:
+          setSelectedItem(10);
+      }
+    };
     setDefaultItem();
-  }, [location]);
+  }, [location, id]);
 
   return (
     <>

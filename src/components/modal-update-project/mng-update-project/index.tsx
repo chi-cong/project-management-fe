@@ -92,7 +92,7 @@ export const MngUpdateProject: React.FC<ModalUpdateProjectProp> = ({
           textAlign: "center",
         }}
       >
-        Update Project
+        {isUpdate ? " Update Project" : "Project Details"}
       </h2>
       <Form
         className='project-form'
