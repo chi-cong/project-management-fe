@@ -11,7 +11,7 @@ import {
 } from "antd";
 import React, { useState } from "react";
 import "./modal-create-project.css";
-import { Project, User } from "src/share/models";
+import { OUserRole, Project, User } from "src/share/models";
 import {
   useCreateProjectMutation,
   useGetDepartmentsQuery,
@@ -19,6 +19,7 @@ import {
 } from "src/share/services";
 import dayjs from "dayjs";
 import { CustomAvatar, SelectPmTable } from "src/components/v2";
+import { useRoleChecker } from "src/share/hooks";
 
 type ModalUpdateProjectProp = {
   isModalOpen: boolean;
@@ -30,14 +31,18 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
   setIsModalOpen,
 }) => {
   const [form] = Form.useForm();
+  const checkRole = useRoleChecker();
   const startDate = Form.useWatch("startAt", { form, preserve: true });
   const [createProject] = useCreateProjectMutation();
   const [selectedPm, setSeletedPm] = useState<User | undefined>(undefined);
   const [openSelectePm, setOpenSeletePm] = useState<boolean>(false);
 
-  const { data: departmentData } = useGetDepartmentsQuery({
-    itemsPerPage: "ALL",
-  });
+  const { data: departmentData } = useGetDepartmentsQuery(
+    {
+      itemsPerPage: "ALL",
+    },
+    { skip: checkRole(OUserRole.Staff) || checkRole(OUserRole.Manager) }
+  );
 
   const onFinish: FormProps<Project>["onFinish"] = async (values) => {
     await createProject({

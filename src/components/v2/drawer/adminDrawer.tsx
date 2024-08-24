@@ -66,39 +66,42 @@ export const AdminDrawer = () => {
     {
       title: "Account",
       onClick() {
-        dispatch(openDrawer(false));
         navigate(
           `/v2/dashboard/${(localStorageUtil.get("role") as string).toLocaleLowerCase()}/account`
         );
+        dispatch(openDrawer(false));
       },
       icon: <TeamOutlined />,
-      addCallBack() {
+      addCallBack(e: React.MouseEvent) {
+        e.stopPropagation();
         setCreateUser(true);
       },
     },
     {
       title: "Department",
       onClick() {
-        dispatch(openDrawer(false));
         navigate(
           `/v2/dashboard/${(localStorageUtil.get("role") as string).toLocaleLowerCase()}/departments`
         );
+        dispatch(openDrawer(false));
       },
       icon: <ClusterOutlined />,
-      addCallBack() {
+      addCallBack(e: React.MouseEvent) {
+        e.stopPropagation();
         setCreateDepartment(true);
       },
     },
     {
       title: "Project",
       onClick() {
-        dispatch(openDrawer(false));
         navigate(
           `/v2/dashboard/${(localStorageUtil.get("role") as string).toLocaleLowerCase()}/projects`
         );
+        dispatch(openDrawer(false));
       },
       icon: <RocketOutlined />,
-      addCallBack() {
+      addCallBack(e: React.MouseEvent) {
+        e.stopPropagation();
         setCreateProject(true);
       },
     },
@@ -119,7 +122,7 @@ export const AdminDrawer = () => {
       <Drawer
         onClose={() => dispatch(openDrawer(false))}
         open={isOpen}
-        placement="left"
+        placement='left'
         width={setDrawerWidth(windowWidth)}
       >
         <CustomMenu

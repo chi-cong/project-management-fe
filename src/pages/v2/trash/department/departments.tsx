@@ -25,16 +25,16 @@ export const DepartmentTrash = () => {
   };
   const navigate = useNavigate();
   return (
-    <div className="v2-departments-page">
-      <section className="main">
-        <header className="main-header">
-          <section className="first-sec">
-            <div className="title-des">
-              <div className="title-row">
+    <div className='v2-departments-page'>
+      <section className='main'>
+        <header className='main-header'>
+          <section className='first-sec'>
+            <div className='title-des'>
+              <div className='title-row'>
                 <h2>Departments Trash</h2>
               </div>
               <Button
-                shape="round"
+                shape='round'
                 style={{ display: "" }}
                 onClick={() => navigate(-1)}
               >
@@ -42,10 +42,10 @@ export const DepartmentTrash = () => {
                 Back to department
               </Button>
             </div>
-            <Row className="header-action" gutter={[8, 8]}>
-              <Col xs={12} sm={12} md={24}>
+            <Row className='header-action' gutter={[8, 8]}>
+              <Col xs={24} sm={24} md={24}>
                 <Input.Search
-                  placeholder="Search..."
+                  placeholder='Search...'
                   style={{ width: "100%" }}
                   allowClear
                   onSearch={(value) =>
@@ -56,7 +56,7 @@ export const DepartmentTrash = () => {
             </Row>
           </section>
         </header>
-        <main className="department-main-info">
+        <main className='department-main-info'>
           <List
             grid={{
               gutter: 12,

@@ -13,6 +13,7 @@
         justify-content: flex-start;
         gap: var(--gap-s);
         word-break: break-word;
+        min-height: 20px;
         .team-icon {
           color: var(--primary-color);
         }

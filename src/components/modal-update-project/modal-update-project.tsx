@@ -11,7 +11,7 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import "./modal-update-project.css";
-import { Project, User } from "src/share/models";
+import { OUserRole, Project, User } from "src/share/models";
 import {
   useUpdateProjectMutation,
   useGetDepartmentsQuery,
@@ -19,6 +19,7 @@ import {
 import { utcToLocal } from "src/share/utils";
 import dayjs from "dayjs";
 import { CustomAvatar, SelectPmTable } from "src/components/v2";
+import { useRoleChecker } from "src/share/hooks";
 
 type ModalUpdateProjectProp = {
   isModalOpen: boolean;
@@ -34,9 +35,13 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
   isUpdate,
 }) => {
   const [updateProject] = useUpdateProjectMutation();
-  const { data: departmentData } = useGetDepartmentsQuery({
-    itemsPerPage: "ALL",
-  });
+  const checkRole = useRoleChecker();
+  const { data: departmentData } = useGetDepartmentsQuery(
+    {
+      itemsPerPage: "ALL",
+    },
+    { skip: checkRole(OUserRole.Staff) || checkRole(OUserRole.Manager) }
+  );
   const [form] = Form.useForm();
   const startDate = Form.useWatch("startAt", { form, preserve: true });
   const [selectedPm, setSeletedPm] = useState<User | undefined>(undefined);
@@ -100,7 +105,7 @@ export const ModalUpdateProject: React.FC<ModalUpdateProjectProp> = ({
             textAlign: "center",
           }}
         >
-          {isUpdate ? " Update Project" : "Project Detail"}
+          {isUpdate ? " Update Project" : "Project Details"}
         </h2>
         <Form
           className='project-form'

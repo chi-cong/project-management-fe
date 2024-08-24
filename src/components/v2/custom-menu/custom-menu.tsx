@@ -6,7 +6,7 @@ import { PlusSquare } from "src/assets/icons";
 export interface CustomMenuItem {
   title: string;
   onClick: () => unknown;
-  addCallBack?: () => unknown;
+  addCallBack?: (e: React.MouseEvent<HTMLDivElement>) => unknown;
   icon?: ReactNode;
 }
 
@@ -40,12 +40,7 @@ export const CustomMenu = ({
               </Typography.Text>
             </div>
             {item.addCallBack && (
-              <div
-                className='add-icon'
-                onClick={() => {
-                  item.addCallBack!();
-                }}
-              >
+              <div className='add-icon' onClick={item.addCallBack}>
                 <PlusSquare />
               </div>
             )}

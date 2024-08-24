@@ -135,12 +135,13 @@ export const StaffProject = () => {
             >
               {projectStaffs?.users?.length ? (
                 <Avatar.Group maxCount={3}>
-                  {projectStaffs?.users.map((staff) => (
+                  {projectStaffs?.users.map((staff, index) => (
                     <CustomAvatar
                       size={32}
                       userName={staff.name}
                       avatarSrc={staff.avatar}
                       bgColor={staff.avatar_color}
+                      key={index}
                     />
                   ))}
                 </Avatar.Group>

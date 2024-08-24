@@ -15,6 +15,10 @@
   .project-card-body {
     width: 100%;
     cursor: pointer;
+    .description {
+      min-height: 20px;
+      display: inline-block;
+    }
     .progress-sec {
       width: 100%;
       .progress-second-line {

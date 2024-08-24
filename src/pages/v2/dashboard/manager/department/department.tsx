@@ -27,13 +27,22 @@ export const ManagerDepartment = () => {
   const [updateModal, setUpdateModal] = useState<boolean>(false);
   const [addStaffModal, setAddStaffModal] = useState<boolean>(false);
   const [rmStaffModal, setRmStaffModal] = useState<boolean>(false);
-  const { data } = useGetDepartmentQuery({ id: departmentId! });
-  const { data: departmentProjects } = useGetAllProjectDepartmentQuery({
-    departmentId,
-  });
-  const { data: departmentStaffs } = useManagerGetAllStaffDepartmentQuery({
-    items_per_page: "ALL",
-  });
+  const { data } = useGetDepartmentQuery(
+    { id: departmentId! },
+    { skip: departmentId === "null" }
+  );
+  const { data: departmentProjects } = useGetAllProjectDepartmentQuery(
+    {
+      departmentId,
+    },
+    { skip: departmentId === "null" }
+  );
+  const { data: departmentStaffs } = useManagerGetAllStaffDepartmentQuery(
+    {
+      items_per_page: "ALL",
+    },
+    { skip: departmentId === "null" }
+  );
   const [projectFilter, setProjectFilter] = useState<{
     onProgress: Project[];
     todo: Project[];

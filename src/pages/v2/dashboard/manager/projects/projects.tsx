@@ -27,11 +27,16 @@ export const ManagerProjects = () => {
   const navigate = useNavigate();
 
   //fetching data
-  const { data: allProject } = useGetAllProjectDepartmentQuery({
-    ...queries,
-    items_per_page: 9,
-    departmentId: user?.department_id,
-  });
+  const { data: allProject } = useGetAllProjectDepartmentQuery(
+    {
+      ...queries,
+      items_per_page: 9,
+      departmentId: user?.department_id,
+    },
+    {
+      skip: user?.department_id ? false : true,
+    }
+  );
 
   //pagination
   const onChangePage: PaginationProps["onChange"] = (page) => {

@@ -38,7 +38,7 @@ export const Account = () => {
   const filterDepartment = (): MenuProps["items"] => {
     const result: MenuProps["items"] = [
       {
-        label: "ALL",
+        label: "All departments",
         key: "",
         onClick: () => setQueries({ ...queries, departmentId: "" }),
       },
@@ -57,7 +57,7 @@ export const Account = () => {
 
   const items: MenuProps["items"] = [
     {
-      label: "ALL",
+      label: "All Roles",
       key: OUserRole.All,
       onClick: () => setQueries({ ...queries, role: OUserRole.All }),
     },
@@ -95,7 +95,7 @@ export const Account = () => {
           <section className='first-sec'>
             <div className='title-des'>
               <div className='title-row'>
-                <h2>Account</h2>
+                <h2>Accounts</h2>
               </div>
             </div>
             <Row className='action' gutter={[8, 8]}>
@@ -110,7 +110,9 @@ export const Account = () => {
                         textTransform: "capitalize",
                       }}
                     >
-                      {queries.role === OUserRole.All ? "Role" : queries.role}
+                      {queries.role === OUserRole.All
+                        ? "All Roles"
+                        : queries.role.toLowerCase()}
                       <DownOutlined />
                     </Space>
                   </Button>
@@ -131,7 +133,7 @@ export const Account = () => {
                         ? departments?.departments?.find(
                             (d) => d.department_id === queries.departmentId
                           )?.name
-                        : "Department"}
+                        : "All departments"}
                       <DownOutlined />
                     </Space>
                   </Button>

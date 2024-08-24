@@ -154,7 +154,7 @@ export const ManagerProject = () => {
       <div className='manager-project-page'>
         <header className='header-row'>
           <div className='first-part'>
-            <Typography.Title level={2}>{projectData?.name}</Typography.Title>
+            <h2>{projectData?.name}</h2>
             <Popover
               content={ProjectOptions}
               open={openMenu}
@@ -202,12 +202,13 @@ export const ManagerProject = () => {
             >
               {projectStaffs?.users?.length ? (
                 <Avatar.Group maxCount={3}>
-                  {projectStaffs?.users.map((staff) => (
+                  {projectStaffs?.users.map((staff, index) => (
                     <CustomAvatar
                       size={32}
                       userName={staff.name}
                       avatarSrc={staff.avatar}
                       bgColor={staff.avatar_color}
+                      key={index}
                     />
                   ))}
                 </Avatar.Group>

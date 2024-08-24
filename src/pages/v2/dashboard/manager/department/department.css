@@ -32,6 +32,12 @@
           align-items: center;
           gap: var(--gap-xs);
         }
+        .open-team-member-modal-btn {
+          display: none;
+          @mixin tabletAndMobile {
+            display: inline-block;
+          }
+        }
         svg {
           margin: auto;
           width: 16px;
