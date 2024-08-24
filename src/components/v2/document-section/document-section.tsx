@@ -6,6 +6,7 @@ import {
   useGetDocFileMutation,
   useGetUserDetailQuery,
   useGetProjectTasksQuery,
+  useGetImgFileMutation,
 } from "src/share/services";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "src/libs/redux";
@@ -27,6 +28,7 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
 
   const { data: user } = useGetUserDetailQuery();
   const [getFile] = useGetDocFileMutation();
+  const [getImgFile] = useGetImgFileMutation();
   const [deleteFile] = useDeleteFileMutation();
   const { data: task, refetch: refetchTask } = useGetTaskQuery(
     {
@@ -70,6 +72,10 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
 
   const getLinks = () => {
     return task?.document!.map(async (file) => {
+      const extension = file.slice(file.lastIndexOf("."));
+      if (extension === ".pdf") {
+        return await getImgFile({ file }).unwrap();
+      }
       return await getFile({ file }).unwrap();
     });
   };
@@ -99,32 +105,32 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
                       </a>
                     </Typography.Link>
                   </div>
-                  {!checkRole(OUserRole.Staff) ||
-                    (user?.user_id === project?.project_manager_id && (
-                      <Popconfirm
-                        title='Delete this file ?'
-                        onConfirm={() => {
-                          // fileLinks and filenames index are the same
-                          deleteFile({
-                            filename: task?.document[index],
-                            taskId: task?.task_id,
+                  {(!checkRole(OUserRole.Staff) ||
+                    user?.user_id === project?.project_manager_id) && (
+                    <Popconfirm
+                      title='Delete this file ?'
+                      onConfirm={() => {
+                        // fileLinks and filenames index are the same
+                        deleteFile({
+                          filename: task?.document[index],
+                          taskId: task?.task_id,
+                        })
+                          .unwrap()
+                          .then(() => {
+                            message.success(
+                              `${task?.document[index]} is deleted`
+                            );
                           })
-                            .unwrap()
-                            .then(() => {
-                              message.success(
-                                `${task?.document[index]} is deleted`
-                              );
-                            })
-                            .catch(() => {
-                              message.error("Failed to delete file");
-                            });
-                        }}
-                      >
-                        <Button shape='round' danger size='small'>
-                          Delete
-                        </Button>
-                      </Popconfirm>
-                    ))}
+                          .catch(() => {
+                            message.error("Failed to delete file");
+                          });
+                      }}
+                    >
+                      <Button shape='round' danger size='small'>
+                        Delete
+                      </Button>
+                    </Popconfirm>
+                  )}
                 </div>
               );
             }

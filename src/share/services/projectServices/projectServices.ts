@@ -274,6 +274,19 @@ const projectServices = hrManagementApi.injectEndpoints({
       },
       transformResponse: (response: Response<string>) => response.data,
     }),
+    getImgFile: build.mutation<string, Partial<{ filename: string }>>({
+      query(body) {
+        return {
+          url: "upload/get-file-image",
+          method: "POST",
+          headers: {
+            authorization: accessToken(),
+          },
+          body,
+        };
+      },
+      transformResponse: (response: Response<string>) => response.data,
+    }),
     deleteFile: build.mutation<
       boolean,
       Partial<{ taskId: string; filename: string }>
@@ -672,4 +685,5 @@ export const {
   useGetDeletedProjectsQuery,
   useRestoreProjectMutation,
   useDeleteProjectPermanentlyMutation,
+  useGetImgFileMutation,
 } = projectServices;
