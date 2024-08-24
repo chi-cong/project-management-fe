@@ -195,6 +195,7 @@ export const ModalCreateProject: React.FC<ModalUpdateProjectProp> = ({
         onCancel={() => setOpenSeletePm(false)}
         footer={[]}
         width={"90vw"}
+        style={{ minWidth: "" }}
       >
         <div style={{ marginTop: "30px" }}>
           <SelectPmTable setSelectedPM={setSeletedPm} selectedPm={selectedPm} />
