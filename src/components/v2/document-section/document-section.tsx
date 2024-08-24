@@ -6,7 +6,6 @@ import {
   useGetDocFileMutation,
   useGetUserDetailQuery,
   useGetProjectTasksQuery,
-  useGetImgFileMutation,
 } from "src/share/services";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "src/libs/redux";
@@ -28,7 +27,6 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
 
   const { data: user } = useGetUserDetailQuery();
   const [getFile] = useGetDocFileMutation();
-  const [getImgFile] = useGetImgFileMutation();
   const [deleteFile] = useDeleteFileMutation();
   const { data: task, refetch: refetchTask } = useGetTaskQuery(
     {
@@ -79,10 +77,6 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
 
   const getLinks = () => {
     return task?.document!.map(async (file) => {
-      const extension = file.slice(file.lastIndexOf("."));
-      if (extension === ".pdf") {
-        return await getImgFile({ file }).unwrap();
-      }
       return await getFile({ file }).unwrap();
     });
   };
