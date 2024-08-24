@@ -93,7 +93,7 @@ export const StaffProject = () => {
             }}
           >
             <Folder />
-            <Typography.Text>Documents</Typography.Text>
+            <Typography.Text>Attachments</Typography.Text>
           </Button>
         </div>
       </OutsideClickHandler>

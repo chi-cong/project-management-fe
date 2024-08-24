@@ -114,7 +114,7 @@ export const ManagerProject = () => {
             }}
           >
             <Folder />
-            <Typography.Text>Documents</Typography.Text>
+            <Typography.Text>Attachments</Typography.Text>
           </Button>
           <Button
             type='text'
