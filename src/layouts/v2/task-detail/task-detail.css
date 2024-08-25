@@ -43,6 +43,7 @@
   }
 
   .task-detail-content {
+    border-top: solid 1px var(--gray-color);
     display: flex;
     justify-content: space-between;
     height: 100%;
@@ -53,19 +54,32 @@
       gap: var(--gap-xl);
       width: 100%;
       padding: var(--padding-m);
-      .assigned-user-card {
-        border: transparent;
-        /* override UI lib */
-        .ant-card-body {
-          padding-left: 0;
+      border-right: solid 1px var(--gray-color);
+      .assigned-user-section {
+        display: flex;
+        align-items: center;
+
+        .assigned-user-card {
+          /* override UI lib */
+          border-color: transparent;
+          .ant-card-body {
+            display: flex;
+            align-items: center;
+            padding-left: 0;
+            padding-top: 0;
+          }
         }
       }
       .task-description {
         width: 100%;
       }
     }
+    .document-container {
+      padding: var(--padding-m);
+    }
     .main-task-detail-section-full {
       width: 100%;
+      border-right: 0px;
     }
   }
 }

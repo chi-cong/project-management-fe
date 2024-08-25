@@ -6,6 +6,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: var(--gap-m);
     @mixin tabletAndMobile {
       flex-direction: column;
       justify-content: center;
@@ -16,11 +17,19 @@
       display: flex;
       align-items: center;
       gap: var(--gap-xs);
+      @mixin tabletAndMobile {
+        margin-bottom: var(--gap-s);
+      }
       .title-row-btn {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: var(--gap-xs);
+      }
+      .title-and-menu {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
       }
     }
     .second-part {
