@@ -8,7 +8,6 @@ import {
   MenuProps,
   PaginationProps,
   Row,
-  Space,
 } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { useState } from "react";
@@ -86,17 +85,18 @@ export const AccountTrash = () => {
               <Col xs={12} sm={12} md={6}>
                 <Dropdown menu={menuProps}>
                   <Button style={{ width: "100%" }}>
-                    <Space
+                    <div
                       style={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
                         textTransform: "capitalize",
+                        width: "100%",
                       }}
                     >
                       {queries.role.toLowerCase()}
                       <DownOutlined />
-                    </Space>
+                    </div>
                   </Button>
                 </Dropdown>
               </Col>

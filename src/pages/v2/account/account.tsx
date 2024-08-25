@@ -9,7 +9,6 @@ import {
   MenuProps,
   PaginationProps,
   Row,
-  Space,
 } from "antd";
 import { DownOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
@@ -102,31 +101,33 @@ export const Account = () => {
               <Col xs={24} sm={12} md={12} lg={7}>
                 <Dropdown menu={menuProps}>
                   <Button style={{ width: "100%" }}>
-                    <Space
+                    <div
                       style={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
                         textTransform: "capitalize",
+                        width: "100%",
                       }}
                     >
                       {queries.role === OUserRole.All
                         ? "All Roles"
                         : queries.role.toLowerCase()}
                       <DownOutlined />
-                    </Space>
+                    </div>
                   </Button>
                 </Dropdown>
               </Col>
               <Col xs={24} sm={12} md={12} lg={7}>
                 <Dropdown menu={{ items: filterDepartment() }}>
                   <Button style={{ width: "100%" }}>
-                    <Space
+                    <div
                       style={{
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
                         textTransform: "capitalize",
+                        width: "100%",
                       }}
                     >
                       {queries.departmentId !== ""
@@ -135,7 +136,7 @@ export const Account = () => {
                           )?.name
                         : "All departments"}
                       <DownOutlined />
-                    </Space>
+                    </div>
                   </Button>
                 </Dropdown>
               </Col>
