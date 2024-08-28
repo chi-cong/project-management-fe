@@ -47,9 +47,14 @@ export const StaffDepartment = () => {
     total_task_is_done: string;
     total_task_is_not_done: string;
   }): number => {
+    if (parseInt(information.total_task_is_done) === 0) {
+      return 0;
+    }
+
     return Math.ceil(
-      (parseInt(information.total_task_is_done) /
-        parseInt(information.total_task_is_not_done)) *
+      (parseFloat(information.total_task_is_done) /
+        (parseFloat(information.total_task_is_done) +
+          parseFloat(information.total_task_is_not_done))) *
         100
     );
   };

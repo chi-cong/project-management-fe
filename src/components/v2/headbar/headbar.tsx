@@ -95,7 +95,9 @@ export const Headbar = () => {
           >
             <MenuOutlined />
           </Button>
-          <h5 style={{ fontSize: "18px" }}>Project Management</h5>
+          <h5 className='app-name' style={{ fontSize: "18px" }}>
+            Project Management
+          </h5>
         </div>
         <Popover
           content={<UserHeadbarOption />}

@@ -40,15 +40,13 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
   };
 
   const calculateProgress = (): number => {
-    if (
-      parseFloat(project.total_task!.total_task_is_done) === 0 ||
-      parseFloat(project.total_task!.total_task_is_not_done)! === 0
-    ) {
+    if (parseFloat(project.total_task!.total_task_is_done) === 0) {
       return 0;
     }
     return Math.ceil(
       (parseFloat(project?.total_task!.total_task_is_done) /
-        parseFloat(project?.total_task!.total_task_is_not_done)) *
+        (parseFloat(project?.total_task!.total_task_is_done) +
+          parseFloat(project?.total_task!.total_task_is_not_done))) *
         100
     );
   };

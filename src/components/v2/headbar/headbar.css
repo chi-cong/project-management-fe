@@ -16,6 +16,11 @@
   .headbar-avatar-wraper {
     cursor: pointer;
   }
+  .app-name {
+    @media screen and (max-width: 450px) {
+      display: none;
+    }
+  }
 }
 .show-drawer-button {
   display: none;

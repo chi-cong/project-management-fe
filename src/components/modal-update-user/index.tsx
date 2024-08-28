@@ -84,7 +84,7 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
 
   return (
     <Modal
-      className="wrapper"
+      className='wrapper'
       open={isModalOpen}
       centered
       onCancel={handleCancel}
@@ -100,32 +100,32 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
       >
         Update User
       </h2>
-      <Form name="user-info" onFinish={onFinish} layout="vertical" form={form}>
+      <Form name='user-info' onFinish={onFinish} layout='vertical' form={form}>
         <div>
           <Form.Item<IUpdateUser>
-            name="name"
-            label="Name"
+            name='name'
+            label='Name'
             rules={[{ required: true, message: "Name is required" }]}
           >
-            <Input placeholder="Name..." size="large" />
+            <Input placeholder='Name...' size='large' />
           </Form.Item>
         </div>
         <div>
           <Form.Item<IUpdateUser>
-            name="username"
+            name='username'
             rules={[
               { required: true, message: "Username is required" },
               { pattern: /^\S+$/, message: "No whitespace's allowed" },
             ]}
-            label="Username"
+            label='Username'
           >
-            <Input placeholder="Username..." size="large" />
+            <Input placeholder='Username...' size='large' />
           </Form.Item>
         </div>
         <div>
           <Form.Item<IUpdateUser>
-            name="email"
-            label="Email"
+            name='email'
+            label='Email'
             rules={[
               { required: true, message: "Email is required" },
               { pattern: /^\S+$/, message: "No whitespace's allowed" },
@@ -135,19 +135,30 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
               },
             ]}
           >
-            <Input placeholder="Email..." size="large" />
+            <Input placeholder='Email...' size='large' />
           </Form.Item>
         </div>
         <div>
-          <Form.Item<IUpdateUser> name="phone" label="Phone">
-            <Input placeholder="Phone..." size="large" />
+          <Form.Item<IUpdateUser>
+            name='phone'
+            label='Phone'
+            rules={[
+              { required: true, message: "Phone is required" },
+              {
+                pattern:
+                  /(?:\+84|0084|0)[235789][0-9]{1,2}[0-9]{7}(?:[^\d]+|$)/g,
+                message: "Invalid Vietnam phone number",
+              },
+            ]}
+          >
+            <Input placeholder='Phone...' size='large' />
           </Form.Item>
         </div>
         <div>
-          <Form.Item<IUpdateUser> name="birthday" label="Birthday">
+          <Form.Item<IUpdateUser> name='birthday' label='Birthday'>
             <DatePicker
-              placeholder="Birthday..."
-              size="large"
+              placeholder='Birthday...'
+              size='large'
               style={{ width: "100%" }}
               maxDate={dayjs()}
             />
@@ -155,8 +166,8 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
         </div>
         <div>
           <Form.Item<IUpdateUser>
-            name="role"
-            label="Roles"
+            name='role'
+            label='Roles'
             rules={[{ required: true, message: "Role is required" }]}
           >
             <Select
@@ -166,20 +177,20 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
                   option.value === OUserRole.Admin &&
                   currentRole === OUserRole.Manager,
               }))}
-              size="large"
+              size='large'
               onChange={(value) => setCurrentRole(value as UserRole)}
             />
           </Form.Item>
         </div>
-        <Form.Item className="update-user-form-btn">
+        <Form.Item className='update-user-form-btn'>
           <Space>
-            <Button type="primary" htmlType="submit" size="large">
+            <Button type='primary' htmlType='submit' size='large'>
               Update
             </Button>
             <Button
-              type="primary"
+              type='primary'
               ghost
-              size="large"
+              size='large'
               onClick={() => handleCancel()}
             >
               Cancel

@@ -134,7 +134,14 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
           <Form.Item<UserInfor>
             name='phone'
             label='Phone'
-            rules={[{ required: true, message: "Email is required" }]}
+            rules={[
+              { required: true, message: "Phone is required" },
+              {
+                pattern:
+                  /(?:\+84|0084|0)[235789][0-9]{1,2}[0-9]{7}(?:[^\d]+|$)/g,
+                message: "Invalid Vietnam phone number",
+              },
+            ]}
           >
             <Input
               placeholder='Phone...'
