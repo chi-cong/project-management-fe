@@ -66,9 +66,12 @@ export const AdminDepartment = () => {
     total_task_is_done: string;
     total_task_is_not_done: string;
   }): number => {
+    console.log(information);
+
     return Math.ceil(
-      (parseInt(information.total_task_is_done) /
-        parseInt(information.total_task_is_not_done)) *
+      (parseFloat(information.total_task_is_done) /
+        (parseFloat(information.total_task_is_done) +
+          parseFloat(information.total_task_is_not_done))) *
         100
     );
   };
@@ -99,10 +102,10 @@ export const AdminDepartment = () => {
   const DepartmentOptions = () => {
     return (
       <OutsideClickHandler onClickOutside={() => setDepartmentOpions(false)}>
-        <div className='department-option'>
+        <div className="department-option">
           <Button
-            type='text'
-            className='department-option-btn'
+            type="text"
+            className="department-option-btn"
             onClick={() => {
               setUpdateModal(true);
               setDepartmentOpions(false);
@@ -112,7 +115,7 @@ export const AdminDepartment = () => {
             <Typography.Text>Edit</Typography.Text>
           </Button>
           <Popconfirm
-            title='Delete this department ?'
+            title="Delete this department ?"
             onConfirm={() => {
               deleteDepartment({ departmentId })
                 .unwrap()
@@ -121,7 +124,7 @@ export const AdminDepartment = () => {
               navigate(-1);
             }}
           >
-            <Button className='department-option-btn' type='text'>
+            <Button className="department-option-btn" type="text">
               <Trash />
               <Typography.Text>Delete</Typography.Text>
             </Button>
@@ -137,10 +140,10 @@ export const AdminDepartment = () => {
           setTeamOpions(false);
         }}
       >
-        <div className='department-option'>
+        <div className="department-option">
           <Button
-            type='text'
-            className='department-option-btn'
+            type="text"
+            className="department-option-btn"
             onClick={() => {
               setAddStaffModal(true);
               setTeamOpions(false);
@@ -150,8 +153,8 @@ export const AdminDepartment = () => {
             <Typography.Text>Add Member </Typography.Text>
           </Button>
           <Button
-            className='department-option-btn'
-            type='text'
+            className="department-option-btn"
+            type="text"
             onClick={() => {
               setRmStaffModal(true);
               setTeamOpions(false);
@@ -167,10 +170,10 @@ export const AdminDepartment = () => {
 
   return (
     <>
-      <div className='department-page'>
-        <section className='main'>
-          <header className='main-header'>
-            <div className='title-row'>
+      <div className="department-page">
+        <section className="main">
+          <header className="main-header">
+            <div className="title-row">
               <h2>{data?.name}</h2>
               <div style={{ display: "flex" }}>
                 <Popover
@@ -179,14 +182,14 @@ export const AdminDepartment = () => {
                   trigger={"click"}
                   onOpenChange={() => setDepartmentOpions(true)}
                 >
-                  <Button type='text' className='title-row-btn' size='small'>
+                  <Button type="text" className="title-row-btn" size="small">
                     <MenuDots />
                   </Button>
                 </Popover>
                 <Button
-                  type='default'
-                  className='title-row-btn'
-                  shape='round'
+                  type="default"
+                  className="title-row-btn"
+                  shape="round"
                   onClick={() => setReportModal(true)}
                 >
                   <PieChart />
@@ -194,16 +197,16 @@ export const AdminDepartment = () => {
                 </Button>
               </div>
               <Button
-                shape='round'
+                shape="round"
                 style={{ display: "" }}
                 onClick={() => setIsTeamOpened(true)}
-                className='open-team-member-modal-btn'
+                className="open-team-member-modal-btn"
               >
                 <TeamOutlined />
                 Team members
               </Button>
               <Button
-                shape='round'
+                shape="round"
                 style={{ display: "" }}
                 onClick={() => navigate(-1)}
               >
@@ -211,19 +214,19 @@ export const AdminDepartment = () => {
                 Back to department
               </Button>
             </div>
-            <section className='second-sec'>
-              <div className='des-manager-sec'>
+            <section className="second-sec">
+              <div className="des-manager-sec">
                 <Typography.Text>{data?.description}</Typography.Text>
                 {data?.information?.manager ? (
-                  <Card className='manager-card'>
+                  <Card className="manager-card">
                     <Card.Meta
                       title={data.information.manager?.name}
                       description={
-                        <div className='department-manager-card-des'>
+                        <div className="department-manager-card-des">
                           <Typography.Text>
                             {data.information.manager?.email}
                           </Typography.Text>
-                          <Typography.Text type='secondary'>
+                          <Typography.Text type="secondary">
                             Department Manager
                           </Typography.Text>
                         </div>
@@ -239,11 +242,11 @@ export const AdminDepartment = () => {
                     />
                   </Card>
                 ) : (
-                  <Empty description='No Manager' />
+                  <Empty description="No Manager" />
                 )}
               </div>
 
-              <div className='pie-chart'>
+              <div className="pie-chart">
                 <ResponsivePie
                   data={[
                     {
@@ -305,18 +308,18 @@ export const AdminDepartment = () => {
               </div>
             </section>
           </header>
-          <section className='project-section'>
-            <DepartmentProjects title='Todo' projects={projectFilter.todo} />
+          <section className="project-section">
+            <DepartmentProjects title="Todo" projects={projectFilter.todo} />
             <DepartmentProjects
-              title='On Progress'
+              title="On Progress"
               projects={projectFilter.onProgress}
             />
-            <DepartmentProjects title='Done' projects={projectFilter.done} />
+            <DepartmentProjects title="Done" projects={projectFilter.done} />
           </section>
         </section>
-        <section className='team-member-sec'>
-          <div className='member-list-container'>
-            <div className='title'>
+        <section className="team-member-sec">
+          <div className="member-list-container">
+            <div className="title">
               <Typography.Title level={5}>Team Members</Typography.Title>
               <Popover
                 content={<TeamMemberOptions />}
@@ -324,13 +327,13 @@ export const AdminDepartment = () => {
                 open={teamOptions}
                 onOpenChange={() => setTeamOpions(true)}
               >
-                <Button type='text' size='small'>
+                <Button type="text" size="small">
                   <MenuDots />
                 </Button>
               </Popover>
             </div>
             <List
-              className='memeber-list'
+              className="memeber-list"
               dataSource={departmentStaffs?.users}
               renderItem={(user) => {
                 return (
@@ -358,7 +361,7 @@ export const AdminDepartment = () => {
         open={reportModal}
         onCancel={() => setReportModal(false)}
         footer={[]}
-        title='Department Report'
+        title="Department Report"
         width={"80%"}
         style={{ minWidth: "95vw" }}
       >
@@ -390,7 +393,7 @@ export const AdminDepartment = () => {
       <Modal
         zIndex={100}
         title={
-          <div className='title'>
+          <div className="title">
             <h4>Team Members</h4>
             <Popover
               content={<TeamMemberOptions />}
@@ -398,20 +401,20 @@ export const AdminDepartment = () => {
               trigger={"click"}
               onOpenChange={() => setTeamOpions(true)}
             >
-              <Button type='text' size='small'>
+              <Button type="text" size="small">
                 <MenuDots style={{ width: "16px" }} />
               </Button>
             </Popover>
           </div>
         }
-        className='department-team-member-modal'
+        className="department-team-member-modal"
         open={isTeamOpened}
         onCancel={() => setIsTeamOpened(false)}
         footer={[]}
       >
-        <div className='member-list-container'>
+        <div className="member-list-container">
           <List
-            className='memeber-list'
+            className="memeber-list"
             dataSource={departmentStaffs?.users}
             renderItem={(user) => {
               return (
