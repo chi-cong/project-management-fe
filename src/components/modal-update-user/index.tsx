@@ -164,7 +164,7 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
                 ...option,
                 disabled:
                   option.value === OUserRole.Admin &&
-                  currentRole === OUserRole.ProjectManager,
+                  currentRole === OUserRole.Manager,
               }))}
               size="large"
               onChange={(value) => setCurrentRole(value as UserRole)}
