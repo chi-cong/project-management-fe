@@ -1,13 +1,4 @@
-import {
-  Button,
-  Col,
-  Dropdown,
-  Input,
-  MenuProps,
-  Row,
-  Space,
-  Table,
-} from "antd";
+import { Button, Col, Dropdown, Input, MenuProps, Row, Table } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { useGetUsersQuery } from "src/share/services";
@@ -122,17 +113,18 @@ export const SelectPmTable: React.FC<ModalAddUserToProjectProps> = ({
         <Col xs={8} sm={8} md={6} lg={4}>
           <Dropdown menu={{ items }}>
             <Button style={{ width: "100%" }}>
-              <Space
+              <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
                   textTransform: "capitalize",
+                  width: "100%",
                 }}
               >
                 {queries.role.toLowerCase()}
                 <DownOutlined />
-              </Space>
+              </div>
             </Button>
           </Dropdown>
         </Col>
