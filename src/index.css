@@ -77,3 +77,6 @@
 .ant-avatar-group-popover {
   z-index: 10 !important;
 }
+.ant-drawer {
+  padding: 0;
+}

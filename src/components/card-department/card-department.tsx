@@ -79,9 +79,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
             <Row className="department-header">
               {/* title */}
               <Col sm={12} md={20} className="department-header-info">
-                <h2 className="department-name">
-                  {shortenLongText(30, department.name)}
-                </h2>
+                <h2 className="department-name">{department.name}</h2>
               </Col>
               {/* action (delete, update) */}
               <Col sm={12} md={4} className="department-header-action">
