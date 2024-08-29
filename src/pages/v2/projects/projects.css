@@ -20,6 +20,9 @@
           align-items: flex-start;
           gap: var(--gap-s);
         }
+        .page-filter {
+          @mixin textOverflow;
+        }
         .title-des {
           width: 30%;
           @mixin tabletAndMobile {
