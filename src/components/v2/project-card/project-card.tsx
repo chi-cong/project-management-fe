@@ -115,7 +115,7 @@ export const ProjectCard = ({ project }: ProjectCardProp) => {
     <>
       <div className='project-card-v2' onClick={goToDetail}>
         <div className='project-card-head'>
-          <Typography.Title level={4}>
+          <Typography.Title level={4} className='project-name'>
             {shortenLongText(25, project?.name)}
           </Typography.Title>
           {!checkRole(OUserRole.Staff) && (

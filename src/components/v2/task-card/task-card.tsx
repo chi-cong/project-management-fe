@@ -98,8 +98,8 @@ export const TaskCard = ({
   return (
     <Card className='task-card'>
       <div className='task-card-title'>
-        <Typography.Title level={5}>
-          {shortenLongText(25, task.name)}
+        <Typography.Title level={5} className='task-name'>
+          {task.name}
         </Typography.Title>
         <div className='title-options'>
           {(!checkRole(OUserRole.Staff) ||

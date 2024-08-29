@@ -208,10 +208,10 @@ export const TaskDetail = ({
     >
       <div className='task-detail-content'>
         <div
-          className={`main-task-detail-section ${modalWidth === 750 && "main-task-detail-section-full"}`}
+          className={`main-task-detail-section ${modalWidth === 750 && "main-task-detail-section-full "}`}
         >
           {taskAssignment.assignment?.user && (
-            <>
+            <div className='assigned-user-section'>
               <Card loading={false} className='assigned-user-card'>
                 <Card.Meta
                   {...(taskAssignment && {
@@ -227,23 +227,24 @@ export const TaskDetail = ({
                   title={taskAssignment.assignment.user?.name}
                   description={taskAssignment.assignment.user?.email}
                 />
+                <Button
+                  style={{ width: "fit-content" }}
+                  type='link'
+                  onClick={() => {
+                    updateAssignment({
+                      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+                      assignmentId: assignment?.assignment_id!,
+                      value: { user_id: null },
+                    })
+                      .unwrap()
+                      .then(() => message.success("Unassigned user"))
+                      .catch(() => message.error("Failed to unassign user"));
+                  }}
+                >
+                  Unassign
+                </Button>
               </Card>
-              <Button
-                style={{ width: "fit-content" }}
-                onClick={() => {
-                  updateAssignment({
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-                    assignmentId: assignment?.assignment_id!,
-                    value: { user_id: null },
-                  })
-                    .unwrap()
-                    .then(() => message.success("Unassigned user"))
-                    .catch(() => message.error("Failed to unassign user"));
-                }}
-              >
-                Unassign
-              </Button>
-            </>
+            </div>
           )}
           <div className='task-description'>
             <Typography.Title level={3}>
@@ -255,7 +256,11 @@ export const TaskDetail = ({
           </div>
           <Activities />
         </div>
-        {modalWidth === 1000 && <DocumentSection project={project} />}
+        {modalWidth === 1000 && (
+          <div className='document-container'>
+            <DocumentSection project={project} />
+          </div>
+        )}
       </div>
       <UpdateTaskForm
         isModalOpen={editModal}

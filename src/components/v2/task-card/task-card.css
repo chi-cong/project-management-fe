@@ -1,3 +1,5 @@
+@import "../../../mixin/mixin.css";
+
 .task-card {
   width: 100%;
   height: fit-content !important;
@@ -6,6 +8,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .task-name {
+      @mixin textOverflow;
+    }
   }
   .task-card-footer {
     display: flex;

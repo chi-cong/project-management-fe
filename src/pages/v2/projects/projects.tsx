@@ -1,22 +1,44 @@
 import "./projects.css";
-import { Button, Col, Input, List, PaginationProps, Row } from "antd";
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Col,
+  Dropdown,
+  Input,
+  List,
+  MenuProps,
+  PaginationProps,
+  Row,
+} from "antd";
+import { DeleteOutlined, PlusOutlined, DownOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { ModalCreateProject } from "src/components/";
 import { CardProject } from "src/components/card-project";
 import { useNavigate } from "react-router-dom";
-import { useGetAllProjectQuery } from "src/share/services";
+import {
+  useGetAllProjectQuery,
+  useGetDepartmentsQuery,
+} from "src/share/services";
 import { selectProject } from "src/libs/redux/selectProjectSlice";
 import { useDispatch } from "react-redux";
 import { localStorageUtil } from "src/share/utils";
 
 export const Projects = () => {
   const dispatch = useDispatch();
+  const { data: departments } = useGetDepartmentsQuery({
+    itemsPerPage: "ALL",
+    page: 1,
+  });
+
   //components
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [queries, setQueries] = useState<{ page: number; search: string }>({
+  const [queries, setQueries] = useState<{
+    page: number;
+    search: string;
+    department_id?: string;
+  }>({
     page: 1,
     search: "",
+    department_id: "",
   });
   const navigate = useNavigate();
 
@@ -31,6 +53,26 @@ export const Projects = () => {
     setQueries({ ...queries, page });
   };
 
+  const filterDepartment = (): MenuProps["items"] => {
+    const result: MenuProps["items"] = [
+      {
+        label: "All departments",
+        key: "",
+        onClick: () => setQueries({ ...queries, department_id: "" }),
+      },
+    ];
+    departments?.departments!.forEach((department) => {
+      result.push({
+        label: department.name,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        key: department?.department_id!,
+        onClick: () =>
+          setQueries({ ...queries, department_id: department.department_id }),
+      });
+    });
+    return result;
+  };
+
   return (
     <div className='v2-projects-page'>
       <section className='main'>
@@ -42,7 +84,7 @@ export const Projects = () => {
               </div>
             </div>
             <Row className='action' gutter={[8, 8]}>
-              <Col xs={24} sm={24} md={12}>
+              <Col xs={24} sm={12} md={8}>
                 <Input.Search
                   placeholder='Search...'
                   style={{ width: "100%" }}
@@ -52,7 +94,31 @@ export const Projects = () => {
                   }
                 />
               </Col>
-              <Col xs={12} sm={12} md={6}>
+              <Col xs={24} sm={12} md={8}>
+                <Dropdown menu={{ items: filterDepartment() }}>
+                  <Button style={{ width: "100%" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        textTransform: "capitalize",
+                        width: "100%",
+                      }}
+                    >
+                      <span className='page-filter'>
+                        {queries.department_id !== ""
+                          ? departments?.departments?.find(
+                              (d) => d.department_id === queries.department_id
+                            )?.name
+                          : "All departments"}
+                      </span>
+                      <DownOutlined />
+                    </div>
+                  </Button>
+                </Dropdown>
+              </Col>
+              <Col xs={12} sm={12} md={4}>
                 <Button
                   type='default'
                   className='title-row-btn'
@@ -67,7 +133,7 @@ export const Projects = () => {
                   Trash
                 </Button>
               </Col>
-              <Col xs={12} sm={12} md={6}>
+              <Col xs={12} sm={12} md={4}>
                 <Button
                   type='primary'
                   className='title-row-btn'
