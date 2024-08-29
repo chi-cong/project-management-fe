@@ -1,3 +1,4 @@
+@import "./mixin/mixin.css";
 @font-face {
   font-family: Poppins;
   src: url(assets/fonts/Poppins/Poppins-Regular.ttf);
@@ -79,4 +80,7 @@
 }
 .ant-drawer {
   padding: 0;
+}
+.page-filter {
+  @mixin textOverflow;
 }

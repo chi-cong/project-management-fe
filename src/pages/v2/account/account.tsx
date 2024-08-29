@@ -110,9 +110,11 @@ export const Account = () => {
                         width: "100%",
                       }}
                     >
-                      {queries.role === OUserRole.All
-                        ? "All Roles"
-                        : queries.role.toLowerCase()}
+                      <span className='page-filter'>
+                        {queries.role === OUserRole.All
+                          ? "All Roles"
+                          : queries.role.toLowerCase()}
+                      </span>
                       <DownOutlined />
                     </div>
                   </Button>
@@ -130,11 +132,13 @@ export const Account = () => {
                         width: "100%",
                       }}
                     >
-                      {queries.departmentId !== ""
-                        ? departments?.departments?.find(
-                            (d) => d.department_id === queries.departmentId
-                          )?.name
-                        : "All departments"}
+                      <span className='page-filter'>
+                        {queries.departmentId !== ""
+                          ? departments?.departments?.find(
+                              (d) => d.department_id === queries.departmentId
+                            )?.name
+                          : "All departments"}
+                      </span>
                       <DownOutlined />
                     </div>
                   </Button>
