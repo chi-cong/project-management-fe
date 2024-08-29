@@ -77,8 +77,6 @@
 .ant-avatar-group-popover {
   z-index: 10 !important;
 }
-.ant-card-meta {
-  border: transparent;
-  display: flex;
-  align-items: center;
+.ant-drawer {
+  padding: 0;
 }
