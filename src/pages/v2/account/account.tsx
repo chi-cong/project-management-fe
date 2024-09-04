@@ -91,20 +91,20 @@ export const Account = () => {
   return (
     <Spin
       spinning={isLoading}
-      tip="Loading Accounts"
-      className="account-card-loading"
-      size="large"
+      tip='Loading Accounts'
+      className='account-card-loading'
+      size='large'
     >
-      <div className="v2-account-page">
-        <section className="main">
-          <header className="main-header">
-            <section className="first-sec">
-              <div className="title-des">
-                <div className="title-row">
+      <div className='v2-account-page'>
+        <section className='main'>
+          <header className='main-header'>
+            <section className='first-sec'>
+              <div className='title-des'>
+                <div className='title-row'>
                   <h2>Accounts</h2>
                 </div>
               </div>
-              <Row className="action" gutter={[8, 8]}>
+              <Row className='action' gutter={[8, 8]}>
                 <Col xs={24} sm={12} md={12} lg={7}>
                   <Dropdown menu={menuProps}>
                     <Button style={{ width: "100%" }}>
@@ -117,7 +117,7 @@ export const Account = () => {
                           width: "100%",
                         }}
                       >
-                        <span className="page-filter">
+                        <span className='page-filter'>
                           {queries.role === OUserRole.All
                             ? "All Roles"
                             : queries.role.toLowerCase()}
@@ -139,7 +139,7 @@ export const Account = () => {
                           width: "100%",
                         }}
                       >
-                        <span className="page-filter">
+                        <span className='page-filter'>
                           {queries.departmentId !== ""
                             ? departments?.departments?.find(
                                 (d) => d.department_id === queries.departmentId
@@ -154,7 +154,7 @@ export const Account = () => {
 
                 <Col xs={24} sm={24} md={24} lg={10}>
                   <Input.Search
-                    placeholder="Search..."
+                    placeholder='Search...'
                     style={{ width: "100%" }}
                     allowClear
                     onSearch={(value) =>
@@ -162,11 +162,11 @@ export const Account = () => {
                     }
                   />
                 </Col>
-                <div className="action-row">
+                <div className='action-row'>
                   <Col xs={12} sm={12} md={12} lg={5}>
                     <Button
-                      type="default"
-                      className="title-row-btn"
+                      type='default'
+                      className='title-row-btn'
                       icon={<DeleteOutlined />}
                       style={{ width: "100%" }}
                       onClick={() => {
@@ -180,8 +180,8 @@ export const Account = () => {
                   </Col>
                   <Col xs={12} sm={12} md={12} lg={5}>
                     <Button
-                      type="primary"
-                      className="title-row-btn"
+                      type='primary'
+                      className='title-row-btn'
                       icon={<PlusOutlined />}
                       onClick={() => setIsModalOpen(true)}
                       style={{ width: "100%" }}

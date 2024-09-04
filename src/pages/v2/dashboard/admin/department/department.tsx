@@ -9,7 +9,7 @@ import {
   List,
   message,
   Empty,
-  Badge,
+  Tag,
 } from "antd";
 import { ResponsivePie } from "@nivo/pie";
 import { ArrowLeftOutlined, TeamOutlined } from "@ant-design/icons";
@@ -323,15 +323,10 @@ export const AdminDepartment = () => {
         <section className='team-member-sec'>
           <div className='member-list-container'>
             <div className='title'>
-              <Badge
-                count={departmentStaffs?.total}
-                className='total-staff-count'
-                style={{ backgroundColor: "var(--primary-color)" }}
-                showZero
-                size='small'
-              >
-                <Typography.Title level={5}>Team Members</Typography.Title>
-              </Badge>
+              <Typography.Title level={5}>Team Members</Typography.Title>
+              <Tag style={{ height: "fit-content" }} color='#2db7f5'>
+                {departmentStaffs?.total}
+              </Tag>
               <Popover
                 content={<TeamMemberOptions />}
                 trigger={"click"}
@@ -343,28 +338,46 @@ export const AdminDepartment = () => {
                 </Button>
               </Popover>
             </div>
-            <List
-              className='memeber-list'
-              dataSource={departmentStaffs?.users}
-              renderItem={(user) => {
-                return (
-                  <List.Item>
-                    <List.Item.Meta
-                      title={user?.name || user.username}
-                      description={(user?.role as RoleResponse).name}
-                      avatar={
-                        <CustomAvatar
-                          size={60}
-                          userName={user.username}
-                          avatarSrc={user.avatar}
-                          bgColor={user.avatar_color}
-                        />
-                      }
-                    />
-                  </List.Item>
-                );
-              }}
-            />
+            <List className='memeber-list'>
+              {data?.information?.manager && (
+                <List.Item>
+                  <List.Item.Meta
+                    title={data.information.manager?.name}
+                    description='MANAGER'
+                    avatar={
+                      <CustomAvatar
+                        size={60}
+                        userName={data.information.manager?.name}
+                        avatarSrc={data?.information?.manager.avatar}
+                        bgColor={data?.information?.manager?.avatar_color}
+                      />
+                    }
+                  />
+                </List.Item>
+              )}
+              {departmentStaffs?.users
+                .filter(
+                  (user) => user.user_id !== data?.information?.manager?.user_id
+                )
+                .map((user) => {
+                  return (
+                    <List.Item>
+                      <List.Item.Meta
+                        title={user?.name || user.username}
+                        description={(user?.role as RoleResponse).name}
+                        avatar={
+                          <CustomAvatar
+                            size={60}
+                            userName={user.username}
+                            avatarSrc={user.avatar}
+                            bgColor={user.avatar_color}
+                          />
+                        }
+                      />
+                    </List.Item>
+                  );
+                })}
+            </List>
           </div>
         </section>
       </div>
@@ -407,7 +420,10 @@ export const AdminDepartment = () => {
         zIndex={100}
         title={
           <div className='title'>
-            <h4>Team Members</h4>
+            <h4 style={{ marginRight: "var(--gap-xs)" }}>Team Members</h4>
+            <Tag style={{ height: "fit-content" }} color='#2db7f5'>
+              {departmentStaffs?.total}
+            </Tag>
             <Popover
               content={<TeamMemberOptions />}
               open={teamOptions}
@@ -426,28 +442,46 @@ export const AdminDepartment = () => {
         footer={[]}
       >
         <div className='member-list-container'>
-          <List
-            className='memeber-list'
-            dataSource={departmentStaffs?.users}
-            renderItem={(user) => {
-              return (
-                <List.Item>
-                  <List.Item.Meta
-                    title={user?.name || user.username}
-                    description={(user?.role as RoleResponse).name}
-                    avatar={
-                      <CustomAvatar
-                        size={60}
-                        userName={user.username}
-                        avatarSrc={user.avatar}
-                        bgColor={user.avatar_color}
-                      />
-                    }
-                  />
-                </List.Item>
-              );
-            }}
-          />
+          <List className='memeber-list'>
+            {data?.information?.manager && (
+              <List.Item>
+                <List.Item.Meta
+                  title={data.information.manager?.name}
+                  description='MANAGER'
+                  avatar={
+                    <CustomAvatar
+                      size={60}
+                      userName={data?.information?.manager.name}
+                      avatarSrc={data?.information?.manager.avatar}
+                      bgColor={data?.information?.manager?.avatar_color}
+                    />
+                  }
+                />
+              </List.Item>
+            )}
+            {departmentStaffs?.users
+              .filter(
+                (user) => user.user_id !== data?.information?.manager?.user_id
+              )
+              .map((user) => {
+                return (
+                  <List.Item>
+                    <List.Item.Meta
+                      title={user?.name || user.username}
+                      description={(user?.role as RoleResponse).name}
+                      avatar={
+                        <CustomAvatar
+                          size={60}
+                          userName={user.name}
+                          avatarSrc={user.avatar}
+                          bgColor={user.avatar_color}
+                        />
+                      }
+                    />
+                  </List.Item>
+                );
+              })}
+          </List>
         </div>
       </Modal>
     </>

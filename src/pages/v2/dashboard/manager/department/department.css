@@ -92,19 +92,25 @@
     }
   }
   .team-member-sec {
-    width: 19%;
+    width: 100%;
+    @mixin tabletAndMobile {
+      width: 0;
+    }
     padding-left: var(--padding-xs);
     .member-list-container {
       position: fixed;
       height: 85dvh;
       width: calc((100vw - 250px) * 0.2);
-
+      @mixin tabletAndMobile {
+        display: none;
+      }
       overflow-y: auto;
       border-radius: var(--rounded-border);
       padding: var(--padding-s);
       .title {
         width: 100%;
         display: flex;
+        flex-wrap: wrap;
         margin-top: var(--gap-s);
         justify-content: center;
         gap: var(--gap-xs);

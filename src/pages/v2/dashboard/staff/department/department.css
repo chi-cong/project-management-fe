@@ -56,6 +56,7 @@
         .des-manager-sec {
           display: flex;
           flex-direction: column;
+          flex-wrap: wrap;
           gap: var(--gap-xl);
           width: 70%;
           margin-bottom: 20px;
@@ -93,7 +94,13 @@
   .team-member-sec {
     width: 19%;
     padding-left: var(--padding-xs);
+    @mixin tabletAndMobile {
+      width: 0;
+    }
     .member-list-container {
+      @mixin tabletAndMobile {
+        display: none;
+      }
       position: fixed;
       height: 85dvh;
       width: calc((100vw - 250px) * 0.2);
@@ -107,6 +114,7 @@
         margin-top: var(--gap-s);
         justify-content: center;
         gap: var(--gap-xs);
+        flex-wrap: wrap;
       }
       border: 1px solid var(--gray-color);
     }

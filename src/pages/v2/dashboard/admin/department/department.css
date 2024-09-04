@@ -97,6 +97,9 @@
       display: none;
     }
     .member-list-container {
+      @mixin tabletAndMobile {
+        display: none;
+      }
       position: fixed;
       height: 85dvh;
       width: calc((100vw - 250px) * 0.2);
@@ -110,6 +113,7 @@
         margin-top: var(--gap-s);
         justify-content: center;
         gap: var(--gap-xs);
+        flex-wrap: wrap;
       }
       border: 1px solid var(--gray-color);
     }
