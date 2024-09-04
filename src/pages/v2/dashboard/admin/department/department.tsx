@@ -9,6 +9,7 @@ import {
   List,
   message,
   Empty,
+  Badge,
 } from "antd";
 import { ResponsivePie } from "@nivo/pie";
 import { ArrowLeftOutlined, TeamOutlined } from "@ant-design/icons";
@@ -322,7 +323,15 @@ export const AdminDepartment = () => {
         <section className='team-member-sec'>
           <div className='member-list-container'>
             <div className='title'>
-              <Typography.Title level={5}>Team Members</Typography.Title>
+              <Badge
+                count={departmentStaffs?.total}
+                className='total-staff-count'
+                style={{ backgroundColor: "var(--primary-color)" }}
+                showZero
+                size='small'
+              >
+                <Typography.Title level={5}>Team Members</Typography.Title>
+              </Badge>
               <Popover
                 content={<TeamMemberOptions />}
                 trigger={"click"}
@@ -380,6 +389,7 @@ export const AdminDepartment = () => {
         width={"80vw"}
         style={{ minWidth: "600px" }}
         footer={[]}
+        title='Add Member'
       >
         <AddStaffTabs id={departmentId} />
       </Modal>
@@ -389,6 +399,7 @@ export const AdminDepartment = () => {
         width={"80vw"}
         style={{ minWidth: "500px" }}
         footer={[]}
+        title='Remove Member'
       >
         <RmDepartmentStaff departmentId={departmentId} />
       </Modal>

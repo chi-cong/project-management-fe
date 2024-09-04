@@ -73,29 +73,29 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
 
   return (
     <>
-      <div className="card-department-container" onClick={onClick}>
+      <div className='card-department-container' onClick={onClick}>
         <Card hoverable bordered={false}>
-          <div className="department-wrapper">
-            <Row className="department-header">
+          <div className='department-wrapper'>
+            <Row className='department-header'>
               {/* title */}
-              <Col sm={12} md={20} className="department-header-info">
-                <h2 className="department-name">{department.name}</h2>
+              <Col sm={12} md={20} className='department-header-info'>
+                <h2 className='department-name'>{department.name}</h2>
               </Col>
               {/* action (delete, update) */}
-              <Col sm={12} md={4} className="department-header-action">
+              <Col sm={12} md={4} className='department-header-action'>
                 <Space size={[8, 24]} wrap={true}>
                   <div
                     onClick={showModal}
-                    className="department-header-action-button"
+                    className='department-header-action-button'
                   >
                     <EditOutlined />
                   </div>
                   <div
-                    className="department-header-action-button icon-delete-Project"
+                    className='department-header-action-button icon-delete-Project'
                     onClick={handleDeleteClick}
                   >
                     <Popconfirm
-                      title="Are you sure to delete this department?"
+                      title='Are you sure to delete this department?'
                       icon={<QuestionCircleOutlined style={{ color: "red" }} />}
                       onConfirm={() => {
                         deleteDepartmentHandler();
@@ -107,18 +107,17 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                 </Space>
               </Col>
             </Row>
-            <div className="department-body">
-              <div className="department-manager-info">
-                <span>{shortenLongText(40, department?.description)}</span>
-              </div>
+            <div className='department-body'>
+              <span className='description'>{department?.description}</span>
+
               {/* info */}
-              <Row className="department-body-info">
+              <Row className='department-body-info'>
                 <Col sm={24} xs={24} xxl={18}>
                   <Card
-                    className="department-body-manager-card"
+                    className='department-body-manager-card'
                     style={{ marginBottom: "var(--gap-s)" }}
                   >
-                    <div className="department-body-manager-info-wrapper">
+                    <div className='department-body-manager-info-wrapper'>
                       {department.information?.manager?.user_id ? (
                         <>
                           <div
@@ -135,14 +134,14 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                               }
                             />
                           </div>
-                          <div className="department-manager-main-info">
+                          <div className='department-manager-main-info'>
                             <h3 style={{ textWrap: "nowrap" }}>
                               {shortenLongText(
                                 20,
                                 department.information?.manager?.name
                               )}
                             </h3>
-                            <span className="department-body-manager-role">
+                            <span className='department-body-manager-role'>
                               Manger
                             </span>
                           </div>
@@ -164,31 +163,31 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                 {/* avatar group */}
                 <Col>
                   <Popover
-                    placement="bottom"
-                    trigger="hover"
+                    placement='bottom'
+                    trigger='hover'
                     content={
-                      <Space direction="vertical" style={{ display: "flex" }}>
+                      <Space direction='vertical' style={{ display: "flex" }}>
                         <div>
-                          <Space direction="vertical">
+                          <Space direction='vertical'>
                             <h2>Project Manager</h2>
                             <Avatar
-                              size="large"
+                              size='large'
                               style={{ backgroundColor: "#87d068" }}
                               icon={<UserOutlined />}
                             />
                           </Space>
                         </div>
                         <Divider />
-                        <Space direction="vertical">
+                        <Space direction='vertical'>
                           <h2>Members</h2>
                           <Space>
                             <Avatar
-                              size="large"
+                              size='large'
                               style={{ backgroundColor: "#87d068" }}
                               icon={<UserOutlined />}
                             />
                             <Avatar
-                              size="large"
+                              size='large'
                               style={{ backgroundColor: "#87d068" }}
                               icon={<UserOutlined />}
                             />
@@ -197,7 +196,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                             onClick={() => {
                               showModalAddUser();
                             }}
-                            size="large"
+                            size='large'
                             style={{
                               backgroundColor: "#87d068",
                               cursor: "pointer",
@@ -210,7 +209,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                   >
                     <Avatar.Group
                       maxCount={2}
-                      maxPopoverTrigger="click"
+                      maxPopoverTrigger='click'
                       size={40}
                       style={{ minHeight: "40px", minWidth: "40px" }}
                       maxStyle={{
