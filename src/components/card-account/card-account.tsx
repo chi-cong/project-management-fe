@@ -10,14 +10,13 @@ import { useDeleteUserMutation } from "src/share/services";
 import { CustomAvatar } from "src/components/v2";
 import UpdateUserModal from "src/components/modal-update-user";
 import { OUserRole, RoleResponse, User } from "src/share/models";
+import { useRoleChecker } from "src/share/hooks";
 type CardAccount = {
   account: User;
   manager?: string;
   userId?: string;
   staffCount?: number;
 };
-
-import { useRoleChecker } from "src/share/hooks";
 
 export const CardAccount: React.FC<CardAccount> = ({ account, userId }) => {
   const checkRole = useRoleChecker();
