@@ -125,7 +125,14 @@ const ModalCreateUser: React.FC<ModalCreateUser> = ({
           <Form.Item<ICreateUser>
             name='phone'
             label='Phone'
-            rules={[{ required: true, message: "Phone is required" }]}
+            rules={[
+              { required: true, message: "Phone is required" },
+              {
+                pattern:
+                  /(?:\+84|0084|0)[235789][0-9]{1,2}[0-9]{7}(?:[^\d]+|$)/g,
+                message: "Invalid Vietnam phone number",
+              },
+            ]}
           >
             <Input placeholder='Phone...' size='large' />
           </Form.Item>

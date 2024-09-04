@@ -9,6 +9,7 @@ import {
   MenuProps,
   PaginationProps,
   Row,
+  Spin,
 } from "antd";
 import { DownOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
@@ -27,7 +28,7 @@ export const Account = () => {
     departmentId?: string;
   }>({ role: OUserRole.All, page: 1, search: "", departmentId: "" });
 
-  const { data } = useGetUsersQuery({
+  const { data, isLoading } = useGetUsersQuery({
     ...queries,
     items_per_page: 10,
   });
@@ -88,132 +89,143 @@ export const Account = () => {
   };
 
   return (
-    <div className='v2-account-page'>
-      <section className='main'>
-        <header className='main-header'>
-          <section className='first-sec'>
-            <div className='title-des'>
-              <div className='title-row'>
-                <h2>Accounts</h2>
+    <Spin
+      spinning={isLoading}
+      tip='Loading Accounts'
+      className='account-card-loading'
+      size='large'
+    >
+      <div className='v2-account-page'>
+        <section className='main'>
+          <header className='main-header'>
+            <section className='first-sec'>
+              <div className='title-des'>
+                <div className='title-row'>
+                  <h2>Accounts</h2>
+                </div>
               </div>
-            </div>
-            <Row className='action' gutter={[8, 8]}>
-              <Col xs={24} sm={12} md={12} lg={7}>
-                <Dropdown menu={menuProps}>
-                  <Button style={{ width: "100%" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        textTransform: "capitalize",
-                        width: "100%",
-                      }}
-                    >
-                      {queries.role === OUserRole.All
-                        ? "All Roles"
-                        : queries.role.toLowerCase()}
-                      <DownOutlined />
-                    </div>
-                  </Button>
-                </Dropdown>
-              </Col>
-              <Col xs={24} sm={12} md={12} lg={7}>
-                <Dropdown menu={{ items: filterDepartment() }}>
-                  <Button style={{ width: "100%" }}>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        textTransform: "capitalize",
-                        width: "100%",
-                      }}
-                    >
-                      {queries.departmentId !== ""
-                        ? departments?.departments?.find(
-                            (d) => d.department_id === queries.departmentId
-                          )?.name
-                        : "All departments"}
-                      <DownOutlined />
-                    </div>
-                  </Button>
-                </Dropdown>
-              </Col>
+              <Row className='action' gutter={[8, 8]}>
+                <Col xs={24} sm={12} md={12} lg={7}>
+                  <Dropdown menu={menuProps}>
+                    <Button style={{ width: "100%" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          textTransform: "capitalize",
+                          width: "100%",
+                        }}
+                      >
+                        <span className='page-filter'>
+                          {queries.role === OUserRole.All
+                            ? "All Roles"
+                            : queries.role.toLowerCase()}
+                        </span>
+                        <DownOutlined />
+                      </div>
+                    </Button>
+                  </Dropdown>
+                </Col>
+                <Col xs={24} sm={12} md={12} lg={7}>
+                  <Dropdown menu={{ items: filterDepartment() }}>
+                    <Button style={{ width: "100%" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          textTransform: "capitalize",
+                          width: "100%",
+                        }}
+                      >
+                        <span className='page-filter'>
+                          {queries.departmentId !== ""
+                            ? departments?.departments?.find(
+                                (d) => d.department_id === queries.departmentId
+                              )?.name
+                            : "All departments"}
+                        </span>
+                        <DownOutlined />
+                      </div>
+                    </Button>
+                  </Dropdown>
+                </Col>
 
-              <Col xs={24} sm={24} md={24} lg={10}>
-                <Input.Search
-                  placeholder='Search...'
-                  style={{ width: "100%" }}
-                  allowClear
-                  onSearch={(value) =>
-                    setQueries({ ...queries, search: value })
-                  }
-                />
-              </Col>
-              <div className='action-row'>
-                <Col xs={12} sm={12} md={12} lg={5}>
-                  <Button
-                    type='default'
-                    className='title-row-btn'
-                    icon={<DeleteOutlined />}
+                <Col xs={24} sm={24} md={24} lg={10}>
+                  <Input.Search
+                    placeholder='Search...'
                     style={{ width: "100%" }}
-                    onClick={() => {
-                      navigate(
-                        `/v2/dashboard/${localStorageUtil.get("role")?.toLocaleLowerCase()}/account-trash/`
-                      );
-                    }}
-                  >
-                    Trash
-                  </Button>
+                    allowClear
+                    onSearch={(value) =>
+                      setQueries({ ...queries, search: value })
+                    }
+                  />
                 </Col>
-                <Col xs={12} sm={12} md={12} lg={5}>
-                  <Button
-                    type='primary'
-                    className='title-row-btn'
-                    icon={<PlusOutlined />}
-                    onClick={() => setIsModalOpen(true)}
-                    style={{ width: "100%" }}
-                  >
-                    Create
-                  </Button>
-                </Col>
-              </div>
-            </Row>
-          </section>
-        </header>
-        <main>
-          <List
-            grid={{
-              gutter: 12,
-              xs: 1,
-              sm: 1,
-              md: 1,
-              lg: 2,
-              xl: 2,
-              xxl: 2,
-            }}
-            pagination={{
-              position: "bottom",
-              align: "center",
-              pageSize: 10,
-              total: data?.total,
-              onChange: onChangePage,
-              showSizeChanger: false,
-            }}
-            dataSource={data?.users}
-            renderItem={(user) => (
-              <List.Item>
-                <CardAccount userId={user.user_id} account={user} />
-              </List.Item>
-            )}
-          />
-        </main>
-      </section>
-      <ModalCreateUser
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      />
-    </div>
+                <div className='action-row'>
+                  <Col xs={12} sm={12} md={12} lg={5}>
+                    <Button
+                      type='default'
+                      className='title-row-btn'
+                      icon={<DeleteOutlined />}
+                      style={{ width: "100%" }}
+                      onClick={() => {
+                        navigate(
+                          `/v2/dashboard/${localStorageUtil.get("role")?.toLocaleLowerCase()}/account-trash/`
+                        );
+                      }}
+                    >
+                      Trash
+                    </Button>
+                  </Col>
+                  <Col xs={12} sm={12} md={12} lg={5}>
+                    <Button
+                      type='primary'
+                      className='title-row-btn'
+                      icon={<PlusOutlined />}
+                      onClick={() => setIsModalOpen(true)}
+                      style={{ width: "100%" }}
+                    >
+                      Create
+                    </Button>
+                  </Col>
+                </div>
+              </Row>
+            </section>
+          </header>
+          <main>
+            <List
+              grid={{
+                gutter: 12,
+                xs: 1,
+                sm: 1,
+                md: 1,
+                lg: 2,
+                xl: 2,
+                xxl: 2,
+              }}
+              pagination={{
+                position: "bottom",
+                align: "center",
+                pageSize: 10,
+                total: data?.total,
+                onChange: onChangePage,
+                showSizeChanger: false,
+              }}
+              dataSource={data?.users}
+              renderItem={(user) => (
+                <List.Item>
+                  <CardAccount userId={user.user_id} account={user} />
+                </List.Item>
+              )}
+            />
+          </main>
+        </section>
+        <ModalCreateUser
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      </div>
+    </Spin>
   );
 };

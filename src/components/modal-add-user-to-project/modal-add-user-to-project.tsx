@@ -1,4 +1,14 @@
-import { Button, Col, Input, message, Modal, Row, Table, Tabs } from "antd";
+import {
+  Button,
+  Col,
+  Dropdown,
+  Input,
+  message,
+  Modal,
+  Row,
+  Table,
+  Tabs,
+} from "antd";
 import React, { useState } from "react";
 import "./modal-add-user-to-project.css";
 import {
@@ -6,7 +16,8 @@ import {
   useGetUsersQuery,
 } from "src/share/services";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
-import { OUserRole, Project, RoleResponse } from "src/share/models";
+import { DownOutlined } from "@ant-design/icons";
+import { OUserRole, Project, RoleResponse, UserRole } from "src/share/models";
 interface ModalAddUserToProjectProps {
   isModalOpen: boolean;
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,7 +26,7 @@ interface ModalAddUserToProjectProps {
 import { ProjectTeam } from "./project-team";
 import { useRoleChecker } from "src/share/hooks";
 
-import type { TabsProps } from "antd";
+import type { MenuProps, TabsProps } from "antd";
 
 interface DataType {
   avatar: {
@@ -36,9 +47,10 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
   const checkRole = useRoleChecker();
   const [staffPage, setStaffPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
+  const [role, setRole] = useState<UserRole>(OUserRole.All);
 
   const { data: allUsers } = useGetUsersQuery(
-    { role: "ALL", page: staffPage, search, items_per_page: 5 },
+    { role, page: staffPage, search, items_per_page: 5 },
     { skip: !checkRole(OUserRole.Admin) }
   );
 
@@ -118,6 +130,19 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
       });
   };
 
+  const roleFilter: MenuProps["items"] = [
+    {
+      label: "Manager",
+      key: OUserRole.Manager,
+      onClick: () => setRole(OUserRole.Manager),
+    },
+    {
+      label: "Staff",
+      key: OUserRole.Staff,
+      onClick: () => setRole(OUserRole.Staff),
+    },
+  ];
+
   const projectStaffTabs: TabsProps["items"] = [
     {
       key: "1",
@@ -129,12 +154,28 @@ export const ModalAddUserToProject: React.FC<ModalAddUserToProjectProps> = ({
       label: "Add User To Project",
       children: (
         <>
-          {/* search */}
           <Row className='modal-add-user-search-input'>
-            <Col span={8}>
+            <Col span={6}>
+              <Dropdown menu={{ items: roleFilter }}>
+                <Button style={{ width: "100%" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      textTransform: "capitalize",
+                      width: "100%",
+                    }}
+                  >
+                    {role === OUserRole.All ? "All Roles" : role.toLowerCase()}
+                    <DownOutlined />
+                  </div>
+                </Button>
+              </Dropdown>
+            </Col>
+            <Col offset={1} span={8}>
               <Input.Search
                 placeholder='Search...'
-                size='large'
                 onSearch={(value) => setSearch(value)}
                 allowClear
               />

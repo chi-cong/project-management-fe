@@ -15,6 +15,7 @@ import { userRoleOptions, utcToLocal } from "src/share/utils";
 import dayjs, { Dayjs } from "dayjs";
 import { OUserRole, RoleResponse, User, UserRole } from "src/share/models";
 import { useUpdateUserMutation } from "src/share/services";
+
 interface IUpdateUser {
   user_id?: string;
   username?: string;
@@ -39,6 +40,10 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
   const [updateUser] = useUpdateUserMutation();
   const [form] = Form.useForm();
   const [currentRole, setCurrentRole] = useState<string | undefined>();
+  const isAdmin =
+    (user.role as RoleResponse)?.name === OUserRole.Admin ||
+    (user.role as RoleResponse)?.name === OUserRole.SuperAdmin;
+
   const onFinish: FormProps<IUpdateUser>["onFinish"] = async (values) => {
     const sentValues = {
       username: values.username!,
@@ -107,7 +112,7 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
             label="Name"
             rules={[{ required: true, message: "Name is required" }]}
           >
-            <Input placeholder="Name..." size="large" />
+            <Input placeholder="Name..." size="large" disabled={isAdmin} />
           </Form.Item>
         </div>
         <div>
@@ -119,7 +124,7 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
             ]}
             label="Username"
           >
-            <Input placeholder="Username..." size="large" />
+            <Input placeholder="Username..." size="large" disabled={isAdmin} />
           </Form.Item>
         </div>
         <div>
@@ -135,12 +140,23 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
               },
             ]}
           >
-            <Input placeholder="Email..." size="large" />
+            <Input placeholder="Email..." size="large" disabled={isAdmin} />
           </Form.Item>
         </div>
         <div>
-          <Form.Item<IUpdateUser> name="phone" label="Phone">
-            <Input placeholder="Phone..." size="large" />
+          <Form.Item<IUpdateUser>
+            name="phone"
+            label="Phone"
+            rules={[
+              { required: true, message: "Phone is required" },
+              {
+                pattern:
+                  /(?:\+84|0084|0)[235789][0-9]{1,2}[0-9]{7}(?:[^\d]+|$)/g,
+                message: "Invalid Vietnam phone number",
+              },
+            ]}
+          >
+            <Input placeholder="Phone..." size="large" disabled={isAdmin} />
           </Form.Item>
         </div>
         <div>
@@ -150,6 +166,7 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
               size="large"
               style={{ width: "100%" }}
               maxDate={dayjs()}
+              disabled={isAdmin}
             />
           </Form.Item>
         </div>
@@ -163,17 +180,23 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
               options={userRoleOptions.map((option) => ({
                 ...option,
                 disabled:
-                  option.value === OUserRole.Admin &&
-                  currentRole === OUserRole.ProjectManager,
+                  (option.value === OUserRole.Admin && isAdmin) ||
+                  option.value === currentRole,
               }))}
               size="large"
               onChange={(value) => setCurrentRole(value as UserRole)}
+              disabled={isAdmin}
             />
           </Form.Item>
         </div>
         <Form.Item className="update-user-form-btn">
           <Space>
-            <Button type="primary" htmlType="submit" size="large">
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+              disabled={isAdmin}
+            >
               Update
             </Button>
             <Button

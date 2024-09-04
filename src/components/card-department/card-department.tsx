@@ -79,9 +79,7 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
             <Row className='department-header'>
               {/* title */}
               <Col sm={12} md={20} className='department-header-info'>
-                <h2 className='department-name'>
-                  {shortenLongText(30, department.name)}
-                </h2>
+                <h2 className='department-name'>{department.name}</h2>
               </Col>
               {/* action (delete, update) */}
               <Col sm={12} md={4} className='department-header-action'>
@@ -110,9 +108,8 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
               </Col>
             </Row>
             <div className='department-body'>
-              <div className='department-manager-info'>
-                <span>{shortenLongText(40, department?.description)}</span>
-              </div>
+              <span className='description'>{department?.description}</span>
+
               {/* info */}
               <Row className='department-body-info'>
                 <Col sm={24} xs={24} xxl={18}>
@@ -139,7 +136,10 @@ export const CardDepartment: React.FC<CardDepartmentProps> = ({
                           </div>
                           <div className='department-manager-main-info'>
                             <h3 style={{ textWrap: "nowrap" }}>
-                              {department.information?.manager?.name}
+                              {shortenLongText(
+                                20,
+                                department.information?.manager?.name
+                              )}
                             </h3>
                             <span className='department-body-manager-role'>
                               Manger

@@ -7,11 +7,8 @@ interface ProjectCardProp {
   projectName?: string;
   description?: string;
   information?: {
-    total_user: number;
-    total_task: {
-      total_task_is_done: number;
-      total_task_is_not_done: number;
-    };
+    total_task_is_done: string;
+    total_task_is_not_done: string;
   };
 }
 
@@ -23,8 +20,9 @@ export const ProjectCard = ({
 }: ProjectCardProp) => {
   const calculateProgress = (): number => {
     return Math.ceil(
-      (information!.total_task.total_task_is_done /
-        information!.total_task.total_task_is_not_done) *
+      (parseFloat(information?.total_task_is_done!) /
+        (parseFloat(information?.total_task_is_done!) +
+          parseFloat(information?.total_task_is_not_done!))) *
         100
     );
   };
@@ -34,29 +32,29 @@ export const ProjectCard = ({
       hoverable
       title={projectName}
       onClick={onClick}
-      className='project-card'
+      className="project-card"
     >
-      <div className='project-card-content'>
-        <div className='text-info'>
-          <span className='project-card-line'>
-            <TeamOutlined className='team-icon' />
+      <div className="project-card-content">
+        <div className="text-info">
+          <span className="project-card-line">
+            <TeamOutlined className="team-icon" />
             {information?.total_user}
           </span>
-          <span className='project-card-line'>
-            <InfoCircleOutlined className='info-icon' />
+          <span className="project-card-line">
+            <InfoCircleOutlined className="info-icon" />
             {description}
           </span>
         </div>
-        <div className='project-progress'>
+        <div className="project-progress">
           <Progress
-            type='dashboard'
+            type="dashboard"
             steps={6}
             percent={
               information?.total_task?.total_task_is_not_done
                 ? calculateProgress()
                 : 0
             }
-            trailColor='rgba(0, 0, 0, 0.06)'
+            trailColor="rgba(0, 0, 0, 0.06)"
             size={"small"}
           />
         </div>

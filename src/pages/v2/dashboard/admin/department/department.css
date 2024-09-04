@@ -97,6 +97,9 @@
       display: none;
     }
     .member-list-container {
+      @mixin tabletAndMobile {
+        display: none;
+      }
       position: fixed;
       height: 85dvh;
       width: calc((100vw - 250px) * 0.2);
@@ -105,10 +108,12 @@
       border-radius: var(--rounded-border);
       padding: var(--padding-s);
       .title {
+        width: 100%;
         display: flex;
-        width: 9.85rem;
-        margin-left: auto;
-        margin-right: auto;
+        margin-top: var(--gap-s);
+        justify-content: center;
+        gap: var(--gap-xs);
+        flex-wrap: wrap;
       }
       border: 1px solid var(--gray-color);
     }

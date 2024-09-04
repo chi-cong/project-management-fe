@@ -1,4 +1,4 @@
-@import url(src/index.css);
+@import "../../../mixin/mixin.css";
 
 .project-card-v2 {
   display: flex;
@@ -11,6 +11,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @mixin textOverflow {
+    }
   }
   .project-card-body {
     width: 100%;

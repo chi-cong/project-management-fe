@@ -11,7 +11,9 @@
       justify-content: space-between;
 
       .department-name {
-        word-wrap: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
       }
       .department-header-info {
         display: flex;
@@ -33,6 +35,9 @@
       display: flex;
       flex-direction: column;
       width: 100%;
+      .description {
+        @mixin textOverflow;
+      }
       .department-body-info {
         margin-top: 10px;
         display: flex;

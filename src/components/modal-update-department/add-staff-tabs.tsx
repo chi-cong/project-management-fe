@@ -2,6 +2,7 @@ import { Button, Table, message } from "antd";
 import React, { useState } from "react";
 import { CustomAvatar } from "../v2";
 import { ColumnsType } from "antd/es/table";
+import { PlusOutlined } from "@ant-design/icons";
 import {
   useManagerGetStaffNoDepartmentQuery,
   useAddStaffDepartmentMutation,
@@ -51,6 +52,7 @@ const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
       render: (_: string, record: DataType) => (
         <Button
           type='primary'
+          ghost
           onClick={() => [
             addDepartmentStaff({
               departmentId: id,
@@ -61,7 +63,7 @@ const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
               .catch(() => message.error("Failed to add user")),
           ]}
         >
-          Add
+          <PlusOutlined />
         </Button>
       ),
     },
@@ -108,6 +110,7 @@ const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
         >
           <Button
             type='primary'
+            ghost
             onClick={async () => {
               addDepartmentStaff({
                 departmentId: id,
@@ -118,7 +121,7 @@ const AddStaffTabs: React.FC<{ id?: string }> = ({ id }) => {
                 .catch(() => message.error("Failed to add user"));
             }}
           >
-            Assign
+            <PlusOutlined />
           </Button>
         </div>
       )}

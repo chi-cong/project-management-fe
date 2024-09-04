@@ -26,9 +26,10 @@ const projectServices = hrManagementApi.injectEndpoints({
         page: number;
         items_per_page: number | undefined;
         search?: string;
+        department_id?: string;
       }
     >({
-      query: ({ page, items_per_page, search }) => {
+      query: ({ page, items_per_page, search, department_id }) => {
         return {
           url: `projects/admin/get-all`,
           method: "GET",
@@ -39,6 +40,7 @@ const projectServices = hrManagementApi.injectEndpoints({
             page,
             items_per_page,
             search: search || "",
+            department_id,
           },
         };
       },
