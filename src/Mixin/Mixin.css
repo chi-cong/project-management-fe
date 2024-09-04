@@ -21,3 +21,10 @@
     @mixin-content;
   }
 }
+
+@define-mixin textOverflow {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  @mixin-content;
+}

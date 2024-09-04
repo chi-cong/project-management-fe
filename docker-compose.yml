@@ -7,4 +7,4 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - VITE_REQUEST_API_URL=http://10.100.1.159:3050/
+      - VITE_REQUEST_API_URL=http://18.70.171.240:23030/
