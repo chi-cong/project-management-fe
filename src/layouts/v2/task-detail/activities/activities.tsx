@@ -87,19 +87,28 @@ export const Activities = () => {
                     bgColor={activity.user?.avatar_color}
                   />
                 }
-                title={activity.user?.name}
+                title={
+                  <div className="activity-title">
+                    <Typography.Text>{activity.user?.name}</Typography.Text>
+                    <Typography.Text
+                      className="activity-item-time"
+                      style={{
+                        marginLeft: 16,
+                        fontStyle: "italic",
+                        color: "var(--primary-color)",
+                        fontWeight: "lighter",
+                      }}
+                    >
+                      {(utcToLocal(activity.createdAt) as Dayjs).fromNow()}
+                    </Typography.Text>
+                  </div>
+                }
                 description={
                   <Typography.Paragraph style={{ opacity: "0.67" }}>
                     {activity.description}
                   </Typography.Paragraph>
                 }
               />
-              <Typography.Text
-                className="activity-item-time"
-                style={{ fontStyle: "italic", color: "var(--primary-color)" }}
-              >
-                {(utcToLocal(activity.createdAt) as Dayjs).fromNow()}
-              </Typography.Text>
             </List.Item>
           )}
         />
