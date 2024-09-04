@@ -40,7 +40,9 @@ const ModalUpdateUser: React.FC<ModalUpdateUser> = ({
   const [updateUser] = useUpdateUserMutation();
   const [form] = Form.useForm();
   const [currentRole, setCurrentRole] = useState<string | undefined>();
-  const isAdmin = (user.role as RoleResponse)?.name === OUserRole.Admin;
+  const isAdmin =
+    (user.role as RoleResponse)?.name === OUserRole.Admin ||
+    (user.role as RoleResponse)?.name === OUserRole.SuperAdmin;
 
   const onFinish: FormProps<IUpdateUser>["onFinish"] = async (values) => {
     const sentValues = {
