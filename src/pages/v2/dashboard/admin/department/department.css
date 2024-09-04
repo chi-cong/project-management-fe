@@ -105,10 +105,11 @@
       border-radius: var(--rounded-border);
       padding: var(--padding-s);
       .title {
+        width: 100%;
         display: flex;
-        width: 9.85rem;
-        margin-left: auto;
-        margin-right: auto;
+        margin-top: var(--gap-s);
+        justify-content: center;
+        gap: var(--gap-xs);
       }
       border: 1px solid var(--gray-color);
     }

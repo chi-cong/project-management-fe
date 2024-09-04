@@ -1,5 +1,5 @@
 import "./department.css";
-import { Typography, Card, Modal, Button, List, Empty } from "antd";
+import { Typography, Card, Modal, Button, List, Empty, Badge } from "antd";
 import { ResponsivePie } from "@nivo/pie";
 import { CustomAvatar } from "src/components/v2";
 import { DepartmentProjects } from "src/layouts/v2";
@@ -84,7 +84,7 @@ export const StaffDepartment = () => {
 
   return departmentId !== "null" ? (
     <>
-      <div className='department-page'>
+      <div className='staff-department-page'>
         <section className='main'>
           <header className='main-header'>
             <div className='title-row'>
@@ -216,7 +216,15 @@ export const StaffDepartment = () => {
         <section className='team-member-sec'>
           <div className='member-list-container'>
             <div className='title'>
-              <Typography.Title level={5}>Team Members</Typography.Title>
+              <Badge
+                count={departmentStaffs?.total}
+                className='total-staff-count'
+                style={{ backgroundColor: "var(--primary-color)" }}
+                showZero
+                size='small'
+              >
+                <Typography.Title level={5}>Team Members</Typography.Title>
+              </Badge>
             </div>
             <List
               className='memeber-list'

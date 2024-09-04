@@ -1,5 +1,14 @@
 import "./department.css";
-import { Typography, Card, Modal, Button, Popover, List, Empty } from "antd";
+import {
+  Typography,
+  Card,
+  Modal,
+  Button,
+  Popover,
+  List,
+  Empty,
+  Badge,
+} from "antd";
 import { ResponsivePie } from "@nivo/pie";
 import { CustomAvatar, MngRmDepartStaff } from "src/components/v2";
 import { DepartmentProjects } from "src/layouts/v2";
@@ -12,7 +21,7 @@ import {
   useManagerGetAllStaffDepartmentQuery,
 } from "src/share/services";
 import { Project, RoleResponse } from "src/share/models";
-import { MngUpdateDepart } from "src/components";
+import { MngUpdateDepart, OutsideClickHandler } from "src/components";
 import AddStaffTabs from "src/components/modal-update-department/add-staff-tabs";
 import { TeamOutlined } from "@ant-design/icons";
 
@@ -90,36 +99,38 @@ export const ManagerDepartment = () => {
 
   const TeamMemberOptions = () => {
     return (
-      <div className='department-option'>
-        <Button
-          type='text'
-          className='department-option-btn'
-          onClick={() => {
-            setAddStaffModal(true);
-            setTeamOpions(false);
-          }}
-        >
-          <UserPlus />
-          <Typography.Text>Add Member </Typography.Text>
-        </Button>
-        <Button
-          className='department-option-btn'
-          type='text'
-          onClick={() => {
-            setRmStaffModal(true);
-            setTeamOpions(false);
-          }}
-        >
-          <Trash />
-          <Typography.Text>Remove Member</Typography.Text>
-        </Button>
-      </div>
+      <OutsideClickHandler onClickOutside={() => setTeamOpions(false)}>
+        <div className='department-option'>
+          <Button
+            type='text'
+            className='department-option-btn'
+            onClick={() => {
+              setAddStaffModal(true);
+              setTeamOpions(false);
+            }}
+          >
+            <UserPlus />
+            <Typography.Text>Add Member </Typography.Text>
+          </Button>
+          <Button
+            className='department-option-btn'
+            type='text'
+            onClick={() => {
+              setRmStaffModal(true);
+              setTeamOpions(false);
+            }}
+          >
+            <Trash />
+            <Typography.Text>Remove Member</Typography.Text>
+          </Button>
+        </div>
+      </OutsideClickHandler>
     );
   };
 
   return departmentId !== "null" ? (
     <>
-      <div className='department-page'>
+      <div className='mng-department-page'>
         <section className='main'>
           <header className='main-header'>
             <div className='title-row'>
@@ -257,7 +268,15 @@ export const ManagerDepartment = () => {
         <section className='team-member-sec'>
           <div className='member-list-container'>
             <div className='title'>
-              <Typography.Title level={5}>Team Members</Typography.Title>
+              <Badge
+                count={departmentStaffs?.total}
+                className='total-staff-count'
+                style={{ backgroundColor: "var(--primary-color)" }}
+                showZero
+                size='small'
+              >
+                <Typography.Title level={5}>Team Members</Typography.Title>
+              </Badge>
               <Popover
                 content={<TeamMemberOptions />}
                 open={teamOptions}
@@ -314,6 +333,7 @@ export const ManagerDepartment = () => {
         onCancel={() => setAddStaffModal(false)}
         width={"80vw"}
         footer={[]}
+        title='Add Member'
         style={{ minWidth: "800px" }}
       >
         <AddStaffTabs id={departmentId} />
@@ -324,6 +344,7 @@ export const ManagerDepartment = () => {
         width={"80vw"}
         style={{ minWidth: "800px" }}
         footer={[]}
+        title='Remove member'
       >
         <MngRmDepartStaff departmentId={departmentId} />
       </Modal>
