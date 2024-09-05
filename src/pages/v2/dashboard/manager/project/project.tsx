@@ -92,10 +92,10 @@ export const ManagerProject = () => {
   const ProjectOptions = () => {
     return (
       <OutsideClickHandler onClickOutside={() => setOpenMenu(false)}>
-        <div className='project-option'>
+        <div className="project-option">
           <Button
-            type='text'
-            className='project-option-btn'
+            type="text"
+            className="project-option-btn"
             onClick={() => {
               setIsUpdateProject(false);
               setProjectUpdateModal(true);
@@ -106,8 +106,8 @@ export const ManagerProject = () => {
             <Typography.Text>Detail</Typography.Text>
           </Button>
           <Button
-            type='text'
-            className='project-option-btn'
+            type="text"
+            className="project-option-btn"
             onClick={() => {
               setDocSec(true);
               setOpenMenu(false);
@@ -117,8 +117,8 @@ export const ManagerProject = () => {
             <Typography.Text>Attachments</Typography.Text>
           </Button>
           <Button
-            type='text'
-            className='project-option-btn'
+            type="text"
+            className="project-option-btn"
             onClick={() => {
               setIsUpdateProject(true);
               setProjectUpdateModal(true);
@@ -129,7 +129,7 @@ export const ManagerProject = () => {
             <Typography.Text>Edit</Typography.Text>
           </Button>
           <Popconfirm
-            title='Delete this project ?'
+            title="Delete this project ?"
             onConfirm={() => {
               deleteProject({ projectId: projectData?.project_id })
                 .unwrap()
@@ -139,7 +139,7 @@ export const ManagerProject = () => {
                 .catch(() => message.error("failed to delete this project"));
             }}
           >
-            <Button className='project-option-btn' type='text'>
+            <Button className="project-option-btn" type="text">
               <Trash />
               <Typography.Text>Delete</Typography.Text>
             </Button>
@@ -151,9 +151,9 @@ export const ManagerProject = () => {
 
   return (
     <>
-      <div className='manager-project-page'>
-        <header className='header-row'>
-          <div className='first-part'>
+      <div className="manager-project-page">
+        <header className="header-row">
+          <div className="first-part">
             <h2>{projectData?.name}</h2>
             <Popover
               content={ProjectOptions}
@@ -161,21 +161,21 @@ export const ManagerProject = () => {
               trigger={"click"}
               onOpenChange={() => setOpenMenu(true)}
             >
-              <Button type='text' size='small'>
+              <Button type="text" size="small">
                 <MenuDots />
               </Button>
             </Popover>
             <Button
-              type='default'
-              className='title-row-btn'
-              shape='round'
+              type="default"
+              className="title-row-btn"
+              shape="round"
               onClick={() => setReportModal(true)}
             >
               <PieChart />
               Reports
             </Button>
             <Button
-              shape='round'
+              shape="round"
               style={{ display: "" }}
               onClick={() => navigate(-1)}
             >
@@ -183,10 +183,10 @@ export const ManagerProject = () => {
               Back to Projects
             </Button>
           </div>
-          <div className='second-part'>
+          <div className="second-part">
             <Button
-              type='primary'
-              className='create-task-btn'
+              type="primary"
+              className="create-task-btn"
               onClick={() => {
                 setCreateTaskModal(true);
               }}
@@ -197,7 +197,7 @@ export const ManagerProject = () => {
               </Typography.Text>
             </Button>
             <div
-              className='avatar-group-wrapper'
+              className="avatar-group-wrapper"
               onClick={() => setAddUserModal(true)}
             >
               {projectStaffs?.users?.length ? (
@@ -213,7 +213,7 @@ export const ManagerProject = () => {
                   ))}
                 </Avatar.Group>
               ) : (
-                <CustomAvatar size={32} userName='+' />
+                <CustomAvatar size={32} userName="+" />
               )}
             </div>
           </div>
@@ -228,7 +228,7 @@ export const ManagerProject = () => {
             xl: 3,
             xxl: 3,
           }}
-          className='task-sec'
+          className="task-sec"
           dataSource={taskListSrc}
           renderItem={(taskList) => {
             return (
@@ -287,7 +287,7 @@ export const ManagerProject = () => {
         open={reportModal}
         onCancel={() => setReportModal(false)}
         footer={[]}
-        title='Department Report'
+        title="Department Report"
         width={"90vw"}
       >
         <ProjectReport projectId={projectId} />

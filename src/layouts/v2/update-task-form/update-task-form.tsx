@@ -113,7 +113,7 @@ export const UpdateTaskForm: React.FC<TaskForm> = ({
 
   return (
     <Modal
-      className='wrapper'
+      className="wrapper"
       open={isModalOpen}
       centered
       onCancel={handleCancel}
@@ -130,34 +130,34 @@ export const UpdateTaskForm: React.FC<TaskForm> = ({
       >
         Update Task
       </h2>
-      <Form form={form} name='user-info' onFinish={onFinish} layout='vertical'>
+      <Form form={form} name="user-info" onFinish={onFinish} layout="vertical">
         <div>
           <Form.Item<TaskFormFields>
-            name='name'
-            label='Name'
+            name="name"
+            label="Name"
             rules={[{ required: true, message: "Username is required" }]}
           >
-            <Input placeholder='Name...' size='large' />
+            <Input placeholder="Name..." size="large" />
           </Form.Item>
         </div>
         <div>
           <Form.Item<TaskFormFields>
-            name='description'
+            name="description"
             rules={[{ required: true, message: "Username is required" }]}
-            label='Description'
+            label="Description"
           >
             <Input.TextArea
               style={{ resize: "none", height: "100px" }}
-              placeholder='Description...'
-              size='large'
+              placeholder="Description..."
+              size="large"
             />
           </Form.Item>
         </div>
         <div>
-          <Form.Item<TaskFormFields> name='deadline' label='Deadline'>
+          <Form.Item<TaskFormFields> name="deadline" label="Deadline">
             <DatePicker
-              placeholder='Deadline...'
-              size='large'
+              placeholder="Deadline..."
+              size="large"
               style={{ width: "100%" }}
               minDate={
                 project?.startAt
@@ -173,27 +173,27 @@ export const UpdateTaskForm: React.FC<TaskForm> = ({
           </Form.Item>
         </div>
         <div>
-          <Form.Item<TaskFormFields> name='status' label='Status'>
+          <Form.Item<TaskFormFields> name="status" label="Status">
             <Select
               options={[
                 { label: "Todo", value: OAssignmentStatus.Todo },
                 { label: "On Progress", value: OAssignmentStatus.OnProgress },
                 { label: "Done", value: OAssignmentStatus.Done },
               ]}
-              size='large'
+              size="large"
               style={{ width: "100%" }}
             />
           </Form.Item>
         </div>
-        <Form.Item className='create-task-form-btn'>
+        <Form.Item className="create-task-form-btn">
           <Space>
-            <Button type='primary' htmlType='submit' size='large'>
+            <Button type="primary" htmlType="submit" size="large">
               Update
             </Button>
             <Button
-              type='primary'
+              type="primary"
               ghost
-              size='large'
+              size="large"
               onClick={() => handleCancel()}
             >
               Cancel

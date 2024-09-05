@@ -5,21 +5,21 @@ import {
   useGetDocFileMutation,
   useDeleteProjectFileMutation,
   useGetUserDetailQuery,
+  useGetProjectQuery,
 } from "src/share/services";
 
 import type { UploadProps } from "antd";
 import { OUserRole, Project } from "src/share/models";
 import { useRoleChecker } from "src/share/hooks";
+import { useParams } from "react-router-dom";
 
 const baseApi = import.meta.env.VITE_REQUEST_API_URL;
 
-export const ProjectDocument = ({
-  project,
-  refetch,
-}: {
-  project?: Project;
-  refetch: () => void;
-}) => {
+export const ProjectDocument = ({ project }: { project?: Project }) => {
+  const { id: projectId } = useParams();
+  const { refetch } = useGetProjectQuery({
+    projectId: projectId!,
+  });
   const [getFile] = useGetDocFileMutation();
   const [deleteFile] = useDeleteProjectFileMutation();
   const checkRole = useRoleChecker();

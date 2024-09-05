@@ -70,7 +70,7 @@ export const CreateTaskForm: React.FC<TaskForm> = ({
 
   return (
     <Modal
-      className='wrapper'
+      className="wrapper"
       open={isModalOpen}
       centered
       onCancel={handleCancel}
@@ -88,34 +88,34 @@ export const CreateTaskForm: React.FC<TaskForm> = ({
         Create Task
       </h2>
 
-      <Form form={form} name='user-info' onFinish={onFinish} layout='vertical'>
+      <Form form={form} name="user-info" onFinish={onFinish} layout="vertical">
         <div>
           <Form.Item<TaskFormFields>
-            name='name'
-            label='Name'
-            rules={[{ required: true, message: "Username is required" }]}
+            name="name"
+            label="Name"
+            rules={[{ required: true, message: "Name is required" }]}
           >
-            <Input placeholder='Name...' size='large' />
+            <Input placeholder="Name..." size="large" />
           </Form.Item>
         </div>
         <div>
           <Form.Item<TaskFormFields>
-            name='description'
-            rules={[{ required: true, message: "Username is required" }]}
-            label='Description'
+            name="description"
+            rules={[{ required: true, message: "Description is required" }]}
+            label="Description"
           >
             <Input.TextArea
               style={{ resize: "none", height: "100px" }}
-              placeholder='Description...'
-              size='large'
+              placeholder="Description..."
+              size="large"
             />
           </Form.Item>
         </div>
         <div>
-          <Form.Item<TaskFormFields> name='deadline' label='Deadline'>
+          <Form.Item<TaskFormFields> name="deadline" label="Deadline">
             <DatePicker
-              placeholder='Deadline...'
-              size='large'
+              placeholder="Deadline..."
+              size="large"
               style={{ width: "100%" }}
               minDate={
                 project?.startAt
@@ -130,15 +130,15 @@ export const CreateTaskForm: React.FC<TaskForm> = ({
             />
           </Form.Item>
         </div>
-        <Form.Item className='create-task-form-btn'>
+        <Form.Item className="create-task-form-btn">
           <Space>
-            <Button type='primary' htmlType='submit' size='large'>
+            <Button type="primary" htmlType="submit" size="large">
               Create
             </Button>
             <Button
-              type='primary'
+              type="primary"
               ghost
-              size='large'
+              size="large"
               onClick={() => handleCancel()}
             >
               Cancel

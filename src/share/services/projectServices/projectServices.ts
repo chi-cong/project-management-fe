@@ -178,10 +178,9 @@ const projectServices = hrManagementApi.injectEndpoints({
         project_id: string;
         task_id?: string;
         endAt?: string | Dayjs;
-        status: AssignmentStatus;
       }>
     >({
-      query({ user_id, project_id, task_id }) {
+      query({ user_id, project_id, task_id, endAt }) {
         return {
           url: "assignments/create",
           method: "POST",
@@ -192,6 +191,7 @@ const projectServices = hrManagementApi.injectEndpoints({
             project_id,
             task_id,
             user_id: user_id ? user_id : null,
+            endAt,
           },
         };
       },

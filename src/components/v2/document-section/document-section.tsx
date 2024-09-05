@@ -15,10 +15,12 @@ import { selectTaskAssign } from "src/libs/redux/taskAssignSlice";
 import type { UploadProps } from "antd";
 import { useRoleChecker } from "src/share/hooks";
 import { OUserRole, Project } from "src/share/models";
+import { useParams } from "react-router-dom";
 
 const baseApi = import.meta.env.VITE_REQUEST_API_URL;
 
 export const DocumentSection = ({ project }: { project?: Project }) => {
+  const { id: projectId } = useParams();
   const taskAssignment = useSelector(
     (state: RootState) => state.taskAssignment
   );
@@ -35,7 +37,7 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
     { skip: taskAssignment.task ? false : true }
   );
   const { refetch: tasksRefetch } = useGetProjectTasksQuery({
-    projectId: project?.project_id,
+    projectId,
     items_per_page: "ALL",
     page: 1,
   });
@@ -148,7 +150,8 @@ export const DocumentSection = ({ project }: { project?: Project }) => {
       ) : null} */}
       {!checkRole(OUserRole.Staff) ||
       (checkRole(OUserRole.Staff) &&
-        taskAssignment?.assignment?.user_id === user?.user_id) ? (
+        taskAssignment?.assignment?.user_id === user?.user_id) ||
+      project?.project_manager_id === user?.user_id ? (
         <Upload.Dragger {...props} listType="text">
           <strong>Choose a file</strong> or drag it here
         </Upload.Dragger>

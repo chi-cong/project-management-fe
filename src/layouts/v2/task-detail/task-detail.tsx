@@ -55,6 +55,7 @@ export const TaskDetail = ({
   const [deleteTask] = useDeleteTaskMutation();
   const [updateAssignment] = useUpdateAssignmentMutation();
   const [isOpenAssignUser, setIsOpenAssignUser] = useState<boolean>(false);
+  const [taskOptions, setTaskOptions] = useState<boolean>(false);
 
   const [editModal, setEditModal] = useState<boolean>(false);
   const [modalWidth, setModalWidth] = useState<number>(750);
@@ -70,44 +71,48 @@ export const TaskDetail = ({
 
   const TaskOption = () => {
     return (
-      <div className='task-option'>
-        <Button
-          type='text'
-          className='task-option-btn'
-          onClick={() => {
-            setEditModal(true);
-          }}
-        >
-          <Pen />
-          <Typography.Text>Edit</Typography.Text>
-        </Button>
-        <Popconfirm
-          title='Delete this task ?'
-          onConfirm={async () => {
-            await deleteTask({ taskId: taskAssignment.task?.task_id })
-              .unwrap()
-              .then(() => {
-                setShowTaskDetail(false);
-                message.success("Task is deleted");
-              })
-              .catch(() => message.error("failed to delete this task"));
-          }}
-        >
-          <Button className='task-option-btn' type='text'>
-            <Trash />
-            <Typography.Text>Delete</Typography.Text>
+      <OutsideClickHandler onClickOutside={() => setTaskOptions(false)}>
+        <div className="task-option">
+          <Button
+            type="text"
+            className="task-option-btn"
+            onClick={() => {
+              setEditModal(true);
+              setTaskOptions(false);
+            }}
+          >
+            <Pen />
+            <Typography.Text>Edit</Typography.Text>
           </Button>
-        </Popconfirm>
-      </div>
+          <Popconfirm
+            title="Delete this task ?"
+            onConfirm={async () => {
+              await deleteTask({ taskId: taskAssignment.task?.task_id })
+                .unwrap()
+                .then(() => {
+                  setShowTaskDetail(false);
+                  message.success("Task is deleted");
+                  setTaskOptions(false);
+                })
+                .catch(() => message.error("failed to delete this task"));
+            }}
+          >
+            <Button className="task-option-btn" type="text">
+              <Trash />
+              <Typography.Text>Delete</Typography.Text>
+            </Button>
+          </Popconfirm>
+        </div>
+      </OutsideClickHandler>
     );
   };
 
   const AssignUserPopover = () => {
     return (
       <OutsideClickHandler onClickOutside={() => setIsOpenAssignUser(false)}>
-        <div className='assign-user-popover'>
+        <div className="assign-user-popover">
           <Input.Search
-            placeholder='Search'
+            placeholder="Search"
             onSearch={(value) => {
               setSearch(value);
             }}
@@ -117,7 +122,7 @@ export const TaskDetail = ({
             return (
               <Card
                 hoverable
-                className='assignable-user-card'
+                className="assignable-user-card"
                 style={{ marginTop: "10px" }}
                 onClick={() => {
                   updateAssignment({
@@ -164,27 +169,27 @@ export const TaskDetail = ({
       width={modalWidth}
       open={open}
       onCancel={() => setShowTaskDetail(false)}
-      className='task-detail-modal'
+      className="task-detail-modal"
       title={
-        <div className='task-detail-modal-title'>
+        <div className="task-detail-modal-title">
           <Popover
             content={AssignUserPopover}
-            placement='bottomLeft'
-            trigger='click'
+            placement="bottomLeft"
+            trigger="click"
             open={isOpenAssignUser}
             onOpenChange={() => setIsOpenAssignUser(true)}
           >
-            <Button className='assign-task-btn' size='small' type='text'>
-              <UserPlus className='assign-task-icon' />
+            <Button className="assign-task-btn" size="small" type="text">
+              <UserPlus className="assign-task-icon" />
               <h5>Assign task to</h5>
-              <Down className='assign-task-icon' />
+              <Down className="assign-task-icon" />
             </Button>
           </Popover>
-          <div className='task-detail-head-right-size'>
-            <Tooltip title='files' className='open-files-btn'>
+          <div className="task-detail-head-right-size">
+            <Tooltip title="files" className="open-files-btn">
               <Button
-                type='text'
-                size='small'
+                type="text"
+                size="small"
                 onClick={() => {
                   if (modalWidth === 750) {
                     setModalWidth(1000);
@@ -193,12 +198,17 @@ export const TaskDetail = ({
                   }
                 }}
               >
-                <Folder className='menu-dots-task-detail' />
+                <Folder className="menu-dots-task-detail" />
               </Button>
             </Tooltip>
-            <Popover content={<TaskOption />} trigger='click'>
-              <Button type='text' size='small'>
-                <MenuDots className='menu-dots-task-detail' />
+            <Popover
+              open={taskOptions}
+              content={<TaskOption />}
+              trigger="click"
+              onOpenChange={() => setTaskOptions(true)}
+            >
+              <Button type="text" size="small">
+                <MenuDots className="menu-dots-task-detail" />
               </Button>
             </Popover>
           </div>
@@ -206,13 +216,13 @@ export const TaskDetail = ({
       }
       footer={[]}
     >
-      <div className='task-detail-content'>
+      <div className="task-detail-content">
         <div
           className={`main-task-detail-section ${modalWidth === 750 && "main-task-detail-section-full "}`}
         >
           {taskAssignment.assignment?.user && (
-            <div className='assigned-user-section'>
-              <Card loading={false} className='assigned-user-card'>
+            <div className="assigned-user-section">
+              <Card loading={false} className="assigned-user-card">
                 <Card.Meta
                   {...(taskAssignment && {
                     avatar: (
@@ -229,7 +239,7 @@ export const TaskDetail = ({
                 />
                 <Button
                   style={{ width: "fit-content" }}
-                  type='link'
+                  type="link"
                   onClick={() => {
                     updateAssignment({
                       // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
@@ -246,7 +256,7 @@ export const TaskDetail = ({
               </Card>
             </div>
           )}
-          <div className='task-description'>
+          <div className="task-description">
             <Typography.Title level={3}>
               {taskAssignment.task?.name}
             </Typography.Title>
@@ -257,7 +267,7 @@ export const TaskDetail = ({
           <Activities />
         </div>
         {modalWidth === 1000 && (
-          <div className='document-container'>
+          <div className="document-container">
             <DocumentSection project={project} />
           </div>
         )}

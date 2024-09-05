@@ -31,23 +31,23 @@ export const ConfirNewPassForm = ({ email }: { email: string }) => {
     <>
       <Spin
         spinning={changePasswordStatus.isLoading}
-        size='large'
-        tip='Sending Request'
+        size="large"
+        tip="Sending Request"
       >
         <Form
-          name='forgor-password'
+          name="forgor-password"
           onFinish={onFinish}
-          className='login-form'
-          autoComplete='off'
+          className="login-form"
+          autoComplete="off"
         >
           <Form.Item<ChangePasswordFormType>
-            name='newPassword'
+            name="newPassword"
             rules={[{ required: true, message: "New password is required" }]}
           >
-            <Input.Password placeholder='Confirm New Password' size='large' />
+            <Input.Password placeholder="New Password" size="large" />
           </Form.Item>
           <Form.Item<ChangePasswordFormType>
-            name='confirm'
+            name="confirm"
             rules={[
               { required: true, message: "Confirm your new password" },
               ({ getFieldValue }) => ({
@@ -62,14 +62,14 @@ export const ConfirNewPassForm = ({ email }: { email: string }) => {
               }),
             ]}
           >
-            <Input.Password placeholder='New Password' size='large' />
+            <Input.Password placeholder="Confirm New Password" size="large" />
           </Form.Item>
           <Form.Item>
             <Button
               style={{ width: "100%" }}
-              type='primary'
-              htmlType='submit'
-              size='large'
+              type="primary"
+              htmlType="submit"
+              size="large"
             >
               Change Password
             </Button>

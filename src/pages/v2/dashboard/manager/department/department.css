@@ -92,7 +92,6 @@
     }
   }
   .team-member-sec {
-    width: 100%;
     @mixin tabletAndMobile {
       width: 0;
     }

@@ -191,14 +191,10 @@ export const AdminProject = () => {
             <Button
               shape="round"
               style={{ display: "" }}
-              onClick={() =>
-                navigate(
-                  `/v2/dashboard/${localStorageUtil.get("role")?.toLocaleLowerCase()}/projects`
-                )
-              }
+              onClick={() => navigate(-1)}
             >
               <ArrowLeftOutlined />
-              Back to Projects
+              Go back
             </Button>
           </div>
           <div className="second-part">

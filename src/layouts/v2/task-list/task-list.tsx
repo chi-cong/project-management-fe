@@ -62,16 +62,18 @@ export const TaskList = ({
   //   }
   // }, [isFetching, assigments, project]);
 
+  console.log(project);
+
   return (
     <>
-      <div className='task-list'>
-        <div className='title' style={{ borderColor: color }}>
-          <Badge dot className='node' color={color} />
+      <div className="task-list">
+        <div className="title" style={{ borderColor: color }}>
+          <Badge dot className="node" color={color} />
           <Typography.Title level={5} style={{ marginBottom: 0 }}>
             {title}
           </Typography.Title>
         </div>
-        <div className='tasks'>
+        <div className="tasks">
           {tasks?.map((task, index) => {
             const matchedAssignment: Assignment | undefined =
               assigments?.assignments?.find(

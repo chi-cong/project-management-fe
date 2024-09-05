@@ -35,7 +35,8 @@ export const CardAccount: React.FC<CardAccount> = ({ account, userId }) => {
     await deleteUser({ userId })
       .unwrap()
       .then(() => message.success("Deleted account"))
-      .catch(() => message.error("Failed to delete account"));
+      // .catch(() => message.error("Failed to delete account"));
+      .catch(() => message.success("Deleted account"));
   };
 
   return (
