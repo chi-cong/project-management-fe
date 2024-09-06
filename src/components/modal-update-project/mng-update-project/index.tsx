@@ -66,6 +66,26 @@ export const MngUpdateProject: React.FC<ModalUpdateProjectProp> = ({
     });
   };
 
+  const addedMissingPMList = () => {
+    const newList = [...pms!.users, project!.project_manager!];
+    return newList?.map((pm) => {
+      return {
+        label: (
+          <Space>
+            <CustomAvatar
+              bgColor={pm.avatar_color}
+              avatarSrc={pm.avatar}
+              size={32}
+              userName={pm.name}
+            />
+            <Typography>{pm.name}</Typography>
+          </Space>
+        ),
+        value: pm.user_id,
+      };
+    });
+  };
+
   useEffect(() => {
     form.setFieldsValue({
       ...project,
@@ -145,22 +165,29 @@ export const MngUpdateProject: React.FC<ModalUpdateProjectProp> = ({
             </div>
           ) : (
             <Select
-              options={pms?.users?.map((pm) => {
-                return {
-                  label: (
-                    <Space>
-                      <CustomAvatar
-                        bgColor={pm.avatar_color}
-                        avatarSrc={pm.avatar}
-                        size={32}
-                        userName={pm.name}
-                      />
-                      <Typography>{pm.name}</Typography>
-                    </Space>
-                  ),
-                  value: pm.user_id,
-                };
-              })}
+              options={
+                project?.project_manager_id &&
+                pms?.users.findIndex(
+                  (user) => project.project_manager_id === user.user_id
+                )
+                  ? addedMissingPMList()
+                  : pms?.users?.map((pm) => {
+                      return {
+                        label: (
+                          <Space>
+                            <CustomAvatar
+                              bgColor={pm.avatar_color}
+                              avatarSrc={pm.avatar}
+                              size={32}
+                              userName={pm.name}
+                            />
+                            <Typography>{pm.name}</Typography>
+                          </Space>
+                        ),
+                        value: pm.user_id,
+                      };
+                    })
+              }
               size='large'
             />
           )}
