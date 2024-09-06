@@ -45,7 +45,7 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
       projectId: project?.project_id,
       search,
     },
-    { skip: user?.department_id ? false : true }
+    { skip: user?.user_id === project?.project_manager_id }
   );
   const { data: staffsInDepartments } = useGetAllStaffInDepartmentsQuery(
     {
@@ -53,7 +53,7 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
       department_ids: project?.department_ids,
       search,
     },
-    { skip: user?.user_id === project?.project_manager_id ? false : true }
+    { skip: user?.user_id !== project?.project_manager_id }
   );
 
   const [createAssignment] = useCreateAssigmentMutation();
@@ -114,8 +114,8 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
   };
 
   const mapTableData = () => {
-    if (user?.user_id === project?.project_manager_id || staffs?.users) {
-      return staffsInDepartments?.users.map((staff): DataType => {
+    if (user?.user_id === project?.project_manager_id) {
+      return staffsInDepartments?.users?.map((staff): DataType => {
         return {
           avatar: {
             src: staff.avatar,
@@ -128,20 +128,18 @@ export const AddProjectUserPanel: React.FC<ModalAddUserToProjectProps> = ({
         };
       });
     }
-    if (staffs?.users?.length) {
-      return staffs?.users.map((staff): DataType => {
-        return {
-          avatar: {
-            src: staff.avatar,
-            bgColor: staff.avatar_color,
-          },
-          name: staff.name!,
-          email: staff.email!,
-          role: (staff.role as RoleResponse).name!,
-          key: staff.user_id!,
-        };
-      });
-    }
+    return staffs?.users?.map((staff): DataType => {
+      return {
+        avatar: {
+          src: staff.avatar,
+          bgColor: staff.avatar_color,
+        },
+        name: staff.name!,
+        email: staff.email!,
+        role: (staff.role as RoleResponse).name!,
+        key: staff.user_id!,
+      };
+    });
   };
 
   const projectStaffTabs: TabsProps["items"] = [

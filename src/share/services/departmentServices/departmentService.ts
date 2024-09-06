@@ -160,9 +160,14 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
     }),
     getAllProjectDepartment: build.query<
       ProjectResp,
-      { departmentId?: string; items_per_page?: number | "ALL"; page?: number }
+      {
+        search?: string;
+        departmentId?: string;
+        items_per_page?: number | "ALL";
+        page?: number;
+      }
     >({
-      query: ({ departmentId, items_per_page, page }) => {
+      query: ({ departmentId, items_per_page, page, search }) => {
         return {
           url: `projects/get-all-project-in-department/${departmentId}`,
           method: "GET",
@@ -172,6 +177,7 @@ export const DepartmentServices = hrManagementApi.injectEndpoints({
           params: {
             items_per_page: items_per_page || "ALL",
             page: page || 1,
+            search,
           },
         };
       },
