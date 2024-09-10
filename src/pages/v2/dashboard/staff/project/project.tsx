@@ -33,7 +33,7 @@ export const StaffProject = () => {
   const [activitySec, setActivitySec] = useState<boolean>(false);
   const [projectDetailModal, setProjectDetailModal] = useState<boolean>(false);
 
-  const { data: projectData, refetch: projectRefetch } = useGetProjectQuery({
+  const { data: projectData } = useGetProjectQuery({
     projectId: projectId!,
   });
   const { data: tasks } = useGetProjectTasksQuery({
@@ -188,7 +188,7 @@ export const StaffProject = () => {
         project={projectData}
       />
       <Modal open={docSec} onCancel={() => setDocSec(false)} footer={[]}>
-        <ProjectDocument project={projectData} refetch={projectRefetch} />
+        <ProjectDocument project={projectData} />
       </Modal>
       <Modal
         open={taskDocSec}
