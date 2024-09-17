@@ -12,49 +12,15 @@ import {
 } from "src/share/services/";
 import { MenuOutlined, BellOutlined } from "@ant-design/icons";
 import { openDrawer } from "src/libs/redux/drawerSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { OutsideClickHandler, NotiList } from "src/components";
+import { socket } from "src/share/services/";
+
+import type { Notification } from "src/share/models";
 
 export const Headbar = () => {
   const { data: notis } = useGetInitNotisQuery(undefined);
-  const [notifications, setNotifications] = useState([
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-  ]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [openOptions, setOpenOptions] = useState<boolean>(false);
@@ -66,6 +32,29 @@ export const Headbar = () => {
     dispatch(hrManagementApi.util.resetApiState());
     navigate("/v2/login");
   };
+
+  // setup initial notifications
+  useEffect(() => {
+    if (notis) {
+      setNotifications(notis.notifications);
+    }
+  }, [notis]);
+
+  // setup socket
+  useEffect(() => {
+    socket.connect();
+    socket.on("new-noti", (msg) => {
+      setNotifications((prevNotifications) => {
+        console.log(msg);
+
+        // const newNotifications = [...prevNotifications, msg];
+        return newNotifications;
+      });
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const UserHeadbarOption = () => {
     return (
@@ -144,11 +133,12 @@ export const Headbar = () => {
         </div>
         <div className='second-part'>
           <Popover
-            content={<NotiList />}
+            content={
+              <div style={{ width: "300px", height: "400px" }}>
+                <NotiList notifications={notifications} />
+              </div>
+            }
             trigger='click'
-            placement='topRight'
-            // open={openOptions}
-            // onOpenChange={() => setOpenOptions(true)}
           >
             <div className='notification'>
               <Badge count={notifications.length} showZero>

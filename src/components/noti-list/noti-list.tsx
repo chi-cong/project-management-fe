@@ -1,51 +1,14 @@
 import "./noti-list.css";
-import { Button } from "antd";
-import { useState } from "react";
-import { useGetInitNotisQuery } from "src/share/services";
+import { Button, Typography } from "antd";
+import { utcToLocal } from "src/share/utils";
 
-export const NotiList = () => {
-  const { data: notis } = useGetInitNotisQuery(undefined);
-  const [notifications, setNotifications] = useState([
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-    {
-      content: "Livestream is updated by Admin",
-    },
-  ]);
+import type { Notification } from "src/share/models";
 
-  console.log(notis);
+interface NotiListProp {
+  notifications: Notification[];
+}
 
+export const NotiList = ({ notifications }: NotiListProp) => {
   return (
     <div className='noti-list'>
       <div className='title-row'>
@@ -53,20 +16,28 @@ export const NotiList = () => {
         <Button type='link'>Mark all as read</Button>
       </div>
       <div className='noti-list-body'>
-        {notis &&
-          notis.map(() => {
-            return (
-              <div className='noti-content'>
-                <p>Notification</p>
-                <Button
-                  style={{ fontSize: "11px", paddingLeft: "0px" }}
-                  type='link'
-                >
-                  Mark as read
-                </Button>
+        {notifications.map((notification) => {
+          return (
+            <div
+              className={`noti-content ${!notification.is_read && "unread-noti"}`}
+              key={notification.notifications.notification_id}
+            >
+              <Typography.Text>
+                {notification.notifications.content}
+              </Typography.Text>
+              <div className='noti-content-footer'>
+                <p className='timer'>
+                  {utcToLocal(notification.notifications.createdAt)?.fromNow()}
+                </p>
+                {!notification.is_read && (
+                  <Button style={{ paddingLeft: "0px" }} type='link'>
+                    Mark as read
+                  </Button>
+                )}
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
