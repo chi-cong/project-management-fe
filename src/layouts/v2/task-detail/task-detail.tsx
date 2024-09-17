@@ -276,6 +276,7 @@ export const TaskDetail = ({
         isModalOpen={editModal}
         setIsModalOpen={setEditModal}
         project={project}
+        assignment={assignment}
       />
     </Modal>
   );
