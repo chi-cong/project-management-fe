@@ -1,18 +1,60 @@
 import "./headbar.css";
-import { Typography, Popover, Button, Card } from "antd";
+import { Typography, Popover, Button, Card, Badge } from "antd";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
 import { Logout, Lock, Person } from "src/assets/icons";
 import { useNavigate } from "react-router-dom";
 import { localStorageUtil, sessionStorageUtil } from "src/share/utils";
 import { useDispatch } from "react-redux";
 import { hrManagementApi } from "src/share/services/";
-import { useGetUserDetailQuery } from "src/share/services/";
-import { MenuOutlined } from "@ant-design/icons";
+import {
+  useGetUserDetailQuery,
+  useGetInitNotisQuery,
+} from "src/share/services/";
+import { MenuOutlined, BellOutlined } from "@ant-design/icons";
 import { openDrawer } from "src/libs/redux/drawerSlice";
 import { useState } from "react";
-import { OutsideClickHandler } from "src/components/outside-click-handler";
+import { OutsideClickHandler, NotiList } from "src/components";
 
 export const Headbar = () => {
+  const { data: notis } = useGetInitNotisQuery(undefined);
+  const [notifications, setNotifications] = useState([
+    {
+      content: "Livestream is updated by Admin",
+    },
+    {
+      content: "Livestream is updated by Admin",
+    },
+    {
+      content: "Livestream is updated by Admin",
+    },
+    {
+      content: "Livestream is updated by Admin",
+    },
+    {
+      content: "Livestream is updated by Admin",
+    },
+    {
+      content: "Livestream is updated by Admin",
+    },
+    {
+      content: "Livestream is updated by Admin",
+    },
+    {
+      content: "Livestream is updated by Admin",
+    },
+    {
+      content: "Livestream is updated by Admin",
+    },
+    {
+      content: "Livestream is updated by Admin",
+    },
+    {
+      content: "Livestream is updated by Admin",
+    },
+    {
+      content: "Livestream is updated by Admin",
+    },
+  ]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [openOptions, setOpenOptions] = useState<boolean>(false);
@@ -87,6 +129,7 @@ export const Headbar = () => {
       <header className='headbar'>
         <div
           style={{ display: "flex", alignItems: "center", gap: "var(--gap-s)" }}
+          className='first-part'
         >
           <Button
             className='show-drawer-button'
@@ -99,21 +142,36 @@ export const Headbar = () => {
             Project Management
           </h5>
         </div>
-        <Popover
-          content={<UserHeadbarOption />}
-          trigger='click'
-          open={openOptions}
-          onOpenChange={() => setOpenOptions(true)}
-        >
-          <div className='headbar-avatar-wraper'>
-            <CustomAvatar
-              size={45}
-              userName={user?.name}
-              avatarSrc={user?.avatar}
-              bgColor={user?.avatar_color}
-            />
-          </div>
-        </Popover>
+        <div className='second-part'>
+          <Popover
+            content={<NotiList />}
+            trigger='click'
+            placement='topRight'
+            // open={openOptions}
+            // onOpenChange={() => setOpenOptions(true)}
+          >
+            <div className='notification'>
+              <Badge count={notifications.length} showZero>
+                <BellOutlined className='bell-icon' />
+              </Badge>
+            </div>
+          </Popover>
+          <Popover
+            content={<UserHeadbarOption />}
+            trigger='click'
+            open={openOptions}
+            onOpenChange={() => setOpenOptions(true)}
+          >
+            <div className='headbar-avatar-wraper'>
+              <CustomAvatar
+                size={45}
+                userName={user?.name}
+                avatarSrc={user?.avatar}
+                bgColor={user?.avatar_color}
+              />
+            </div>
+          </Popover>
+        </div>
       </header>
       <div className='headbar-placeholder'></div>
     </>

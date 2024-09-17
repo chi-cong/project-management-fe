@@ -1,0 +1,19 @@
+.noti-list {
+  min-width: 300px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-m);
+  .title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .noti-list-body {
+    height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-s);
+  }
+}
