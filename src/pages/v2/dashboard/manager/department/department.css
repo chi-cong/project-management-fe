@@ -19,7 +19,6 @@
       gap: var(--gap-s);
       .title-row {
         display: flex;
-        tit
         align-items: center;
         justify-content: flex-start;
         gap: var(--gap-xs);

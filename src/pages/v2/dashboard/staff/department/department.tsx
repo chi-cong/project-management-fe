@@ -89,7 +89,7 @@ export const StaffDepartment = () => {
           <header className='main-header'>
             <div className='title-row'>
               <h2>{data?.name}</h2>
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", gap: "var(--gap-xs)" }}>
                 <Button
                   shape='round'
                   style={{ display: "" }}
