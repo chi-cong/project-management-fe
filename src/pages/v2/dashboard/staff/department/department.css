@@ -22,10 +22,7 @@
         align-items: center;
         gap: var(--gap-xs);
         margin-bottom: 20px;
-        @mixin tabletAndMobile {
-          flex-direction: column;
-          align-items: flex-start;
-        }
+        flex-wrap: wrap;
         .title-row-btn {
           display: flex;
           align-items: center;
