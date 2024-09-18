@@ -21,6 +21,7 @@ import type { Notification } from "src/share/models";
 export const Headbar = () => {
   const { data: notis } = useGetInitNotisQuery(undefined);
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [unreadNoti, setUnreadNoti] = useState<number>(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [openOptions, setOpenOptions] = useState<boolean>(false);
@@ -37,19 +38,21 @@ export const Headbar = () => {
   useEffect(() => {
     if (notis) {
       setNotifications(notis.notifications);
+      let unread = 0;
+      notis.notifications.forEach((noti) => {
+        if (!noti.is_read) {
+          unread++;
+        }
+      });
+      setUnreadNoti(unread);
     }
   }, [notis]);
 
   // setup socket
   useEffect(() => {
     socket.connect();
-    socket.on("new-noti", (msg) => {
-      setNotifications((prevNotifications) => {
-        console.log(msg);
-
-        // const newNotifications = [...prevNotifications, msg];
-        return newNotifications;
-      });
+    socket.on("new-noti", (msg: Notification) => {
+      setNotifications((prevNotifications) => [msg, ...prevNotifications]);
     });
     return () => {
       socket.disconnect();
@@ -135,13 +138,16 @@ export const Headbar = () => {
           <Popover
             content={
               <div style={{ width: "300px", height: "400px" }}>
-                <NotiList notifications={notifications} />
+                <NotiList
+                  notifications={notifications}
+                  updateNotiList={setNotifications}
+                />
               </div>
             }
             trigger='click'
           >
             <div className='notification'>
-              <Badge count={notifications.length} showZero>
+              <Badge count={unreadNoti} showZero>
                 <BellOutlined className='bell-icon' />
               </Badge>
             </div>

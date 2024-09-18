@@ -13,7 +13,16 @@ const NotificationServices = hrManagementApi.injectEndpoints({
       transformResponse: (response: Response<NotificationResp>) =>
         response.data,
     }),
+    markAsRead: build.mutation<NotificationResp, { id: string }>({
+      query: ({ id }) => {
+        return {
+          url: `user-notifications/mark-as-read/${id}`,
+          method: "PUT",
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetInitNotisQuery } = NotificationServices;
+export const { useGetInitNotisQuery, useMarkAsReadMutation } =
+  NotificationServices;
