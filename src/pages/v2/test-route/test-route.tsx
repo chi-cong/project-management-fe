@@ -57,10 +57,10 @@ export const TestRoute = () => {
               </li>
             ))}
             {/* Render notifications từ API */}
-            {/* {noti &&
+            {noti &&
               noti.map((notification, index) => (
                 <li key={index}>{notification?.notifications?.content}</li>
-              ))} */}
+              ))}
           </ul>
         ) : (
           <p>Chưa có thông báo nào</p>
