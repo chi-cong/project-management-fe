@@ -1,1 +1,0 @@
-export {CardDepartments} from './card-departments-list'

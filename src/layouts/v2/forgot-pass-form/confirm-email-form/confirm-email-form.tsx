@@ -41,7 +41,7 @@ export const ConfirmEmailForm = ({
         tip='Sending Request'
       >
         <Form
-          name='forgor-password'
+          name='forgot-password'
           onFinish={onFinish}
           className='forgot-password-form'
         >
