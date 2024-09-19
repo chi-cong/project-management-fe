@@ -17,6 +17,7 @@ import { OutsideClickHandler, NotiList } from "src/components";
 import { socket } from "src/share/services/";
 
 import type { Notification } from "src/share/models";
+import dayjs from "dayjs";
 
 export const Headbar = () => {
   const { data: notis } = useGetInitNotisQuery(undefined);
@@ -51,13 +52,23 @@ export const Headbar = () => {
   // setup socket
   useEffect(() => {
     socket.connect();
-    socket.on("new-noti", (msg: Notification) => {
-      setNotifications((prevNotifications) => [msg, ...prevNotifications]);
-    });
+    const notiListener = (msg: { content: string; noti_id: string }) => {
+      const newNoti: Notification = {
+        is_read: false,
+        createdAt: dayjs().utc().format(),
+        notification_id: msg.noti_id,
+        notifications: {
+          content: msg.content,
+        },
+      };
+      setNotifications((prevNotifications) => [newNoti, ...prevNotifications]);
+      setUnreadNoti((prevCount) => prevCount + 1);
+    };
+    socket.on("new-noti", notiListener);
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [socket]);
 
   const UserHeadbarOption = () => {
     return (
@@ -141,6 +152,8 @@ export const Headbar = () => {
                 <NotiList
                   notifications={notifications}
                   updateNotiList={setNotifications}
+                  setUnreadCount={setUnreadNoti}
+                  unreadCount={unreadNoti}
                 />
               </div>
             }

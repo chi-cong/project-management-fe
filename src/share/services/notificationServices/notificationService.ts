@@ -6,7 +6,7 @@ const NotificationServices = hrManagementApi.injectEndpoints({
     getInitNotis: build.query<NotificationResp, undefined>({
       query: () => {
         return {
-          url: `user-notifications/get-user-notifications?items_per_page=ALL`,
+          url: `user-notifications/get-user-notifications?items_per_page=20`,
           method: "GET",
         };
       },
