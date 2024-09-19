@@ -13,6 +13,8 @@ import dayjs, { Dayjs } from "dayjs";
 import { RoleResponse, User, UserRole } from "src/share/models";
 import { useUpdateUserDetailMutation } from "src/share/services";
 import { utcToLocal } from "src/share/utils";
+import { useRoleChecker } from "src/share/hooks";
+import { OUserRole, Project } from "src/share/models";
 interface UserInfor {
   user_id?: string;
   username?: string;
@@ -31,6 +33,8 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
   const [form] = Form.useForm();
   const [isEdit, setIsEdit] = useState(false);
   const [updateUserDetail] = useUpdateUserDetailMutation();
+  const checkRole = useRoleChecker();
+  const isStaff = checkRole(OUserRole.Staff);
 
   const onFinish: FormProps<UserInfor>["onFinish"] = async (values) => {
     const sentValues = {
@@ -93,22 +97,26 @@ export const ProfileForm: React.FC<ProfileForm> = ({ user }) => {
             />
           </Form.Item>
         </div>
-        <div>
-          <Form.Item<UserInfor>
-            name="username"
-            rules={[
-              { required: true, message: "Username is required" },
-              { pattern: /^\S+$/, message: "Contains no whitespace" },
-            ]}
-            label="Username"
-          >
-            <Input
-              placeholder="Username..."
-              size="large"
-              className={isEdit ? "input-enable" : "input-disable"}
-            />
-          </Form.Item>
-        </div>
+        {!isStaff && (
+          <div>
+            <Form.Item<UserInfor>
+              name="username"
+              rules={[
+                { required: true, message: "Username is required" },
+                { pattern: /^\S+$/, message: "Contains no whitespace" },
+              ]}
+              label="Username"
+            >
+              <Input
+                placeholder="Username..."
+                size="large"
+                className={
+                  isEdit && !isStaff ? "input-enable" : "input-disable"
+                }
+              />
+            </Form.Item>
+          </div>
+        )}
         <div>
           <Form.Item<UserInfor>
             name="email"
