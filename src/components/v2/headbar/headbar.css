@@ -21,6 +21,25 @@
       display: none;
     }
   }
+  .second-part {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-s);
+    .notification {
+      width: 45px;
+      height: 45px;
+      border-radius: var(--circle-border);
+      background: var(--gray-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      .bell-icon {
+        font-size: 20px;
+      }
+    }
+  }
 }
 .show-drawer-button {
   display: none;

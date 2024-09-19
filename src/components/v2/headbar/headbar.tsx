@@ -1,18 +1,28 @@
 import "./headbar.css";
-import { Typography, Popover, Button, Card } from "antd";
+import { Typography, Popover, Button, Card, Badge } from "antd";
 import { CustomAvatar } from "src/components/v2/custom-avatar";
 import { Logout, Lock, Person } from "src/assets/icons";
 import { useNavigate } from "react-router-dom";
 import { localStorageUtil, sessionStorageUtil } from "src/share/utils";
 import { useDispatch } from "react-redux";
 import { hrManagementApi } from "src/share/services/";
-import { useGetUserDetailQuery } from "src/share/services/";
-import { MenuOutlined } from "@ant-design/icons";
+import {
+  useGetUserDetailQuery,
+  useGetInitNotisQuery,
+} from "src/share/services/";
+import { MenuOutlined, BellOutlined } from "@ant-design/icons";
 import { openDrawer } from "src/libs/redux/drawerSlice";
-import { useState } from "react";
-import { OutsideClickHandler } from "src/components/outside-click-handler";
+import { useEffect, useState } from "react";
+import { OutsideClickHandler, NotiList } from "src/components";
+import { socket } from "src/share/services/";
+
+import type { Notification } from "src/share/models";
+import dayjs from "dayjs";
 
 export const Headbar = () => {
+  const { data: notis } = useGetInitNotisQuery(undefined);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [unreadNoti, setUnreadNoti] = useState<number>(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [openOptions, setOpenOptions] = useState<boolean>(false);
@@ -24,6 +34,41 @@ export const Headbar = () => {
     dispatch(hrManagementApi.util.resetApiState());
     navigate("/v2/login");
   };
+
+  // setup initial notifications
+  useEffect(() => {
+    if (notis) {
+      setNotifications(notis.notifications);
+      let unread = 0;
+      notis.notifications.forEach((noti) => {
+        if (!noti.is_read) {
+          unread++;
+        }
+      });
+      setUnreadNoti(unread);
+    }
+  }, [notis]);
+
+  // setup socket
+  useEffect(() => {
+    socket.connect();
+    const notiListener = (msg: { content: string; noti_id: string }) => {
+      const newNoti: Notification = {
+        is_read: false,
+        createdAt: dayjs().utc().format(),
+        notification_id: msg.noti_id,
+        notifications: {
+          content: msg.content,
+        },
+      };
+      setNotifications((prevNotifications) => [newNoti, ...prevNotifications]);
+      setUnreadNoti((prevCount) => prevCount + 1);
+    };
+    socket.on("new-noti", notiListener);
+    return () => {
+      socket.disconnect();
+    };
+  }, [socket]);
 
   const UserHeadbarOption = () => {
     return (
@@ -87,6 +132,7 @@ export const Headbar = () => {
       <header className='headbar'>
         <div
           style={{ display: "flex", alignItems: "center", gap: "var(--gap-s)" }}
+          className='first-part'
         >
           <Button
             className='show-drawer-button'
@@ -99,21 +145,42 @@ export const Headbar = () => {
             Project Management
           </h5>
         </div>
-        <Popover
-          content={<UserHeadbarOption />}
-          trigger='click'
-          open={openOptions}
-          onOpenChange={() => setOpenOptions(true)}
-        >
-          <div className='headbar-avatar-wraper'>
-            <CustomAvatar
-              size={45}
-              userName={user?.name}
-              avatarSrc={user?.avatar}
-              bgColor={user?.avatar_color}
-            />
-          </div>
-        </Popover>
+        <div className='second-part'>
+          <Popover
+            content={
+              <div style={{ width: "300px", height: "400px" }}>
+                <NotiList
+                  notifications={notifications}
+                  updateNotiList={setNotifications}
+                  setUnreadCount={setUnreadNoti}
+                  unreadCount={unreadNoti}
+                />
+              </div>
+            }
+            trigger='click'
+          >
+            <div className='notification'>
+              <Badge count={unreadNoti} showZero>
+                <BellOutlined className='bell-icon' />
+              </Badge>
+            </div>
+          </Popover>
+          <Popover
+            content={<UserHeadbarOption />}
+            trigger='click'
+            open={openOptions}
+            onOpenChange={() => setOpenOptions(true)}
+          >
+            <div className='headbar-avatar-wraper'>
+              <CustomAvatar
+                size={45}
+                userName={user?.name}
+                avatarSrc={user?.avatar}
+                bgColor={user?.avatar_color}
+              />
+            </div>
+          </Popover>
+        </div>
       </header>
       <div className='headbar-placeholder'></div>
     </>

@@ -5,10 +5,7 @@ import { TaskCard } from "src/components/v2";
 import { Assignment, AssignmentStatus, Project, Task } from "src/share/models";
 import { useGetAssignmentsQuery } from "src/share/services";
 import { DocumentSection } from "src/components/v2";
-// import { InView } from "react-intersection-observer";
 import { useState } from "react";
-
-// import { LoadingOutlined } from "@ant-design/icons";
 
 interface TaskListProp {
   color?: string;
@@ -50,30 +47,16 @@ export const TaskList = ({
     }
   );
 
-  // const [mergedAssignments, setMergedAssigments] = useState<
-  //   Assignment[] | undefined
-  // >(assigments?.assignments);
-
-  // useEffect(() => {
-  //   if (!isFetching && mergedAssignments) {
-  //     setMergedAssigments([...mergedAssignments!, ...assigments!.assignments]);
-  //   } else if (!isFetching && !mergedAssignments && assigments) {
-  //     setMergedAssigments([...assigments!.assignments]);
-  //   }
-  // }, [isFetching, assigments, project]);
-
-  console.log(project);
-
   return (
     <>
-      <div className="task-list">
-        <div className="title" style={{ borderColor: color }}>
-          <Badge dot className="node" color={color} />
+      <div className='task-list'>
+        <div className='title' style={{ borderColor: color }}>
+          <Badge dot className='node' color={color} />
           <Typography.Title level={5} style={{ marginBottom: 0 }}>
             {title}
           </Typography.Title>
         </div>
-        <div className="tasks">
+        <div className='tasks'>
           {tasks?.map((task, index) => {
             const matchedAssignment: Assignment | undefined =
               assigments?.assignments?.find(
@@ -93,26 +76,6 @@ export const TaskList = ({
               );
             }
           })}
-          {/* <InView
-          as='div'
-          style={{
-            height: "fit-content",
-            display: "flex",
-            justifyContent: "center",
-            }}
-            onChange={(inView) => {
-              if (inView && assigments) {
-                if (assigments && params.page * 5 < assigments?.total) {
-                  setParams({ ...params, page: params.page + 1 });
-                  console.log(params);
-                  }
-                  }
-                  }}
-                  >
-                  {assigments && params.page * 5 < assigments?.total && (
-                    <LoadingOutlined style={{ margin: "auto" }} />
-                    )}
-                    </InView> */}
         </div>
       </div>
       <Modal>

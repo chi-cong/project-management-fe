@@ -6,20 +6,24 @@ import { router } from "src/libs";
 import { Provider } from "react-redux";
 import { store } from "src/libs/redux";
 import { ConfigProvider } from "antd";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(relativeTime);
+dayjs.extend(utc);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: "#5030E5",
-            fontFamily: "Poppins",
-          },
-        }}
-      >
-        <RouterProvider router={router} />
-      </ConfigProvider>
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "#5030E5",
+          fontFamily: "Poppins",
+        },
+      }}
+    >
+      <RouterProvider router={router} />
+    </ConfigProvider>
+  </Provider>
 );
