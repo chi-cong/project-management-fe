@@ -1,1 +1,0 @@
-export {ModalDepartmentManager} from "./modal-department-manager";
