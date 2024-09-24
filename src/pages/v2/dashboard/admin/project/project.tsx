@@ -39,7 +39,8 @@ import {
   OutsideClickHandler,
 } from "src/components";
 import { Activities } from "src/layouts/v2/task-detail/activities";
-import { localStorageUtil } from "src/share/utils";
+import { DragDropContext } from "@hello-pangea/dnd";
+
 export const AdminProject = () => {
   const { id: projectId } = useParams();
 
@@ -91,6 +92,8 @@ export const AdminProject = () => {
     },
   ];
 
+  const dragEnd = (result) => {};
+
   const ProjectOptions = () => {
     return (
       <OutsideClickHandler
@@ -98,10 +101,10 @@ export const AdminProject = () => {
           setOpenMenu(false);
         }}
       >
-        <div className="project-option">
+        <div className='project-option'>
           <Button
-            type="text"
-            className="project-option-btn"
+            type='text'
+            className='project-option-btn'
             onClick={() => {
               setIsUpdateProject(false);
               setProjectUpdateModal(true);
@@ -112,8 +115,8 @@ export const AdminProject = () => {
             <Typography.Text>Detail</Typography.Text>
           </Button>
           <Button
-            type="text"
-            className="project-option-btn"
+            type='text'
+            className='project-option-btn'
             onClick={() => {
               setDocSec(true);
               setOpenMenu(false);
@@ -123,8 +126,8 @@ export const AdminProject = () => {
             <Typography.Text>Attachments</Typography.Text>
           </Button>
           <Button
-            type="text"
-            className="project-option-btn"
+            type='text'
+            className='project-option-btn'
             onClick={() => {
               setIsUpdateProject(true);
               setProjectUpdateModal(true);
@@ -135,7 +138,7 @@ export const AdminProject = () => {
             <Typography.Text>Edit</Typography.Text>
           </Button>
           <Popconfirm
-            title="Delete this project ?"
+            title='Delete this project ?'
             onConfirm={() => {
               deleteProject({ projectId: projectData?.project_id })
                 .unwrap()
@@ -145,7 +148,7 @@ export const AdminProject = () => {
                 .catch(() => message.error("failed to delete this project"));
             }}
           >
-            <Button className="project-option-btn" type="text">
+            <Button className='project-option-btn' type='text'>
               <Trash />
               <Typography.Text>Delete</Typography.Text>
             </Button>
@@ -163,10 +166,10 @@ export const AdminProject = () => {
         className="account-card-loading"
         size="large"
       > */}
-      <div className="admin-project-page">
-        <header className="header-row">
-          <div className="first-part">
-            <div className="title-and-menu">
+      <div className='admin-project-page'>
+        <header className='header-row'>
+          <div className='first-part'>
+            <div className='title-and-menu'>
               <h2>{projectData?.name}</h2>
               <Popover
                 content={ProjectOptions}
@@ -174,22 +177,22 @@ export const AdminProject = () => {
                 open={openMenu}
                 onOpenChange={() => setOpenMenu(true)}
               >
-                <Button type="text" size="small">
+                <Button type='text' size='small'>
                   <MenuDots />
                 </Button>
               </Popover>
             </div>
             <Button
-              type="default"
-              className="title-row-btn"
-              shape="round"
+              type='default'
+              className='title-row-btn'
+              shape='round'
               onClick={() => setReportModal(true)}
             >
               <PieChart />
               Reports
             </Button>
             <Button
-              shape="round"
+              shape='round'
               style={{ display: "" }}
               onClick={() => navigate(-1)}
             >
@@ -197,10 +200,10 @@ export const AdminProject = () => {
               Go back
             </Button>
           </div>
-          <div className="second-part">
+          <div className='second-part'>
             <Button
-              type="primary"
-              className="create-task-btn"
+              type='primary'
+              className='create-task-btn'
               onClick={() => {
                 setCreateTaskModal(true);
               }}
@@ -211,7 +214,7 @@ export const AdminProject = () => {
               </Typography.Text>
             </Button>
             <div
-              className="avatar-group-wrapper"
+              className='avatar-group-wrapper'
               onClick={() => setAddUserModal(true)}
             >
               {projectStaffs?.users?.length ? (
@@ -227,40 +230,42 @@ export const AdminProject = () => {
                   ))}
                 </Avatar.Group>
               ) : (
-                <CustomAvatar size={32} userName="+" />
+                <CustomAvatar size={32} userName='+' />
               )}
             </div>
           </div>
         </header>
-        <List
-          grid={{
-            gutter: [16, 16],
-            xs: 1,
-            sm: 1,
-            md: 1,
-            lg: 1,
-            xl: 3,
-            xxl: 3,
-          }}
-          className="task-sec"
-          dataSource={taskListSrc}
-          renderItem={(taskList) => {
-            return (
-              <List.Item>
-                <TaskList
-                  color={taskList.color}
-                  title={taskList.title}
-                  showTaskDetail={setTaskDetailModal}
-                  showDocSec={setTaskDocSec}
-                  showActies={setActivitySec}
-                  type={taskList.type}
-                  project={projectData}
-                  tasks={tasks?.data}
-                />
-              </List.Item>
-            );
-          }}
-        />
+        <DragDropContext onDragEnd={dragEnd}>
+          <List
+            grid={{
+              gutter: [16, 16],
+              xs: 1,
+              sm: 1,
+              md: 1,
+              lg: 1,
+              xl: 3,
+              xxl: 3,
+            }}
+            className='task-sec'
+            dataSource={taskListSrc}
+            renderItem={(taskList) => {
+              return (
+                <List.Item>
+                  <TaskList
+                    color={taskList.color}
+                    title={taskList.title}
+                    showTaskDetail={setTaskDetailModal}
+                    showDocSec={setTaskDocSec}
+                    showActies={setActivitySec}
+                    type={taskList.type}
+                    project={projectData}
+                    tasks={tasks?.data}
+                  />
+                </List.Item>
+              );
+            }}
+          />
+        </DragDropContext>
       </div>
 
       <TaskDetail
@@ -300,7 +305,7 @@ export const AdminProject = () => {
         open={reportModal}
         onCancel={() => setReportModal(false)}
         footer={[]}
-        title="Project Report"
+        title='Project Report'
         width={"90vw"}
       >
         <ProjectReport projectId={projectId} />

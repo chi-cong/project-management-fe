@@ -12,6 +12,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^17.0.0",
     "@nivo/pie": "^0.87.0",
     "@reduxjs/toolkit": "^2.2.3",
     "@types/js-cookie": "^3.0.6",
