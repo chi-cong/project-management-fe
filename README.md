@@ -1,8 +1,9 @@
-# My portfolio website
+# Project management
 
-This is my portfolio, where I introduce mysefl, my experience and my tech stack.
-You can open the website at https://chi-cong.github.io/Portfolio/ <br/>
-Main techs are used in this app :<br />
+Managing company's departments, project and tasks. The App works on both computer and mobile devices<br/>
+This is the frontend repository.
+
+Main techs are used in this app :
 
 - React 18
 - Vites
@@ -10,7 +11,7 @@ Main techs are used in this app :<br />
 - Redux Toolkit/ RTK Query
 - SocketIO
 
-Here are some picture of the app
+Here are some pictures of the app
 
 ![Alt mainpic](public/demopics/login.png)
 ![Alt mainpic](public/demopics/department.png)
