@@ -1,5 +1,5 @@
 @import "../../mixin/mixin.css";
-.card-department-container {
+.trash-card-department-container {
   .ant-card-body {
     padding: 10px;
   }
@@ -11,7 +11,7 @@
       justify-content: space-between;
 
       .department-name {
-        word-wrap: nowrap;
+        @mixin textOverflow;
       }
       .department-header-info {
         display: flex;
@@ -33,12 +33,17 @@
       display: flex;
       flex-direction: column;
       width: 100%;
+      .department-manager-info {
+        span {
+          display: block;
+          @mixin textOverflow;
+        }
+      }
       .department-body-info {
         margin-top: 10px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-
         .department-body-manager-info-wrapper {
           display: flex;
           width: 100%;

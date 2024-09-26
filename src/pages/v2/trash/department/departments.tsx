@@ -25,7 +25,7 @@ export const DepartmentTrash = () => {
   };
   const navigate = useNavigate();
   return (
-    <div className='v2-departments-page'>
+    <div className='v2-departments-trash-page'>
       <section className='main'>
         <header className='main-header'>
           <section className='first-sec'>
@@ -46,7 +46,6 @@ export const DepartmentTrash = () => {
               <Col xs={24} sm={24} md={24}>
                 <Input.Search
                   placeholder='Search...'
-                  style={{ width: "100%" }}
                   allowClear
                   onSearch={(value) =>
                     setQueries({ ...queries, search: value })

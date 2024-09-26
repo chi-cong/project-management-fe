@@ -58,25 +58,25 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
   };
 
   return (
-    <div className="card-department-container">
+    <div className='trash-card-department-container'>
       <Card hoverable bordered={false}>
-        <div className="department-wrapper">
-          <Row className="department-header">
+        <div className='department-wrapper'>
+          <Row className='department-header'>
             {/* title */}
-            <Col span={12} className="department-header-info">
-              <h2 className="department-name" onClick={onClick}>
+            <Col span={12} className='department-header-info'>
+              <h2 className='department-name' onClick={onClick}>
                 {department.name}
               </h2>
             </Col>
             {/* action (delete, update) */}
-            <Col span={12} className="department-header-action">
+            <Col span={12} className='department-header-action'>
               <Space>
                 <div
-                  className="department-header-action-button icon-delete-department"
+                  className='department-header-action-button icon-delete-department'
                   onClick={handleRestoreClick}
                 >
                   <Popconfirm
-                    title="Are you sure to restore this Department?"
+                    title='Are you sure to restore this Department?'
                     icon={<QuestionCircleOutlined style={{ color: "red" }} />}
                     onConfirm={RestoreDepartment}
                   >
@@ -84,11 +84,11 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
                   </Popconfirm>
                 </div>
                 <div
-                  className="department-header-action-button icon-delete-department"
+                  className='department-header-action-button icon-delete-department'
                   onClick={handleDeleteForeverClick}
                 >
                   <Popconfirm
-                    title="Are you sure to delete this department permanently?"
+                    title='Are you sure to delete this department permanently?'
                     icon={<QuestionCircleOutlined style={{ color: "red" }} />}
                     onConfirm={DeleteDepartmentForever}
                   >
@@ -98,15 +98,15 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
               </Space>
             </Col>
           </Row>
-          <div className="department-body">
-            <div className="department-manager-info" onClick={onClick}>
-              <span>{department.name}</span>
+          <div className='department-body'>
+            <div className='department-manager-info' onClick={onClick}>
+              <span>{department.description}</span>
             </div>
             {/* info */}
-            <Row className="department-body-info">
+            <Row className='department-body-info'>
               <Col sm={24} xs={24} xxl={18}>
-                <Card className="department-body-manager-card">
-                  <div className="department-body-manager-info-wrapper">
+                <Card className='department-body-manager-card'>
+                  <div className='department-body-manager-info-wrapper'>
                     {department.information?.manager?.user_id ? (
                       <>
                         <div style={{ display: "flex", alignItems: "center" }}>
@@ -119,11 +119,11 @@ export const CardDepartmentTrash: React.FC<CardDepartmentTrashProps> = ({
                             }
                           />
                         </div>
-                        <div className="department-manager-main-info">
+                        <div className='department-manager-main-info'>
                           <h3 style={{ textWrap: "nowrap" }}>
                             {department.information?.manager?.name}
                           </h3>
-                          <span className="department-body-manager-role">
+                          <span className='department-body-manager-role'>
                             Manger
                           </span>
                         </div>

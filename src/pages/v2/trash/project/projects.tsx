@@ -24,7 +24,7 @@ export const ProjectTrash = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='v2-projects-page'>
+    <div className='v2-projects-trash-page'>
       <section className='main'>
         <header className='main-header'>
           <section className='first-sec'>
@@ -41,12 +41,10 @@ export const ProjectTrash = () => {
                 Back to Project
               </Button>
             </div>
-            <Row className='action' gutter={[8, 8]}>
-              <Col xs={0} sm={0} md={0} lg={6} />
-              <Col xs={24} sm={24} md={24} lg={18}>
+            <Row className='header-action' gutter={[8, 8]}>
+              <Col span={24}>
                 <Input.Search
                   placeholder='Search...'
-                  style={{ width: "100%" }}
                   allowClear
                   onSearch={(value) =>
                     setQueries({ ...queries, search: value })

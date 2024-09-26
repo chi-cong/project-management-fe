@@ -1,5 +1,6 @@
 @import "../../../../mixin/mixin.css";
-.v2-projects-page {
+.v2-projects-trash-page {
+  width: 100%;
   .main {
     display: flex;
     flex-direction: column;
@@ -12,16 +13,14 @@
       .first-sec {
         width: 100%;
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         margin-bottom: 20px;
         justify-content: space-between;
-        @mixin tabletAndMobile {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: var(--gap-s);
-        }
         .title-des {
+          width: fit-content;
           display: flex;
+          flex-wrap: wrap;
           align-items: center;
           gap: var(--gap-s);
           .title-row {
@@ -45,6 +44,9 @@
             align-items: center;
             gap: var(--gap-xs);
           }
+        }
+        .header-action {
+          width: 250px;
         }
       }
     }

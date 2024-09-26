@@ -106,7 +106,7 @@ export const CardProjectTrash: React.FC<CardProjectTrash> = ({
             <div className='project-body' onClick={onClick}>
               {/* info */}
               <div className='project-body-info'>
-                <span>{shortenLongText(80, description)}</span>
+                <span>{description}</span>
               </div>
             </div>
             <div className='project-footer'>
