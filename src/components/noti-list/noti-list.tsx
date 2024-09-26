@@ -1,7 +1,10 @@
 import "./noti-list.css";
-import { Button, Typography } from "antd";
+import { Button, notification, Typography } from "antd";
 import { utcToLocal } from "src/share/utils";
-import { useMarkAsReadMutation } from "src/share/services";
+import {
+  useMarkAsReadMutation,
+  useMarkAllAsReadMutation,
+} from "src/share/services";
 
 import type { Notification } from "src/share/models";
 
@@ -19,11 +22,28 @@ export const NotiList = ({
   unreadCount,
 }: NotiListProp) => {
   const [markAsRead] = useMarkAsReadMutation();
+  const [markAllAsRead] = useMarkAllAsReadMutation();
 
   return (
     <div className='noti-list'>
       <div className='title-row'>
         <h3>Notifications</h3>
+        <Button
+          type='link'
+          onClick={() => {
+            markAllAsRead(null)
+              .unwrap()
+              .then(() => {
+                const newNotiList = notifications.map((noti) => {
+                  return { ...noti, is_read: true };
+                });
+                updateNotiList(newNotiList);
+                setUnreadCount(0);
+              });
+          }}
+        >
+          Mark all as read
+        </Button>
       </div>
       <div className='noti-list-body'>
         {notifications.map((notification, index) => {

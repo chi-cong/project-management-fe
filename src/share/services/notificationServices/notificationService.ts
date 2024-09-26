@@ -21,8 +21,19 @@ const NotificationServices = hrManagementApi.injectEndpoints({
         };
       },
     }),
+    markAllAsRead: build.mutation<NotificationResp, null>({
+      query: () => {
+        return {
+          url: `user-notifications/read-many`,
+          method: "PUT",
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetInitNotisQuery, useMarkAsReadMutation } =
-  NotificationServices;
+export const {
+  useGetInitNotisQuery,
+  useMarkAsReadMutation,
+  useMarkAllAsReadMutation,
+} = NotificationServices;
